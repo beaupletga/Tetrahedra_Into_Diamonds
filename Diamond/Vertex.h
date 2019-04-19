@@ -5,26 +5,13 @@
 #include <vector>
 using namespace std;
 
-// class Vertex
-// {
-//     public:
-//         Vertex(int,vector<double>);
-//         int get_id();
-//         bool operator==(Vertex);
-//         void add_neighbours(vector<Vertex>&);
-//         vector<Vertex>& get_neighbours();
-
-//     private: 
-//         int id;
-//         vector<double> coords;
-//         vector<Vertex> neighbours;
-// };
 
 class Vertex
 {
     public:
         Vertex(int,vector<double>);
         int get_id();
+        vector<double> get_coords();
         bool operator==(Vertex);
         void add_neighbours(vector<Vertex*>);
         vector<Vertex *> get_neighbours();

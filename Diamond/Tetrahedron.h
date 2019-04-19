@@ -8,24 +8,6 @@
 #include "Vertex.h"
 using namespace std;
 
-// class Tetrahedron
-// {
-//     public:
-//         Tetrahedron(int,vector<Vertex>&);
-//         bool is_adjacent(Tetrahedron&);
-//         int get_id();
-//         map<tuple<int,int>,vector<Vertex>>& get_edges();
-//         void display_vertices_id();
-//         vector<Vertex>& get_vertices();
-//         vector<Tetrahedron>& get_neighbours();
-//         void add_edge_vertex_match(tuple<int,int>,Vertex&);
-//     private:
-//         int id;
-//         vector<Vertex> vertices;
-//         vector<Tetrahedron> neighbours;
-//         map<tuple<int,int>,vector<Vertex>> edges;
-// };
-
 class Tetrahedron
 {
     public:
@@ -33,6 +15,7 @@ class Tetrahedron
         // bool is_adjacent(Tetrahedron);
         int get_id();
         void display_vertices_id();
+        void display_edges();
         vector<Vertex*> get_vertices();
         vector<Tetrahedron*> get_neighbours();
         void add_edge_vertex_match(tuple<int,int>,Vertex*);
@@ -41,7 +24,7 @@ class Tetrahedron
         int id;
         vector<Vertex*> vertices;
         vector<Tetrahedron*> neighbours;
-        map<tuple<int,int>,vector<Vertex*>> edges;
+        vector<tuple<int,int>> edges;
 };
 
 
