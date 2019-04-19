@@ -25,7 +25,7 @@ double average_edge_degree(std::map<tuple<int,int>,vector<Tetrahedron*>>);
 double average_edges_per_vertex(vector<Vertex>);
 
 Vertex* pick_random_neighbour(Vertex&);
-Vertex* pick_steepest_neighbour(Vertex&);
+Vertex* pick_steepest_neighbour(Vertex&,int);
 void step_1(vector<Vertex>&,vector<Tetrahedron>&);
 
 

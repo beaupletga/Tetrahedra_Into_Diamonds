@@ -118,15 +118,26 @@ Vertex* pick_random_neighbour(Vertex& vertex)
     return vertex.get_neighbours()[vertex_index];
 }
 
+// decreasing
 bool cmp(Vertex* lhs, Vertex* rhs)
 {
   return lhs->get_coords()[2] < rhs->get_coords()[2];
 }
 
-Vertex* pick_steepest_neighbour(Vertex& vertex)
+// careful, this function is unsafe because we don't check the bounds
+Vertex* pick_steepest_neighbour(Vertex& vertex,int lala)
 {
     vector<Vertex*> neighbours=vertex.get_neighbours();
-    return *max_element(neighbours.begin(),neighbours.end(),cmp);
+    sort(neighbours.begin(),neighbours.end(),cmp);
+    if (lala-1>neighbours.size())
+    {
+        cout<<"Bounds problem"<<endl;
+        return neighbours[0];
+    }
+    else
+    {
+        return neighbours[lala-1];
+    }
 }
 
 void step_1(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list)
@@ -134,28 +145,29 @@ void step_1(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list)
     map<tuple<int,int>,vector<Vertex*>> edge_to_vertex;
     for(int i=0;i<vertex_list.size();i++)
     {
-        Vertex* v2 =pick_random_neighbour(vertex_list[i]);
         tuple<int,int> tmp;
-        if (vertex_list[i].get_id()<v2->get_id())
+        int lala=0;
+        do
         {
-            tmp= make_tuple(vertex_list[i].get_id(),v2->get_id());
-        }
-        else
-        {
-            tmp= make_tuple(v2->get_id(),vertex_list[i].get_id());
-        }
-        if (edge_to_vertex.count(tmp)==0)
-        {
-            vector<Vertex*> vec_tmp={&vertex_list[i]};
-            edge_to_vertex.insert({tmp,vec_tmp});
-        }
-        else
-        {
-            edge_to_vertex.find(tmp)->second.push_back(&vertex_list[i]);
-        }
+            lala++;
+            Vertex* v2 =pick_random_neighbour(vertex_list[i]);
+            // Vertex* v2 =pick_steepest_neighbour(vertex_list[i],lala);
+            
+            if (vertex_list[i].get_id()<v2->get_id())
+            {
+                tmp= make_tuple(vertex_list[i].get_id(),v2->get_id());
+            }
+            else
+            {
+                tmp= make_tuple(v2->get_id(),vertex_list[i].get_id());
+            }
+        } while (edge_to_vertex.count(tmp)!=0);
+        vector<Vertex*> vec_tmp={&vertex_list[i]};
+        edge_to_vertex.insert({tmp,vec_tmp});
     }
 
     double count_failure=0;
+    double count_tetra_isolated=0;
     int count_edges_in_tetra;
     for (Tetrahedron &i : tetra_list)
     {
@@ -175,8 +187,12 @@ void step_1(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list)
         {
             count_failure++;
         }
+        if (count_edges_in_tetra==0)
+        {
+            count_tetra_isolated++;
+        }
     }
-
+    cout<<"Share of Tetra isolated : "<<count_tetra_isolated/tetra_list.size()<<endl;
     cout<<"Share of tetrahedra having at least 2 edges taken : "<<count_failure/tetra_list.size()<<endl;
 
     double edge_count_twice=0;
@@ -188,8 +204,13 @@ void step_1(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list)
         }
     }
 
-    cout<<"Share of edges choosen by both etreme vertex : "<<edge_count_twice<<endl;
+    cout<<"Share of edges choosen by both extreme vertex : "<<edge_count_twice<<endl;
+
+    cout<<"edge_to_vertex size : "<<edge_to_vertex.size()<<endl;
 }
+
+
+
 
 
     
