@@ -55,3 +55,13 @@ bool Vertex::operator==(Vertex a)
     return (this->id==a.id);
 }
 
+bool cmp_neighbours(Vertex* lhs, Vertex* rhs)
+{
+    return lhs->get_id()< rhs->get_id();
+}
+
+void Vertex::sort_neighbours()
+{
+    sort(this->neighbours.begin(),this->neighbours.end(),cmp_neighbours);
+}
+

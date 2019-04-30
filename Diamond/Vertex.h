@@ -2,6 +2,7 @@
 #define VERTEX_H
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -16,6 +17,8 @@ class Vertex
         void add_neighbours(vector<Vertex*>);
         vector<Vertex *> get_neighbours();
         void display_neighbours();
+        void sort_neighbours();
+        double angle;
 
     private: 
         int id;

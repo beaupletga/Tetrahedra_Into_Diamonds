@@ -5,6 +5,9 @@ using namespace std;
 Tetrahedron::Tetrahedron(int id,vector<Vertex*> vertex_list)
 {
     this->id=id;
+    this->count_matched=0;
+    this->in_diamond=false;
+    this->is_on_boundary=false;
     for(int i=0;i<vertex_list.size();i++)
     {
         this->vertices.push_back(vertex_list[i]);
@@ -70,24 +73,68 @@ vector<tuple<int,int>> Tetrahedron::enumerate_edges()
     return edges;
 }
 
-// bool Tetrahedron::is_adjacent(Tetrahedron* tetra)
-// {
-//     int count=0;
-//     for(int i=0;i<this->vertices.size();i++)
-//     {
-//         for(int j=0;j<tetra.get_vertices().size();j++)
-//         {
-//             if (this->vertices[i]==tetra.get_vertices()[j])
-//             {
-//                 count++;
-//             }
-//             if (count==2)
-//             {
-//                 return true;
-//             }
-//         }
-//     }
-//     return false;
-// }
+// return edges id of a tetrahedron
+vector<tuple<int,int,int>> Tetrahedron::enumerate_faces()
+{
+    int v0=this->vertices[0]->get_id();
+    int v1=this->vertices[1]->get_id();
+    int v2=this->vertices[2]->get_id();
+    int v3=this->vertices[3]->get_id();
+
+    tuple<int,int,int> f0 =make_tuple(v0,v1,v2);
+    tuple<int,int,int> f1 =make_tuple(v0,v2,v3);
+    tuple<int,int,int> f2 =make_tuple(v1,v2,v3);
+    tuple<int,int,int> f3 =make_tuple(v0,v1,v3);
+    
+    vector<tuple<int,int,int>> faces={f0,f1,f2,f3};
+
+    return faces;
+}
+
+bool Tetrahedron::is_adjacent(Tetrahedron* tetra)
+{
+    int count=0;
+    for(int i=0;i<this->vertices.size();i++)
+    {
+        for(int j=0;j<tetra->get_vertices().size();j++)
+        {
+            if (this->vertices[i]==tetra->get_vertices()[j])
+            {
+                count++;
+            }
+            if (count>=3)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+void Tetrahedron::set_in_diamond(bool value)
+{
+    this->in_diamond=value;
+}
+
+bool Tetrahedron::get_in_diamond()
+{
+    return this->in_diamond;
+}
+
+void Tetrahedron::set_is_on_boundary(bool value)
+{
+    this->is_on_boundary=value;
+}
+bool Tetrahedron::get_is_on_boundary()
+{
+    return this->is_on_boundary;
+}
+
+void Tetrahedron::add_neighbour(Tetrahedron* tetra)
+{
+    this->neighbours.push_back(tetra);
+}
+
 
 

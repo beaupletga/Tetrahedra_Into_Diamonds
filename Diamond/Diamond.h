@@ -8,7 +8,7 @@ using namespace std;
 class Diamond
 {
     public:
-        Diamond(vector<Tetrahedron*>&);
+        Diamond(int,vector<Tetrahedron*>&);
         int get_id();
         vector<Tetrahedron*> get_tetra_list();
         tuple<int,int> get_central_edge();
