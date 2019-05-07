@@ -30,7 +30,7 @@ void Vertex::display_neighbours()
     cout<<endl;
 }
 
-void Vertex::add_neighbours(vector<Vertex *> neighbours)
+void Vertex::add_neighbours(vector<Vertex*> neighbours)
 {
     for (int i=0;i<neighbours.size();i++)
     {

@@ -16,6 +16,7 @@ class Diamond
 
     private:
         int id;
+        Vertex* anchor_vertice;
         vector<Tetrahedron*> tetra_list;
         tuple<int,int> central_edge;
         vector<Vertex*> vertices;

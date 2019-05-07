@@ -14,6 +14,7 @@ class Tetrahedron
         Tetrahedron(int,vector<Vertex *>);
         // bool is_adjacent(Tetrahedron);
         int get_id();
+        tuple<double,double,double> get_barycenter();
         void display_vertices_id();
         void display_edges();
         vector<Vertex*> get_vertices();

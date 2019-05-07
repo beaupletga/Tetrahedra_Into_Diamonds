@@ -1,28 +1,24 @@
 #include "Diamond.h"
 
-
+// constructor for each diamond
+// we know that the set of tetra shape as a cycle
 Diamond::Diamond(int id,vector<Tetrahedron*>& elements)
 {
-    // cout<<"d0"<<elements.size()<<endl;
     this->id=id;
     bool already_in=false;
     this->tetra_list.push_back(elements[0]);
-    // cout<<"d1"<<endl;
+    // we want to add the tetra such that the order is the same as in the cycle around the central edge
     while (this->tetra_list.size()!=elements.size())
     {
         for(int i=0;i<elements.size();i++)
         {
-            // cout<<"d2"<<endl;
             already_in=false;
-            // cout<<"ouiii"<<this->tetra_list.back()->get_id()<<endl;
+            // if the new element is adjacent to the last added one
             if (elements[i]->is_adjacent(this->tetra_list.back()))
             {
-                // cout<<"oui1"<<endl;
-                // cout<<"d3"<<endl;
+                // we check that this new element isn't already added
                 for (int j=0;j<this->tetra_list.size();j++)
                 {
-                    // cout<<"oui2"<<endl;
-                    // cout<<"d4"<<endl;
                     if (this->tetra_list[j]->get_id()==elements[i]->get_id())
                     {
                         already_in=true;
@@ -30,8 +26,7 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements)
                     }
                 }
             }
-            // cout<<"d5"<<endl;
-            // cout<<already_in<<endl;
+            // if it's not already added, then we add it
             if (!already_in)
             {
                 this->tetra_list.push_back(elements[i]);

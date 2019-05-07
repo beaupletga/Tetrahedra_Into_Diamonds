@@ -12,20 +12,31 @@ void preprocessing_tetra(tuple<vector<vector<double>>,vector<vector<double>>>& r
 
     for(int i=0;i<geometry.size();i++)
     {
-        Vertex tmp=Vertex(i,geometry[i]);
-        vertex_list.push_back(tmp);
+        Vertex vertex=Vertex(i,geometry[i]);
+        vertex_list.push_back(vertex);
     }
-
     for(int i=0;i<connectivity.size();i++)
     {
-        vector<Vertex*> tmp0 ={&vertex_list[connectivity[i][0]],&vertex_list[connectivity[i][1]],&vertex_list[connectivity[i][2]],&vertex_list[connectivity[i][3]]};
-        Tetrahedron tmp1=Tetrahedron(i,tmp0);
-        tetra_list.push_back(tmp1);
+        bool ignore=false;
+        for(double j : connectivity[i])
+        {
+            if (j>=geometry.size())
+            {
+                ignore=true;
+            }
+        }
+        if (!ignore)
+        {
+            vector<Vertex*> tmp0 ={&vertex_list[connectivity[i][0]],&vertex_list[connectivity[i][1]],&vertex_list[connectivity[i][2]],&vertex_list[connectivity[i][3]]};
+            Tetrahedron tmp1=Tetrahedron(i,tmp0);
+            tetra_list.push_back(tmp1);
 
-        tmp0[0]->add_neighbours(tmp0);
-        tmp0[1]->add_neighbours(tmp0);
-        tmp0[2]->add_neighbours(tmp0);
-        tmp0[3]->add_neighbours(tmp0);
+            tmp0[0]->add_neighbours(tmp0);
+            tmp0[1]->add_neighbours(tmp0);
+            tmp0[2]->add_neighbours(tmp0);
+            tmp0[3]->add_neighbours(tmp0);
+        }
+        
     }
 }   
 
@@ -90,6 +101,7 @@ void make_face_dict(vector<Tetrahedron>& tetra_list,map<tuple<int,int,int>,vecto
         vector<tuple<int,int,int>> faces = tetra_list[i].enumerate_faces();
         for (int j=0;j<faces.size();j++)
         {
+            // cout<<get<0>(faces[j])<<" "<<get<1>(faces[j])<<" "<<get<2>(faces[j])<<endl;
             if(face_dict.count(faces[j])==0)
             {
                 vector<Tetrahedron*> tmp={&tetra_list[i]};
@@ -100,6 +112,7 @@ void make_face_dict(vector<Tetrahedron>& tetra_list,map<tuple<int,int,int>,vecto
                 face_dict.find(faces[j])->second.push_back(&tetra_list[i]);
             }
         }
+        // cout<<endl;
     }
     for(pair<tuple<int,int,int>,vector<Tetrahedron*>> i : face_dict)
     {

@@ -136,5 +136,20 @@ void Tetrahedron::add_neighbour(Tetrahedron* tetra)
     this->neighbours.push_back(tetra);
 }
 
+tuple<double,double,double> Tetrahedron::get_barycenter()
+{
+    double x=0;
+    double y=0;
+    double z=0;
+    for(Vertex* vertex : this->get_vertices())
+    {
+        x+=vertex->get_coords()[0];
+        y+=vertex->get_coords()[1];
+        z+=vertex->get_coords()[2];
+    }
+    tuple<double,double,double> tmp = {x/4,y/4,z/4};
+    return tmp;
+}
+
 
 

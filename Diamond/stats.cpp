@@ -83,5 +83,30 @@ void stats(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vector<Tetrahedro
 
     cout<<"Share of edges choosen by both extreme vertex : "<<edge_count_twice<<endl;
 
-    cout<<"edge_to_vertex size : "<<edge_to_vertex.size()<<endl;
+    double count_tetra_diamond=0;
+    for (int i=0;i<tetra_list.size();i++)
+    {
+        count_tetra_diamond+=tetra_list[i].get_in_diamond();
+    }
+    cout<<"Share of tetra in full diamond : "<<count_tetra_diamond/tetra_list.size()<<endl;
+
+    double count=0;
+    for (Tetrahedron tetra : tetra_list)
+    {
+        if (tetra.get_in_diamond()==false )
+        {
+            count++;
+        }
+    }
+    cout<<"Share of tetra isolated: "<<count/tetra_list.size()<<endl;
+
+    count=0;
+    for (Tetrahedron tetra : tetra_list)
+    {
+        if (tetra.get_in_diamond()==false and tetra.get_is_on_boundary())
+        {
+            count++;
+        }
+    }
+    cout<<"Share of tetra isolated and on the boundary : "<<count/tetra_list.size()<<endl;
 }

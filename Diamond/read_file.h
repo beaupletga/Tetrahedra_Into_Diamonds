@@ -13,7 +13,9 @@
 using namespace std;
 
 vector<double> split(string,int,bool);
-tuple<vector<vector<double>>,vector<vector<double>>> read_file(string);
+tuple<vector<vector<double>>,vector<vector<double>>> read_tet_file(string);
+tuple<vector<vector<double>>,vector<vector<double>>> read_mesh_file(string);
+
 
 #endif
 
