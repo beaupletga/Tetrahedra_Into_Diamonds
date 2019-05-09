@@ -36,7 +36,12 @@ void preprocessing_tetra(tuple<vector<vector<double>>,vector<vector<double>>>& r
             tmp0[2]->add_neighbours(tmp0);
             tmp0[3]->add_neighbours(tmp0);
         }
-        
+    }
+
+    // sort neighbours for each vertex by id
+    for (Vertex &i : vertex_list)
+    {
+        i.sort_neighbours();
     }
 }   
 
@@ -122,4 +127,16 @@ void make_face_dict(vector<Tetrahedron>& tetra_list,map<tuple<int,int,int>,vecto
         }
     }
 
+    // add neighbourd between adjacent tetra
+    for(pair<tuple<int,int,int>,vector<Tetrahedron*>> face :face_dict)
+    {
+        for(int i=0;i<face.second.size()-1;i++)
+        {
+            for(int j=i+1;j<face.second.size();j++)
+            {
+                face.second[i]->add_neighbour(face.second[j]);
+                face.second[j]->add_neighbour(face.second[i]);
+            }
+        }
+    }
 }

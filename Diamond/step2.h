@@ -17,8 +17,9 @@
 
 using namespace std;
 
-vector<Diamond> step_2(map<tuple<int,int>,vector<Vertex*>>&,vector<Tetrahedron>&,map<tuple<int,int>,vector<Tetrahedron*>>& );
-
+vector<Diamond> step_2(map<tuple<int,int>,vector<Vertex*>>&,
+vector<Tetrahedron>&,map<tuple<int,int>,vector<Tetrahedron*>>&,
+map<tuple<int,int,int>,vector<Tetrahedron*>>&);
 #endif
 
 

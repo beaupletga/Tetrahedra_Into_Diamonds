@@ -135,7 +135,6 @@ tuple<vector<vector<double>>,vector<vector<double>>> read_mesh_file(string filen
             j--;
         }
     }
-
     tuple<vector<vector<double>>,vector<vector<double>>> lala = make_tuple(geometry_list,conectivity_list); 
     return lala;
 }

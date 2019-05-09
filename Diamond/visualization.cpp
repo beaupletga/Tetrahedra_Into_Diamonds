@@ -15,7 +15,7 @@ void visualize(vector<Tetrahedron> &tetra_list)
 
 void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list, map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict, map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex)
 {
-    int nb_isolated = 4*count_if(tetra_list.begin(),tetra_list.end(),[](Tetrahedron i){return !i.get_in_diamond() && i.get_is_on_boundary();});
+    int nb_isolated = 4*count_if(tetra_list.begin(),tetra_list.end(),[](Tetrahedron i){return !i.get_in_diamond();});
     // int nb_isolated = 4*
     ofstream output;
     output.open("visualize.off");
@@ -27,7 +27,7 @@ void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> 
     }
     for (Tetrahedron tetra : tetra_list)
     {
-        if (!tetra.get_in_diamond() && tetra.get_is_on_boundary())
+        if (!tetra.get_in_diamond())// && tetra.get_is_on_boundary())
         {
             double R = rand()%255;
             double G = rand()%255;
