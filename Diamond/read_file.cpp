@@ -46,10 +46,12 @@ tuple<vector<vector<double>>,vector<vector<double>>> read_tet_file(string filena
             if (count<n_v)
             {
                 whole_list.push_back(split(line,0,3));
+                // cout<<split(line,0,3)[0]<<" "<<split(line,0,3)[1]<<" "<<split(line,0,3)[2]<<endl;
             }
             else
             {
                 whole_list.push_back(split(line,1,5));
+                // cout<<split(line,1,5)[0]<<" "<<split(line,1,5)[1]<<" "<<split(line,1,5)[2]<<" "<<split(line,1,5)[3]<<endl;
             }
             count+=1;
         }

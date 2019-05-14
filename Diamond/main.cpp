@@ -14,8 +14,16 @@
 #include "stats.h"
 #include "step1.h"
 #include "step2.h"
+#include "step3.h"
 
 using namespace std;
+
+// dictionnaire de vertex (int,numero_diamant), ref vers un diamant adjacent
+
+// array de tetra (int,numero_diamant), chaque tetra est associé avec un numero
+
+// array de diamant (int,tableau_numero_diamant_voisin), où le diamant a juste une liste de ref vers ses voisins
+
 
 int main() 
 {
@@ -25,7 +33,7 @@ int main()
     // return both the geometry and the connectivity as a tuple
     // result=read_tet_file("delaunay3D_sphere870.tet");
     result=read_tet_file("hand.tet");
-    // result=read_file("delaunay3D_sphere6k.tet");
+    // result=read_tet_file("delaunay3D_sphere6k.tet");
     // result=read_mesh_file("ball.mesh");
 
     // read the result tuple and encapsulate the geom. and connect. in propers classes
@@ -63,12 +71,17 @@ int main()
     
 
     // this method doesn't work if you use step_1_vertex_choose_neighbour because all diamond are not cycles
-    step_2(edge_to_vertex,tetra_list,edge_dict,face_dict);
+    vector<Diamond> diamond_list=step_2(edge_to_vertex,tetra_list,edge_dict,face_dict);
 
-    // stats(edge_to_vertex,tetra_list);
+    stats(edge_to_vertex,tetra_list);
 
     visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
+    // visualize_all(vertex_list,tetra_list);
     // visualize(tetra_list);
+
+    // cout<<max_element(diamond_list.begin(),diamond_list.end(),[](Diamond i,Diamond j){return i.get_tetra_list().size()<j.get_tetra_list().size();})->get_tetra_list().size()<<endl;
+
+    step_3(tetra_list,diamond_list);
 
     return 0;
 }  

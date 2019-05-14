@@ -180,24 +180,13 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
                         // if none of these tetra is already in a diamond
                         if (count_if(edge_dict[edge].begin(),edge_dict[edge].end(),[](Tetrahedron* i){return i->get_in_diamond();})==0)
                         {
+                            // we add the edge into a list, with the nb of tetra associated
                             ocurrences.push_back({get<0>(edge),get<1>(edge),edge_dict[edge].size()});
-                            // then we can use this edge as central edge for a diamond
-                            // diamond_list[edge]=edge_dict[edge];
-                            // // // and mark all the tetra of this new diamond
-                            // for (Tetrahedron* tmp : edge_dict[edge])
-                            // {
-                            //     tmp->set_in_diamond(true);
-                            //     count++;
-                            // }
                         }
                     }
                 }
-                // we push into the queue all tetra adjacent (by an edge) to the focused tetra
-                // for (Tetrahedron* tmp2 : edge_dict[edge])
-                // {
-                //     wait_list.push(tmp2);
-                // }   
             }
+            // we take the edge with maximum adjacent tetra
             if (ocurrences.size()>0)
             {
                 tuple<int,int,int> max = *max_element( ocurrences.begin(), ocurrences.end(),
@@ -232,24 +221,24 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
         edge_to_vertex[i.first]={&vertex_list[get<0>(i.first)]};
     }
 
-    std::ofstream outfile;
-    outfile.open("scores.csv", ios::app);
-    double count_tetra_diamond=0;
-    for (int i=0;i<tetra_list.size();i++)
-    {
-        count_tetra_diamond+=tetra_list[i].get_in_diamond();
-    }
+    // std::ofstream outfile;
+    // outfile.open("scores.csv", ios::app);
+    // double count_tetra_diamond=0;
+    // for (int i=0;i<tetra_list.size();i++)
+    // {
+    //     count_tetra_diamond+=tetra_list[i].get_in_diamond();
+    // }
 
-    tuple<double,double,double> bary = tetra_list[tmppp].get_barycenter();
-    outfile<<get<0>(bary);
-    outfile<<",";
-    outfile<<get<1>(bary);
-    outfile<<",";
-    outfile<<get<2>(bary);
-    outfile<<",";
-    outfile<<count_tetra_diamond/tetra_list.size();
-    outfile<<"\n";
-    outfile.close();
+    // tuple<double,double,double> bary = tetra_list[tmppp].get_barycenter();
+    // outfile<<get<0>(bary);
+    // outfile<<",";
+    // outfile<<get<1>(bary);
+    // outfile<<",";
+    // outfile<<get<2>(bary);
+    // outfile<<",";
+    // outfile<<count_tetra_diamond/tetra_list.size();
+    // outfile<<"\n";
+    // outfile.close();
     return edge_to_vertex;
 }
 

@@ -151,5 +151,25 @@ tuple<double,double,double> Tetrahedron::get_barycenter()
     return tmp;
 }
 
+Diamond* Tetrahedron::get_diamond_ref()
+{
+    return this->diamond_ref;
+}
+
+int Tetrahedron::get_position_in_diamond()
+{
+    return this->position_in_diamond;
+}
+
+void Tetrahedron::set_diamond_ref(Diamond* diamond)
+{
+    this->diamond_ref=diamond;
+}
+
+void Tetrahedron::set_position_in_diamond(int position)
+{
+    this->position_in_diamond=position;
+}
+
 
 

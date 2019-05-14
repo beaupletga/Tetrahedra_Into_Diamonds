@@ -62,25 +62,21 @@ vector<Tetrahedron*> Diamond::get_tetra_list()
     return this->tetra_list;
 }
 
-tuple<int,int> Diamond::get_central_edge()
-{
-    return this->central_edge;
-}
-
-vector<Vertex*> Diamond::get_vertices()
-{
-    return this->vertices;
-}
-
 vector<Diamond*> Diamond::get_neighbours()
 {
     return this->neighbours;
+}
+
+Vertex* Diamond::get_anchor_vertex()
+{
+    return this->anchor_vertex;
 }
 
 vector<tuple<int,int,int>> Diamond::get_external_faces()
 {
     map<tuple<int,int,int>,int> faces;
     vector<tuple<int,int,int>> external_faces;
+    // put faces in dictionary
     for (Tetrahedron* tetra : this->tetra_list)
     {
         for (tuple<int,int,int> face : tetra->enumerate_faces())
@@ -95,6 +91,7 @@ vector<tuple<int,int,int>> Diamond::get_external_faces()
             }
         }
     }
+    // gather all faces appearing only once
     for(pair<tuple<int,int,int>,int> face : faces)
     {
         if (face.second==1)
@@ -110,28 +107,49 @@ vector<tuple<int,int,int>> Diamond::get_external_faces()
 void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
 {
     // cout<<this->tetra_list.size()<<endl;
-    for (int i=0;i<this->tetra_list.size();i++)
+    // if the diamond has n tetra => 2*n external faces
+    if (this->tetra_list.size()>1)
     {
-        int similarity=0;
-        // cout<<this->tetra_list.size()<<endl;
-        // tetra_list[0]->display_vertices_id();
-        for (Vertex* vertex : this->tetra_list[i]->get_vertices())
+        // we want to know which tetra has this face
+        for (int i=0;i<this->tetra_list.size();i++)
         {
-            if (vertex->get_id()==get<0>(face) || vertex->get_id()==get<1>(face) || vertex->get_id()==get<2>(face))
+            int similarity=0;
+            // cout<<this->tetra_list.size()<<endl;
+            // tetra_list[0]->display_vertices_id();
+            for (Vertex* vertex : this->tetra_list[i]->get_vertices())
             {
-                similarity++;
+                if (vertex->get_id()==get<0>(face) || vertex->get_id()==get<1>(face) || vertex->get_id()==get<2>(face))
+                {
+                    similarity++;
+                }
+            }
+            // if a tetra shared 3 vertices with the face then the face belong to it
+            if (similarity==3)
+            {
+                if (get<0>(face)==this->anchor_vertex->get_id() || get<1>(face)==this->anchor_vertex->get_id()
+                || get<2>(face)==this->anchor_vertex->get_id())
+                {
+                    this->neighbours[2*i]=neighbour;
+                }
+                else
+                {
+                    this->neighbours[2*i+1]=neighbour;
+                }
             }
         }
-        if (similarity==3)
+    }
+    // if the diamond has only one tetra => 4 external faces
+    // we order the face by the vertice not belonging to the face
+    // example : tetra (1,2,3,4)
+    // the order of the faces is : 234 134 124 123
+    else
+    {
+        for (int i=0;i<4;i++)
         {
-            if (get<0>(face)==this->anchor_vertex->get_id() || get<1>(face)==this->anchor_vertex->get_id()
-            || get<2>(face)==this->anchor_vertex->get_id())
+            int id =this->tetra_list[0]->get_vertices()[i]->get_id();
+            if (id!=get<0>(face) && id!=get<1>(face) && id!=get<2>(face))
             {
-                this->neighbours[2*i]=neighbour;
-            }
-            else
-            {
-                this->neighbours[2*i+1]=neighbour;
+                this->neighbours[i]=neighbour;
             }
         }
     }

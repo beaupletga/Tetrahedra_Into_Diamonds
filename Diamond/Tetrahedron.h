@@ -6,7 +6,11 @@
 #include <tuple>
 #include <map>
 #include "Vertex.h"
+// #include "Diamond.h"
 using namespace std;
+
+// forward declaration of the class diamond because of cyclic declaration
+class Diamond;
 
 class Tetrahedron
 {
@@ -28,6 +32,10 @@ class Tetrahedron
         void set_is_on_boundary(bool);
         bool get_is_on_boundary();
         void add_neighbour(Tetrahedron*);
+        Diamond* get_diamond_ref();
+        int get_position_in_diamond();
+        void set_diamond_ref(Diamond*);
+        void set_position_in_diamond(int); 
 
         int count_matched;
 
@@ -38,6 +46,9 @@ class Tetrahedron
         vector<tuple<int,int>> edges;
         bool in_diamond;
         bool is_on_boundary;
+
+        Diamond* diamond_ref;
+        int position_in_diamond;
 };
 
 

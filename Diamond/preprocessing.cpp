@@ -10,6 +10,7 @@ void preprocessing_tetra(tuple<vector<vector<double>>,vector<vector<double>>>& r
     vector<vector<double>> geometry = get<0>(result);
     vector<vector<double>> connectivity = get<1>(result);
 
+    // create vertex for each point of the file
     for(int i=0;i<geometry.size();i++)
     {
         Vertex vertex=Vertex(i,geometry[i]);
@@ -18,6 +19,8 @@ void preprocessing_tetra(tuple<vector<vector<double>>,vector<vector<double>>>& r
     for(int i=0;i<connectivity.size();i++)
     {
         bool ignore=false;
+        // need to ignore some tetra which use imaginary vertex (like delaunay triangulation)
+        // these vertices have index beyond the number of vertices
         for(double j : connectivity[i])
         {
             if (j>=geometry.size())
