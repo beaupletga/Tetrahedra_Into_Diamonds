@@ -32,9 +32,9 @@ int main()
     tuple<vector<vector<double>>,vector<vector<double>>> result;
     // return both the geometry and the connectivity as a tuple
     // result=read_tet_file("delaunay3D_sphere870.tet");
-    result=read_tet_file("hand.tet");
+    // result=read_tet_file("hand.tet");
     // result=read_tet_file("delaunay3D_sphere6k.tet");
-    // result=read_mesh_file("ball.mesh");
+    result=read_mesh_file("ball.mesh");
 
     // read the result tuple and encapsulate the geom. and connect. in propers classes
     preprocessing_tetra(result,vertex_list,tetra_list);
@@ -81,7 +81,90 @@ int main()
 
     // cout<<max_element(diamond_list.begin(),diamond_list.end(),[](Diamond i,Diamond j){return i.get_tetra_list().size()<j.get_tetra_list().size();})->get_tetra_list().size()<<endl;
 
-    step_3(tetra_list,diamond_list);
+    
+
+
+    // double count=0;
+    // for(Tetrahedron tetra : tetra_list)
+    // {
+    //     if (!tetra.get_in_diamond())
+    //     {
+    //         for (Tetrahedron* neighbour : tetra.get_neighbours())
+    //         {
+    //             if (!neighbour->get_in_diamond())
+    //             {
+    //                 count++;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // }
+    // cout<<"Tetra isolated adjacent : "<<count/tetra_list.size()<<endl;
+
+    // for each tetra, we assign its position in the diamond array
+    int tetra_array[tetra_list.size()];
+
+    int diamond1_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==1;});
+    int diamond3_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==3;});
+    int diamond4_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==4;});
+    int diamond5_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==5;});
+    int diamond6_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==6;});
+    int diamond7_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==7;});
+    int diamond8_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==8;});
+    int diamond9_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==9;});
+
+    // array gathering all neighbours of the diamonds
+    int array_size=diamond1_size*4+diamond3_size*6+diamond4_size*8+diamond5_size*10+
+    diamond6_size*12+diamond7_size*14+diamond8_size*16+diamond9_size*18;
+    int diamond_array[array_size];
+
+    // 1 if it's a new diamond, 0 ow
+    // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
+    bool diamond_extra_bytes_array[array_size]={0};
+
+    map<int,int> diamond_id_to_index = step_3(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
+
+    map<int,int> index_to_diamond_id;
+    for(pair<int,int> i : diamond_id_to_index)
+    {
+        index_to_diamond_id[i.second]=i.first;
+    }
+
+    vector<int> path;
+    queue<int> wait_list;
+    unordered_set<int> lala;
+    wait_list.push(0);
+    int w=0;
+    while(!wait_list.empty())
+    {
+        int index = wait_list.front();
+        wait_list.pop();
+        int i=index+1;
+        if(lala.count(index_to_diamond_id[index])==0)
+        {
+            wait_list.push(diamond_array[index]);
+            lala.insert(index_to_diamond_id[index]);
+            path.push_back(index_to_diamond_id[index]);
+            while(diamond_extra_bytes_array[i]!=1 && i<array_size)
+            {
+                if (diamond_array[i]!=-1)
+                {
+                    wait_list.push(diamond_array[i]);
+                }
+                i++;
+            }
+        }
+        w++;
+        if (w==10000){
+            break;
+        }
+    }
+
+    cout<<"Array size : "<<array_size<<endl;
+    cout<<"lala size : "<<lala.size()<<" "<<diamond_list.size()<<endl;
+    cout<<path.size()<<endl;
+    visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
+
 
     return 0;
 }  

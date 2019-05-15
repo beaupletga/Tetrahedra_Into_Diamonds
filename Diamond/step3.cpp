@@ -1,40 +1,30 @@
 #include "step3.h"
 
-void step_3(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list)
+map<int,int> step_3(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list,int (tetra_array)[],
+int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size)
 {
-    // for each tetra, we assign the size of its diamond and its position in it
-    int tetra_array[tetra_list.size()];
-
-    int diamond1_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==1;});
-    int diamond3_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==3;});
-    int diamond4_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==4;});
-    int diamond5_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==5;});
-    int diamond6_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==6;});
-    int diamond7_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==7;});
-    int diamond8_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==8;});
-    int diamond9_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==9;});
-
-    int array_size=diamond1_size*4+diamond3_size*6+diamond4_size*8+diamond5_size*10+
-    diamond6_size*12+diamond7_size*14+diamond8_size*16+diamond9_size*18;
-    int diamond_array[array_size];
-
-    
+  
     map<int,int> diamond_id_to_index;
     int index=0;
+    // each diamond is represented by an id and the index of the first face in the diamond array
     for(int i=0;i<diamond_list.size();i++)
     {
         diamond_id_to_index[diamond_list[i].get_id()]=index;
         index+=diamond_list[i].get_neighbours().size();
+        // cout<<diamond_list[i].get_id()<<endl;
+        // assert(true==false);
     }
 
     index=0;
+    // for each face, we assign the index of the diamond (first face)
     for(int i=0;i<diamond_list.size();i++)
     {
+        diamond_extra_bytes_array[index]=1;
         for(Diamond* diamond : diamond_list[i].get_neighbours())
         {
             if (diamond==NULL)
             {
-                diamond_array[index]=NULL;
+                diamond_array[index]=-1;
             }
             else
             {
@@ -46,12 +36,13 @@ void step_3(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list)
 
     for(int i=0;i<tetra_list.size();i+=2)
     {
-        tetra_array[i]=diamond_id_to_index[tetra_list[i].get_diamond_ref()->get_id()]+tetra_list[i].get_position_in_diamond();;
+        tetra_array[i]=diamond_id_to_index[tetra_list[i].get_diamond_ref()->get_id()]+tetra_list[i].get_position_in_diamond();
     }
 
-
-    cout<<"Size : "<<array_size+tetra_list.size()<<endl;
-    float size = (float)(array_size+tetra_list.size())/(float)tetra_list.size();
-    cout<<size<<endl;
-    
+    return diamond_id_to_index;
+    // float size = (float)(diamond_array_size+tetra_list.size())/(float)tetra_list.size();
+    // cout<<"Real Size : "<<size<<endl;
+    // cout<<diamond_array_size<<endl;
+    // cout<<sizeof(diamond_array)<<endl; 
+    // cout<<sizeof(diamond_extra_bytes_array)<<endl; 
 }

@@ -90,23 +90,26 @@ void stats(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vector<Tetrahedro
     }
     cout<<"Share of tetra in full diamond : "<<count_tetra_diamond/tetra_list.size()<<endl;
 
-    double count=0;
+    count_tetra_isolated=0;
     for (Tetrahedron tetra : tetra_list)
     {
         if (tetra.get_in_diamond()==false )
         {
-            count++;
+            count_tetra_isolated++;
         }
     }
-    cout<<"Share of tetra isolated: "<<count/tetra_list.size()<<endl;
+    cout<<"Share of tetra isolated: "<<count_tetra_isolated/tetra_list.size()<<endl;
 
-    count=0;
+    double count_tetra_in_diamond_boundary=0;
     for (Tetrahedron tetra : tetra_list)
     {
         if (tetra.get_in_diamond()==false and tetra.get_is_on_boundary())
         {
-            count++;
+            count_tetra_in_diamond_boundary++;
         }
     }
-    cout<<"Share of tetra isolated and on the boundary : "<<count/tetra_list.size()<<endl;
+    cout<<"Share of tetra isolated and on the boundary : "<<count_tetra_in_diamond_boundary/tetra_list.size()<<endl;
+
+
+    cout<<"Theorical Size : "<<2*count_tetra_diamond/tetra_list.size()+4*count_tetra_isolated/tetra_list.size()<<endl;
 }

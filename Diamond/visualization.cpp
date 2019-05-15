@@ -87,3 +87,42 @@ void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> 
 
     output.close();
 }
+
+void visualize_diamond(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list,
+vector<Diamond> &diamond_list,vector<int> &diamond_indexes)
+{
+    int nb=0;
+    for(int index : diamond_indexes)
+    {
+        if (diamond_list[index].get_tetra_list().size()==1)
+        {
+            nb+=4;
+        }
+        else
+        {
+            nb+=2*diamond_list[index].get_tetra_list().size();
+        }
+        
+    }
+    ofstream output;
+    output.open("visualize_path.off");
+    output<<"OFF\n";
+    // output<<vertex_list.size()<<" "<<edge_dict.size()*4<<" "<<0<<"\n";
+    output<<vertex_list.size()<<" "<<nb<<" "<<0<<"\n";
+    for (Vertex vertex : vertex_list)
+    {
+        output<<vertex.get_coords()[0]<<" "<<vertex.get_coords()[1]<<" "<<vertex.get_coords()[2]<<"\n";
+    }
+    for (int index : diamond_indexes)
+    {
+        double R = rand()%255;
+        double G = rand()%255;
+        double B = rand()%255;
+        
+        for(tuple<int,int,int> face : diamond_list[index].get_external_faces())
+        {
+            output<<"3 "<<get<0>(face)<<" "<<get<1>(face)<<" "<<get<2>(face)<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        }
+    }
+    output.close();
+}
