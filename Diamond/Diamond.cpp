@@ -154,3 +154,21 @@ void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
         }
     }
 }
+
+
+int Diamond::get_neighbour_index(Diamond* neighbour)
+{
+    for(int i=0;i<this->neighbours.size();i++)
+    {
+        if (this->neighbours[i]!=NULL)
+        {
+            if(this->neighbours[i]->get_id()==neighbour->get_id())
+            {
+                return i;
+            }
+        }
+        
+    }
+    // warning !!
+    return -1;
+}

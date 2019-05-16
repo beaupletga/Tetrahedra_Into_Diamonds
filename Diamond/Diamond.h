@@ -14,6 +14,7 @@ class Diamond
         Vertex* get_anchor_vertex();
         vector<tuple<int,int,int>> get_external_faces();
         void add_neighbour(tuple<int,int,int> &,Diamond*);
+        int get_neighbour_index(Diamond* neighbour);
 
     private:
         int id;

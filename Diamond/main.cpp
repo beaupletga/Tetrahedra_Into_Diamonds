@@ -122,19 +122,20 @@ int main()
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
-    map<int,int> diamond_id_to_index = step_3(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
+    map<int,int> index_to_diamond_id = step_3(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
 
-    map<int,int> index_to_diamond_id;
-    for(pair<int,int> i : diamond_id_to_index)
-    {
-        index_to_diamond_id[i.second]=i.first;
-    }
+    // map<int,int> index_to_diamond_id;
+    // for(pair<int,int> i : diamond_id_to_index)
+    // {
+    //     index_to_diamond_id[i.second]=i.first;
+    // }
 
     vector<int> path;
     queue<int> wait_list;
     unordered_set<int> lala;
     wait_list.push(0);
     int w=0;
+    int q=0;
     while(!wait_list.empty())
     {
         int index = wait_list.front();
@@ -142,20 +143,39 @@ int main()
         int i=index+1;
         if(lala.count(index_to_diamond_id[index])==0)
         {
+            w=0;
             wait_list.push(diamond_array[index]);
             lala.insert(index_to_diamond_id[index]);
             path.push_back(index_to_diamond_id[index]);
+            // cout<<diamond_extra_bytes_array[index]<<endl;
             while(diamond_extra_bytes_array[i]!=1 && i<array_size)
             {
                 if (diamond_array[i]!=-1)
                 {
+                    // cout<<index_to_diamond_id[diamond_array[i]]<<endl;
                     wait_list.push(diamond_array[i]);
                 }
                 i++;
+                w++;
             }
+            i=index;
+            while(diamond_extra_bytes_array[i]!=1 && i<array_size)
+            {
+                if (diamond_array[i]!=-1)
+                {
+                    // cout<<index_to_diamond_id[diamond_array[i]]<<endl;
+                    wait_list.push(diamond_array[i]);
+                }
+                i--;
+                w++;
+            }
+            wait_list.push(diamond_array[i]);
+            w++;
+            // cout<<w<<endl;
+            
         }
-        w++;
-        if (w==10000){
+        q++;
+        if (q==100){
             break;
         }
     }
@@ -165,6 +185,24 @@ int main()
     cout<<path.size()<<endl;
     visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
 
+    float size = (float)(array_size+tetra_list.size())/(float)tetra_list.size();
+    cout<<"Real Size : "<<size<<endl;
+
+    // for(int i=0;i<array_size;i++)
+    // {
+    //     if (index_to_diamond_id.count(i)==1)
+    //     {
+    //         cout<<i<<" "<<index_to_diamond_id[i]<<" "<<index_to_diamond_id[diamond_array[i]]<<" "<<index_to_diamond_id[diamond_array[diamond_array[i]]]<<endl;
+    //     }
+    // }
+    // for(int i=0;i<30;i++)
+    // {
+    //     cout<<index_to_diamond_id[diamond_array[i]]<<endl;
+    //     if (diamond_extra_bytes_array[i]==1)
+    //     {
+    //         cout<<endl;
+    //     }
+    // }
 
     return 0;
 }  
