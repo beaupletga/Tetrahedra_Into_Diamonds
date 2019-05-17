@@ -11,6 +11,7 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex)
     if (elements.size()==1)
     {
         this->neighbours={NULL,NULL,NULL,NULL};
+        this->central_edge=pair<int,int>{elements[0]->get_vertices()[0]->get_id(),elements[0]->get_vertices()[1]->get_id()};
     }
     else
     {
@@ -18,7 +19,31 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex)
         {
             this->neighbours.push_back(NULL);
         }
+
+        unordered_map<int,int> vertex_frequency;
+        for(Tetrahedron* tetra : elements)
+        {
+            for(Vertex* vertex : tetra->get_vertices())
+            {
+                vertex_frequency[vertex->get_id()]++;
+            }
+        }
+        vector<int> central_vertices;
+        for(pair<int,int> i : vertex_frequency)
+        {
+            if(i.second>2)
+            {
+                central_vertices.push_back(i.first);
+            }
+                   
+        }
+        // to check that the diamond is well formed (only 2 vertex appear more than twice)
+        assert(central_vertices.size()==2);
+        this->central_edge=pair<int,int>{central_vertices[0],central_vertices[1]};
     }
+
+
+
     // we want to add the tetra such that the order is the same as in the cycle around the central edge
    
     while (this->tetra_list.size()!=elements.size())
@@ -71,6 +96,12 @@ Vertex* Diamond::get_anchor_vertex()
 {
     return this->anchor_vertex;
 }
+
+pair<int,int> Diamond::get_central_edge()
+{   
+    return this->central_edge;
+}
+
 
 vector<tuple<int,int,int>> Diamond::get_external_faces()
 {

@@ -7,7 +7,8 @@
 #include <string>
 #include <tuple>
 #include <map>
-#include <math.h>       /* atan */
+#include <queue>
+#include <unordered_set>
 
 #include "Vertex.h"
 #include "Triangle.h"
@@ -16,6 +17,7 @@
 
 using namespace std;
 
+vector<int> BFS(map<int,int> &,int [],bool [],int);
 
 #endif
 

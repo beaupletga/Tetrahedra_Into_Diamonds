@@ -11,10 +11,12 @@
 #include "Tetrahedron.h"
 #include "preprocessing.h"
 #include "visualization.h"
+#include "navigate.h"
 #include "stats.h"
 #include "step1.h"
 #include "step2.h"
 #include "step3.h"
+#include "step4.h"
 
 using namespace std;
 
@@ -32,9 +34,9 @@ int main()
     tuple<vector<vector<double>>,vector<vector<double>>> result;
     // return both the geometry and the connectivity as a tuple
     // result=read_tet_file("delaunay3D_sphere870.tet");
-    // result=read_tet_file("hand.tet");
+    result=read_tet_file("hand.tet");
     // result=read_tet_file("delaunay3D_sphere6k.tet");
-    result=read_mesh_file("ball.mesh");
+    // result=read_mesh_file("ball.mesh");
 
     // read the result tuple and encapsulate the geom. and connect. in propers classes
     preprocessing_tetra(result,vertex_list,tetra_list);
@@ -59,8 +61,8 @@ int main()
 
     cout<<"Edges dict size : "<<edge_dict.size()<<endl;
 
-    cout<<"Average Vertex Degree : "<<average_vertex_degree(vertex_dict)<<endl;
-    cout<<"Average Edge Degree : "<<average_edge_degree(edge_dict)<<endl;
+    cout<<"Tetra per Vertex : "<<average_vertex_degree(vertex_dict)<<endl;
+    cout<<"Tetra per edge : "<<average_edge_degree(edge_dict)<<endl;
     cout<<"Edges per Vertex : "<<average_edges_per_vertex(vertex_list)<<endl;
 
     map<tuple<int,int>,vector<Vertex*>> edge_to_vertex;
@@ -78,28 +80,6 @@ int main()
     visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
     // visualize_all(vertex_list,tetra_list);
     // visualize(tetra_list);
-
-    // cout<<max_element(diamond_list.begin(),diamond_list.end(),[](Diamond i,Diamond j){return i.get_tetra_list().size()<j.get_tetra_list().size();})->get_tetra_list().size()<<endl;
-
-    
-
-
-    // double count=0;
-    // for(Tetrahedron tetra : tetra_list)
-    // {
-    //     if (!tetra.get_in_diamond())
-    //     {
-    //         for (Tetrahedron* neighbour : tetra.get_neighbours())
-    //         {
-    //             if (!neighbour->get_in_diamond())
-    //             {
-    //                 count++;
-    //                 break;
-    //             }
-    //         }
-    //     }
-    // }
-    // cout<<"Tetra isolated adjacent : "<<count/tetra_list.size()<<endl;
 
     // for each tetra, we assign its position in the diamond array
     int tetra_array[tetra_list.size()];
@@ -122,87 +102,24 @@ int main()
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
-    map<int,int> index_to_diamond_id = step_3(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
 
-    // map<int,int> index_to_diamond_id;
-    // for(pair<int,int> i : diamond_id_to_index)
-    // {
-    //     index_to_diamond_id[i.second]=i.first;
-    // }
+    step_3(diamond_list,vertex_list);
 
-    vector<int> path;
-    queue<int> wait_list;
-    unordered_set<int> lala;
-    wait_list.push(0);
-    int w=0;
-    int q=0;
-    while(!wait_list.empty())
-    {
-        int index = wait_list.front();
-        wait_list.pop();
-        int i=index+1;
-        if(lala.count(index_to_diamond_id[index])==0)
-        {
-            w=0;
-            wait_list.push(diamond_array[index]);
-            lala.insert(index_to_diamond_id[index]);
-            path.push_back(index_to_diamond_id[index]);
-            // cout<<diamond_extra_bytes_array[index]<<endl;
-            while(diamond_extra_bytes_array[i]!=1 && i<array_size)
-            {
-                if (diamond_array[i]!=-1)
-                {
-                    // cout<<index_to_diamond_id[diamond_array[i]]<<endl;
-                    wait_list.push(diamond_array[i]);
-                }
-                i++;
-                w++;
-            }
-            i=index;
-            while(diamond_extra_bytes_array[i]!=1 && i<array_size)
-            {
-                if (diamond_array[i]!=-1)
-                {
-                    // cout<<index_to_diamond_id[diamond_array[i]]<<endl;
-                    wait_list.push(diamond_array[i]);
-                }
-                i--;
-                w++;
-            }
-            wait_list.push(diamond_array[i]);
-            w++;
-            // cout<<w<<endl;
-            
-        }
-        q++;
-        if (q==100){
-            break;
-        }
-    }
 
-    cout<<"Array size : "<<array_size<<endl;
-    cout<<"lala size : "<<lala.size()<<" "<<diamond_list.size()<<endl;
-    cout<<path.size()<<endl;
-    visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
+    // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
 
-    float size = (float)(array_size+tetra_list.size())/(float)tetra_list.size();
-    cout<<"Real Size : "<<size<<endl;
+    // vector<int> path= BFS(index_to_diamond_id,diamond_array,diamond_extra_bytes_array,array_size);
 
-    // for(int i=0;i<array_size;i++)
-    // {
-    //     if (index_to_diamond_id.count(i)==1)
-    //     {
-    //         cout<<i<<" "<<index_to_diamond_id[i]<<" "<<index_to_diamond_id[diamond_array[i]]<<" "<<index_to_diamond_id[diamond_array[diamond_array[i]]]<<endl;
-    //     }
-    // }
-    // for(int i=0;i<30;i++)
-    // {
-    //     cout<<index_to_diamond_id[diamond_array[i]]<<endl;
-    //     if (diamond_extra_bytes_array[i]==1)
-    //     {
-    //         cout<<endl;
-    //     }
-    // }
+    // cout<<"Array size : "<<array_size<<endl;
+    // cout<<path.size()<<endl;
+    // float size = (float)(array_size+tetra_list.size())/(float)tetra_list.size();
+    // cout<<"Real Size : "<<size<<endl;
+
+
+    // visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
+    // visualize_central_edges(vertex_list,diamond_list);
+
+    
 
     return 0;
-}  
+}

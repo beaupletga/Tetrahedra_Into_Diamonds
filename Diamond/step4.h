@@ -1,5 +1,5 @@
-#ifndef STEP3_H
-#define STEP3_H
+#ifndef STEP4_H
+#define STEP4_H
 
 #include <iostream>
 #include <vector>
@@ -17,5 +17,10 @@
 
 using namespace std;
 
-void step_3(vector<Diamond> &,vector<Vertex> &);
+map<int,int> step_4(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list,int [],
+int [],bool [],int);
 #endif
+
+
+
+

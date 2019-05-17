@@ -126,3 +126,28 @@ vector<Diamond> &diamond_list,vector<int> &diamond_indexes)
     }
     output.close();
 }
+
+void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamond_list)
+{
+    ofstream output;
+    output.open("visualize_edges.off");
+    output<<"OFF\n";
+    // output<<vertex_list.size()<<" "<<edge_dict.size()*4<<" "<<0<<"\n";
+    output<<vertex_list.size()<<" "<<0<<" "<<diamond_list.size()<<"\n";
+    for (Vertex vertex : vertex_list)
+    {
+        output<<vertex.get_coords()[0]<<" "<<vertex.get_coords()[1]<<" "<<vertex.get_coords()[2]<<"\n";
+    }
+    for (Diamond diamond : diamond_list)
+    {
+        double R = 155;
+        double G = 155;
+        double B = 155;
+        
+        int vertex1 = diamond.get_central_edge().first;
+        int vertex2 = diamond.get_central_edge().second;
+
+        output<<"2 "<<vertex1<<" "<<vertex2<<" "<<R<<" "<<G<<" "<<B<<"\n";
+    }
+    output.close();
+}
