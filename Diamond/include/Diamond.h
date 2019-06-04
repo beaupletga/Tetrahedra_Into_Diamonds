@@ -5,12 +5,15 @@
 #include "assert.h"
 
 #include <unordered_map>
+#include <unordered_set>
+
 using namespace std;
 
 class Diamond
 {
     public:
         Diamond(int,vector<Tetrahedron*>&,Vertex*);
+        Diamond();
         int get_id();
         vector<Tetrahedron*> get_tetra_list();
         vector<Diamond*> get_neighbours();
@@ -19,6 +22,10 @@ class Diamond
         void add_neighbour(tuple<int,int,int> &,Diamond*);
         int get_neighbour_index(Diamond* neighbour);
         pair<int,int> get_central_edge();
+        void set_central_edge(pair<int,int>);
+        void set_anchor_vertex(Vertex*);
+        void display_vertices_id();
+        bool has_anchor;
 
     private:
         int id;

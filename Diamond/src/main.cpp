@@ -15,8 +15,8 @@
 #include "../include/stats.h"
 #include "../include/step1.h"
 #include "../include/step2.h"
-#include "../include/step4.h"
 #include "../include/step3.h"
+#include "../include/step4.h"
 
 using namespace std;
 
@@ -75,9 +75,9 @@ int main()
     // this method doesn't work if you use step_1_vertex_choose_neighbour because all diamond are not cycles
     vector<Diamond> diamond_list=step_2(edge_to_vertex,tetra_list,edge_dict,face_dict);
 
-    stats(edge_to_vertex,tetra_list);
+    // stats(edge_to_vertex,tetra_list);
 
-    visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
+    // visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
     // visualize_all(vertex_list,tetra_list);
     // visualize(tetra_list);
 
@@ -102,13 +102,60 @@ int main()
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
+    set_central_edge(diamond_list,edge_dict,vertex_dict);
 
-    step_3(diamond_list,vertex_list);
+    unordered_set<int> v;
+    for(Diamond &diamond : diamond_list)
+    {
+        // cout<<diamond.get_central_edge().first<<" "<<diamond.get_central_edge().second<<endl;
+        v.insert(diamond.get_central_edge().first);
+        v.insert(diamond.get_central_edge().second);
+    }
 
+    cout<<(double)v.size()/vertex_list.size()<<endl;
 
+    cout<<"Nb Diamonds : "<<diamond_list.size()<<endl;
+    int x=0;
+    // for(int i=0;i<diamond_list.size();i++)
+    // {
+    //     if (diamond_list[i].has_anchor)
+    //     {
+    //        x++;
+    //     }
+    // }
+    // cout<<"Nb Diamonds with anchor : "<<x<<endl;
+
+    // for(Tetrahedron* tetra : vertex_dict[2839])
+    // {
+    //     tetra->display_vertices_id();
+    // }
+
+    x=0;
+    for(int i=0;i<diamond_list.size();i++)
+    {
+        x+=diamond_list[i].get_tetra_list().size();
+    }
+    cout<<x<<endl;
+
+    step_3(diamond_list,vertex_list,vertex_dict);
+
+    x=0;
+    unordered_set<int> s;
+    for(int i=0;i<diamond_list.size();i++)
+    {
+        if (diamond_list[i].has_anchor)
+        {
+            // s[diamond_list[i].get_anchor_vertex()->get_id()]+=1;
+            s.insert(diamond_list[i].get_anchor_vertex()->get_id());
+            
+        }
+        x+=diamond_list[i].get_tetra_list().size();
+    }
+    cout<<s.size()<<endl;
+    cout<<x<<endl;
     // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
 
-    // vector<int> path= BFS(index_to_diamond_id,diamond_array,diamond_extra_bytes_array,array_size);
+    // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size);
 
     // cout<<"Array size : "<<array_size<<endl;
     // cout<<path.size()<<endl;

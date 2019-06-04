@@ -147,7 +147,7 @@ void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamon
         int vertex1 = diamond.get_central_edge().first;
         int vertex2 = diamond.get_central_edge().second;
 
-        output<<"2 "<<vertex1<<" "<<vertex2<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<vertex1<<"->"<<vertex2<<";\n";//<" "<<R<<" "<<G<<" "<<B<<"\n";
     }
     output.close();
 }

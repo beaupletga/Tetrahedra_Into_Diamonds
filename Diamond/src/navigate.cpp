@@ -41,9 +41,23 @@ int previous_tetrahedron(int diamond_array[],int tetra_array[],bool diamond_extr
     }
 }
 
+// get diamond id from index in the diamond array
+int index_to_diamond(bool diamond_extra_bytes_array[],int array_size,int index)
+{
+    int count=0;
+    for(int i=0;i<=index;i++)
+    {
+        if(diamond_extra_bytes_array[i]==1)
+        {
+            count++;
+        }
+    }
+    // because diamond id starts at 0
+    return count-1;
+}
 
-vector<int> BFS(map<int,int> &index_to_diamond_id,int diamond_array[],bool diamond_extra_bytes_array[],
-int array_size)
+
+vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size)
 {
     vector<int> path;
     queue<int> wait_list;
@@ -56,12 +70,13 @@ int array_size)
         int index = wait_list.front();
         wait_list.pop();
         int i=index+1;
-        if(lala.count(index_to_diamond_id[index])==0)
+        int diamond_id = index_to_diamond(diamond_extra_bytes_array,array_size,index);
+        if(lala.count(diamond_id)==0)
         {
             w=0;
             wait_list.push(diamond_array[index]);
-            lala.insert(index_to_diamond_id[index]);
-            path.push_back(index_to_diamond_id[index]);
+            lala.insert(diamond_id);
+            path.push_back(diamond_id);
             // cout<<diamond_extra_bytes_array[index]<<endl;
             while(diamond_extra_bytes_array[i]!=1 && i<array_size)
             {

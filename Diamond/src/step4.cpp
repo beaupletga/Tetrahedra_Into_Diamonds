@@ -30,8 +30,8 @@ int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size)
                 // offset=0 => first face of the tetra...
                 int offset = diamond->get_neighbour_index(&diamond_list[i]);
                 diamond_array[index]=diamond_id_to_index[diamond->get_id()]+offset;
-                index_to_diamond_id[index]=diamond_list[i].get_id();
             }
+            index_to_diamond_id[index]=diamond_list[i].get_id();
             index++;
         }
     }

@@ -181,6 +181,15 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
                         if (count_if(edge_dict[edge].begin(),edge_dict[edge].end(),[](Tetrahedron* i){return i->get_in_diamond();})==0)
                         {
                             // we add the edge into a list, with the nb of tetra associated
+                            int y=0;
+                            for(pair<tuple<int,int>,vector<Tetrahedron*>> edge2 : diamond_list)
+                            {
+                                if(get<0>(edge2.first)==get<0>(edge) || get<0>(edge2.first)==get<1>(edge) ||
+                                get<1>(edge2.first)==get<0>(edge) || get<1>(edge2.first)==get<1>(edge))
+                                {
+                                    y++;
+                                }
+                            }
                             ocurrences.push_back({get<0>(edge),get<1>(edge),edge_dict[edge].size()});
                         }
                     }
