@@ -184,6 +184,7 @@ int Diamond::get_neighbour_index(Diamond* neighbour)
         
     }
     // warning !!
+    assert(true==false);
     return -1;
 }
 

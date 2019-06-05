@@ -1,5 +1,10 @@
 #include "../include/step4.h"
 
+
+// this function reads all diamond and create the adjacency array
+// this is an array containing the index of the neighbour for each face of each diamond
+// ex : at index 2, there is the index of the neighbour (this index is more precise as it's
+// the index of the face of the neighboring diamond) sharing the third face of the first diamond
 map<int,int> step_4(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list,int (tetra_array)[],
 int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size)
 {
@@ -40,7 +45,5 @@ int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size)
     {
         tetra_array[i]=diamond_id_to_index[tetra_list[i].get_diamond_ref()->get_id()]+tetra_list[i].get_position_in_diamond();
     }
-
-
     return index_to_diamond_id;
 }

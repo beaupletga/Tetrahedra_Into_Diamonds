@@ -103,115 +103,115 @@ void cc(vector<Diamond> &diamond_list)
 
 // this step aims at choosing an anchor vertex for each diamond
 // such that any vertex is linked to only one diamond
-void step_3(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,vector<Tetrahedron*>> &vertex_dict)
+void step_3(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,vector<Tetrahedron*>> &vertex_dict,
+map<tuple<int,int>,vector<Tetrahedron*>> &edge_dict)
 {
-    map<int,vector<pair<int,int>>> tmp;
-    for(Diamond diamond : diamond_list)
+    // foreach vertex, we add to a list the central edges adjacent to it
+    map<int,vector<pair<int,int>>> remaining_vertices;
+    for(Diamond &diamond : diamond_list)
     {  
         int vertex1 =  diamond.get_central_edge().first;
         int vertex2 =  diamond.get_central_edge().second;
-        tmp[vertex1].push_back(diamond.get_central_edge());
-        tmp[vertex2].push_back(diamond.get_central_edge());
+        remaining_vertices[vertex1].push_back(diamond.get_central_edge());
+        remaining_vertices[vertex2].push_back(diamond.get_central_edge());
     }
-    map<pair<int,int>,int> lalaa;
-    while(tmp.size()>0)
+
+    // while there is a vertex not associated to an central edge and which is adjacent to a non paired central edge
+    while(remaining_vertices.size()>0)
     {
-        pair<int,vector<pair<int,int>>> it = *min_element(tmp.begin(),tmp.end(),[](pair<int,vector<pair<int,int>>> i,pair<int,vector<pair<int,int>>> j){return i.second.size()<j.second.size();});
-        // cout<<it.first<<it.second.size()<<endl;
+        // we choose the vertex with the smallest number of adjacent central edges
+        pair<int,vector<pair<int,int>>> it = *min_element(remaining_vertices.begin(),remaining_vertices.end(),
+        [](pair<int,vector<pair<int,int>>> i,pair<int,vector<pair<int,int>>> j){return i.second.size()<j.second.size();});
+        // we pair this vertex to the first of its adjacent edges        
         pair<int,pair<int,int>> w = {it.first,{it.second[0]}};
-        for(Diamond &diamond : diamond_list)
+        // we add this vertex as an anchor to the diamond of this central edge
+        for(Tetrahedron* tetra : edge_dict[w.second])
         {
-            if(diamond.get_central_edge()==it.second[0])
+            if(tetra->get_diamond_ref()->get_central_edge()==it.second[0])
             {
-                diamond.set_anchor_vertex(&vertex_list[it.first]);
-                diamond.has_anchor=true;
+                tetra->get_diamond_ref()->set_anchor_vertex(&vertex_list[it.first]);
+                tetra->get_diamond_ref()->has_anchor=true;
                 break;
             }
         }
-        if (lalaa.count(it.second[0])>0)
-        {
-            assert(true==false);
-        }
-        else
-        {
-            lalaa[it.second[0]]=it.first;
-        }
 
-        tmp.erase(it.first);
-        for(pair<int,vector<pair<int,int>>> j : tmp)
+        remaining_vertices.erase(it.first);
+        if (w.first==w.second.first && remaining_vertices.count(w.second.second)>0)
         {
-            for(int k=0;k<j.second.size();k++)
+            // deleting in map doesn't seem to work so I need to push back all elements except the one i want to delete
+            vector<pair<int,int>> x;
+            for(int k=0;k<remaining_vertices[w.second.second].size();k++)
             {
-                if(j.second[k]==w.second)
+                if(remaining_vertices[w.second.second][k]!=w.second)
                 {
-                    vector<pair<int,int>> w;
-                    for(pair<int,int> c  : j.second)
-                    {
-                        if(c!=j.second[k])
-                        {
-                            w.push_back(c);
-                        }
-                    }
-                    tmp[j.first]=w;
-                    break;
+                    x.push_back(remaining_vertices[w.second.second][k]);
                 }
             }
-            if(tmp[j.first].size()==0)
+            remaining_vertices[w.second.second]=x;
+
+            if (remaining_vertices[w.second.second].size()==0)
+                remaining_vertices.erase(w.second.second);
+            
+        }
+        else if (w.first==w.second.second && remaining_vertices.count(w.second.first)>0)
+        {
+            vector<pair<int,int>> x;
+            for(int k=0;k<remaining_vertices[w.second.first].size();k++)
             {
-                tmp.erase(j.first);
+                if(remaining_vertices[w.second.first][k]!=w.second)
+                {
+                    x.push_back(remaining_vertices[w.second.first][k]);
+                }
             }
+            remaining_vertices[w.second.first]=x;
+
+            if (remaining_vertices[w.second.first].size()==0)
+                remaining_vertices.erase(w.second.first);
         }
     }
-    cc(diamond_list);
+}
 
-    cout<<endl;
-    int x=0;
-
+// this function aims at associating all unassociated vertices of step_3 (around 0.1% of vertices)
+// to do this, for each unpaired vertex, we break an adjacent diamond (containing at least 3 tetra)
+// into several diamond of size 1 and put the vertex as the anchor of one of this diamond
+void step_3_bis(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,vector<Tetrahedron*>> &vertex_dict)
+{
     for(Vertex vertex : vertex_list)
     {
         bool is_in=false;
-        for(pair<pair<int,int>,int> i : lalaa)
+        for(Diamond diamond : diamond_list)
         {
-            if (i.second==vertex.get_id())
+            if (diamond.has_anchor && diamond.get_anchor_vertex()->get_id()==vertex.get_id())
             {
                 is_in=true;
                 break;
-            }
+            } 
         }
         if(!is_in)
         {
-            // x++;
             bool finished=false;
             
             for(Tetrahedron* tetra : vertex_dict[vertex.get_id()])
             {
                 if (tetra->get_diamond_ref()->get_tetra_list().size()>1 && !finished)
                 {
-                    // cout<<"ID : "<<tetra->get_diamond_ref()->get_id()<<endl;
                     bool a=false;
                     bool b=false;
                     Diamond diamond1,diamond2;
-                    // bool not_finish=true;
-                    // cout<<tetra->get_diamond_ref()->get_anchor_vertex()->get_id()<<endl;
-                    // cout<<endl;
-                    // cout<<"Anchor Id : "<<tetra->get_diamond_ref()->get_anchor_vertex()->get_id()<<endl;
-                    // cout<<"Vertex id : "<<vertex.get_id()<<endl;
                     vector<Diamond> c;
+
                     for(Tetrahedron* tetra2 : tetra->get_diamond_ref()->get_tetra_list())
                     {
+                        bool a_taken=false;
+                        bool b_taken=false;
                         int v0,v1,v2,v3;
                         v0=tetra2->get_vertices()[0]->get_id();
                         v1=tetra2->get_vertices()[1]->get_id();
                         v2=tetra2->get_vertices()[2]->get_id();
                         v3=tetra2->get_vertices()[3]->get_id();
                         vector<int> v_list={v0,v1,v2,v3};
-                        vector<Tetrahedron*> f = {tetra2};
-                        // cout<<v0<<" "<<v1<<" "<<v2<<" "<<v3<<endl;
-                        // tetra2->display_vertices_id();
-                        
-                        bool a_taken=false;
-                        bool b_taken=false;
-                        
+                        vector<Tetrahedron*> f = {tetra2};                       
+
                         if (!a)
                         {
                             for (int i=0;i<v_list.size();i++)
@@ -219,12 +219,8 @@ void step_3(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,ve
                                 if (vertex.get_id()==v_list[i])
                                 {
                                     a_taken=true;
-                                    // cout<<"SOLO VERTEX"<<endl;
-                                    // cc(diamond_list);
                                     diamond1 = Diamond(diamond_list.back().get_id()+1,f,tetra2->get_vertices()[i]);
                                     diamond1.has_anchor=true;
-                                    // lalaa.push_back(pair<int,pair<int,int>>{v0,{0,0}});
-                                    // lalaa[{0,0}]=v0;
                                     a=true;
                                     break;
                                 }
@@ -237,11 +233,8 @@ void step_3(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,ve
                             {
                                 if (anchor_id==v_list[i])
                                 {
-                                    // cout<<"ANCHOR"<<endl;
-                                    
                                     diamond2 = Diamond(diamond_list.back().get_id()+1,f,tetra->get_diamond_ref()->get_anchor_vertex());
                                     diamond2.has_anchor=true;
-                                    // lalaa.push_back(pair<int,pair<int,int>>{v0,{0,0}});
                                     b=true;
                                     b_taken=true;
                                     break;
@@ -257,32 +250,20 @@ void step_3(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,ve
 
                         if (a && b && !finished)
                         {
-                            // cout<<"oui"<<endl;
                             for (int i=0;i<diamond_list.size();i++)
                             {
                                 if (&diamond_list[i]==tetra->get_diamond_ref())
                                 {
-                                    // cout<<x<<" "<<diamond_list[i].has_anchor<<" ";
-                                    
                                     if (diamond_list[i].has_anchor)
                                     {
-                                        // diamond_list[i]=diamond1;
                                         diamond_list.push_back(diamond2);
                                     }
                                     else
                                     {
-                                        // diamond_list[i]=diamond1;
+                                        diamond2.has_anchor=false;
                                         c.push_back(diamond2);
                                     }
                                     diamond_list[i]=diamond1;
-                                    // cout<<c.size()<<" ";
-                                    // cout<<diamond_list.size()<<endl;
-                                    // diamond_list.erase(diamond_list.begin()+i);
-                                    // cout<<x<<endl;
-                                    
-                                    x++;
-                                    // cc(diamond_list);
-                                    // cout<<endl;
                                     finished=true;
                                     break;
                                 }
@@ -297,11 +278,29 @@ void step_3(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,ve
             }
         }   
     }
-    cout<<"x : "<<x<<endl;
 }
 
 
-void step_3_bis(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,map<int,vector<Tetrahedron*>> &vertex_dict)
-{
 
+void step_3_ter(vector<Diamond> &diamond_list)
+{
+    map<tuple<int,int,int>,vector<Diamond*>> external_faces_dict;
+    // we add the external faces of each diamond to the dict
+    // as soon as a face is shared by 2 tetra, we link the 2 diamonds
+    for(Diamond &diamond : diamond_list)
+    {
+        for (tuple<int,int,int> face : diamond.get_external_faces())
+        {
+            if (external_faces_dict.count(face)==0)
+            {
+                external_faces_dict[face]={&diamond};
+            }
+            else
+            {
+                external_faces_dict[face].push_back(&diamond);
+                external_faces_dict[face][0]->add_neighbour(face,external_faces_dict[face][1]);
+                external_faces_dict[face][1]->add_neighbour(face,external_faces_dict[face][0]);
+            }
+        }
+    }
 }

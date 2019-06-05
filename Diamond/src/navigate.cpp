@@ -61,10 +61,10 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
 {
     vector<int> path;
     queue<int> wait_list;
-    unordered_set<int> lala;
+    unordered_set<int> lala={-1};
     wait_list.push(0);
     int w=0;
-    // int q=0;
+    int q=0;
     while(!wait_list.empty())
     {
         int index = wait_list.front();
@@ -104,10 +104,10 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
             // cout<<w<<endl;
             
         }
-        // q++;
-        // if (q==100){
-        //     break;
-        // }
+        q++;
+        if (q==1000){
+            break;
+        }
     }
     return path;
 }

@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 #include <map>
+#include <chrono> 
 
 #include "../include/read_file.h"
 #include "../include/Vertex.h"
@@ -20,13 +21,6 @@
 
 using namespace std;
 
-// dictionnaire de vertex (int,numero_diamant), ref vers un diamant adjacent
-
-// array de tetra (int,numero_diamant), chaque tetra est associé avec un numero
-
-// array de diamant (int,tableau_numero_diamant_voisin), où le diamant a juste une liste de ref vers ses voisins
-
-
 int main() 
 {
     vector<Vertex> vertex_list;
@@ -34,9 +28,9 @@ int main()
     tuple<vector<vector<double>>,vector<vector<double>>> result;
     // return both the geometry and the connectivity as a tuple
     // result=read_tet_file("../data/delaunay3D_sphere870.tet");
-    // result=read_tet_file("../data/hand.tet");
+    result=read_tet_file("../data/hand.tet");
     // result=read_tet_file("../data/delaunay3D_sphere6k.tet");
-    result=read_mesh_file("../data/ball.mesh");
+    // result=read_mesh_file("../data/ball.mesh");
 
     // read the result tuple and encapsulate the geom. and connect. in propers classes
     preprocessing_tetra(result,vertex_list,tetra_list);
@@ -102,71 +96,35 @@ int main()
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
+    
     set_central_edge(diamond_list,edge_dict,vertex_dict);
+    auto a = chrono::high_resolution_clock::now(); 
+    step_3(diamond_list,vertex_list,vertex_dict,edge_dict);
+    auto b = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(b - a); 
+    step_3_bis(diamond_list,vertex_list,vertex_dict);
+    step_3_ter(diamond_list);
+    
+    cout<<duration.count()<<endl;
 
-    unordered_set<int> v;
-    for(Diamond &diamond : diamond_list)
-    {
-        // cout<<diamond.get_central_edge().first<<" "<<diamond.get_central_edge().second<<endl;
-        v.insert(diamond.get_central_edge().first);
-        v.insert(diamond.get_central_edge().second);
-    }
+    map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
 
-    cout<<(double)v.size()/vertex_list.size()<<endl;
-
-    cout<<"Nb Diamonds : "<<diamond_list.size()<<endl;
-    int x=0;
-    // for(int i=0;i<diamond_list.size();i++)
+    // for (int i : diamond_array)
     // {
-    //     if (diamond_list[i].has_anchor)
-    //     {
-    //        x++;
-    //     }
+    //     cout<<i<<endl;
     // }
-    // cout<<"Nb Diamonds with anchor : "<<x<<endl;
-
-    // for(Tetrahedron* tetra : vertex_dict[2839])
-    // {
-    //     tetra->display_vertices_id();
-    // }
-
-    x=0;
-    for(int i=0;i<diamond_list.size();i++)
-    {
-        x+=diamond_list[i].get_tetra_list().size();
-    }
-    cout<<x<<endl;
-
-    step_3(diamond_list,vertex_list,vertex_dict);
-
-    x=0;
-    unordered_set<int> s;
-    for(int i=0;i<diamond_list.size();i++)
-    {
-        if (diamond_list[i].has_anchor)
-        {
-            // s[diamond_list[i].get_anchor_vertex()->get_id()]+=1;
-            s.insert(diamond_list[i].get_anchor_vertex()->get_id());
-            
-        }
-        x+=diamond_list[i].get_tetra_list().size();
-    }
-    cout<<s.size()<<endl;
-    cout<<x<<endl;
-    // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
-
-    // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size);
+    vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size);
 
     // cout<<"Array size : "<<array_size<<endl;
     // cout<<path.size()<<endl;
     // float size = (float)(array_size+tetra_list.size())/(float)tetra_list.size();
     // cout<<"Real Size : "<<size<<endl;
 
-
-    // visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
+    visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
     // visualize_central_edges(vertex_list,diamond_list);
-
-    
+    auto c = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(c - b); 
+    cout<<duration.count()<<endl;
 
     return 0;
 }
