@@ -88,7 +88,7 @@ void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> 
     output.close();
 }
 
-int id_to_index(vector<Diamond> &diamond_list,int id)
+int id_to_index2(vector<Diamond> &diamond_list,int id)
 {
     for(int i=0;i<diamond_list.size();i++)
     {
@@ -97,18 +97,18 @@ int id_to_index(vector<Diamond> &diamond_list,int id)
             return i;
         }
     }
-    cout<<id<<endl;
+    cout<<"ID : "<<id<<endl;
     assert(true==false);
     return -1;
 }
 
 void visualize_diamond(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list,
-vector<Diamond> &diamond_list,vector<int> &diamond_ids)
+vector<Diamond> &diamond_list,vector<int> &diamond_ids,map<int,int> &index_to_diamond_id)
 {
     int nb=0;
     for(int id : diamond_ids)
     {
-        int index=id_to_index(diamond_list,id);
+        int index=id_to_index2(diamond_list,id);
         if (diamond_list[index].get_tetra_list().size()==1)
         {
             nb+=4;
@@ -117,7 +117,6 @@ vector<Diamond> &diamond_list,vector<int> &diamond_ids)
         {
             nb+=2*diamond_list[index].get_tetra_list().size();
         }
-        
     }
     ofstream output;
     output.open("../data/visualize_path.off");
@@ -133,7 +132,7 @@ vector<Diamond> &diamond_list,vector<int> &diamond_ids)
         double R = rand()%255;
         double G = rand()%255;
         double B = rand()%255;
-        int index=id_to_index(diamond_list,id);
+        int index=id_to_index2(diamond_list,id);
         for(tuple<int,int,int> face : diamond_list[index].get_external_faces())
         {
             output<<"3 "<<get<0>(face)<<" "<<get<1>(face)<<" "<<get<2>(face)<<" "<<R<<" "<<G<<" "<<B<<"\n";

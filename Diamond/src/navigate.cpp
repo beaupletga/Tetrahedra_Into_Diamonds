@@ -57,24 +57,33 @@ int index_to_diamond(bool diamond_extra_bytes_array[],int array_size,int index)
 }
 
 
-vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size)
+vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size,map<int,int> &index_to_diamond_id)
 {
     vector<int> path;
     queue<int> wait_list;
-    unordered_set<int> lala={-1};
-    wait_list.push(0);
-    int w=0;
+    unordered_set<int> lala;
+    // wait_list.push(0);
     int q=0;
+
+    for(auto [key,val] : index_to_diamond_id)
+    {
+        if (val==100)
+        {
+            wait_list.push(key);
+            break;
+        }
+    }
+
     while(!wait_list.empty())
     {
         int index = wait_list.front();
         wait_list.pop();
         int i=index+1;
-        int diamond_id = index_to_diamond(diamond_extra_bytes_array,array_size,index);
+        // int diamond_id = index_to_diamond(diamond_extra_bytes_array,array_size,index);
+        int diamond_id = index_to_diamond_id[index];
         if(lala.count(diamond_id)==0)
         {
-            w=0;
-            wait_list.push(diamond_array[index]);
+            // cout<<diamond_id<<endl;
             lala.insert(diamond_id);
             path.push_back(diamond_id);
             // cout<<diamond_extra_bytes_array[index]<<endl;
@@ -82,30 +91,39 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
             {
                 if (diamond_array[i]!=-1)
                 {
-                    // cout<<index_to_diamond_id[diamond_array[i]]<<endl;
                     wait_list.push(diamond_array[i]);
+                    // // if (diamond_array[i]<=11)
+                    // {
+                    //     cout<<"-> "<<diamond_array[i]<<endl;
+                    // }
                 }
-                i++;
-                w++;
+                i++;               
             }
             i=index;
             while(diamond_extra_bytes_array[i]!=1 && i<array_size)
             {
                 if (diamond_array[i]!=-1)
                 {
-                    // cout<<index_to_diamond_id[diamond_array[i]]<<endl;
                     wait_list.push(diamond_array[i]);
+                    // if (diamond_array[i]<=11)
+                    // {
+                    //     cout<<"-> "<<diamond_array[i]<<endl;
+                    // }
                 }
                 i--;
-                w++;
             }
-            wait_list.push(diamond_array[i]);
-            w++;
-            // cout<<w<<endl;
-            
+            if (diamond_array[i]!=-1)
+            {
+                wait_list.push(diamond_array[i]);
+                // if (diamond_array[i]<=11)
+                // {
+                //     cout<<"-> "<<diamond_array[i]<<endl;
+                // }
+            }
+            q++;            
         }
-        q++;
-        if (q==1000){
+        
+        if (q==9000){
             break;
         }
     }

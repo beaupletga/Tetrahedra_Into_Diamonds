@@ -69,6 +69,8 @@ int main()
     // this method doesn't work if you use step_1_vertex_choose_neighbour because all diamond are not cycles
     vector<Diamond> diamond_list=step_2(edge_to_vertex,tetra_list,edge_dict,face_dict);
 
+    cout<<"Diamond list size : "<<diamond_list.size()<<endl;
+
     // stats(edge_to_vertex,tetra_list);
 
     // visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
@@ -96,35 +98,53 @@ int main()
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
-    
-    set_central_edge(diamond_list,edge_dict,vertex_dict);
-    auto a = chrono::high_resolution_clock::now(); 
-    step_3(diamond_list,vertex_list,vertex_dict,edge_dict);
-    auto b = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::microseconds>(b - a); 
-    step_3_bis(diamond_list,vertex_list,vertex_dict);
-    step_3_ter(diamond_list);
-    
-    cout<<duration.count()<<endl;
+    cout<<"step2"<<endl;
+    step_3_0_set_central_edge(diamond_list,edge_dict,vertex_dict);
+    step_3_1_pair_vertices_as_anchor(diamond_list,vertex_list,vertex_dict,edge_dict);
+    // auto a = chrono::high_resolution_clock::now(); 
+    step_3_2_pair_unpaired_vertices(diamond_list,vertex_list,vertex_dict);
 
-    map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,array_size);
-
-    // for (int i : diamond_array)
+    // vector<int> x;
+    // for(auto diamond : diamond_list)
     // {
-    //     cout<<i<<endl;
+    //     if (diamond.has_anchor)
+    //     {
+    //         x.push_back(diamond.get_anchor_vertex()->get_id());
+    //     }
     // }
-    vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size);
+    // cout<<"xx "<<x.size()<<endl;
 
-    // cout<<"Array size : "<<array_size<<endl;
-    // cout<<path.size()<<endl;
-    // float size = (float)(array_size+tetra_list.size())/(float)tetra_list.size();
-    // cout<<"Real Size : "<<size<<endl;
+    step_3_3_connectivity(diamond_list);
+    // cout<<diamond_list.back().get_id()<<" "<<diamond_list.size()<<endl;
+    map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
+    // auto b = chrono::high_resolution_clock::now();
+    // auto duration = chrono::duration_cast<chrono::microseconds>(b - a);
+    // cout<<duration.count()<<endl;
 
-    visualize_diamond(vertex_list,tetra_list,diamond_list,path);  
+    unordered_set<int> y;
+    int yy=0;
+    for(auto diamond : diamond_list)
+    {
+        y.insert(diamond.get_id());
+        yy++;
+    }
+    cout<<"yy "<<y.size()<<" "<<yy<<endl;
+
+    map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+    array_size,anchor_dict);
+
+    // for (int i=0;i<20;i++)
+    // {
+    //     cout<<i<<" "<<diamond_extra_bytes_array[i]<<endl;
+    // }
+
+    vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
+
+    visualize_diamond(vertex_list,tetra_list,diamond_list,path,index_to_diamond_id);  
     // visualize_central_edges(vertex_list,diamond_list);
-    auto c = chrono::high_resolution_clock::now();
-    duration = chrono::duration_cast<chrono::microseconds>(c - b); 
-    cout<<duration.count()<<endl;
+    // auto c = chrono::high_resolution_clock::now();
+    // duration = chrono::duration_cast<chrono::microseconds>(c - b); 
+    // cout<<duration.count()<<endl;
 
     return 0;
 }

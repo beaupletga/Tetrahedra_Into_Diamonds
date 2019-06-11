@@ -26,12 +26,12 @@ vector<Diamond> step_2(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vecto
     for(pair<tuple<int,int>,vector<Vertex*>> i : edge_to_vertex)
     {
         Diamond tmp= Diamond(diamond_id,edge_dict[i.first],i.second[0]);
-        for(int j=0;j<tmp.get_tetra_list().size();j++)
-        {
-            tmp.get_tetra_list()[j]->set_position_in_diamond(j);
-            tmp.get_tetra_list()[j]->set_diamond_ref(&tmp);
-        }
         diamond_list.push_back(tmp);
+        // for(int j=0;j<diamond_list.back().get_tetra_list().size();j++)
+        // {
+        //     diamond_list.back().get_tetra_list()[j]->set_position_in_diamond(j);
+        //     diamond_list.back().get_tetra_list()[j]->set_diamond_ref(&diamond_list.back());
+        // }
         diamond_id++;
     }
 
@@ -45,41 +45,19 @@ vector<Diamond> step_2(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vecto
             vector<Tetrahedron*> pointer_tetra= {&tetra_list[i]};
             Diamond tmp= Diamond(diamond_id,pointer_tetra,tetra_list[i].get_vertices()[rand()%4]);
             pointer_diamond = &tmp;
-            tmp.get_tetra_list()[0]->set_position_in_diamond(0);
-            tmp.get_tetra_list()[0]->set_diamond_ref(&tmp);
             diamond_list.push_back(tmp);
+            // diamond_list.back().get_tetra_list()[0]->set_position_in_diamond(0);
+            // diamond_list.back().get_tetra_list()[0]->set_diamond_ref(&diamond_list.back());
             diamond_id++;
         }
     }
-
-    // map<tuple<int,int,int>,vector<Diamond*>> external_faces_dict;
-    // // we add the external faces of each diamond to the dict
-    // // as soon as a face is shared by 2 tetra, we link the 2 diamonds
-    // for(Diamond &diamond : diamond_list)
-    // {
-    //     for (tuple<int,int,int> face : diamond.get_external_faces())
-    //     {
-    //         if (external_faces_dict.count(face)==0)
-    //         {
-    //             external_faces_dict[face]={&diamond};
-    //         }
-    //         else
-    //         {
-    //             external_faces_dict[face].push_back(&diamond);
-    //             external_faces_dict[face][0]->add_neighbour(face,external_faces_dict[face][1]);
-    //             external_faces_dict[face][1]->add_neighbour(face,external_faces_dict[face][0]);
-    //         }
-    //     }
-    // }
-
-    // for each tetra, we link the tetra with its diamond and fix its position in the diamond
-    // for(Diamond &diamond : diamond_list)
-    // {
-    //     for(int i=0;i<diamond.get_tetra_list().size();i++)
-    //     {
-    //         diamond.get_tetra_list()[i]->set_position_in_diamond(i);
-    //         diamond.get_tetra_list()[i]->set_diamond_ref(&diamond);
-    //     }
-    // }
+    for(Diamond &diamond : diamond_list)
+    {
+        for(int i=0;i<diamond.get_tetra_list().size();i++)
+        {
+            diamond.get_tetra_list()[i]->set_position_in_diamond(i);
+            diamond.get_tetra_list()[i]->set_diamond_ref(&diamond);
+        }
+    }
     return diamond_list;
 }
