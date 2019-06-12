@@ -201,7 +201,8 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
             // cout<<"size : "<<tetra->get_diamond_ref()->get_tetra_list().size()<<endl;
             if (tetra->get_diamond_ref()->get_tetra_list().size()>1)
             {
-                
+                int before= tetra->get_diamond_ref()->get_tetra_list().size();
+                int ab=false;
                 bool a=false;
                 bool b=false;
                 Diamond diamond1;
@@ -237,10 +238,6 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
                     }
                     if (!a_taken && !b)
                     {   
-                        // if (!tetra->get_diamond_ref()->has_anchor)
-                        // {
-                        //     b=true;
-                        // }
                         int anchor_id=tetra->get_diamond_ref()->get_anchor_vertex()->get_id();
                         for (int i=0;i<v_list.size();i++)
                         {
@@ -263,36 +260,35 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
                     }
 
 
-                    if (a && b)
+                    if (a && b && !ab)
                     {
                         for (int i=0;i<diamond_list.size();i++)
                         {
                             if (&diamond_list[i]==tetra->get_diamond_ref())
                             {
-                                if (diamond_list[i].has_anchor)
-                                {
-                                    diamond_list.push_back(diamond2);
-                                }
-                                else
+                                if (!diamond_list[i].has_anchor)
                                 {
                                     diamond2.has_anchor=false;
-                                    c.push_back(diamond2);
                                 }
-                                cout<<"Delete : "<<diamond_list[i].get_id()<<endl;
+                                c.push_back(diamond2);
                                 diamond_list[i]=diamond1;
-                                // finished=true;
+                                // v
+                                ab=true;
                                 break;
                             }
                         }
-                        break;
+                        // break;
                     }   
                 }
-                // cout<<a<<" "<<b<<endl;
                 if (a && b)
                 {
                     diamond_list.insert( diamond_list.end(), c.begin(), c.end());
+                    // cout<<"before : "<<before*2<<endl;
+                    // cout<<"after : "<<4+c.size()*4<<endl;
+                    // // cout<<ab<<endl;
+                    // cout<<endl;
+
                     break;
-                    // cc(diamond_list);
                 }
             }
         }

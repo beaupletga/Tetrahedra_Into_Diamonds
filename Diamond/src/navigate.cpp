@@ -123,7 +123,7 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
             q++;            
         }
         
-        if (q==9000){
+        if (q==50000){
             break;
         }
     }

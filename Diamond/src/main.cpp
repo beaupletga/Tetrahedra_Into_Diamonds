@@ -28,9 +28,9 @@ int main()
     tuple<vector<vector<double>>,vector<vector<double>>> result;
     // return both the geometry and the connectivity as a tuple
     // result=read_tet_file("../data/delaunay3D_sphere870.tet");
-    result=read_tet_file("../data/hand.tet");
+    // result=read_tet_file("../data/hand.tet");
     // result=read_tet_file("../data/delaunay3D_sphere6k.tet");
-    // result=read_mesh_file("../data/ball.mesh");
+    result=read_mesh_file("../data/ball.mesh");
 
     // read the result tuple and encapsulate the geom. and connect. in propers classes
     preprocessing_tetra(result,vertex_list,tetra_list);
@@ -77,6 +77,25 @@ int main()
     // visualize_all(vertex_list,tetra_list);
     // visualize(tetra_list);
 
+
+    step_3_0_set_central_edge(diamond_list,edge_dict,vertex_dict);
+    step_3_1_pair_vertices_as_anchor(diamond_list,vertex_list,vertex_dict,edge_dict);
+    step_3_2_pair_unpaired_vertices(diamond_list,vertex_list,vertex_dict);
+    step_3_3_connectivity(diamond_list);
+    map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
+
+
+    // unordered_set<int> x;
+    // for(auto diamond : diamond_list)
+    // {
+    //     if (diamond.has_anchor)
+    //     {
+    //         x.insert(diamond.get_anchor_vertex()->get_id());
+    //     }
+    // }
+    // cout<<"xx "<<x.size()<<endl;
+
+
     // for each tetra, we assign its position in the diamond array
     int tetra_array[tetra_list.size()];
 
@@ -92,55 +111,31 @@ int main()
     // array gathering all neighbours of the diamonds
     int array_size=diamond1_size*4+diamond3_size*6+diamond4_size*8+diamond5_size*10+
     diamond6_size*12+diamond7_size*14+diamond8_size*16+diamond9_size*18;
+    cout<<"array size : "<<array_size<<endl;
     int diamond_array[array_size];
 
     // 1 if it's a new diamond, 0 ow
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
-    cout<<"step2"<<endl;
-    step_3_0_set_central_edge(diamond_list,edge_dict,vertex_dict);
-    step_3_1_pair_vertices_as_anchor(diamond_list,vertex_list,vertex_dict,edge_dict);
-    // auto a = chrono::high_resolution_clock::now(); 
-    step_3_2_pair_unpaired_vertices(diamond_list,vertex_list,vertex_dict);
-
-    // vector<int> x;
-    // for(auto diamond : diamond_list)
-    // {
-    //     if (diamond.has_anchor)
-    //     {
-    //         x.push_back(diamond.get_anchor_vertex()->get_id());
-    //     }
-    // }
-    // cout<<"xx "<<x.size()<<endl;
-
-    step_3_3_connectivity(diamond_list);
-    // cout<<diamond_list.back().get_id()<<" "<<diamond_list.size()<<endl;
-    map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
-    // auto b = chrono::high_resolution_clock::now();
-    // auto duration = chrono::duration_cast<chrono::microseconds>(b - a);
-    // cout<<duration.count()<<endl;
-
-    unordered_set<int> y;
-    int yy=0;
-    for(auto diamond : diamond_list)
-    {
-        y.insert(diamond.get_id());
-        yy++;
-    }
-    cout<<"yy "<<y.size()<<" "<<yy<<endl;
-
     map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
     array_size,anchor_dict);
 
-    // for (int i=0;i<20;i++)
+    // cout<<"array size : "<<array_size<<endl;
+
+    // for(Diamond diamond : diamond_list)
     // {
-    //     cout<<i<<" "<<diamond_extra_bytes_array[i]<<endl;
+    //     if (diamond.get_id()==index_to_diamond_id[6])
+    //     {
+    //         diamond.display_vertices_id();
+    //         break;
+    //     }
     // }
+    // vector<int> path = {index_to_diamond_id[6]};
 
-    vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
+    // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
 
-    visualize_diamond(vertex_list,tetra_list,diamond_list,path,index_to_diamond_id);  
+    // visualize_diamond(vertex_list,tetra_list,diamond_list,path,index_to_diamond_id);  
     // visualize_central_edges(vertex_list,diamond_list);
     // auto c = chrono::high_resolution_clock::now();
     // duration = chrono::duration_cast<chrono::microseconds>(c - b); 
