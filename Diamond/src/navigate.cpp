@@ -83,19 +83,13 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
         int diamond_id = index_to_diamond_id[index];
         if(lala.count(diamond_id)==0)
         {
-            // cout<<diamond_id<<endl;
             lala.insert(diamond_id);
             path.push_back(diamond_id);
-            // cout<<diamond_extra_bytes_array[index]<<endl;
             while(diamond_extra_bytes_array[i]!=1 && i<array_size)
             {
                 if (diamond_array[i]!=-1)
                 {
                     wait_list.push(diamond_array[i]);
-                    // // if (diamond_array[i]<=11)
-                    // {
-                    //     cout<<"-> "<<diamond_array[i]<<endl;
-                    // }
                 }
                 i++;               
             }
@@ -105,25 +99,17 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
                 if (diamond_array[i]!=-1)
                 {
                     wait_list.push(diamond_array[i]);
-                    // if (diamond_array[i]<=11)
-                    // {
-                    //     cout<<"-> "<<diamond_array[i]<<endl;
-                    // }
                 }
                 i--;
             }
             if (diamond_array[i]!=-1)
             {
                 wait_list.push(diamond_array[i]);
-                // if (diamond_array[i]<=11)
-                // {
-                //     cout<<"-> "<<diamond_array[i]<<endl;
-                // }
             }
             q++;            
         }
         
-        if (q==50000){
+        if (q==500){
             break;
         }
     }

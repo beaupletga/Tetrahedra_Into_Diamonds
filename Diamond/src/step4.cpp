@@ -24,19 +24,13 @@ int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size,
     map<int,int> diamond_id_to_index;
     map<int,int> index_to_diamond_id;
     int index=0;
-
-    // cout<<anchor_dict.size()<<endl;
-    // cout<<0<<endl;
     for(int i=0;i<anchor_dict.size();i++)
     {
-        // cout<<anchor_dict[i]->get_id()<<endl;
         diamond_id_to_index[anchor_dict[i]->get_id()]=index;
-        // cout<<"xx "<<anchor_dict[i]->get_neighbours().size()<<endl;
         index+=anchor_dict[i]->get_neighbours().size();
         tetra_order.push_back(id_to_index(diamond_list,anchor_dict[i]));
     }
 
-    // cout<<0.1<<endl;
     // each diamond is represented by an id and the index of the first face in the diamond array
     for(int i=0;i<diamond_list.size();i++)
     {
@@ -47,8 +41,6 @@ int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size,
             tetra_order.push_back(i);
         }   
     }
-    cout<<"index : "<<index<<endl;
-
 
     index=0;
     // for each face, we assign the index of the diamond (first face)
@@ -71,10 +63,10 @@ int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size,
             index++;
         }
     }
-    cout<<"index : "<<index<<endl;
-    for(int i=0;i<tetra_list.size();i+=2)
-    {
-        tetra_array[i]=diamond_id_to_index[tetra_list[i].get_diamond_ref()->get_id()]+tetra_list[i].get_position_in_diamond();
-    }
+    // cout<<"index : "<<index<<endl;
+    // for(int i=0;i<tetra_list.size();i+=2)
+    // {
+    //     tetra_array[i]=diamond_id_to_index[tetra_list[i].get_diamond_ref()->get_id()]+tetra_list[i].get_position_in_diamond();
+    // }
     return index_to_diamond_id;
 }

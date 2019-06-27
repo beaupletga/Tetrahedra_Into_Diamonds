@@ -3,6 +3,7 @@
 #include <tuple>
 #include <array>
 #include <vector>
+#include <math.h>
 #include <map>
 #include <chrono> 
 
@@ -13,6 +14,7 @@
 #include "../include/preprocessing.h"
 #include "../include/visualization.h"
 #include "../include/navigate.h"
+#include "../include/consistency.h"
 #include "../include/stats.h"
 #include "../include/step1.h"
 #include "../include/step2.h"
@@ -20,6 +22,22 @@
 #include "../include/step4.h"
 
 using namespace std;
+
+
+// to do : 
+
+// - utiliser les bits de services pour naviguer dans le graphe
+// - calculer le degré d'un sommet
+// - calculer l'hypersphere d'un sommet
+// comparer appariement des diamants et des quads et comparer les ref necessaires (une economisé par quad et 2 quand diamant)
+// - visualiser les edges pour appareiller les diamants avec des ancres (pour le rapport)
+// - comprendre l'article SOT (pour le rapport)
+// - reordonner les tetra afin que l'on puisse passer d'un tetra à un diamant
+// - améliorer l'algo pour creer des diamants (utiliser un algo d'optimisation local)
+// - préciser dans le rapport que notre algo est streaming (puisque le BFS ne lit que quelque tetra à la fois)
+// - utiliser les references differentielles pour gagner de la place (plutot que de stocker les references sur 32 bits, 
+// on peut stocker la différence entre deux référence sur 8 ou 16 bits)
+// - faire une reduction polynomiale afin de montrer que notre probleme est np-complet
 
 int main() 
 {
@@ -46,6 +64,10 @@ int main()
     make_edge_dict(tetra_list,edge_dict);
     make_face_dict(tetra_list ,face_dict);
 
+    
+
+
+
     double count_face=0;
     for (Tetrahedron i : tetra_list)
     {
@@ -71,30 +93,37 @@ int main()
 
     cout<<"Diamond list size : "<<diamond_list.size()<<endl;
 
+    // check_1(diamond_list);
+    check_3(diamond_list);
+    // vector<int> tetras_id= {3589,5208,10131,5575,14914,11636,16268};
+
+    // 3589
+    // 5208
+    // 10131
+    // 5575
+    // 14914
+    // 11636
+    // 16268
+
+    // for (Tetrahedron* tetra : diamond_list[2625].get_tetra_list())
+    // {
+    //     tetra->display_vertices_id();
+    // }    
+    // visualize_subset_tetra(vertex_list,tetra_list,tetras_id);
+    // visualize_subset_diamond(vertex_list,diamond_list,ids);
+    // return 0;
+
     // stats(edge_to_vertex,tetra_list);
 
     // visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
     // visualize_all(vertex_list,tetra_list);
     // visualize(tetra_list);
 
-
     step_3_0_set_central_edge(diamond_list,edge_dict,vertex_dict);
     step_3_1_pair_vertices_as_anchor(diamond_list,vertex_list,vertex_dict,edge_dict);
     step_3_2_pair_unpaired_vertices(diamond_list,vertex_list,vertex_dict);
     step_3_3_connectivity(diamond_list);
     map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
-
-
-    // unordered_set<int> x;
-    // for(auto diamond : diamond_list)
-    // {
-    //     if (diamond.has_anchor)
-    //     {
-    //         x.insert(diamond.get_anchor_vertex()->get_id());
-    //     }
-    // }
-    // cout<<"xx "<<x.size()<<endl;
-
 
     // for each tetra, we assign its position in the diamond array
     int tetra_array[tetra_list.size()];
@@ -111,35 +140,41 @@ int main()
     // array gathering all neighbours of the diamonds
     int array_size=diamond1_size*4+diamond3_size*6+diamond4_size*8+diamond5_size*10+
     diamond6_size*12+diamond7_size*14+diamond8_size*16+diamond9_size*18;
-    cout<<"array size : "<<array_size<<endl;
     int diamond_array[array_size];
-
+    
     // 1 if it's a new diamond, 0 ow
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
     bool diamond_extra_bytes_array[array_size]={0};
 
-    map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
-    array_size,anchor_dict);
+    cout<<"Array size : "<<array_size<<endl;
 
-    // cout<<"array size : "<<array_size<<endl;
 
-    // for(Diamond diamond : diamond_list)
-    // {
-    //     if (diamond.get_id()==index_to_diamond_id[6])
-    //     {
-    //         diamond.display_vertices_id();
-    //         break;
-    //     }
-    // }
-    // vector<int> path = {index_to_diamond_id[6]};
+    
+    
+    step_3_5_set_neighbour_permutation(diamond_list);
+    
+
+    // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+    // array_size,anchor_dict);
 
     // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
 
+    // for(Tetrahedron* tetra : vertex_dict[1])
+    // {
+    //     cout<<tetra->get_diamond_ref()->get_tetra_list().size()<<endl;
+    // }
+
+    // cout<<get<0>(edge_dict.begin()->first)<<" "<<get<1>(edge_dict.begin()->first)<<endl;
+    // cout<<edge_dict[{0,7}].size()<<endl;
     // visualize_diamond(vertex_list,tetra_list,diamond_list,path,index_to_diamond_id);  
     // visualize_central_edges(vertex_list,diamond_list);
-    // auto c = chrono::high_resolution_clock::now();
-    // duration = chrono::duration_cast<chrono::microseconds>(c - b); 
-    // cout<<duration.count()<<endl;
+
+
+    
+    
+
+
+    cout<<"Compression size : "<<(float)array_size/tetra_list.size()<<endl;
 
     return 0;
 }

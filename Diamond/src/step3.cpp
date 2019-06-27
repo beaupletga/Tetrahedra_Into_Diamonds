@@ -333,3 +333,151 @@ map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &diamond_list)
     }
     return anchor_dict;
 }
+
+
+vector<int> get_orientation(Diamond focus, Diamond* neighbour,int index)
+{
+    vector<int> focus_order = focus.get_vertex_order();
+    vector<int> neighbour_order = neighbour->get_vertex_order();
+
+    vector<int> permutation;
+    int min_j=1000;
+    for(int i=0;i<focus_order.size();i++)
+    {
+        for (int j=0;j<neighbour_order.size();j++)
+        {
+            if (focus_order[i]==neighbour_order[j])
+            {
+                cout<<i<<"->"<<j<<" ";
+                permutation.push_back(j);
+                if (min_j>j)
+                {
+                    min_j=j;
+                }
+            }
+        }
+    }
+    cout<< focus_order.size()<<" "<<neighbour_order.size()<<" "<<index<<endl;
+    if (permutation.size()==3)
+    {
+        if (permutation[0]==neighbour_order.size()-2 || permutation[0]==neighbour_order.size()-1)
+        {
+            if (permutation[1]==permutation[2]-1)
+            {
+                return {2,0,1};
+            }
+            else if (permutation[1]==neighbour_order.size()-3 && permutation[2]==0)
+            {
+                return {2,0,1};
+            }
+            else
+            {
+                return {2,1,0};
+            }
+        }
+        else if (permutation[1]==neighbour_order.size()-2 || permutation[1]==neighbour_order.size()-1)
+        {
+            if (permutation[0]==permutation[2]-1)
+            {
+                return {0,2,1};
+            }
+            else if (permutation[0]==neighbour_order.size()-3 && permutation[2]==0)
+            {
+                return {0,2,1};
+            }
+            else
+            {
+                return {1,2,0};
+            }
+        }
+        else if (permutation[2]==neighbour_order.size()-2 || permutation[2]==neighbour_order.size()-1)
+        {
+            if (permutation[0]==permutation[1]-1 && permutation[1]<permutation[2])
+            {
+                return {0,1,2};
+            }
+            else if (permutation[0]==neighbour_order.size()-3 && permutation[1]==0)
+            {
+                return {0,1,2};
+            }
+            else
+            {
+                return {1,0,2};
+            }
+        }
+    }
+    else if (permutation.size()==4)
+    {  
+        int x=0;
+        for(int i : {focus_order.back(),focus_order[focus_order.size()-2]})
+        {
+            for (int j=0;j<neighbour_order.size();j++)
+            {
+                if (i==neighbour_order[j])
+                {
+                    x++;
+                }
+            }
+        }
+        if (x==2)
+        {
+            return {0,1,2};
+        }
+    }
+    else if(permutation.size()==5)
+    {
+
+    }
+    else if (permutation.size()==6)
+    {
+
+    }
+    // for (size_t i = 0; i < permutation.size(); i++)
+    // {
+    //     cout<<permutation[i]<<" ";
+    // }
+    // cout<<endl;
+    
+    // cout<<"d"<<endl;
+    // cout<<permutation.size()<<endl;
+    // permutation[0]-=min_j;
+    // permutation[1]-=min_j;
+    // permutation[2]-=min_j;
+    // cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<endl;
+    return permutation;
+}
+
+
+void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
+{
+    for(Diamond &diamond : diamond_list)
+    {
+        for(int i=0;i<diamond.get_neighbours().size();i++)
+        {
+            if (diamond.get_neighbours()[i]!=NULL)
+            {
+                if(diamond.get_tetra_list().size()>1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
+                {
+                    vector<int> permutation = get_orientation(diamond,diamond.get_neighbours()[i],i);
+                    // for (int i : permutation)
+                    // {
+                    //     cout<<i<<" ";
+                    // }
+                    // cout<<endl;
+                }
+                // else if (diamond.get_tetra_list().size()>1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
+                // {
+
+                // }
+                // else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
+                // {
+
+                // }
+                // else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
+                // {
+
+                // }
+            }
+        }
+    }
+}

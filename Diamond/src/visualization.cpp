@@ -1,5 +1,19 @@
 #include "../include/visualization.h"
 
+int id_to_index2(vector<Diamond> &diamond_list,int id)
+{
+    for(int i=0;i<diamond_list.size();i++)
+    {
+        if (diamond_list[i].get_id()==id)
+        {
+            return i;
+        }
+    }
+    cout<<"ID : "<<id<<endl;
+    assert(true==false);
+    return -1;
+}
+
 void visualize(vector<Tetrahedron> &tetra_list)
 {
     ofstream output;
@@ -12,6 +26,75 @@ void visualize(vector<Tetrahedron> &tetra_list)
     output.close();
 }
 
+void visualize_subset_tetra(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list,vector<int> &tetras_id)
+{
+    ofstream output;
+    output.open ("../data/visualize_subset_tetra.off");
+    output<<"OFF\n";
+    output<<vertex_list.size()<<" "<<tetras_id.size()*4<<" "<<0<<"\n";
+    for (Vertex vertex : vertex_list)
+    {
+        output<<vertex.get_coords()[0]<<" "<<vertex.get_coords()[1]<<" "<<vertex.get_coords()[2]<<"\n";
+    }
+    for (int id : tetras_id)
+    {
+        double R = rand()%255;
+        double G = rand()%255;
+        double B = rand()%255;
+        Tetrahedron tetra = tetra_list[id];
+        vector<Vertex*> ids=tetra.get_vertices();
+        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<"3 "<<ids[0]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<"3 "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+    }
+    output.close();
+}
+
+void visualize_subset_diamond(vector<Vertex> &vertex_list,vector<Diamond> &diamond_list,vector<int> &diamonds_id)
+{
+    ofstream output;
+    output.open("../data/visualize_subset_diamond.off");
+    output<<"OFF\n";
+
+    int size=0;
+
+    for (int id : diamonds_id)
+    {
+        int index=id_to_index2(diamond_list,id);
+        size+=diamond_list[index].get_external_faces().size();
+    }
+
+    output<<vertex_list.size()<<" "<<size<<" "<<0<<"\n";
+    for (Vertex vertex : vertex_list)
+    {
+        output<<vertex.get_coords()[0]<<" "<<vertex.get_coords()[1]<<" "<<vertex.get_coords()[2]<<"\n";
+    }
+    for (int id : diamonds_id)
+    {
+        
+        int index=id_to_index2(diamond_list,id);
+
+        // for(tuple<int,int,int> face : diamond_list[index].get_external_faces())
+        // {
+        //     double R = rand()%255;
+        //     double G = rand()%255;
+        //     double B = rand()%255;
+        //     output<<"3 "<<get<0>(face)<<" "<<get<1>(face)<<" "<<get<2>(face)<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        // }
+        for(Tetrahedron* tetra : diamond_list[index].get_tetra_list())
+        {
+            cout<<tetra->get_id()<<endl;
+            double R = rand()%255;
+            double G = rand()%255;
+            double B = rand()%255;
+            for(tuple<int,int,int> face : tetra->enumerate_faces())
+            {
+                output<<"3 "<<get<0>(face)<<" "<<get<1>(face)<<" "<<get<2>(face)<<" "<<R<<" "<<G<<" "<<B<<"\n";
+            }
+        }
+    }
+}
 
 void visualize_all(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list)
 {
@@ -33,7 +116,8 @@ void visualize_all(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list)
     }
 }
 
-void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list, map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict, map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex)
+void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list, map<tuple<int,int>,
+vector<Tetrahedron*>>& edge_dict, map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex)
 {
     int nb_isolated = 4*count_if(tetra_list.begin(),tetra_list.end(),[](Tetrahedron i){return !i.get_in_diamond();});
     // int nb_isolated = 4*
@@ -88,19 +172,6 @@ void visualize_diamond_isolated(vector<Vertex> &vertex_list,vector<Tetrahedron> 
     output.close();
 }
 
-int id_to_index2(vector<Diamond> &diamond_list,int id)
-{
-    for(int i=0;i<diamond_list.size();i++)
-    {
-        if (diamond_list[i].get_id()==id)
-        {
-            return i;
-        }
-    }
-    cout<<"ID : "<<id<<endl;
-    assert(true==false);
-    return -1;
-}
 
 void visualize_diamond(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list,
 vector<Diamond> &diamond_list,vector<int> &diamond_ids,map<int,int> &index_to_diamond_id)
@@ -152,6 +223,11 @@ void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamon
     {
         output<<vertex.get_coords()[0]<<" "<<vertex.get_coords()[1]<<" "<<vertex.get_coords()[2]<<"\n";
     }
+    output.close();
+
+
+    // ofstream output;
+    output.open("../data/visualize_edges.edges");
     for (Diamond diamond : diamond_list)
     {
         double R = 155;
@@ -161,7 +237,8 @@ void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamon
         int vertex1 = diamond.get_central_edge().first;
         int vertex2 = diamond.get_central_edge().second;
 
-        output<<vertex1<<"->"<<vertex2<<";\n";//<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<vertex1<<" "<<vertex2<<"\n";//<" "<<R<<" "<<G<<" "<<B<<"\n";
     }
     output.close();
+
 }

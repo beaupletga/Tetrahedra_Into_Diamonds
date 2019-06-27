@@ -113,6 +113,3 @@ void stats(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vector<Tetrahedro
 
     cout<<"Theorical Size : "<<2*count_tetra_diamond/tetra_list.size()+4*count_tetra_isolated/tetra_list.size()<<endl;
 }
-
-
-// float compression_size()
