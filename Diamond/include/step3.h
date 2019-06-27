@@ -17,7 +17,12 @@
 #include "Diamond.h"
 
 using namespace std;
-void set_central_edge(vector<Diamond> &,map<tuple<int,int>,vector<Tetrahedron*>> &,
+void step_3_0_set_central_edge(vector<Diamond> &,map<tuple<int,int>,vector<Tetrahedron*>> &,
 map<int,vector<Tetrahedron*>> &);
-void step_3(vector<Diamond> &,vector<Vertex> &,map<int,vector<Tetrahedron*>> &);
+void step_3_1_pair_vertices_as_anchor(vector<Diamond> &,vector<Vertex> &,map<int,vector<Tetrahedron*>> &,
+map<tuple<int,int>,vector<Tetrahedron*>> &);
+void step_3_2_pair_unpaired_vertices(vector<Diamond> &,vector<Vertex> &,map<int,vector<Tetrahedron*>> &);
+void step_3_3_connectivity(vector<Diamond> &);
+map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &);
+void step_3_5_set_neighbour_permutation(vector<Diamond> &);
 #endif

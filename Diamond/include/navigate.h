@@ -17,7 +17,7 @@
 
 using namespace std;
 
-vector<int> BFS(int [],bool [],int);
+vector<int> BFS(int [],bool [],int,map<int,int>&);
 
 #endif
 

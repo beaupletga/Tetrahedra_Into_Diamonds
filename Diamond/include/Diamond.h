@@ -26,6 +26,8 @@ class Diamond
         void set_anchor_vertex(Vertex*);
         void display_vertices_id();
         bool has_anchor;
+        vector<int> get_vertex_order();
+        vector<tuple<int,int,int>> neighbours_faces;
 
     private:
         int id;
