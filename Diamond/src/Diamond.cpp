@@ -153,6 +153,7 @@ void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
                     this->neighbours[2*i+1]=neighbour;
                     this->neighbours_faces[2*i+1]=face;
                 }
+                break;
             }
         }
     }
@@ -265,9 +266,11 @@ void Diamond::display_vertices_id()
 vector<int> Diamond::get_vertex_order()
 {
     vector<int> order;
+    int south=-1;
+    int north=-1;
     if (this->get_tetra_list().size()>1)
     {
-        we use a step of 2 because face 0 and 1 share the same 2 vertices (2 and 3, 4 and 5 ...)
+        // we use a step of 2 because face 0 and 1 share the same 2 vertices (2 and 3, 4 and 5 ...)
         for(int i=0;i<this->neighbours_faces.size();i+=2)
         {
             tuple<int,int,int> x;
@@ -309,6 +312,7 @@ vector<int> Diamond::get_vertex_order()
         // cout<<endl;
         // we now have a list of vertices id on the equator
         // as we deal with a diamond, each vertex id should appear twice
+        // we just have to make them appear in the good order and remove duplicate
 
         vector<int> final_order;
         for(int i=0;i<order.size()-2;i++)
@@ -342,6 +346,12 @@ vector<int> Diamond::get_vertex_order()
             final_order.push_back(this->central_edge.first);
         }
 
+        // cout<<"-------"<<endl;
+        // cout<<get<0>(this->neighbours_faces[0])<<" "<<get<1>(this->neighbours_faces[0])<<" "<<get<2>(this->neighbours_faces[0])<<endl;
+        // cout<<anchor_vertex->get_id()<<endl;
+        // cout<<final_order[final_order.size()-2]<<" "<<final_order.back()<<endl;
+        // cout<<"-------"<<endl;
+
         // for(int x: final_order)
         // {
         //     cout<<x<<" ";
@@ -354,10 +364,6 @@ vector<int> Diamond::get_vertex_order()
             cout<<"Uncorrect number of vertices : "<<final_order.size()<<" instead of "<<this->tetra_list.size()+2<<endl;
             assert(true==false);
         }
-        // for(int x: final_order)
-        // {
-        //     cout<<x<<" ";
-        // }
         return final_order;
     }
 }
