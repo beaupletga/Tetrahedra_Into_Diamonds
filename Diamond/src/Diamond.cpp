@@ -307,9 +307,10 @@ vector<int> Diamond::get_vertex_order()
         //     cout<<x<<" ";
         // }
         // cout<<endl;
+        // we now have a list of vertices id on the equator
+        // as we deal with a diamond, each vertex id should appear twice
 
         vector<int> final_order;
-
         for(int i=0;i<order.size()-2;i++)
         {
             if (order[i]==order[i+1] || order[i]==order[i+2])
