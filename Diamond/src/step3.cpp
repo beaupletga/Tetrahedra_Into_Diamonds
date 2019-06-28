@@ -228,9 +228,8 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
                             if (vertex_id==v_list[i])
                             {
                                 a_taken=true;
-                                diamond1 = Diamond(last_id,f,tetra2->get_vertices()[i]);
+                                diamond1 = Diamond(last_id,f,tetra2->get_vertices()[i],true);
                                 last_id++;
-                                diamond1.has_anchor=true;
                                 a=true;
                                 break;
                             }
@@ -243,9 +242,8 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
                         {
                             if (anchor_id==v_list[i])
                             {
-                                diamond2 = Diamond(last_id,f,tetra->get_diamond_ref()->get_anchor_vertex());
+                                diamond2 = Diamond(last_id,f,tetra->get_diamond_ref()->get_anchor_vertex(),true);
                                 last_id++;
-                                diamond2.has_anchor=true;
                                 b=true;
                                 b_taken=true;
                                 break;
@@ -336,7 +334,7 @@ map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &diamond_list)
 
 // at the ith face, if i%2=0 => there are the vertices i/2 et i/2 +1
 // at the ith face, if i%2=1 => there are the vertices i-1/2 et i-1/2 +1
-vector<int> get_orientation(Diamond focus, Diamond* neighbour,int index)
+vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
 {
     vector<int> focus_order = focus.get_vertex_order();
     vector<int> neighbour_order = neighbour->get_vertex_order();
@@ -346,15 +344,23 @@ vector<int> get_orientation(Diamond focus, Diamond* neighbour,int index)
 
     // because the last tetra has the vertice 0
     int size=focus.get_tetra_list().size();
-    if (index%2==0)
+
+    if (focus.get_tetra_list().size()==1)
     {
-        vertices={(index/2)%size,(index/2+1)%size ,(focus_order.size()-2)};
+        vertices={0,1,2,3};
     }
     else
     {
-        vertices={((index-1)/2)%size,((index-1)/2+1)%size,(focus_order.size()-1)};
+        if (index%2==0)
+        {
+            vertices={(index/2)%size,(index/2+1)%size ,(focus_order.size()-2)};
+        }
+        else
+        {
+            vertices={((index-1)/2)%size,((index-1)/2+1)%size,(focus_order.size()-1)};
+        }
     }
-    
+        
     for(int i : vertices)
     {
         for (int j=0;j<neighbour_order.size();j++)
@@ -417,24 +423,11 @@ vector<int> get_orientation(Diamond focus, Diamond* neighbour,int index)
     }
     else
     {
-        // permutation.clear();
-        // for(int i=0;i<focus_order.size();i++)
-        // {
-        //     for (int j=0;j<neighbour_order.size();j++)
-        //     {
-        //         if (focus_order[i]==neighbour_order[j])
-        //         {
-        //             cout<<i<<"->"<<j<<" ";
-        //             permutation.push_back(j);
-        //         }
-        //     }
-        // }
-        // cout<<index<<endl;
+        cout<<"Permutation size : "<<permutation.size()<<endl;
         assert(true==false);
     }
     return permutation;
 }
-
 
 void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
 {
@@ -446,25 +439,42 @@ void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
             {
                 if(diamond.get_tetra_list().size()>1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
                 {
-                    vector<int> permutation = get_orientation(diamond,diamond.get_neighbours()[i],i);
-                    // for (int i : permutation)
-                    // {
-                    //     cout<<i<<" ";
-                    // }
-                    // cout<<endl;
+                    vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
+                    diamond.set_permutation(permutation,i);
                 }
-                // else if (diamond.get_tetra_list().size()>1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
-                // {
-
-                // }
-                // else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
-                // {
-
-                // }
-                // else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
-                // {
-
-                // }
+                else if (diamond.get_tetra_list().size()>1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
+                {
+                    vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
+                    diamond.set_permutation(permutation,i);
+                }
+                else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
+                {
+                    vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
+                    diamond.set_permutation(permutation,i);
+                }
+            }
+        }
+    }
+    for(Diamond &diamond : diamond_list)
+    {
+        for(int i=0;i<diamond.get_neighbours().size();i++)
+        {
+            if (diamond.get_neighbours()[i]!=NULL)
+            {
+                if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
+                {
+                    for(int j=0;j<4;j++)
+                    {
+                        for (int k=0;k<diamond.get_neighbours()[i]->neighbours_faces.size();k++)
+                        {
+                            if (diamond.neighbours_faces[j]==diamond.get_neighbours()[i]->neighbours_faces[k])
+                            {
+                                vector<int> permutation = diamond.get_neighbours()[i]->get_permutation(k);
+                                diamond.set_permutation(permutation,j);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

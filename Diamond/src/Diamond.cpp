@@ -8,11 +8,11 @@ Diamond::Diamond()
 
 
 // constructor for each diamond
-// we know that the set of tetra shape as a cycle
-Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex)
+// we know that the set of tetra shape is a cycle
+Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,bool has_anchor)
 {
     this->id=id;
-    this->has_anchor=false;
+    this->has_anchor=has_anchor;
     bool already_in=false;
     this->tetra_list.push_back(elements[0]);
     this->anchor_vertex=anchor_vertex;
@@ -20,6 +20,29 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex)
     {
         this->neighbours={NULL,NULL,NULL,NULL};
         this->neighbours_faces={{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+        this->permutation = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+        if (this->has_anchor)
+        {
+            tuple<int,int,int> opposite_anchor_face=elements[0]->get_opposite_face(anchor_vertex);
+            this->neighbours_faces[0]=opposite_anchor_face;
+            int x=1;
+            for(int i=0;i<4;i++)
+            {
+                if (elements[0]->get_vertices()[i]->get_id()!=anchor_vertex->get_id())
+                {
+                    this->neighbours_faces[x]=elements[0]->get_opposite_face(elements[0]->get_vertices()[i]);
+                    x++;
+                }
+            }
+        }
+        else
+        {
+            for (int i=0;i<4;i++)
+            {
+                this->neighbours_faces[i]=elements[0]->get_opposite_face(elements[0]->get_vertices()[i]);
+            }
+        }
+        
     }
     else
     {
@@ -27,6 +50,7 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex)
         {
             this->neighbours.push_back(NULL);
             this->neighbours_faces.push_back({0,0,0});
+            this->permutation.push_back({0,0,0});
         }
     }
     // we want to add the tetra such that the order is the same as in the cycle around the central edge
@@ -85,6 +109,21 @@ Vertex* Diamond::get_anchor_vertex()
 pair<int,int> Diamond::get_central_edge()
 {   
     return this->central_edge;
+}
+
+void Diamond::set_permutation(vector<int> &permutation,int i)
+{
+    this->permutation[i]=permutation;
+}
+
+vector<int> Diamond::get_permutation(int i)
+{
+    if (i>this->permutation.size())
+    {
+        cout<<"Size limit exceeded"<<endl;
+        assert(true==false);
+    }
+    return this->permutation[i];
 }
 
 
@@ -160,49 +199,13 @@ void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
     
     else
     {
-        if (this->has_anchor)
+        for (int i=0;i<4;i++)
         {
-            int anchor_id = this->anchor_vertex->get_id();
-            if (anchor_id!=get<0>(face) && anchor_id!=get<1>(face) && anchor_id!=get<2>(face))
+            if (this->neighbours_faces[i]==face)
             {
-                this->neighbours[3]=neighbour;
-                this->neighbours_faces[3]=face;
+                this->neighbours[i]=neighbour;
             }
-            else
-            {
-                int x=0;
-                for (int i=0;i<4;i++)
-                {
-                    int id =this->tetra_list[0]->get_vertices()[i]->get_id();
-                    if (id!=anchor_id)
-                    {
-                        if (id!=get<0>(face) && id!=get<1>(face) && id!=get<2>(face))
-                        {
-                            this->neighbours[x]=neighbour;
-                            // this->neighbours_faces[x]=face;
-                        }
-                        x++;
-                    }
-                }
-            }
-        }
-        else
-        {
-            // if the diamond has only one tetra => 4 external faces
-            // we order the face by the vertice not belonging to the face
-            // example : tetra (1,2,3,4)
-            // the order of the faces is : 234 134 124 123
-            for (int i=0;i<4;i++)
-            {
-                int id =this->tetra_list[0]->get_vertices()[i]->get_id();
-                if (id!=get<0>(face) && id!=get<1>(face) && id!=get<2>(face))
-                {
-                    this->neighbours[i]=neighbour;
-                    this->neighbours_faces[i]=face;
-                    break;
-                }
-            }
-        }        
+        }       
     }
 }
 
@@ -220,7 +223,7 @@ int Diamond::get_neighbour_index(Diamond* neighbour)
         }
         
     }
-    // warning !!
+    // both diamaonds are not adjacents
     assert(true==false);
     return -1;
 }
@@ -310,10 +313,11 @@ vector<int> Diamond::get_vertex_order()
         //     cout<<x<<" ";
         // }
         // cout<<endl;
+
+
         // we now have a list of vertices id on the equator
         // as we deal with a diamond, each vertex id should appear twice
         // we just have to make them appear in the good order and remove duplicate
-
         vector<int> final_order;
         for(int i=0;i<order.size()-2;i++)
         {
@@ -346,19 +350,6 @@ vector<int> Diamond::get_vertex_order()
             final_order.push_back(this->central_edge.first);
         }
 
-        // cout<<"-------"<<endl;
-        // cout<<get<0>(this->neighbours_faces[0])<<" "<<get<1>(this->neighbours_faces[0])<<" "<<get<2>(this->neighbours_faces[0])<<endl;
-        // cout<<anchor_vertex->get_id()<<endl;
-        // cout<<final_order[final_order.size()-2]<<" "<<final_order.back()<<endl;
-        // cout<<"-------"<<endl;
-
-        // for(int x: final_order)
-        // {
-        //     cout<<x<<" ";
-        // }
-        // cout<<endl;
-        // cout<<endl;
-        // cout<<"Number of vertices : "<<final_order.size()<<" instead of "<<this->tetra_list.size()+2<<endl;
         if (final_order.size()!=this->tetra_list.size()+2)
         {
             cout<<"Uncorrect number of vertices : "<<final_order.size()<<" instead of "<<this->tetra_list.size()+2<<endl;
@@ -366,5 +357,14 @@ vector<int> Diamond::get_vertex_order()
         }
         return final_order;
     }
+    else
+    {
+        for (Vertex* vertex : this->tetra_list[0]->get_vertices())
+        {
+            order.push_back(vertex->get_id());
+        }
+        return order;
+    }
+        
 }
 

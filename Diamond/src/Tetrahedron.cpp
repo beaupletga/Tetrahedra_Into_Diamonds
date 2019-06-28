@@ -169,5 +169,18 @@ void Tetrahedron::set_position_in_diamond(int position)
     this->position_in_diamond=position;
 }
 
+tuple<int,int,int> Tetrahedron::get_opposite_face(Vertex* vertex)
+{
+    for (tuple<int,int,int> face : this->enumerate_faces())
+    {
+        if (vertex->get_id()!=get<0>(face) && vertex->get_id()!=get<1>(face) && vertex->get_id()!=get<2>(face))
+        {
+            return face;
+        }
+    }
+    // a vertex can't belong to all face of a tetrahedron
+    assert(true==false);
+}
+
 
 
