@@ -334,30 +334,39 @@ map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &diamond_list)
     return anchor_dict;
 }
 
-
+// at the ith face, if i%2=0 => there are the vertices i/2 et i/2 +1
+// at the ith face, if i%2=1 => there are the vertices i-1/2 et i-1/2 +1
 vector<int> get_orientation(Diamond focus, Diamond* neighbour,int index)
 {
     vector<int> focus_order = focus.get_vertex_order();
     vector<int> neighbour_order = neighbour->get_vertex_order();
 
+    vector<int> vertices;
     vector<int> permutation;
-    int min_j=1000;
-    for(int i=0;i<focus_order.size();i++)
+
+    // because the last tetra has the vertice 0
+    int size=focus.get_tetra_list().size();
+    if (index%2==0)
+    {
+        vertices={(index/2)%size,(index/2+1)%size ,(focus_order.size()-2)};
+    }
+    else
+    {
+        vertices={((index-1)/2)%size,((index-1)/2+1)%size,(focus_order.size()-1)};
+    }
+    
+    for(int i : vertices)
     {
         for (int j=0;j<neighbour_order.size();j++)
         {
             if (focus_order[i]==neighbour_order[j])
             {
-                cout<<i<<"->"<<j<<" ";
                 permutation.push_back(j);
-                if (min_j>j)
-                {
-                    min_j=j;
-                }
             }
         }
     }
-    cout<< focus_order.size()<<" "<<neighbour_order.size()<<" "<<index<<endl;
+
+    // cout<< focus_order.size()<<" "<<neighbour_order.size()<<" "<<index<<endl;
     if (permutation.size()==3)
     {
         if (permutation[0]==neighbour_order.size()-2 || permutation[0]==neighbour_order.size()-1)
@@ -406,44 +415,23 @@ vector<int> get_orientation(Diamond focus, Diamond* neighbour,int index)
             }
         }
     }
-    else if (permutation.size()==4)
-    {  
-        int x=0;
-        for(int i : {focus_order.back(),focus_order[focus_order.size()-2]})
-        {
-            for (int j=0;j<neighbour_order.size();j++)
-            {
-                if (i==neighbour_order[j])
-                {
-                    x++;
-                }
-            }
-        }
-        if (x==2)
-        {
-            return {0,1,2};
-        }
-    }
-    else if(permutation.size()==5)
+    else
     {
-
+        // permutation.clear();
+        // for(int i=0;i<focus_order.size();i++)
+        // {
+        //     for (int j=0;j<neighbour_order.size();j++)
+        //     {
+        //         if (focus_order[i]==neighbour_order[j])
+        //         {
+        //             cout<<i<<"->"<<j<<" ";
+        //             permutation.push_back(j);
+        //         }
+        //     }
+        // }
+        // cout<<index<<endl;
+        assert(true==false);
     }
-    else if (permutation.size()==6)
-    {
-
-    }
-    // for (size_t i = 0; i < permutation.size(); i++)
-    // {
-    //     cout<<permutation[i]<<" ";
-    // }
-    // cout<<endl;
-    
-    // cout<<"d"<<endl;
-    // cout<<permutation.size()<<endl;
-    // permutation[0]-=min_j;
-    // permutation[1]-=min_j;
-    // permutation[2]-=min_j;
-    // cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<endl;
     return permutation;
 }
 
