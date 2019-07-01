@@ -30,10 +30,10 @@ void check_2(int (tetra_array)[],int (diamond_array)[],int diamond_array_size)
     cout<<"Check 2 done"<<endl;
 }
 
-void check_3(vector<Diamond> &diamnond_list)
+void check_3(vector<Diamond> &diamond_list)
 {
     unordered_map<int,int> map;
-    for (Diamond &diamond : diamnond_list)
+    for (Diamond &diamond : diamond_list)
     {
         for (Tetrahedron* tetra : diamond.get_tetra_list())
         {
@@ -51,4 +51,34 @@ void check_3(vector<Diamond> &diamnond_list)
         }
     }
     cout<<"Check 3 done"<<endl;
+}
+
+void check_4(vector<Diamond> &diamond_list)
+{
+    int error1=0;
+    int error2=0;
+    vector<int> v={0,0,0};
+    for (Diamond &diamond : diamond_list)
+    {
+        for (int i=0;i<diamond.get_neighbours().size();i++)
+        {
+            if ((diamond.get_neighbours()[i]==NULL && diamond.get_permutation(i)!=v))
+            {
+                error1++;
+            }
+            else if ((diamond.get_neighbours()[i]!=NULL && diamond.get_permutation(i)==v))
+            {
+                error2++;
+            }
+        }
+    }
+    if (error1==0 && error2==0)
+    {
+        cout<<"Check 4 done"<<endl;
+    }
+    else
+    {
+        assert(true==false);
+    }
+    
 }

@@ -154,6 +154,12 @@ int main()
     step_3_5_set_neighbour_permutation(diamond_list);
     
 
+    // check_4(diamond_list);
+
+    cout<<"C'est parti"<<endl;
+    vertex_degree(diamond_list,1000);
+
+
     // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
     // array_size,anchor_dict);
 
