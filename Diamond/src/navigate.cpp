@@ -184,7 +184,7 @@ void vertex_degree(vector<Diamond> &diamond_list,int id)
                 {
                     cout<<"d"<<endl;
                     cout<<"last index : "<<tmp.last_index<<endl;
-                    if (tmp.from->get_permutation(j)[0]==tmp.last_index)
+                    if (tmp.from->get_permutation(tmp.from_face_index)[0]==tmp.last_index)
                     {
                         cout<<"e"<<endl;
                         Next a;
@@ -235,7 +235,7 @@ void vertex_degree(vector<Diamond> &diamond_list,int id)
                         stack_face.push(b);
                         stack_face.push(c);
                     }
-                    else if (tmp.from->get_permutation(j)[1]==tmp.last_index)
+                    else if (tmp.from->get_permutation(tmp.from_face_index)[1]==tmp.last_index)
                     {
                         cout<<"f"<<endl;
                         Next a;
@@ -280,10 +280,6 @@ void vertex_degree(vector<Diamond> &diamond_list,int id)
                             display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
                             display_face(tmp.to->neighbours_faces[(j+2)%tmp.to->get_neighbours().size()]);
                             cout<<endl;
-                            // display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
-                            // display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
-                            // display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
-                            // display_face(tmp.to->neighbours_faces[(j-3)%tmp.to->get_neighbours().size()]);
 
                         }
 
@@ -291,7 +287,7 @@ void vertex_degree(vector<Diamond> &diamond_list,int id)
                         stack_face.push(b);
                         stack_face.push(c);
                     }
-                    else if (tmp.from->get_permutation(j)[2]==tmp.last_index)
+                    else if (tmp.from->get_permutation(tmp.from_face_index)[2]==tmp.last_index)
                     {
                         cout<<"g"<<endl;
                     }

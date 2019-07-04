@@ -25,12 +25,14 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
         {
             tuple<int,int,int> opposite_anchor_face=elements[0]->get_opposite_face(anchor_vertex);
             this->neighbours_faces[0]=opposite_anchor_face;
+            this->vertex_order.push_back(anchor_vertex->get_id());
             int x=1;
             for(int i=0;i<4;i++)
             {
                 if (elements[0]->get_vertices()[i]->get_id()!=anchor_vertex->get_id())
                 {
                     this->neighbours_faces[x]=elements[0]->get_opposite_face(elements[0]->get_vertices()[i]);
+                    this->vertex_order.push_back(elements[0]->get_vertices()[i]->get_id());
                     x++;
                 }
             }
@@ -40,6 +42,8 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
             for (int i=0;i<4;i++)
             {
                 this->neighbours_faces[i]=elements[0]->get_opposite_face(elements[0]->get_vertices()[i]);
+                this->vertex_order.push_back(elements[0]->get_vertices()[i]->get_id());
+
             }
         }
         
@@ -359,11 +363,7 @@ vector<int> Diamond::get_vertex_order()
     }
     else
     {
-        for (Vertex* vertex : this->tetra_list[0]->get_vertices())
-        {
-            order.push_back(vertex->get_id());
-        }
-        return order;
+        return this->vertex_order;
     }
         
 }

@@ -342,10 +342,11 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
     vector<int> vertices;
     vector<int> permutation;
 
+    int fais_chier=-1;
     // because the last tetra has the vertice 0
     int size=focus.get_tetra_list().size();
 
-    if (focus.get_tetra_list().size()==1)
+    if (size==1)
     {
         vertices={0,1,2,3};
     }
@@ -353,11 +354,29 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
     {
         if (index%2==0)
         {
-            vertices={(index/2)%size,(index/2+1)%size ,(focus_order.size()-2)};
+            if (index!=0 && (index/2+1)%size==0)
+            {
+                fais_chier=0;
+                vertices={(index/2),0,size};
+            }
+            else
+            {
+                fais_chier=1;
+                vertices={(index/2)%size,(index/2+1)%size,size};
+            }
         }
         else
         {
-            vertices={((index-1)/2)%size,((index-1)/2+1)%size,(focus_order.size()-1)};
+            if (index-1!=0 && ((index-1)/2+1)%size==0)
+            {
+                fais_chier=2;
+                vertices={((index-1)/2)%size,0,size+1};
+            }
+            else
+            {
+                fais_chier=3;
+                vertices={((index-1)/2)%size,((index-1)/2+1)%size,size+1};
+            }
         }
     }
         
@@ -372,61 +391,124 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
         }
     }
 
-    // cout<< focus_order.size()<<" "<<neighbour_order.size()<<" "<<index<<endl;
-    if (permutation.size()==3)
+    if (focus.get_id()==0 && neighbour->get_id()==3349)
     {
-        if (permutation[0]==neighbour_order.size()-2 || permutation[0]==neighbour_order.size()-1)
+        for (int i : focus_order)
         {
-            if (permutation[1]==permutation[2]-1)
-            {
-                return {2,0,1};
-            }
-            else if (permutation[1]==neighbour_order.size()-3 && permutation[2]==0)
-            {
-                return {2,0,1};
-            }
-            else
-            {
-                return {2,1,0};
-            }
+            cout<<i<<" ";
         }
-        else if (permutation[1]==neighbour_order.size()-2 || permutation[1]==neighbour_order.size()-1)
+        cout<<endl;
+        for (int i : neighbour_order)
         {
-            if (permutation[0]==permutation[2]-1)
-            {
-                return {0,2,1};
-            }
-            else if (permutation[0]==neighbour_order.size()-3 && permutation[2]==0)
-            {
-                return {0,2,1};
-            }
-            else
-            {
-                return {1,2,0};
-            }
+            cout<<i<<" ";
         }
-        else if (permutation[2]==neighbour_order.size()-2 || permutation[2]==neighbour_order.size()-1)
-        {
-            if (permutation[0]==permutation[1]-1 && permutation[1]<permutation[2])
-            {
-                return {0,1,2};
-            }
-            else if (permutation[0]==neighbour_order.size()-3 && permutation[1]==0)
-            {
-                return {0,1,2};
-            }
-            else
-            {
-                return {1,0,2};
-            }
-        }
+        cout<<endl;
+        cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<" "<<neighbour_order.size()<<endl;
+        cout<<vertices[0]<<" "<<vertices[1]<<" "<<vertices[2]<<endl;
+        cout<<"fais_chier "<<fais_chier<<endl;
+        cout<<"index "<<index<<endl;
     }
-    else
+
+
+    if (permutation.size()!=3)
     {
         cout<<"Permutation size : "<<permutation.size()<<endl;
         assert(true==false);
     }
-    return permutation;
+
+    if (neighbour_order.size()!=4)
+    {
+        if (permutation[0]==(neighbour_order.size()-3))
+        {
+            if (permutation[1]==0)
+            {
+                return {0,1,2};
+            }
+            else if (permutation[2]==0)
+            {
+                return {0,2,1};
+            }
+        }
+        if (permutation[1]==(neighbour_order.size()-3))
+        {
+            if (permutation[0]==0)
+            {
+                return {1,0,2};
+            }
+            else if (permutation[2]==0)
+            {
+                return {1,2,0};
+            }
+        }
+        if (permutation[2]==(neighbour_order.size()-3))
+        {
+            if (permutation[0]==0)
+            {
+                return {2,0,1};
+            }
+            else if (permutation[1]==0)
+            {
+                return {2,1,0};
+            }
+        }
+        if (permutation[0]==permutation[1]-1 && permutation[0]<neighbour_order.size()-3)
+        {
+            return {0,1,2};
+        }
+        if (permutation[0]==permutation[2]-1 && permutation[0]<neighbour_order.size()-3)
+        {
+            return {0,2,1};
+        }     
+        if (permutation[1]==permutation[0]-1 && permutation[1]<neighbour_order.size()-3)
+        {
+            return {1,0,2};
+        }
+        if (permutation[1]==permutation[2]-1 && permutation[1]<neighbour_order.size()-3)
+        {
+            return {1,2,0};
+        }  
+        if (permutation[2]==permutation[0]-1 && permutation[2]<neighbour_order.size()-3)
+        {
+            return {2,0,1};
+        }  
+        if (permutation[2]==permutation[1]-1 && permutation[2]<neighbour_order.size()-3)
+        {
+            return {2,1,0};
+        }
+    }
+    else if (neighbour_order.size()==4)
+    {
+        if (permutation[0]<permutation[1] && permutation[1]<permutation[2])
+        {
+            return {0,1,2};
+        }
+        if (permutation[0]<permutation[2] && permutation[2]<permutation[1])
+        {
+            return {0,2,1};
+        }
+        if (permutation[1]<permutation[0] && permutation[0]<permutation[2])
+        {
+            return {1,0,2};
+        }
+        if (permutation[1]<permutation[2] && permutation[2]<permutation[0])
+        {
+            return {1,2,0};
+        }
+        if (permutation[2]<permutation[0] && permutation[0]<permutation[1])
+        {
+            return {2,0,1};
+        }
+        if (permutation[2]<permutation[1] && permutation[1]<permutation[0])
+        {
+            return {2,1,0};
+        }
+    }
+    
+
+
+    cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<" "<<neighbour_order.size()<<endl;
+    cout<<"fuck"<<endl;
+    assert(true==false);   
 }
 
 void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
@@ -447,35 +529,35 @@ void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
                     vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
                     diamond.set_permutation(permutation,i);
                 }
-                else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
-                {
-                    vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
-                    diamond.set_permutation(permutation,i);
-                }
+                // else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
+                // {
+                //     vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
+                //     diamond.set_permutation(permutation,i);
+                // }
             }
         }
     }
-    for(Diamond &diamond : diamond_list)
-    {
-        for(int i=0;i<diamond.get_neighbours().size();i++)
-        {
-            if (diamond.get_neighbours()[i]!=NULL)
-            {
-                if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
-                {
-                    for(int j=0;j<4;j++)
-                    {
-                        for (int k=0;k<diamond.get_neighbours()[i]->neighbours_faces.size();k++)
-                        {
-                            if (diamond.neighbours_faces[j]==diamond.get_neighbours()[i]->neighbours_faces[k])
-                            {
-                                vector<int> permutation = diamond.get_neighbours()[i]->get_permutation(k);
-                                diamond.set_permutation(permutation,j);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // for(Diamond &diamond : diamond_list)
+    // {
+    //     for(int i=0;i<diamond.get_neighbours().size();i++)
+    //     {
+    //         if (diamond.get_neighbours()[i]!=NULL)
+    //         {
+    //             if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
+    //             {
+    //                 for(int j=0;j<4;j++)
+    //                 {
+    //                     for (int k=0;k<diamond.get_neighbours()[i]->neighbours_faces.size();k++)
+    //                     {
+    //                         if (diamond.neighbours_faces[j]==diamond.get_neighbours()[i]->neighbours_faces[k])
+    //                         {
+    //                             vector<int> permutation = diamond.get_neighbours()[i]->get_permutation(k);
+    //                             diamond.set_permutation(permutation,j);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }

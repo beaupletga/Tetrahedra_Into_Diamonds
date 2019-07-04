@@ -153,8 +153,11 @@ int main()
     
     step_3_5_set_neighbour_permutation(diamond_list);
     
-
+    cout<<"oui"<<endl;
     // check_4(diamond_list);
+    check_5(diamond_list);
+    return 0;
+
 
     cout<<"C'est parti"<<endl;
     vertex_degree(diamond_list,1000);
