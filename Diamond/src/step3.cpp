@@ -348,7 +348,23 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
 
     if (size==1)
     {
-        vertices={0,1,2,3};
+        if (index==0)
+        {
+            vertices={1,2,3};
+        }
+        if (index==1)
+        {
+            vertices={0,2,3};
+        }
+        if (index==2)
+        {
+            vertices={0,1,3};
+        }
+        if (index==3)
+        {
+            vertices={0,1,2};
+        }
+        
     }
     else
     {
@@ -391,23 +407,23 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
         }
     }
 
-    if (focus.get_id()==0 && neighbour->get_id()==3349)
-    {
-        for (int i : focus_order)
-        {
-            cout<<i<<" ";
-        }
-        cout<<endl;
-        for (int i : neighbour_order)
-        {
-            cout<<i<<" ";
-        }
-        cout<<endl;
-        cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<" "<<neighbour_order.size()<<endl;
-        cout<<vertices[0]<<" "<<vertices[1]<<" "<<vertices[2]<<endl;
-        cout<<"fais_chier "<<fais_chier<<endl;
-        cout<<"index "<<index<<endl;
-    }
+    // if (focus.get_id()==6369 && neighbour->get_id()==476)
+    // {
+    //     for (int i : focus_order)
+    //     {
+    //         cout<<i<<" ";
+    //     }
+    //     cout<<endl;
+    //     for (int i : neighbour_order)
+    //     {
+    //         cout<<i<<" ";
+    //     }
+    //     cout<<endl;
+    //     cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<" "<<neighbour_order.size()<<endl;
+    //     cout<<vertices[0]<<" "<<vertices[1]<<" "<<vertices[2]<<endl;
+    //     cout<<"fais_chier "<<fais_chier<<endl;
+    //     cout<<"index "<<index<<endl;
+    // }
 
 
     if (permutation.size()!=3)
@@ -529,35 +545,17 @@ void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
                     vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
                     diamond.set_permutation(permutation,i);
                 }
-                // else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
-                // {
-                //     vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
-                //     diamond.set_permutation(permutation,i);
-                // }
+                else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
+                {
+                    vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
+                    diamond.set_permutation(permutation,i);
+                }
+                else if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
+                {
+                    vector<int> permutation = get_permutation(diamond,diamond.get_neighbours()[i],i);
+                    diamond.set_permutation(permutation,i);
+                }
             }
         }
     }
-    // for(Diamond &diamond : diamond_list)
-    // {
-    //     for(int i=0;i<diamond.get_neighbours().size();i++)
-    //     {
-    //         if (diamond.get_neighbours()[i]!=NULL)
-    //         {
-    //             if (diamond.get_tetra_list().size()==1 && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
-    //             {
-    //                 for(int j=0;j<4;j++)
-    //                 {
-    //                     for (int k=0;k<diamond.get_neighbours()[i]->neighbours_faces.size();k++)
-    //                     {
-    //                         if (diamond.neighbours_faces[j]==diamond.get_neighbours()[i]->neighbours_faces[k])
-    //                         {
-    //                             vector<int> permutation = diamond.get_neighbours()[i]->get_permutation(k);
-    //                             diamond.set_permutation(permutation,j);
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 }

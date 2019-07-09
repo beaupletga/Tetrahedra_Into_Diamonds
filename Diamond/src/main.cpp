@@ -38,6 +38,7 @@ using namespace std;
 // - utiliser les references differentielles pour gagner de la place (plutot que de stocker les references sur 32 bits, 
 // on peut stocker la différence entre deux référence sur 8 ou 16 bits)
 // - faire une reduction polynomiale afin de montrer que notre probleme est np-complet
+// faire une fonction qui permet d'encoder notre structure dans un fichier off
 
 int main() 
 {
@@ -156,11 +157,14 @@ int main()
     cout<<"oui"<<endl;
     // check_4(diamond_list);
     check_5(diamond_list);
-    return 0;
+    // return 0;
 
 
     cout<<"C'est parti"<<endl;
-    vertex_degree(diamond_list,1000);
+    int vertex = 321;
+    vertex_degree(diamond_list,vertex);
+
+    cout<<vertex_dict[vertex].size()<<endl;
 
 
     // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,

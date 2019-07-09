@@ -91,11 +91,11 @@ void check_5(vector<Diamond> &diamond_list)
     for (Diamond &diamond : diamond_list)
     {
         int size = diamond.get_tetra_list().size();
-        if (diamond.get_tetra_list().size()>1)
+        // if (diamond.get_tetra_list().size()==1)
         {
             for (int i=0;i<diamond.get_neighbours().size();i++)
             {
-                if (diamond.get_neighbours()[i]!=NULL)// && diamond.get_neighbours()[i]->get_tetra_list().size()>1)
+                if (diamond.get_neighbours()[i]!=NULL)// && diamond.get_neighbours()[i]->get_tetra_list().size()==1)
                 {
                     int left,right,tip;
                     if (diamond.get_vertex_order().size()>4)
@@ -113,6 +113,34 @@ void check_5(vector<Diamond> &diamond_list)
                             tip = diamond.get_vertex_order()[size+1];
                         }
                     }
+                    else
+                    {
+                        if (i==0)
+                        {
+                            left = diamond.get_vertex_order()[1];
+                            right = diamond.get_vertex_order()[2];
+                            tip = diamond.get_vertex_order()[3];
+                        }
+                        if (i==1)
+                        {
+                            left = diamond.get_vertex_order()[0];
+                            right = diamond.get_vertex_order()[2];
+                            tip = diamond.get_vertex_order()[3];
+                        }
+                        if (i==2)
+                        {
+                            left = diamond.get_vertex_order()[0];
+                            right = diamond.get_vertex_order()[1];
+                            tip = diamond.get_vertex_order()[3];
+                        }
+                        if (i==3)
+                        {
+                            left = diamond.get_vertex_order()[0];
+                            right = diamond.get_vertex_order()[1];
+                            tip = diamond.get_vertex_order()[2];
+                        }
+                    }
+                    
                     
                     vector<int> focus={left,right,tip};
                     vector<int> neighbour;
@@ -132,7 +160,7 @@ void check_5(vector<Diamond> &diamond_list)
                     }
                     else
                     {
-                        if (diamond.get_vertex_order().size()>4 && diamond.get_neighbours()[i]->get_vertex_order().size()>4)
+                        if (diamond.get_neighbours()[i]->get_vertex_order().size()>4)
                         {
                             if (neighbour[1]==diamond.get_neighbours()[i]->get_vertex_order().size()-3 && neighbour[0]==0)
                             {

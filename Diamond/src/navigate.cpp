@@ -130,188 +130,488 @@ void display_face(tuple<int,int,int> face)
     cout<<get<0>(face)<<" "<<get<1>(face)<<" "<<get<2>(face)<<endl;
 }
 
+// void vertex_degree(vector<Diamond> &diamond_list,int id)
+// {
+//     unordered_set<int> diamond_ids;
+//     stack<Next> stack_face;
+//     for (int i=0;i<diamond_list.size();i++)
+//     {
+//         if (diamond_list[i].get_anchor_vertex()->get_id()==id && diamond_list[i].has_anchor)
+//         {
+//             for(auto j : diamond_list[i].get_vertex_order())
+//             {
+//                 cout<<j<<" ";
+//             }
+//             cout<<endl;
+
+//             cout<<"a"<<endl;
+//             Next first;
+//             first.from=&diamond_list[i];
+//             first.to=diamond_list[i].get_neighbours()[0];
+//             first.from_face_index=0;
+//             first.last_index=2;
+
+//             if (first.to==NULL)
+//             {
+//                 cout<<"pas de chance"<<endl;
+//                 assert(true==false);
+//             }
+//             cout<<"b"<<endl;
+//             stack_face.push(first);
+//             while (!stack_face.empty())
+//             {
+//                 cout<<stack_face.size()<<endl;
+//                 cout<<"c"<<endl;
+                
+//                 Next tmp = stack_face.top();
+//                 stack_face.pop();
+//                 // display_face(tmp.from->neighbours_faces[tmp.from_face_index]);
+//                 int j=-1;
+//                 for (int k=0;k<tmp.to->neighbours_faces.size();k++)
+//                 {
+//                     if (tmp.to->neighbours_faces[k]==tmp.from->neighbours_faces[tmp.from_face_index])
+//                     {
+//                         display_face(tmp.to->neighbours_faces[k]);
+//                         j=k;
+//                     }
+//                 }
+//                 if (j==-1)
+//                 {
+//                     assert(true==false);
+//                 }
+//                 // display_face(tmp.to->neighbours_faces[j]);
+//                 if (tmp.to->get_tetra_list().size()>1)
+//                 {
+//                     cout<<"d"<<endl;
+//                     cout<<"last index : "<<tmp.last_index<<endl;
+//                     if (tmp.from->get_permutation(tmp.from_face_index)[0]==tmp.last_index)
+//                     {
+//                         cout<<"e"<<endl;
+//                         Next a;
+//                         Next b;
+//                         Next c;
+
+//                         a.from=tmp.to;
+//                         b.from=tmp.to;
+//                         c.from=tmp.to;
+//                         a.last_index=0;
+//                         b.last_index=0;
+//                         c.last_index=0;
+//                         // a.from_face_index=j;
+//                         // b.from_face_index=j;
+//                         // c.from_face_index=j;
+
+
+//                         if (j%2==0)
+//                         {
+//                             cout<<"e1"<<endl;
+//                             a.to=tmp.to->get_neighbours()[(j+1)%tmp.to->get_neighbours().size()];
+//                             b.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
+//                             c.to=tmp.to->get_neighbours()[(j-2)%tmp.to->get_neighbours().size()];
+//                             a.from_face_index=(j+1)%tmp.to->get_neighbours().size();
+//                             b.from_face_index=(j-1)%tmp.to->get_neighbours().size();
+//                             c.from_face_index=(j-2)%tmp.to->get_neighbours().size();
+
+//                             display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
+//                         }
+//                         else
+//                         {
+//                             cout<<"e2"<<endl;
+//                             a.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
+//                             b.to=tmp.to->get_neighbours()[(j-2)%tmp.to->get_neighbours().size()];
+//                             c.to=tmp.to->get_neighbours()[(j-3)%tmp.to->get_neighbours().size()];
+//                             a.from_face_index=(j-1)%tmp.to->get_neighbours().size();
+//                             b.from_face_index=(j-2)%tmp.to->get_neighbours().size();
+//                             c.from_face_index=(j-3)%tmp.to->get_neighbours().size();
+
+//                             display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j-3)%tmp.to->get_neighbours().size()]);
+//                         }
+                        
+//                         stack_face.push(a);
+//                         stack_face.push(b);
+//                         stack_face.push(c);
+//                     }
+//                     else if (tmp.from->get_permutation(tmp.from_face_index)[1]==tmp.last_index)
+//                     {
+//                         cout<<"f"<<endl;
+//                         Next a;
+//                         Next b;
+//                         Next c;
+
+//                         a.from=tmp.to;
+//                         b.from=tmp.to;
+//                         c.from=tmp.to;
+//                         a.last_index=1;
+//                         b.last_index=1;
+//                         c.last_index=1;
+//                         // a.from_face_index=j;
+//                         // b.from_face_index=j;
+//                         // c.from_face_index=j;
+
+//                         if (j%2==0)
+//                         {
+//                             cout<<"f1"<<endl;
+//                             a.to=tmp.to->get_neighbours()[j+1];
+//                             b.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
+//                             c.to=tmp.to->get_neighbours()[(j-2)%tmp.to->get_neighbours().size()];
+//                             a.from_face_index=(j+1)%tmp.to->get_neighbours().size();
+//                             b.from_face_index=(j-1)%tmp.to->get_neighbours().size();
+//                             c.from_face_index=(j-2)%tmp.to->get_neighbours().size();
+
+//                             display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
+//                         }
+//                         else
+//                         {
+//                             cout<<"f2"<<endl;
+//                             a.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
+//                             b.to=tmp.to->get_neighbours()[(j+1)%tmp.to->get_neighbours().size()];
+//                             c.to=tmp.to->get_neighbours()[(j+2)%tmp.to->get_neighbours().size()];
+//                             a.from_face_index=(j-1)%tmp.to->get_neighbours().size();
+//                             b.from_face_index=(j+1)%tmp.to->get_neighbours().size();
+//                             c.from_face_index=(j+2)%tmp.to->get_neighbours().size();
+
+//                             display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
+//                             display_face(tmp.to->neighbours_faces[(j+2)%tmp.to->get_neighbours().size()]);
+//                             cout<<endl;
+
+//                         }
+
+//                         stack_face.push(a);
+//                         stack_face.push(b);
+//                         stack_face.push(c);
+//                     }
+//                     else if (tmp.from->get_permutation(tmp.from_face_index)[2]==tmp.last_index)
+//                     {
+//                         cout<<"g"<<endl;
+//                     }
+//                     // break;
+//                 }
+//                 else if (tmp.to->get_tetra_list().size()==1)
+//                 {
+//                     if (tmp.to->get_permutation(j)[0]==tmp.last_index)
+//                     {
+//                         cout<<"h"<<endl;
+//                     }
+//                     else if (tmp.to->get_permutation(j)[1]==tmp.last_index)
+//                     {
+//                         cout<<"i"<<endl;
+//                     }
+//                     else if (tmp.to->get_permutation(j)[2]==tmp.last_index)
+//                     {
+//                         cout<<"j"<<endl;
+//                     }
+                    
+//                 }
+//                 sleep(2);
+//             }
+//             break;
+//         }
+//     }
+// }
+
+
+
+
 void vertex_degree(vector<Diamond> &diamond_list,int id)
 {
     unordered_set<int> diamond_ids;
     stack<Next> stack_face;
+    int total_degree=0;
     for (int i=0;i<diamond_list.size();i++)
     {
-        if (diamond_list[i].get_anchor_vertex()->get_id()==id && diamond_list[i].has_anchor)
+        if (diamond_list[i].has_anchor && diamond_list[i].get_anchor_vertex()->get_id()==id && diamond_list[i].get_tetra_list().size()>1)
         {
-            for(auto j : diamond_list[i].get_vertex_order())
-            {
-                cout<<j<<" ";
-            }
-            cout<<endl;
-
-            cout<<"a"<<endl;
             Next first;
             first.from=&diamond_list[i];
             first.to=diamond_list[i].get_neighbours()[0];
             first.from_face_index=0;
             first.last_index=2;
-
             if (first.to==NULL)
             {
                 cout<<"pas de chance"<<endl;
                 assert(true==false);
             }
-            cout<<"b"<<endl;
             stack_face.push(first);
-            while (!stack_face.empty())
-            {
-                cout<<stack_face.size()<<endl;
-                cout<<"c"<<endl;
-                
-                Next tmp = stack_face.top();
-                stack_face.pop();
-                // display_face(tmp.from->neighbours_faces[tmp.from_face_index]);
-                int j=-1;
-                for (int k=0;k<tmp.to->neighbours_faces.size();k++)
-                {
-                    if (tmp.to->neighbours_faces[k]==tmp.from->neighbours_faces[tmp.from_face_index])
-                    {
-                        display_face(tmp.to->neighbours_faces[k]);
-                        j=k;
-                    }
-                }
-                if (j==-1)
-                {
-                    assert(true==false);
-                }
-                // display_face(tmp.to->neighbours_faces[j]);
-                if (tmp.to->get_tetra_list().size()>1)
-                {
-                    cout<<"d"<<endl;
-                    cout<<"last index : "<<tmp.last_index<<endl;
-                    if (tmp.from->get_permutation(tmp.from_face_index)[0]==tmp.last_index)
-                    {
-                        cout<<"e"<<endl;
-                        Next a;
-                        Next b;
-                        Next c;
-
-                        a.from=tmp.to;
-                        b.from=tmp.to;
-                        c.from=tmp.to;
-                        a.last_index=0;
-                        b.last_index=0;
-                        c.last_index=0;
-                        // a.from_face_index=j;
-                        // b.from_face_index=j;
-                        // c.from_face_index=j;
-
-
-                        if (j%2==0)
-                        {
-                            cout<<"e1"<<endl;
-                            a.to=tmp.to->get_neighbours()[(j+1)%tmp.to->get_neighbours().size()];
-                            b.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
-                            c.to=tmp.to->get_neighbours()[(j-2)%tmp.to->get_neighbours().size()];
-                            a.from_face_index=(j+1)%tmp.to->get_neighbours().size();
-                            b.from_face_index=(j-1)%tmp.to->get_neighbours().size();
-                            c.from_face_index=(j-2)%tmp.to->get_neighbours().size();
-
-                            display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
-                        }
-                        else
-                        {
-                            cout<<"e2"<<endl;
-                            a.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
-                            b.to=tmp.to->get_neighbours()[(j-2)%tmp.to->get_neighbours().size()];
-                            c.to=tmp.to->get_neighbours()[(j-3)%tmp.to->get_neighbours().size()];
-                            a.from_face_index=(j-1)%tmp.to->get_neighbours().size();
-                            b.from_face_index=(j-2)%tmp.to->get_neighbours().size();
-                            c.from_face_index=(j-3)%tmp.to->get_neighbours().size();
-
-                            display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j-3)%tmp.to->get_neighbours().size()]);
-                        }
-                        
-                        stack_face.push(a);
-                        stack_face.push(b);
-                        stack_face.push(c);
-                    }
-                    else if (tmp.from->get_permutation(tmp.from_face_index)[1]==tmp.last_index)
-                    {
-                        cout<<"f"<<endl;
-                        Next a;
-                        Next b;
-                        Next c;
-
-                        a.from=tmp.to;
-                        b.from=tmp.to;
-                        c.from=tmp.to;
-                        a.last_index=1;
-                        b.last_index=1;
-                        c.last_index=1;
-                        // a.from_face_index=j;
-                        // b.from_face_index=j;
-                        // c.from_face_index=j;
-
-                        if (j%2==0)
-                        {
-                            cout<<"f1"<<endl;
-                            a.to=tmp.to->get_neighbours()[j+1];
-                            b.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
-                            c.to=tmp.to->get_neighbours()[(j-2)%tmp.to->get_neighbours().size()];
-                            a.from_face_index=(j+1)%tmp.to->get_neighbours().size();
-                            b.from_face_index=(j-1)%tmp.to->get_neighbours().size();
-                            c.from_face_index=(j-2)%tmp.to->get_neighbours().size();
-
-                            display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j-2)%tmp.to->get_neighbours().size()]);
-                        }
-                        else
-                        {
-                            cout<<"f2"<<endl;
-                            a.to=tmp.to->get_neighbours()[(j-1)%tmp.to->get_neighbours().size()];
-                            b.to=tmp.to->get_neighbours()[(j+1)%tmp.to->get_neighbours().size()];
-                            c.to=tmp.to->get_neighbours()[(j+2)%tmp.to->get_neighbours().size()];
-                            a.from_face_index=(j-1)%tmp.to->get_neighbours().size();
-                            b.from_face_index=(j+1)%tmp.to->get_neighbours().size();
-                            c.from_face_index=(j+2)%tmp.to->get_neighbours().size();
-
-                            display_face(tmp.to->neighbours_faces[(j-1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j+1)%tmp.to->get_neighbours().size()]);
-                            display_face(tmp.to->neighbours_faces[(j+2)%tmp.to->get_neighbours().size()]);
-                            cout<<endl;
-
-                        }
-
-                        stack_face.push(a);
-                        stack_face.push(b);
-                        stack_face.push(c);
-                    }
-                    else if (tmp.from->get_permutation(tmp.from_face_index)[2]==tmp.last_index)
-                    {
-                        cout<<"g"<<endl;
-                    }
-                    // break;
-                }
-                else if (tmp.to->get_tetra_list().size()==1)
-                {
-                    if (tmp.to->get_permutation(j)[0]==tmp.last_index)
-                    {
-                        cout<<"h"<<endl;
-                    }
-                    else if (tmp.to->get_permutation(j)[1]==tmp.last_index)
-                    {
-                        cout<<"i"<<endl;
-                    }
-                    else if (tmp.to->get_permutation(j)[2]==tmp.last_index)
-                    {
-                        cout<<"j"<<endl;
-                    }
-                    
-                }
-                sleep(2);
-            }
             break;
         }
     }
+    while (!stack_face.empty())
+    {
+        Next current = stack_face.top();
+        stack_face.pop();
+        if (current.to!=NULL && diamond_ids.count(current.to->get_id())==0)
+        {
+            diamond_ids.insert(current.to->get_id());
+            // total_degree+=current.to->get_tetra_list().size();
+        }
+        else
+        {
+            continue;
+        }
+        cout<<"x1"<<endl;
+        // display_face(current.from->neighbours_faces[current.from_face_index]);
+        current.from->display_vertices_id();
+        current.to->display_vertices_id();
+        int neighbour_face_size = current.to->get_neighbours().size();
+        int neighbour_face_index = -1;
+        cout<<"x2"<<endl;
+        for (int k=0;k<current.to->neighbours_faces.size();k++)
+        {
+            if (current.to->neighbours_faces[k]==current.from->neighbours_faces[current.from_face_index])
+            {
+                neighbour_face_index=k;
+                break;
+            }
+        }
+        cout<<"x3"<<endl;
+        if (neighbour_face_index==-1)
+        {
+            cout<<"unknown face"<<endl;
+            assert(true==false);
+        }
+
+        if (current.to->get_tetra_list().size()>1)
+        {
+            cout<<"x4"<<endl;
+            if (current.from->get_permutation(current.from_face_index)[0]==current.last_index)
+            {
+                vector<int> indexes;
+                if (neighbour_face_index%2==0)
+                {
+                    int a = (neighbour_face_size+(neighbour_face_index+1)%neighbour_face_size)%neighbour_face_size;
+                    int b = (neighbour_face_size+(neighbour_face_index-1)%neighbour_face_size)%neighbour_face_size;
+                    int c =(neighbour_face_size+(neighbour_face_index-2)%neighbour_face_size)%neighbour_face_size ;
+
+                    indexes = {a,b,c};
+                }
+                else
+                {
+                    int a = (neighbour_face_size+(neighbour_face_index-1)%neighbour_face_size)%neighbour_face_size;
+                    int b = (neighbour_face_size+(neighbour_face_index-2)%neighbour_face_size)%neighbour_face_size;
+                    int c =(neighbour_face_size+(neighbour_face_index-3)%neighbour_face_size)%neighbour_face_size ;
+
+                    indexes = {a,b,c};
+                }
+                total_degree+=2;
+                cout<<"0"<<endl;
+                // cout<<neighbour_face_index<<" "<<(neighbour_face_size+(neighbour_face_index-2)%neighbour_face_size)%neighbour_face_size<<endl;
+                // cout<<indexes[0]<<" "<<indexes[1]<<" "<<indexes[2]<<endl;
+                display_face(current.to->neighbours_faces[indexes[0]]);
+                display_face(current.to->neighbours_faces[indexes[1]]);
+                display_face(current.to->neighbours_faces[indexes[2]]);
+                
+                if (current.to->neighbours_faces[indexes[0]]!=tuple<int,int,int>{0,0,0})
+                {
+                    Next next0;
+                    next0.from=current.to;
+                    next0.to=current.to->get_neighbours()[indexes[0]];
+                    next0.from_face_index=indexes[0];
+                    next0.last_index=0;
+                    stack_face.push(next0);
+                }
+                if (current.to->neighbours_faces[indexes[1]]!=tuple<int,int,int>{0,0,0})
+                {
+                    Next next1;
+                    next1.from=current.to;
+                    next1.to=current.to->get_neighbours()[indexes[1]];
+                    next1.from_face_index=indexes[1];
+                    next1.last_index=1;
+                    stack_face.push(next1);
+                }
+                if (current.to->neighbours_faces[indexes[2]]!=tuple<int,int,int>{0,0,0})
+                {
+                    Next next2;
+                    next2.from=current.to;
+                    next2.to=current.to->get_neighbours()[indexes[2]];
+                    next2.from_face_index=indexes[2];
+                    next2.last_index=1;
+                    stack_face.push(next2);
+                }
+            }
+            if (current.from->get_permutation(current.from_face_index)[1]==current.last_index)
+            {
+                vector<int> indexes;
+                if (neighbour_face_index%2==0)
+                {
+                    int a = (neighbour_face_size+(neighbour_face_index+1)%neighbour_face_size)%neighbour_face_size;
+                    int b = (neighbour_face_size+(neighbour_face_index+2)%neighbour_face_size)%neighbour_face_size;
+                    int c =(neighbour_face_size+(neighbour_face_index+3)%neighbour_face_size)%neighbour_face_size ;
+
+                    indexes = {a,b,c};
+                    // indexes = {neighbour_face_index+1,(neighbour_face_index+2)%neighbour_face_size,
+                    // (neighbour_face_index+3)%neighbour_face_size};
+                }
+                else
+                {
+                    int a = (neighbour_face_size+(neighbour_face_index-1)%neighbour_face_size)%neighbour_face_size;
+                    int b = (neighbour_face_size+(neighbour_face_index+1)%neighbour_face_size)%neighbour_face_size;
+                    int c =(neighbour_face_size+(neighbour_face_index+2)%neighbour_face_size)%neighbour_face_size ;
+
+                    indexes = {a,b,c};
+                    // indexes = {neighbour_face_index-1,(neighbour_face_index+1)%neighbour_face_size,
+                    // (neighbour_face_index+2)%neighbour_face_size};
+                }
+
+
+
+                total_degree+=2;
+                cout<<"1"<<endl;
+                display_face(current.to->neighbours_faces[indexes[0]]);
+                display_face(current.to->neighbours_faces[indexes[1]]);
+                display_face(current.to->neighbours_faces[indexes[2]]);
+                
+                if (current.to->neighbours_faces[indexes[0]]!=tuple<int,int,int>{0,0,0})
+                {
+                    Next next0;
+                    next0.from=current.to;
+                    next0.to=current.to->get_neighbours()[indexes[0]];
+                    next0.from_face_index=indexes[0];
+                    next0.last_index=1;
+                    stack_face.push(next0);
+                }
+                if (current.to->neighbours_faces[indexes[1]]!=tuple<int,int,int>{0,0,0})
+                {
+                    Next next1;
+                    next1.from=current.to;
+                    next1.to=current.to->get_neighbours()[indexes[1]];
+                    next1.from_face_index=indexes[1];
+                    next1.last_index=0;
+                    stack_face.push(next1);
+                }
+                if (current.to->neighbours_faces[indexes[2]]!=tuple<int,int,int>{0,0,0})
+                {
+                    Next next2;
+                    next2.from=current.to;
+                    next2.to=current.to->get_neighbours()[indexes[2]];
+                    next2.from_face_index=indexes[2];
+                    next2.last_index=0;
+                    stack_face.push(next2);
+                }
+                
+            }
+            if (current.from->get_permutation(current.from_face_index)[2]==current.last_index)
+            {
+                int start;
+                if (neighbour_face_index%2==0)
+                {
+                    start=0;
+                }
+                else
+                {
+                    start=1;
+                }
+                cout<<"2"<<endl;
+                // for (int i : current.to->get_vertex_order())
+                // {
+                //     cout<<i<<" ";
+                // }
+                // cout<<endl;
+                for (int i=start;i<current.to->get_neighbours().size();i+=2)
+                {
+                    total_degree+=1;
+                    if (current.to->neighbours_faces[i]!=tuple<int,int,int>{0,0,0})
+                    {
+                        display_face(current.to->neighbours_faces[i]);
+                        Next next;
+                        next.from=current.to;
+                        next.to=current.to->get_neighbours()[i];
+                        next.from_face_index=i;
+                        next.last_index=2;
+                        stack_face.push(next);
+                    }
+                }
+            }
+        }
+        else
+        {
+            cout<<"Careful"<<endl;
+            total_degree+=1;
+
+            vector<vector<int>> x = {{1,2,3},{0,2,3},{0,1,3},{0,1,2}};
+
+            vector<int> indexes;
+            if (neighbour_face_index==0)
+            {
+                indexes={1,2,3};
+            }
+            if (neighbour_face_index==1)
+            {
+                indexes={0,2,3};
+            }
+            if (neighbour_face_index==2)
+            {
+                indexes={0,1,3};
+            }
+            if (neighbour_face_index==3)
+            {
+                indexes={0,1,2};
+            }
+
+
+            cout<<current.from->get_permutation(current.from_face_index)[0]<<" "<<current.from->get_permutation(current.from_face_index)[1]<<" "<<current.from->get_permutation(current.from_face_index)[2]<<endl;
+            cout<<current.last_index<<" "<<neighbour_face_index<<endl;
+            display_face(current.to->neighbours_faces[0]);
+            display_face(current.to->neighbours_faces[1]);
+            display_face(current.to->neighbours_faces[2]);
+            display_face(current.to->neighbours_faces[3]);
+            cout<<endl;
+
+            int which_case;
+            if (current.from->get_permutation(current.from_face_index)[0]==current.last_index)
+            {
+                which_case = x[neighbour_face_index][0];
+            }
+            if (current.from->get_permutation(current.from_face_index)[1]==current.last_index)
+            {
+                which_case = x[neighbour_face_index][1];
+            }
+            if (current.from->get_permutation(current.from_face_index)[2]==current.last_index)
+            {
+                which_case = x[neighbour_face_index][2];
+            }
+
+            for (int i=0;i<3;i++)
+            {
+                if (current.from->get_permutation(current.from_face_index)[i]!=current.last_index)
+                {
+                    Next next0;
+                    next0.from=current.to;
+                    next0.to=current.to->get_neighbours()[indexes[i]];
+                    next0.from_face_index=indexes[i];
+
+                    if (x[indexes[i]][0]==which_case)
+                    {
+                        next0.last_index=0;
+                    }
+                    if (x[indexes[i]][1]==which_case)
+                    {
+                        next0.last_index=1;
+                    }   
+                    if (x[indexes[i]][2]==which_case)
+                    {
+                        next0.last_index=2;
+                    }
+
+                    stack_face.push(next0);
+                    // cout<<"vertice "<<current.to->vertex_order[indexes[i]]<<endl;
+                    display_face(current.to->neighbours_faces[indexes[i]]);
+                }
+            }
+            cout<<"end"<<endl;
+        }
+        
+        sleep(1);
+    }
+    cout<<"Degree : "<< total_degree<<endl;
 }
+        // else
+        // {
+
+        // }

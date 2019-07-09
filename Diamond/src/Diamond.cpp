@@ -251,15 +251,7 @@ void Diamond::set_anchor_vertex(Vertex* anchor)
 
 void Diamond::display_vertices_id()
 {
-    unordered_set<int> tmp;
-    for(Tetrahedron* tetra : this->tetra_list)
-    {
-        for(Vertex* vertex : tetra->get_vertices())
-        {
-            tmp.insert(vertex->get_id());
-        }
-    }
-    for(int i : tmp)
+    for(int i : this->get_vertex_order())
     {
         cout<<i<<" ";
     }
