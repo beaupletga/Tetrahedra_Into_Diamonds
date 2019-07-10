@@ -161,10 +161,19 @@ int main()
 
 
     cout<<"C'est parti"<<endl;
-    int vertex = 321;
-    vertex_degree(diamond_list,vertex);
-
-    cout<<vertex_dict[vertex].size()<<endl;
+    // int vertex = 89;
+    for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
+    {
+        int v =vertex_degree(diamond_list,i.first);
+        if (v!=i.second.size())
+        {
+            cout<<v<<" "<<i.second.size()<<endl;
+            cout<<i.first<<endl;
+        }
+    }
+   
+    // cout<<"Degree "<<vertex_degree(diamond_list,vertex)<<endl;
+    // cout<<vertex_dict[vertex].size()<<endl;
 
 
     // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,

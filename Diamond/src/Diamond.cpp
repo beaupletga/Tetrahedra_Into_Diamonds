@@ -247,6 +247,24 @@ void Diamond::set_central_edge(pair<int,int> edge)
 void Diamond::set_anchor_vertex(Vertex* anchor)
 {
     this->anchor_vertex=anchor;
+    this->vertex_order.clear();
+    if (this->tetra_list.size()==1)
+    {
+        tuple<int,int,int> opposite_anchor_face=this->tetra_list[0]->get_opposite_face(anchor_vertex);
+        this->neighbours_faces[0]=opposite_anchor_face;
+        this->vertex_order.push_back(anchor_vertex->get_id());
+        int x=1;
+        for(int i=0;i<4;i++)
+        {
+            if (this->tetra_list[0]->get_vertices()[i]->get_id()!=anchor_vertex->get_id())
+            {
+                this->neighbours_faces[x]=this->tetra_list[0]->get_opposite_face(this->tetra_list[0]->get_vertices()[i]);
+                this->vertex_order.push_back(this->tetra_list[0]->get_vertices()[i]->get_id());
+                x++;
+            }
+        }
+    }
+    
 }
 
 void Diamond::display_vertices_id()
