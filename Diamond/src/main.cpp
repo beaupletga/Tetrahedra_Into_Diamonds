@@ -148,36 +148,73 @@ int main()
     bool diamond_extra_bytes_array[array_size]={0};
 
     cout<<"Array size : "<<array_size<<endl;
-
-
-    
     
     step_3_5_set_neighbour_permutation(diamond_list);
+
+    vector<tuple<int,int,int>> permutation_array(array_size,tuple<int,int,int>{0,0,0});
+    vector<tuple<int,int,int>> face_array(array_size,tuple<int,int,int>{0,0,0});
+
+    map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+    array_size,anchor_dict,permutation_array,face_array);
+
     
-    cout<<"oui"<<endl;
+    // cout<<"oui"<<endl;
     // check_4(diamond_list);
-    check_5(diamond_list);
+    // check_5(diamond_list);
     // return 0;
 
 
     cout<<"C'est parti"<<endl;
-    // int vertex = 89;
+    // // int vertex = 89;
+    // for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
+    // {
+    //     int v=vertex_degree(diamond_list,i.first).size();
+    //     if (v!=i.second.size())
+    //     {
+    //         cout<<v<<" "<<i.second.size()<<endl;
+    //         cout<<i.first<<endl;
+    //     }
+    // }
+
+    // vector<int> tetras_ids;
+    // for (int i : vertex_degree(diamond_list,10))
+    // {
+    //     tetras_ids.push_back(i);
+    //     tetra_list[i].display_vertices_id();
+    // }
+    // visualize_subset_tetra(vertex_list,tetra_list,tetras_ids);
+
+    // display_face_diamond(diamond_extra_bytes_array,face_array,100);
+
+    // for (tuple<int,int,int> face  : diamond_list[index_to_diamond_id[7903]].neighbours_faces)
+    // {
+    //     cout<<get<0>(face)<<" "<<get<1>(face)<<" "<<get<2>(face)<<endl;
+    // }
+
+
+    // unordered_set<int> v =vertex_degree(diamond_list,10);
+    // cout<<"degree :"<<v.size()<<" "<<vertex_dict[10].size()<<endl;
+    // cout<<"begin last step"<<endl;
+    
+    // cout<<"real degree : "<<vertex_dict[14].size()<<endl;
+   
+    // int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+    // array_size,permutation_array,face_array,102);
+    // cout<<"degree : "<<v<<endl;
     for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
     {
-        int v =vertex_degree(diamond_list,i.first);
+        int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+        array_size,permutation_array,face_array,i.first);
         if (v!=i.second.size())
         {
             cout<<v<<" "<<i.second.size()<<endl;
             cout<<i.first<<endl;
         }
     }
-   
+
     // cout<<"Degree "<<vertex_degree(diamond_list,vertex)<<endl;
-    // cout<<vertex_dict[vertex].size()<<endl;
+    // cout<<vertex_dict[102].size()<<endl;
 
-
-    // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
-    // array_size,anchor_dict);
 
     // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
 

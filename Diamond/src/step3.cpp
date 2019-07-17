@@ -102,14 +102,6 @@ void cc(vector<Diamond> &diamond_list)
 }
 
 
-// void removing_bad_central_edges(map<int,vector<pair<int,int>>> &remaining_vertices)
-// {
-//     for (pair<int,vector<pair<int,int>>> i : remaining_vertices)
-//     {
-
-//     }
-// }
-
 // this step aims at choosing an anchor vertex for each diamond
 // such that any vertex is linked to only one diamond
 void step_3_1_pair_vertices_as_anchor(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,
