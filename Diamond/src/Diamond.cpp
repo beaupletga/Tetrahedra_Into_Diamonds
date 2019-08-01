@@ -287,47 +287,26 @@ vector<int> Diamond::get_vertex_order()
     int north=-1;
     if (this->get_tetra_list().size()>1)
     {
-        // we use a step of 2 because face 0 and 1 share the same 2 vertices (2 and 3, 4 and 5 ...)
-        for(int i=0;i<this->neighbours_faces.size();i+=2)
+        // we gather all vertices on the "equator" of the diamond (i.e are not on the extremities of the central edge)
+        for (Tetrahedron* tetra : this->get_tetra_list())
         {
-            tuple<int,int,int> x;
-            // this face is on the boundary
-            if (neighbours_faces[i]==tuple<int,int,int>{0,0,0})
+            if (tetra->get_vertices()[0]->get_id()!=this->get_central_edge().first && tetra->get_vertices()[0]->get_id()!=this->get_central_edge().second)
             {
-                x=neighbours_faces[i+1];
+                order.push_back(tetra->get_vertices()[0]->get_id());
             }
-            else
+            if (tetra->get_vertices()[1]->get_id()!=this->get_central_edge().first && tetra->get_vertices()[1]->get_id()!=this->get_central_edge().second)
             {
-                x = neighbours_faces[i];
+                order.push_back(tetra->get_vertices()[1]->get_id());
             }
-            // we only use the edge on the equator for determining the order
-            // we add the north and south at the end
-            if(get<0>(x)==this->get_central_edge().first || get<0>(x)==this->get_central_edge().second)
+            if (tetra->get_vertices()[2]->get_id()!=this->get_central_edge().first && tetra->get_vertices()[2]->get_id()!=this->get_central_edge().second)
             {
-                order.push_back(get<1>(x));order.push_back(get<2>(x));
+                order.push_back(tetra->get_vertices()[2]->get_id());
             }
-            else if (get<1>(x)==this->get_central_edge().first || get<1>(x)==this->get_central_edge().second)
+            if (tetra->get_vertices()[3]->get_id()!=this->get_central_edge().first && tetra->get_vertices()[3]->get_id()!=this->get_central_edge().second)
             {
-                order.push_back(get<0>(x));order.push_back(get<2>(x));
+                order.push_back(tetra->get_vertices()[3]->get_id());
             }
-            else if (get<2>(x)==this->get_central_edge().first || get<2>(x)==this->get_central_edge().second)
-            {
-                order.push_back(get<0>(x));order.push_back(get<1>(x));
-            }
-            else
-            {
-                // a face doesn't contain any vertex from the central edge
-                // or 2 faces of the same tetra are on the boundary
-                assert(true==false);
-            }            
         }
-        
-        // for(int x: order)
-        // {
-        //     cout<<x<<" ";
-        // }
-        // cout<<endl;
-
 
         // we now have a list of vertices id on the equator
         // as we deal with a diamond, each vertex id should appear twice

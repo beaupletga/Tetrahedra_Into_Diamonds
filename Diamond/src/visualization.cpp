@@ -240,5 +240,16 @@ void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamon
         output<<vertex1<<" "<<vertex2<<"\n";//<" "<<R<<" "<<G<<" "<<B<<"\n";
     }
     output.close();
+}
 
+
+void write_in_csv(vector<int> &list)
+{
+    ofstream output;
+    output.open("../data/csv_tmp.csv");
+    for (auto i : list)
+    {
+        output<<i<<endl;
+    }
+    output.close();
 }

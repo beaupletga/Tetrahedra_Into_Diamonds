@@ -36,7 +36,7 @@ double average_edges_per_vertex(vector<Vertex>& vertex_list)
     return count/vertex_list.size();
 }
 
-void stats(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vector<Tetrahedron>& tetra_list)
+void stats(map<tuple<int,int>,vector<Tetrahedron*>>& edge_to_tetra,vector<Tetrahedron>& tetra_list)
 {
     double count_failure=0;
     double count_tetra_isolated=0;
@@ -49,7 +49,7 @@ void stats(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vector<Tetrahedro
         count_edges_in_tetra=0;
         for (tuple<int,int> j : edges)
         {
-            if (edge_to_vertex.count(j)!=0)
+            if (edge_to_tetra.count(j)!=0)
             {
                 count_edges_in_tetra++;
                 i.count_matched++;
@@ -71,17 +71,6 @@ void stats(map<tuple<int,int>,vector<Vertex*>>& edge_to_vertex,vector<Tetrahedro
     cout<<b/tetra_list.size()<<endl;
     cout<<"Share of Tetra isolated : "<<count_tetra_isolated/tetra_list.size()<<endl;
     cout<<"Share of tetrahedra having at least 2 edges taken : "<<count_failure/tetra_list.size()<<endl;
-
-    double edge_count_twice=0;
-    for (pair<tuple<int,int>,vector<Vertex*>> i :edge_to_vertex)
-    {
-        if (i.second.size()>1)
-        {
-            edge_count_twice++;
-        }
-    }
-
-    cout<<"Share of edges choosen by both extreme vertex : "<<edge_count_twice<<endl;
 
     double count_tetra_diamond=0;
     for (int i=0;i<tetra_list.size();i++)

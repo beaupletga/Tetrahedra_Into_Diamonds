@@ -13,27 +13,15 @@ bool is_cycle(vector<Tetrahedron*>& tetra_list)
     {
         for (Vertex* j : tetra_list[i]->get_vertices())
         {
-            if (count_vertex.count(j->get_id())==0)
-            {
-                count_vertex.insert({j->get_id(),1});
-            }
-            else
-            {
-                count_vertex.find(j->get_id())->second++;
-            }
+            count_vertex[j->get_id()]+=1;
         }
     }
-    int min=1000;
     for (pair<int,int> i : count_vertex)
     {
-        if (i.second<min)
+        if (i.second<2)
         {
-            min=i.second;
+            return false;
         }
-    }
-    if (min<=1)
-    {
-        return false;
     }
     return true;
 }
@@ -74,82 +62,226 @@ Vertex* pick_steepest_neighbour(Vertex& vertex,int lala)
 }
 
 // function used for sorting the edges by number of adjacents tetra
-bool cmp_edge(pair<tuple<int,int>,vector<Tetrahedron*>>& lhs, pair<tuple<int,int>,vector<Tetrahedron*>>& rhs)
+bool cmp_edge(pair<tuple<int,int>,vector<Tetrahedron*>> lhs, pair<tuple<int,int>,vector<Tetrahedron*>> rhs)
 {
-    return lhs.second.size()>rhs.second.size();
+    int a=0;
+    int b=0;
+    // unordered_set<int> aa;
+    // unordered_set<int> bb;
+    for (Tetrahedron* tetra : lhs.second)
+    {
+        for (Tetrahedron* neighbour : tetra->get_neighbours())
+        {
+            if (neighbour->get_in_diamond())
+            {
+                // aa.insert(neighbour->get_id());
+                a++;
+            }
+        }
+    }
+    for (Tetrahedron* tetra : rhs.second)
+    {
+        for (Tetrahedron* neighbour : tetra->get_neighbours())
+        {
+            if (neighbour->get_in_diamond())
+            {
+                // bb.insert(neighbour->get_id());
+                b++;
+            }
+        }
+    }
+    return a<b;
+    // return aa.size()<bb.size();
+    // return lhs.second.size()<rhs.second.size(); 
 }
 
-map<tuple<int,int>,vector<Vertex*>> step_1_edge_degree(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
+map<tuple<int,int>,vector<Tetrahedron*>> step_1_edge_degree(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
 {
-    vector<pair<tuple<int,int>,vector<Tetrahedron*>>> edge_dict_copy;
-    map<tuple<int,int>,vector<Vertex*>> edge_to_vertex;
+    map<tuple<int,int>,vector<Tetrahedron*>> edge_dict_copy;
+    map<tuple<int,int>,vector<Tetrahedron*>> edge_to_tetra;
     map<int,int> vertex_check;
     bool already_matched;
 
     for (pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict)
     {
-        pair<tuple<int,int>,vector<Tetrahedron*>> tmp={i.first,i.second};
-        edge_dict_copy.push_back(tmp);
+        if (is_cycle(i.second))
+        {
+            pair<tuple<int,int>,vector<Tetrahedron*>> tmp={i.first,i.second};
+            edge_dict_copy[i.first]=i.second;
+        }
     }
     
-    sort(edge_dict_copy.begin(),edge_dict_copy.end(),cmp_edge);
+    // sort(edge_dict_copy.begin(),edge_dict_copy.end(),cmp_edge);
     int count=0;
     pair<tuple<int,int>,vector<Tetrahedron*>> i;
     // cout<<"lala"<<edge_dict.end()->second.size()<<endl;
-    for(pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict_copy)
+    // for(pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict_copy)
+    while(edge_dict_copy.size()>0)
     {
-        if (is_cycle(i.second))
+        auto maximum = *max_element(edge_dict_copy.begin(),edge_dict_copy.end(),cmp_edge);
+
+        for (Tetrahedron* tetra : maximum.second)
         {
-            already_matched=false;
-            if (vertex_check.count(get<0>(i.first))==0)
+            for (tuple<int,int> edge : tetra->enumerate_edges())
             {
-                for(Tetrahedron* tetra : i.second)
-                {
-                    if (tetra->get_in_diamond()==true)
-                    {
-                        already_matched=true;
-                        break;
-                    }
-                }
-                if (!already_matched)
-                {
-                    vector<Vertex*> tmp={&vertex_list[get<0>(i.first)]};
-                    edge_to_vertex[i.first]=tmp;
-                    for(Tetrahedron* tetra : i.second)
-                    {
-                        tetra->set_in_diamond(true);
-                    }
-                }
+                edge_dict_copy.erase(edge);
             }
-            else if (vertex_check.count(get<1>(i.first))==0)
+            tetra->set_in_diamond(true);
+        }
+        edge_to_tetra[maximum.first]=maximum.second;
+        // cout<<edge_dict_copy.size()<<endl;
+        // if (is_cycle(i.second))
+        {
+            // already_matched=false;
+            // if (vertex_check.count(get<0>(i.first))==0)
+            // {
+            //     for(Tetrahedron* tetra : i.second)
+            //     {
+            //         if (tetra->get_in_diamond()==true)
+            //         {
+            //             already_matched=true;
+            //             break;
+            //         }
+            //     }
+            //     if (!already_matched)
+            //     {
+            //         edge_to_tetra[i.first]=i.second;
+            //         for(Tetrahedron* tetra : i.second)
+            //         {
+            //             tetra->set_in_diamond(true);
+            //         }
+            //     }
+            // }
+            // else if (vertex_check.count(get<1>(i.first))==0)
+            // {
+            //     for(Tetrahedron* tetra : i.second)
+            //     {
+            //         if (tetra->get_in_diamond()==true)
+            //         {
+            //             already_matched=true;
+            //             break;
+            //         }
+            //     }
+            //     if (!already_matched)
+            //     {
+            //         edge_to_tetra[i.first]=i.second;
+            //         for(Tetrahedron* tetra : i.second)
+            //         {
+            //             tetra->set_in_diamond(true);
+            //         }
+            //     }
+            // }
+        }
+    }
+    cout<<"oui"<<endl;
+    cout<<edge_to_tetra.size()<<endl;
+    return edge_to_tetra;
+}
+
+double fitness(map<tuple<int,int>,int> &values,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
+{
+    double value=0;
+    map<int,int> tetra_taken;
+    for (pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict)
+    {
+        if (values[i.first]==1 && is_cycle(i.second))
+        {
+            value+=i.second.size();
+            for (Tetrahedron* tetra : i.second)
             {
-                for(Tetrahedron* tetra : i.second)
-                {
-                    if (tetra->get_in_diamond()==true)
-                    {
-                        already_matched=true;
-                        break;
-                    }
-                }
-                if (!already_matched)
-                {
-                    vector<Vertex*> tmp={&vertex_list[get<1>(i.first)]};
-                    edge_to_vertex[i.first]=tmp;
-                    for(Tetrahedron* tetra : i.second)
-                    {
-                        tetra->set_in_diamond(true);
-                    }
-                }
+                tetra_taken[tetra->get_id()]+=1;
             }
         }
     }
-    return edge_to_vertex;
+    for (pair<int,int> i : tetra_taken)
+    {
+        if (i.second>1)
+        {
+            value-=i.second;
+            value+=1;
+        }
+    }
+    return value;
 }
 
 
-map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
+map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
 {
-    map<tuple<int,int>,vector<Vertex*>> edge_to_vertex;
+    map<tuple<int,int>,int> values;
+    map<tuple<int,int>,vector<Tetrahedron*>> edge_to_tetra;
+    // initialization of the values
+    for (pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict)
+    {
+        values[i.first]=0;
+    }
+
+    double fit=0;
+    double new_fit=0;
+    int no_improvement=0;
+    while(true)
+    {
+        auto it = values.begin();
+        std::advance(it, rand() % values.size());
+        tuple<int,int> random_key = it->first;
+
+        if (values[random_key]==0)
+        {
+            values[random_key]=1;
+        }
+        else
+        {
+            values[random_key]=0;
+        }
+
+        new_fit = fitness(values,edge_dict);
+
+        if (fit>=new_fit)
+        {
+            values[random_key]=1-values[random_key];
+            no_improvement++;
+        }
+        else
+        {
+            no_improvement=0;
+        }
+        
+        fit=new_fit;
+        cout<<"Fitness : "<<new_fit<<endl;
+
+        if (no_improvement==10)
+        {
+            break;
+        }
+    }
+    unordered_set<int> count;
+    for (pair<tuple<int,int>,int> i : values)
+    {
+        if (i.second==1 && is_cycle(edge_dict[i.first]))
+        {
+            edge_to_tetra[i.first]=edge_dict[i.first];
+            for (Tetrahedron* tetra : edge_dict[i.first])
+            {
+                count.insert(tetra->get_id());
+                tetra->set_in_diamond(true);
+            }
+        }
+    }
+    cout<<"Perf : "<<(float)count.size()/tetra_list.size()<<endl;
+    cout<<"step 1 done"<<endl;
+    return edge_to_tetra;
+}
+
+// void step1_mis()
+// {
+
+// }
+
+
+
+
+
+map<tuple<int,int>,vector<Tetrahedron*>> step_1_bfs(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
+{
     map<tuple<int,int>,vector<Tetrahedron*>> diamond_list;
     unordered_set<int> lala;
     queue<Tetrahedron*> wait_list;
@@ -157,7 +289,6 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
     int tmppp=rand()%tetra_list.size();
     wait_list.push(&tetra_list[tmppp]);
     cout<<"First tetra : "<<tmppp<<endl;
-    double count=0;
     while(!wait_list.empty())
     {
         // add top tetrahedron
@@ -181,15 +312,6 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
                         if (count_if(edge_dict[edge].begin(),edge_dict[edge].end(),[](Tetrahedron* i){return i->get_in_diamond();})==0)
                         {
                             // we add the edge into a list, with the nb of tetra associated
-                            int y=0;
-                            for(pair<tuple<int,int>,vector<Tetrahedron*>> edge2 : diamond_list)
-                            {
-                                if(get<0>(edge2.first)==get<0>(edge) || get<0>(edge2.first)==get<1>(edge) ||
-                                get<1>(edge2.first)==get<0>(edge) || get<1>(edge2.first)==get<1>(edge))
-                                {
-                                    y++;
-                                }
-                            }
                             ocurrences.push_back({get<0>(edge),get<1>(edge),edge_dict[edge].size()});
                         }
                     }
@@ -209,7 +331,6 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
                 for (Tetrahedron* tmp : edge_dict[edge])
                 {
                     tmp->set_in_diamond(true);
-                    count++;
                 }
             }
             // we push into the queue all tetra adjacent (by an edge) to the focused tetra
@@ -221,34 +342,7 @@ map<tuple<int,int>,vector<Vertex*>> step_1_bfs(vector<Vertex>& vertex_list,vecto
             wait_list.pop();
         }
     }
-    // cout<<"lala size : "<<lala.size()<<endl;
-
-    // the tuple are sorted by the id of the first vertex
-    // so by always taking the first vertex as root, they won't be any conflict
-    for (pair<tuple<int,int>,vector<Tetrahedron*>> i : diamond_list)
-    {
-        edge_to_vertex[i.first]={&vertex_list[get<0>(i.first)]};
-    }
-
-    // std::ofstream outfile;
-    // outfile.open("scores.csv", ios::app);
-    // double count_tetra_diamond=0;
-    // for (int i=0;i<tetra_list.size();i++)
-    // {
-    //     count_tetra_diamond+=tetra_list[i].get_in_diamond();
-    // }
-
-    // tuple<double,double,double> bary = tetra_list[tmppp].get_barycenter();
-    // outfile<<get<0>(bary);
-    // outfile<<",";
-    // outfile<<get<1>(bary);
-    // outfile<<",";
-    // outfile<<get<2>(bary);
-    // outfile<<",";
-    // outfile<<count_tetra_diamond/tetra_list.size();
-    // outfile<<"\n";
-    // outfile.close();
-    return edge_to_vertex;
+    return diamond_list;
 }
 
 

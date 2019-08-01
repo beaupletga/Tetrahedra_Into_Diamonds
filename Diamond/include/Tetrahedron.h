@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <tuple>
 #include <map>
+#include <assert.h>
 
 #include "../include/Vertex.h"
 // #include "Diamond.h"
@@ -37,6 +38,7 @@ class Tetrahedron
         int get_position_in_diamond();
         void set_diamond_ref(Diamond*);
         void set_position_in_diamond(int); 
+        tuple<int,int,int> get_opposite_face(Vertex*);
 
         int count_matched;
 

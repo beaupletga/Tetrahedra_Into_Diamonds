@@ -30,23 +30,29 @@ void check_2(int (tetra_array)[],int (diamond_array)[],int diamond_array_size)
     cout<<"Check 2 done"<<endl;
 }
 
+// check if the diamonds are well formed
+// i.e no vertex has degree<2
 void check_3(vector<Diamond> &diamond_list)
 {
     unordered_map<int,int> map;
     for (Diamond &diamond : diamond_list)
     {
-        for (Tetrahedron* tetra : diamond.get_tetra_list())
+        if (diamond.get_tetra_list().size()!=1)
         {
-            for (Vertex* vertex : tetra->get_vertices())
+            for (Tetrahedron* tetra : diamond.get_tetra_list())
             {
-                map[vertex->get_id()]+=1;
+                for (Vertex* vertex : tetra->get_vertices())
+                {
+                    map[vertex->get_id()]+=1;
+                }
             }
-        }
-        for(pair<int,int> i : map)
-        {
-            if (i.second<2)
+            for(pair<int,int> i : map)
             {
-                assert(true==false);
+                if (i.second<2)
+                {
+                    cout<<i.second<<endl;
+                    // assert(true==false);
+                }
             }
         }
     }

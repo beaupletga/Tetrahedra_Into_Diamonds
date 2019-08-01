@@ -12,7 +12,7 @@ using namespace std;
 class Diamond
 {
     public:
-        Diamond(int,vector<Tetrahedron*>&,Vertex*);
+        Diamond(int,vector<Tetrahedron*>&,Vertex*,bool has_anchor=false);
         Diamond();
         int get_id();
         vector<Tetrahedron*> get_tetra_list();
@@ -28,6 +28,9 @@ class Diamond
         bool has_anchor;
         vector<int> get_vertex_order();
         vector<tuple<int,int,int>> neighbours_faces;
+        void set_permutation(vector<int>&,int);
+        vector<int> get_permutation(int);
+        vector<int> vertex_order;
 
     private:
         int id;
@@ -35,6 +38,7 @@ class Diamond
         pair<int,int> central_edge;
         vector<Tetrahedron*> tetra_list;
         vector<Diamond*> neighbours;
+        vector<vector<int>> permutation;
 };
 
 

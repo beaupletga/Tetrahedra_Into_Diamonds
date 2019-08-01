@@ -21,4 +21,5 @@ map<tuple<int,int>,vector<Tetrahedron*>>&, map<tuple<int,int>,vector<Vertex*>>&)
 void visualize_diamond(vector<Vertex> &,vector<Tetrahedron> &,
 vector<Diamond> &,vector<int> &,map<int,int>&);
 void visualize_central_edges(vector<Vertex> &,vector<Diamond> &);
+void write_in_csv(vector<int> &);
 #endif
