@@ -197,8 +197,8 @@ double fitness(map<tuple<int,int>,int> &values,map<tuple<int,int>,vector<Tetrahe
     {
         if (i.second>1)
         {
-            value-=i.second;
-            value+=1;
+            value-=2*i.second;
+            // value+=1;
         }
     }
     return value;
@@ -208,6 +208,7 @@ double fitness(map<tuple<int,int>,int> &values,map<tuple<int,int>,vector<Tetrahe
 map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
 {
     map<tuple<int,int>,int> values;
+    map<tuple<int,int>,int> modified_keys;
     map<tuple<int,int>,vector<Tetrahedron*>> edge_to_tetra;
     // initialization of the values
     for (pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict)
@@ -220,35 +221,50 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_li
     int no_improvement=0;
     while(true)
     {
-        auto it = values.begin();
-        std::advance(it, rand() % values.size());
-        tuple<int,int> random_key = it->first;
+        // auto it = values.begin();
+        // std::advance(it, rand() % values.size());
+        // tuple<int,int> random_key = it->first;
 
-        if (values[random_key]==0)
+        for (pair<tuple<int,int>,int> i : values)
         {
-            values[random_key]=1;
+            if (rand() / double(RAND_MAX)<(double)1/(values.size()))
+            {
+                i.second=1-i.second;
+                modified_keys[i.first]=0;
+            }
         }
-        else
-        {
-            values[random_key]=0;
-        }
+
+
+        // if (values[random_key]==0)
+        // {
+        //     values[random_key]=1;
+        // }
+        // else
+        // {
+        //     values[random_key]=0;
+        // }
 
         new_fit = fitness(values,edge_dict);
 
         if (fit>=new_fit)
         {
-            values[random_key]=1-values[random_key];
+            // values[random_key]=1-values[random_key];
+            for (pair<tuple<int,int>,int> key : modified_keys)
+            {
+                values[key.first]=1-values[key.first];
+            }
             no_improvement++;
         }
         else
         {
             no_improvement=0;
         }
-        
+        // cout<<"size "<<modified_keys.size()<<endl;
+        modified_keys.clear();
         fit=new_fit;
-        cout<<"Fitness : "<<new_fit<<endl;
+        // cout<<"Fitness : "<<new_fit<<endl;
 
-        if (no_improvement==10)
+        if (no_improvement==80)
         {
             break;
         }

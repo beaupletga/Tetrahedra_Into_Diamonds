@@ -11,33 +11,35 @@
 \BOOKMARK [3][-]{subsubsection.3.2.2}{Structure de donn\351es compacte}{subsection.3.2}% 11
 \BOOKMARK [1][-]{section.4}{Diamond Compression}{}% 12
 \BOOKMARK [2][-]{subsection.4.1}{Le principe}{section.4}% 13
-\BOOKMARK [2][-]{subsection.4.2}{Appariement tetras en diamants}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.2}{Appariement des t\351tra\350dres en diamants}{section.4}% 14
 \BOOKMARK [3][-]{subsubsection.4.2.1}{Choisir l'ar\352te la plus pentu pour chaque sommet}{subsection.4.2}% 15
-\BOOKMARK [3][-]{subsubsection.4.2.2}{BFS}{subsection.4.2}% 16
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Parcours en largeur des t\351tra\350dres}{subsection.4.2}% 16
 \BOOKMARK [2][-]{subsection.4.3}{Algorithme randomis\351}{section.4}% 17
 \BOOKMARK [2][-]{subsection.4.4}{BFS+algorithme randomis\351}{section.4}% 18
 \BOOKMARK [2][-]{subsection.4.5}{Choisir l'ancre}{section.4}% 19
 \BOOKMARK [2][-]{subsection.4.6}{La structure}{section.4}% 20
-\BOOKMARK [3][-]{subsubsection.4.6.1}{Ordre des sommets et tetrahedres}{subsection.4.6}% 21
-\BOOKMARK [3][-]{subsubsection.4.6.2}{Calculer les permutations}{subsection.4.6}% 22
-\BOOKMARK [2][-]{subsection.4.7}{Les methodes possibles}{section.4}% 23
-\BOOKMARK [2][-]{subsection.4.8}{Acceder au ieme vertex}{section.4}% 24
-\BOOKMARK [2][-]{subsection.4.9}{Acceder au ieme tetra}{section.4}% 25
-\BOOKMARK [2][-]{subsection.4.10}{Degr\351 d'un sommet et Hypersphere d'un sommet}{section.4}% 26
-\BOOKMARK [2][-]{subsection.4.11}{Evaluation de notre structure de donne\351s}{section.4}% 27
-\BOOKMARK [3][-]{subsubsection.4.11.1}{Comment evaluer notre structure}{subsection.4.11}% 28
-\BOOKMARK [2][-]{subsection.4.12}{Resultats}{section.4}% 29
-\BOOKMARK [2][-]{subsection.4.13}{Borne inf\351rieur th\351orique}{section.4}% 30
-\BOOKMARK [2][-]{subsection.4.14}{Encoder les diamants en off}{section.4}% 31
-\BOOKMARK [2][-]{subsection.4.15}{Am\351liorations}{section.4}% 32
-\BOOKMARK [3][-]{subsubsection.4.15.1}{R\351f\351rences diff\351rentielles}{subsection.4.15}% 33
-\BOOKMARK [3][-]{subsubsection.4.15.2}{Rank and select}{subsection.4.15}% 34
-\BOOKMARK [2][-]{subsection.4.16}{Bornes theoriques}{section.4}% 35
-\BOOKMARK [2][-]{subsection.4.17}{Dynamicit\351}{section.4}% 36
-\BOOKMARK [2][-]{subsection.4.18}{Defaults}{section.4}% 37
-\BOOKMARK [1][-]{section.5}{NP completude}{}% 38
-\BOOKMARK [1][-]{section.6}{Impl\351mentation}{}% 39
-\BOOKMARK [2][-]{subsection.6.1}{Vitesse}{section.6}% 40
-\BOOKMARK [1][-]{section.7}{Travail futur}{}% 41
-\BOOKMARK [2][-]{subsection.7.1}{Comment rendre la structure dynamique}{section.7}% 42
-\BOOKMARK [1][-]{section.8}{Conclusion}{}% 43
+\BOOKMARK [3][-]{subsubsection.4.6.1}{Calculer les permutations}{subsection.4.6}% 21
+\BOOKMARK [2][-]{subsection.4.7}{Les m\351thodes possibles}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.8}{Acceder au ieme diamant/t\351tra\350dre isol\351}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.9}{Parcourir les t\351tra\350dres d'un diamant}{section.4}% 24
+\BOOKMARK [2][-]{subsection.4.10}{Acceder au i\350me t\351tra\350dre}{section.4}% 25
+\BOOKMARK [2][-]{subsection.4.11}{Acceder au i\350me sommet}{section.4}% 26
+\BOOKMARK [2][-]{subsection.4.12}{Degr\351 d'un sommet et Hypersphere d'un sommet}{section.4}% 27
+\BOOKMARK [2][-]{subsection.4.13}{Parcours en profondeur du graphe}{section.4}% 28
+\BOOKMARK [2][-]{subsection.4.14}{Evaluation de notre structure de donne\351s}{section.4}% 29
+\BOOKMARK [3][-]{subsubsection.4.14.1}{Comment evaluer notre structure}{subsection.4.14}% 30
+\BOOKMARK [2][-]{subsection.4.15}{Resultats}{section.4}% 31
+\BOOKMARK [2][-]{subsection.4.16}{Borne inf\351rieur th\351orique}{section.4}% 32
+\BOOKMARK [2][-]{subsection.4.17}{Encoder les diamants en off}{section.4}% 33
+\BOOKMARK [2][-]{subsection.4.18}{Am\351liorations}{section.4}% 34
+\BOOKMARK [3][-]{subsubsection.4.18.1}{R\351f\351rences diff\351rentielles}{subsection.4.18}% 35
+\BOOKMARK [3][-]{subsubsection.4.18.2}{Rank and select}{subsection.4.18}% 36
+\BOOKMARK [2][-]{subsection.4.19}{Bornes theoriques}{section.4}% 37
+\BOOKMARK [2][-]{subsection.4.20}{Dynamicit\351}{section.4}% 38
+\BOOKMARK [2][-]{subsection.4.21}{Defaults}{section.4}% 39
+\BOOKMARK [1][-]{section.5}{NP completude}{}% 40
+\BOOKMARK [1][-]{section.6}{Impl\351mentation}{}% 41
+\BOOKMARK [2][-]{subsection.6.1}{Vitesse}{section.6}% 42
+\BOOKMARK [1][-]{section.7}{Travail futur}{}% 43
+\BOOKMARK [2][-]{subsection.7.1}{Comment rendre la structure dynamique}{section.7}% 44
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 45

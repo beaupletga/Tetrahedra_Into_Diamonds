@@ -80,8 +80,8 @@ int main()
     
     map<tuple<int,int>,vector<Tetrahedron*>> edge_to_tetra;
 
-    edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
-    // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
+    // edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
+    edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
     // edge_to_tetra=step_1_edge_degree(vertex_list,tetra_list,edge_dict);
     // edge_to_vertex=step_1_vertex_choose_neighbour(vertex_list,tetra_list,edge_dict);
 
@@ -111,7 +111,7 @@ int main()
     // return 0;
 
     stats(edge_to_tetra,tetra_list);
-    // return 0;
+    return 0;
 
     // visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
     // visualize_all(vertex_list,tetra_list);

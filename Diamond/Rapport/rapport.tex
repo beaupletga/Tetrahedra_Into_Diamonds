@@ -10,6 +10,10 @@
 \usepackage{hyperref}
 \usepackage{listings}  
 \usepackage{mathtools}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage[]{algorithm2e}
+
 
 \title{Compression en diamants de maillages tetrahédriques}
 \author{Gabriel Beauplet, Luca Castelli Aleardi}
@@ -128,10 +132,9 @@ L'algorithme EdgeBreaker de Rossignac \cite{edgebreaker} traverse lui aussi le g
 \end{figure}
 \noindent
 \textbf{Codage de la Valence}. Une manière de décrire la connectivités de sommets est à travers leurs valence. Le premier travail sur la valence des sommets est le travail de Touma et Gotsman \cite{valence_encoding}. Le principe est de considérer la frontière d'un triangle initial et de l'étendre en ajoutant itérativement de nouveaux sommets. La connectivité est encodée en utilisant la valence des nouveaux sommets (concentrée autour de 6). Ainsi, La liste de valence des sommets peut être efficacement compressée par un encodeur d'entropie (2.3 bpv). C'est toujours aujourd'hui l'une des méthodes les plus efficace.
-%Un maillage surfacique contient environ deux fois moins de sommets que de triangles. Par conséquent un algorithme qui se concentre sur l'insertion de nouveaux sommets (et qui génère un symbole par sommet) sera plus efficace qu'une traversée des faces du graphe. Ainsi, si l'entropie par symbole n'est pas deux fois plus large alors l'algorithme apportera de meilleurs taux de compression.\\
 \subsubsection{Structure de données compacte}
 \noindent
-Plusieurs structures de données permettent une utilisation très facile des maillages et se focalisent sur l'utilisation des arêtes du graphe. C'est le cas d'Half-Edge, Winged-Edge et Quad-Edge qui stockent respectivement $18n$ et 9$n_t$ références. Elles permettent facilement de naviguer dans le maillage et opèrent des requêtes d'adjacence en temps constant. Cependant, elles occupent trop de place pour être considérées comme compactes.\\
+Plusieurs structures de données permettent une utilisation très facile des maillages et se focalisent sur l'utilisation des arêtes du graphe. C'est le cas d'Half-Edge, Winged-Edge et Quad-Edge qui stockent $19n$ références (soit 9.5 rpt). Elles permettent facilement de naviguer dans le maillage et opèrent des requêtes d'adjacence en temps constant. Cependant, elles occupent trop de place pour être considérées comme compactes.\\
 La Corner Table (CT) est à la base de plusieurs structures de données. Elle utilise deux listes V et O de $3|F|$ entiers chacune. La table V stocke les incidence triangle/sommet tel que les 3 sommets bordant un triangle t sont consécutifs (V[3t],V[3t+1],V[3t+2]) et sont listés dans un ordre consistent avec le maillage. Ainsi, V[c] représente un coin c associé avec une face f et un sommet. La table O stocke la référence entière du coin oposé. Le coin opposé o(c) au coin c est un coin dans un triangle adjacent qui partage la même arête opposée.
 \begin{figure}[H]
 \begin{center}
@@ -143,21 +146,34 @@ La Corner Table (CT) est à la base de plusieurs structures de données. Elle ut
 \noindent
 \textbf{VOT}. La structure de données VOT (Vertex Opposite Table) est la première structure de données à utiliser cette "Corner Table". Elle permet une répresentation simple et efficace des maillages avec 6 références par triangle (3 références pour les sommets dans la table V et 3 référence pour les coins dans la table O).\\
 \textbf{SOT}. SOT, développée par Rossignac \cite{SOT} est une amélioration de VOT où la table O est réordonnée et la table V supprimée. Néanmoins, l'accès au coin d'un sommet et à l'étoile d'un sommet sont toujours en temps constant. Cette dernière structure de données utilise 3 rpt en moyenne.
+
+\footnotesize
+\begin{tabular}{|c | c | c | c | c|}
+\hline
+Structure de données & Taille mémoire & Temps de navigation & Accès au sommet & Dynamique\\
+\hline
+Basées sur les arêtes\\(Half-edge, Quad-edge, Winged-edge) & 18n+n & O(1) & O(1) & oui\\
+Basées sur les triangles & 13n & O(1) & O(1) & oui\\		
+Corner table & 13n & O(1) & O(1) & oui\\
+\hline
+2D catalog & 7.67n & O(1) & O(1) & oui\\
+\hline
+Star vertices & 7n & O(d) & O(1) & non\\		
+SOT & 6n & O(1) & O(d) & non\\
+SQUAD & $(4+\epsilon)$n & O(1) & O(d) & non\\
+LR & $(2+\delta)$n & O(1) & O(d) & non\\
+\hline  
+\end{tabular}
+
+\normalsize
 %\subsubsection{Enumération de triangulations planaires}
 %La connectivité d'un maillage peut etre vu comme un graphe. Pour les maillages surfaciques, les sommets sont des noeuds connectés via les arêtes du graphes pour former des faces.
 %%Cette analogie entre maillage et graphe explique pourquoi certains résultats très connu de la théorie des graphes peuvent etre appliqués pour la compression de la connectivité des maillages.
 %Tutte a d'abord proposé une formule pour énumérer les triangulations planaires. Cette première énumeration permet de calculer ce que l'on appelle l'entropie de Tutte. Cette entropie vaut environ 3.25 bpv (bits per vertex). C'est une borne supérieure pour l'entropie de la connectivité de n'importe quel maillage surfacique.
-%L'affichage de maillages important demande beaucoup de ressources en calcul. Les GPU sont fait pour réaliser ces opérations d'affichage rapidement en parallele. Par conséquent, les solutions permettant de transeferer le maillage de la mémoire centrale du PC vers la mémoire du GPU sont particulierement intéressante car les trasnfere de données demande beaucoup de cycles CPU. Ainsi, une bonne méthode de transfert de données peut senseiblement réduire le temps d'affichage.
-
-
-%L'un des premiers travaux de compression est le "generalized triangle mesh format" de Deering qui inclut une généralisation des bandes de triangles. Deering a remarqué que les sommets intérieurs sont encodés deux fois. Par conséquent, il proposa de les mettre dans une file de 16 positions et de referencer les sommets par leur location dans cette file si besoin. Cette file permet de réduire le coût de la réutilisation de sommets. Neanmoins, en moyenne les sommets sont toujours utilisés deux fois, ce qui n'est pas effiface). Les résultats expérimentaux montrent que l'algorithme de Deering donne des taux de compression de 3.3 à 9.8 bpv.
-
-
 \subsection{Maillages 3D}
 \subsubsection{Compression}
 \noindent
 \textbf{Grow\&Fold}. L'algorithme Grow\&Fold \cite{grow_and_fold} combine les idées de l'algorithme Topological Surgery \cite{topological_surgery} de Taubin et EdgeBreaker \cite{edgebreaker} de Rossignac. Il construit un arbre couvrant de tétraèdre et un folding string. L'arbre couvrant début à une face arbitraire et grandit en ajoutant des tétraèdres aux faces externes de l'actuel arbre couvrant. Pour chaque ajout de tétraèdre, 3 bits encodes si d'autres tétraèdres seront attchés aux 3 faces extérieures de ce tétraèdre. Le folding string contient pour chaque triangle externe de l'arbre couvrant un code sur 2 bits permettant de retrouver les relations d'incidences absentes de l'arbre couvrant. L'abre couvrant contient $|T|$ tétraèdres et il y a $2|T|$ faces externes. Par conséquent, l'usage mémoire est de 7 bpt.\\
-%L'algorithme "Grow and Fold" de Rossignac encode les tétraèdres en utilisant un peu plus de 7 bpt. Leur algorithme construit un arbre couvrant dans le graphe dual en partant d'une face arbitraire. L'arbre est encodé en utilisant 3 bpt par face indiquant pour chaque face si l'arbre couvrant va continuer de grandir. La frontière de l'arbre couvrant, un maillage surfacique a un "folding string" représenté avec 4 bpt et permettant de retrouver les relations d'incidences absentes de l'arbre couvrant en utilisant les opérations "folding" et "gluing".
 \textbf{Cut Border Machine}. La Cut Border Machine pour les maillages volumiques \cite{cut_border_machine_2d} est directement inspirée de celle pour les maillages surfaciques de Gumhold \cite{cut_border_machine_3d}. L'algorithme étend la frontière défini par une face initiale en traversant des tétraèdres adjacents. Dix symboles sont utilisés pour décrire l'entourage de la frontière lors de l'ajout d'un nouveau sommet pour la construction d'un tétraèdre. Leur algorithme permet de compresser les maillages tétraèdriques en utilisant 2.4 bpt et s'adapte aux non-variétés.
  
 \subsubsection{Structure de données compacte}
@@ -166,142 +182,170 @@ La Corner Table (CT) est à la base de plusieurs structures de données. Elle ut
 \textbf{Bande de Triangles}. Weiler et al. \cite{triangle_strips_weiler} encode les tétrahèdres en bandes. L'inclusion d'une petite quantité d'informations d'adjacence leur permet d'acceder aux faces voisines en temps constant. Leur algorithme stocke en moyenne 5.1 rpt.\\
 \textbf{SOT}. La dernière structure de données développée est SOT \cite{SOT} par Rossignac. Elle améliore sa première structure de données VOT en triant la table O et en supprimant la table V. La structure de données utilise 4 références et 9 bits par tétraèdre en moyenne et permet l'accès à l'étoile d'un sommet en temps constant.
 
-%\textbf{Half-face}.  The Compact Half Face (CHF)
-%proposed by Lage et al. extends CT to tetrahedral meshes, storing
-%8 references per tetrahedron (4 in the V table and 4 in the O
-%table)
-%.  We call it the Vertex Opposite Table (VOT) and propose a
-%sorted variation, SVOT, which does not require any additional
-%storage and yet provides, for each vertex, a reference to an
-%incident corner from which an incident tetrahedron may be
-%recovered and the star of the vertex may be traversed at a constant
-%cost per visited element. We use a set of powerful wedge-based
-%operators for querying and traversing the mesh. Finally, inspired
-%by tetrahedral mesh encoding techniques used by Weiler et al. and
-%by Szymczak and Rossignac, we propose our Sorted O Table
-%(SOT) variation, which eliminates the V table completely and
-%hence reduces storage requirements by 50% to only 4 references
-%and 9 bits per tetrahedron, while preserving the vertex-toincident-corner references and supporting our wedge operators
-%with a linear average cost. 
-
-%
-%Their “Grow&Fold” technique codes tetrahedral connectivity using
-%slightly more than 7 bits per tetrahedron (bpt). The encoding pro-
-%cess builds a tetrahedral spanning tree rooted in an arbitrary bound-
-%ary triangle. This tree is encoded with 3 bpt that indicate for each
-%face whether the spanning tree will continue growing. The bound-
-%ary of the tetrahedron spanning tree, a triangular surface mesh, has
-%an associated “folding string” that is represented with 4 bpt. This
-%string describes how to “fold” and occasionally “glue” the boundary
-%triangles of the spanning tree to reconstruct the original connectiv-
-%ity. The indices associated with the occasional “glue” operations
-%lift the total bit rate slightly above 7 bpt
-%
-%Gumhold et al. have extended their connectivity coder for trian-
-%gular surface meshes [5] to tetrahedral volume meshes [4]. Their
-%algorithm performs a region growing process that maintains a “cut-
-%border,” a (possibly non-manifold) triangle surface mesh, that sepa-
-%rates processed tetrahedra from unprocessed ones. Each iteration of
-%the algorithm processes a triangle on the cut-border, either declar-
-%ing it a “border” face or including its adjacent tetrahedron inside
-%the cut-border. The latter operation specifies the fourth vertex of
-%the tetrahedron. If this is not a “new vertex” it is a vertex from the
-%cut-border, which is specified with a “connect” operation using an
-%indexing scheme that is based on a local breadth-first traversal. Be-
-%cause of the order in which cut-border triangles are processed, this
-%fourth vertex is often close to the processed triangle, and thus has
-%a small local index. The bit rates they achieve for connectivity are
-%around 2 bpt, a result that has not been challenged since.
-
-
 \section{Diamond Compression}
 \subsection{Le principe}
-Dans citation, ils regroupaient les tetrahedres deux à deux afin d'économiser une reference d'un tetrahedre à l'autre. L'idée ici est de regrouper les tetrahedres partageant une même arrete. On appelle un tel regroupement un diamant.
-Au sein d'un diamant, les tetrahedres sont ordonnés. On peut donc oublier les références de voisinage entre deux tetrahedres du même diamant (le tetrahedre 7 est connecté au tetra 6 et 8).
-Ainsi, pour chaque tetrahedre d'un diamant, il est connecté à deux tetras du même diamant (un avant et un après). Ainsi, seul, pour chaque tetra du diamant, seul deux references sont necessaires afin de savoir quels sont les deux tetras adjacents n'appartenant pas au diamant.
-Ainsi, dans le cas parfait, si tous les tetras étaient regroupés en diamants, alors la structure de données n'utiliserait que deux references par tetra.
-\subsection{Appariement tetras en diamants}
-La première étape est de regrouper les tetras en diamants. C'est à dire, trouver un ensemble maximum d'arêtes tel qu'aucune arête n'appartienne au même tetra.
-Les tetras n'ayant aucune arête dans cet ensemble seront appelés des tetras isolés.
+\noindent
+Dans SQUAD, les auteurs traverse le graphe en prodondeur afin d'apareiller les triangles deux à deux avec l'un de leurs sommet partagé. Cela leur permet d'avoir 4 références par quad (i.e pair de triangle) et donc d'économiser une référence par triangle. Quant aux triangles non appareillés, ils sont déguisés comme des quads. D'autre part, tout comme SOT, ils utilisent l'ordre des quads tel que le ième quad soit associé au ième sommet. Dans un maillage 2D, il y a deux fois plus de triangles que de sommets. Par conséquent, le nombre de quads et le nombres de sommets devrait être assez proche.\\
+Notre algorithme s'inspire fortement de SQUAD. Seulement, appareiller les tétraèdres deux à deux permet seulement d'économiser une référence par cube, c'est à dire de passer de 4 références par tétraèdre à 3.\\
+L'idée ici est de regrouper les tetrahedres partageant une même arête. On appelle un tel regroupement un diamant. Il combine les idées de plusieurs papiers :
+\begin{itemize}
+\item Regroupement des tétraèdres comme SQUAD
+\item Ancrer un sommet avec un diamant
+\item Ordonner les diamants tel que le ième sommet soit au sein du ième diamant.
+\item Passage d'un tétraèdre à l'autre en utilisant les faces (et non les coins)
+\end{itemize}
+Un diamant est un ensemble de tétraèdres adjacents deux à deux, partageant une arête commune et formant un cycle. 
+\begin{figure}[H]
+\begin{center}
+%\includegraphics[scale=0.2]{Images/diamant}
+%\caption{Exemple de diamant}
+%\label{fig:diamant}
+\end{center}
+\end{figure}
+\noindent
+Au sein d'un diamant, les tetrahedres sont ordonnés. Ainsi, on peut oublier les références de voisinage entre deux tetrahedres du même diamant. Par exemple, dans un diamant de 5 tétraèdres, le troisième tétraèdre est connecté aux deuxième et quatrième tétraèdre. Par conséquent, pour les tétraèdres au sein d'un diamant, seules les références vers des tétraèdres extérieurs sont nécessaires. Un diamant D contenant $|D|$ tétraèdres aura $2|D|$ références. Si tous les tétraèdres sont réunis en diamants, notre structure consommerait 2 rpt.
+\subsection{Appariement des tétraèdres en diamants}
+La première étape consiste à regrouper les tétraèdre en diamant. On peut ramener ce problème à un problème d'optimisation dans les graphes. En considérant notre maillage 3D comme un graphe, il s'agit de coisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. Tous les tétraèdres n'ayant pas d'arêtes dans $E'$ sont appelés les tétraèdres isolés.\\
+\begin{figure}[H]
+\begin{center}
+%\includegraphics[scale=0.2]{Images/ensemble_arete_tetra}
+%\caption{Exemple de diamant}
+%\label{fig:diamant}
+\end{center}
+\end{figure}
+\noindent
 Pour trouver cet ensemble d'arêtes, nous avons essayés plusieurs algorithmes.
-
-mettre image du cas de figure que l'on ne veut pas (deux aretes qui appartiennent au même tetra)
-
 \subsubsection{Choisir l'arête la plus pentu pour chaque sommet}
-La première méthode consiste à prendre pour chaque sommet, l'arête étant la plus pentu. Néanmoins, cette méthode a deux incovénients majeurs : deux arêtes peuvent être choisi et appartenir au même tetra, elle utilise la géometrie du domaine (et donc peut sembler moins générique).
+La première méthode consiste à prendre pour chaque sommet, une arête dans une direction pré-définie. Néanmoins, cette méthode a deux incovénients majeurs : deux arêtes peuvent être choisies et appartenir au même tétraèdre et elle utilise la géometrie du domaine (et donc peut sembler moins générique).
 
-\subsubsection{BFS}
-La seconde approche consiste à parcourir le maillage en largeur. On choisit un tetrahedre au début de l'algorithme puis on regarde pour chacune de ses arêtes si elle forme un diamant et si aucun des tetrahedres n'est deja dans un diamant. Si c'est le cas, on ajoute ce nouveau diamant, sinon, on ajoute les tetras adjacents à la file.
-On continue cet algorithme tant que tous les tetras n'ont pas été parcouru.
+\begin{figure}[H]
+\begin{center}
+%\includegraphics[scale=0.2]{Images/image_arete_pentu}
+%\caption{Exemple de diamant}
+%\label{fig:image_arete_pentu}
+\end{center}
+\end{figure}
 
-\paragraph{Choix du Tetrahedre de départ}
+\subsubsection{Parcours en largeur des tétraèdres}
+\noindent
+La seconde approche consiste à parcourir le maillage en largeur. On choisit un tétraèdre au début de l'algorithme puis on regarde pour chacune de ses arêtes si les tétraèdres partageant cette arète forment un diamant et qu'aucun n'appartienne déja à un diamant. Si ces deux conditions sont remplis, on crée un nouveau diamant avec cette arête centrale. Puis on ajoute à la file les tétraèdre adjacents et non visités au tétraèdre choisi. On execute ainsi cet algorithme tant que la file n'est pas vide.\\\\
+\begin{algorithm}[H]
+\SetAlgoLined	
+ Soit F une file;\\
+ F.ajouter(t);\\
+ \While{F n'est pas vide}{
+  t = F.défiler();\\
+  \For{arête e dans t}{
+  \If{e forme un diamant}{
+  \If{aucun des tétraèdres ayant e n'appartient à un diamant}{
+  Creer un diamant avec e comme arête centrale;\\
+  }
+  }
+  }
+  Marquer t;\\
+  Ajouter voisins de t non marqués à Q;
+ }
+ \caption{Parcours en profondeur du maillage avec un tétraèdre de départ t}
+\end{algorithm}
+
+\paragraph{Choix du tétraèdre de départ}
 Le choix du tetrahedre de départ n'affecte que très légerement la qualité de l'algorithme.
-
-mettre image de l'incidence du tetra de début
-
-\paragraph{BFS ou DFS}
+\begin{figure}[H]
+\begin{center}
+%\includegraphics[scale=0.2]{Images/tetra_depart}
+%\caption{Exemple de diamant}
+%\label{fig:tetra_depart}
+\end{center}
+\end{figure}
+\noindent
+\paragraph{Parcours en largeur ou en profondeur}
 DFS semble donner des résultats moins bon que BFS.
 
-\paragraph{Inconvénient}
-
-En utilisant un outil de visualisation de maillages 3D réalisé par Luca Castelli, on s'appercoit que les tetra isolés sont essentiellement sur les bords du domaine. Par conséquent, nous avons essayé de constituer les diamants d'abord sur les bords mais sans reussite.
- 
+\paragraph{Avantages et inconvénients}
+L'algorithme de parcours en largeur du graphe présente des avantages et inconvénients. Il est très rapide car sa compléxité est linéaire par rapport à la taille du graphe. De plus, son implémentation est très facile et permet à quiconque de le ré-implémenter ou de le modifier. En revanche, environ 20\% des tétraèdres demeurent isolés et ceux-ci sont principalement localisés sur les bords du volume. En effet, parcourir en largeur les tétraèdres est un comportement naïf. Un algorithme ayant une vision globale du maillage et non juste locale aurait probablement de meilleures performances. 
 \subsection{Algorithme randomisé}
-L'idée est d'utiliser un algorithme randomisé afin de selectionner les arêtes centrales des diamants. On assigne donc un 0 ou 1 à chaque arête suivant si la solution la contient ou non. Puis on calcule la qualité de la solution en utilisant une fonction de fitness qui assigne +1 pour chaque tetrahedre dans un diamant et -1 si deux arêtes appartiennent au même tetrahedre.
-
-L'avantage de cet algorithme est qu'il permet de trouver des solutions de meilleures qualités. Cependant, son execution est plus longue et ne garantie aucune propriété sur la solution finale.
-
+\noindent
+Notre problème s'exprime facilement comme un problème d'optimisation combinatoire en nombres entiers ainsi les algorithmes par descente de gradient ne peuvent être utilisés. Il existe en revanche une catégorie d'algorithmes permettant de maximiser une fonction en visitant aléatoirement l'espace des solutions : l'optimisation aléatoire.\\
+Soit $f$ la fonction aléatoire à minimiser, l'idée est de partir d'une solution initiale x et tant que la condition d'arrêt n'est pas remplie, de créer une solution y à partir de x puis de remplacer x par y si f(y)$>$f(x).\\
+Dans notre cas, une solution est un ensemble d'arêtes. Elle est faisable si pour deux arêtes de notre solution n'appartiennent pas au même tétraèdre. On peut donc matérialiser notre solution comme un vecteur de 0 et 1 pour chaque arête du graphe (1 si l'arête appartient à la solution,0 sinon). Pour calculer la valeur de notre solution, on ajoute pour chaque arête de la solution le nombre de tétraèdre utilisant l'arête et si deux arêtes appartienent au même tétraèdre alors on soustrait le nombre de tétraèdres adjacents à des deux arêtes.\\
+L'inconvénient majeur de cet algorithme est sa lenteur. En effet, il permet de trouver des solutions quasi optimales pour des maillages à plusieurs milliers d'arêtes en quelques secondes mais ne permet pas de trouver des solutions convenables au dela.\\
+Par conséquent, nous avons décidé de joindre l'algorithme de parcours en largeur et l'algorithme randomisé pour allier les avantages des deux : la rapidité de BFS et la globalité d'optimisation aléatoire.
 \subsection{BFS+algorithme randomisé}
 La solution finale est donc un mélange de BFS et d'algorithme randomisé. BFS offre une solution convenable en un temps très court. Néanmoins, sa solution peut etre améliorer avec un algorithme randomisé.
-
-
 Nous avons donc sélectionné un ensemble d'arêtes representant les diamants. Tous les tetrahedres ne possedant pas une de ces aretes sont dit isolés.
-\subsection{Choisir l'ancre}
-Il est necessaire d'acceder au ième sommet facilement. Afin de ne pas ajouter de references, on associe à chaque edge central d'un diamant un sommet. Ainsi, pour chaque diamant, il y a un sommet affecté à celui-ci.
-Si un sommet n'a aucun diamant voisin (que des tetras isolés) alors, on associe le sommet à un des tetras isolés.
-Si un sommet n'a aucun diamant de libre dans son voisinnage alors, on explose un diamant (on supprime le diamant, et on fait comme si il n'y avait que des tetras isolés) et on affecte le sommet à un de ces tetras isolés.
 
-montrer la figure représentant tous les edges centraux
+METTRE TABLEAU DE COMPARAISON ENTRE LES 3 MÉTHODES : BFS, RANDOMISÉ, ET BFS RANDOMISÉ
+
+\subsection{Choisir l'ancre}
+Maintenant que nous avons choisi notre algorithme pour appareiller les tétraèdres en diamants, il est nécessaire d'affecter pour chaque sommet un diamant. De cette manière, on poura accéder au ième sommet en accedant au ième diamant.\\
+Si un sommet n'a aucun diamant voisin (que des tétraèdres isolés) alors, on associe le sommet à un des tetras isolés. Si un sommet n'a aucun diamant de libre (i.e tous les diamants on déjà un sommet affecté) dans son voisinnage alors, on explose un diamant (on supprime le diamant, et on fait comme si il n'y avait que des tétraèdres isolés) et on affecte le sommet à un de ces tétraèdres isolés.
+
+\begin{figure}[H]
+\begin{center}
+%\includegraphics[scale=0.2]{Images/image_association_sommet_diamant}
+%\caption{Exemple de diamant}
+%\label{fig:tetra_depart}
+\end{center}
+\end{figure}
+\noindent
+
+\begin{figure}[H]
+\begin{center}
+%\includegraphics[scale=0.2]{Images/image_explosion_diamant}
+%\caption{Exemple de diamant}
+%\label{fig:tetra_depart}
+\end{center}
+\end{figure}
+\noindent
+Un algorithme glouton affectant en prioirité les sommets adjacents à peu d'arêtes permet d'ancrer correctement et rapidement les diamants aux sommets.
+
+METTRE TABLEAU COMPARATIF DE L'APPARIEMENT SOMMET DIAMANT SUR PLUSIEURS FORMES
+(NOMBRE DE SOMMETS SANS ANCRE, PERFORMANCE AVANT ET APRES EXPLOSION DES DIAMANTS)
 
 \subsection{La structure}
-La structure est un tableau à une dimension dont la taille est le nombre de faces extérieures des diamants ou tetras isolés.
-Ainsi un diamant contenant 4 tetrahedres occupera 8 cellules dans le tableau (car il  a 8 faces extérieures) et un tetra isolés en occupera 4.
-Afin de pouvoir acceder au sommet rapidement, on reordonner l'ordre des diamants afin que le ième vertex soit adjacent au ieme diamant.
-Par ailleurs, pour savoir quand on passe d'un diamant à un autre, nous utilisons des bits de service (1 ou 0) pour chaque face. Une face contient un 1 si c'est la première face d'un diamant, 0 sinon.
-Finalement, histoire de pouvoir tourner facilement autour d'un sommet, nous encodons dans des bits de service les permutations entre deux faces.
-
+Désormais, nos diamants sont formés et les sommets sont associés à des diamants (ou des tétraèdres isolés).\\
+Pour rappel, notre structure doit permettre de :
+\begin{itemize}
+\item Acceder au ième tétraèdre en temps constant
+\item Acceder au ième sommet en temps constant
+\item Naviguer facilement dans le graphe (entre les tétraèdres)
+\item Calculer le degré (i.e l'hypersphère) d'un sommet
+\end{itemize}
+La structure que nous proposons est un tableau F à une dimension dont la taille est le nombre de faces extérieures des diamants ou tétraèdres isolés. Les faces extérieures sont toutes les faces des tétraèdres isolés et les faces externes des diamants. Le tableau contient des entiers qui sont les indices des faces. Ainsi F[i] indique l'indice dans le tableau de la face adjacente à la ième face. Si la ième face est sur le bord du volume alors F[i]=-1.\\ 
+Un diamant contenant quatre tétraèdres occupera 8 cellules dans le tableau (car il a 8 faces extérieures) et un tétraèdre isolé en occupera 4. Les diamants sont ré-ordonnés de tel manière que le ième sommet soit ancré au ième diamant. Etant donné qu'il y a beaucoup plus de diamants que de sommets, seuls, les $|V|$ premiers diamants sont ré-ordonnés.\\
+Par ailleurs, pour savoir quand on passe d'un diamant à un autre, nous utilisons des bits de service (1 ou 0) pour chaque face. Une face contient un 1 si c'est la première face d'un diamant, 0 sinon.Finalement, afin de pouvoir tourner facilement autour d'un sommet, nous utilisons 3 bits de service par face pour représenter la permutation des sommets entre ces deux faces.\\
 Pour résumer, voici notre structure de données :
-
-- un tableau 1D de tailles |F| où F est l'ensemble des faces exterieures du maillage.
-- un bit de service afin de savoir si une face est la première d'un diamant
-- 3 bits de services afin de représenter les permutation entre deux faces
-
-
-mettre image d'un tableau 1D
-mettre image d'une permutation
-
-\subsubsection{Ordre des sommets et tetrahedres}
-
+\begin{itemize}
+\item Un tableau de tailles |F| où F est l'ensemble des faces exterieures du maillage.
+\item Un bit de service par face afin de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé
+\item 3 bits de service par face afin de représenter la permutation des sommets entre deux faces
+\end{itemize}
+METTRE IMAGE DU TABLEAU 1D DES FACES + BITS DE SERVICES
 \subsubsection{Calculer les permutations}
-mettre image de deux diamants qui se touchent et partagent une face
+\noindent
+Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant D possedant $|D|$ tétraèdres contient $|D|+2$ sommets. On ordonne d'abors les sommets situés entre deux faces (i.e les sommets sur "l'équateur" du diamant), puis les deux sommets communs à toutes les faces. Le premier sommet est alors le sommet adjacent au premier tétraèdre et au dernier, le second sommet est celui adjacent au premier tétraèdre et au deuxieme... Pour calculer les permutations entre deux faces, il suffit alors de comparer l'ordre des sommets des deux faces.
 
-Tout comme les tetrahedres, les sommets peuvent etre ordonnés au sein d'un diamant. Un diamant de taille |D| (contenant D tetras) contient |D|+2 sommets.
-On ordonne d'abord les sommets se trouvant sur "l'équateur" du diamant puis les deux sommets adjacents à tous les tetras.
-Le premier sommet est alors le sommet adjacent au premier tetra et au dernier, le second sommet est celui adjacent au premier tetra et au deuxieme...
-Pour calculer les permutations entre deux faces, il suffit alors de comparer l'ordre des sommets des deux faces.
-
-\subsection{Les methodes possibles}
-Notre structure de données doit être à la fois compacte (nécessite moins de stockage que la version standard) et doit permettre de réaliser plusieurs opérations.
-\subsection{Acceder au ieme vertex}
-La première opération doit être de pouvoir acceder au ième sommet. Bien que nous ne stockions pas les sommets de manière explicites (nous ne stockons que les faces). Nous sommes en mesures de localiser le ième sommet car il est adjacent au ième diamant.
-Il nous suffit donc de parcourir les faces et de s'arreter après avoir parcouru i face avec un bit de service=1.
-Cet accès se fait en temps O(n).
-\subsection{Acceder au ieme tetra}
-Lors du regroupement des tetras en diamants, l'ordre des diamants n'est plus le même que l'ordre initial (à la lecture du fichier OFF). Néanmoins, on peut re-ordonner les tetras dans le fichier original afin que l'ordre des tetras soit les mêmes. De cette manière on peut acceder au ième tetra en O(n).
+METTRE DEUX IMAGE A COTÉ : DIAMANT/NUMEROTATION DES SOMMETS ET ORDRE DES SOMMETS
+METTRE IMAGE D'UNE PERMUTATION DES SOMMETS ENTRE 2 FACES
+\subsection{Les méthodes possibles}
+\subsection{Acceder au ieme diamant/tétraèdre isolé}
+Il suffit de parcourir le tableau $F$ et de regarder pour chaque face si le premier bit de service vaut 1. On s'arrête alors dès que l'on a parcouru i faces dont la valeur du premier bit de service est 1. La compléxité est O(n).
+METTRE PSEUDOCODE
+\subsection{Parcourir les tétraèdres d'un diamant}
+Les faces au sein d'un diamant sont ordonnées. Les faces consécutives dans le tableau (modulo la taille du diamant) sont adjacentes dans le diamant. La compléxité est O(1).
+METTRE PSEUDOCODE
+\subsection{Acceder au ième tétraèdre}
+Lors du regroupement des tétraèdres en diamants, l'ordre des diamants n'est plus le même que l'ordre initial (à la lecture du fichier OFF). Néanmoins, on peut re-ordonner les tétraèdres dans le fichier original afin que l'ordre des tétraèdres soit les mêmes. De cette manière on peut acceder au ième tetra en O(n).
+\subsection{Acceder au ième sommet}
+Bien que nous ne stockions pas les sommets de manière explicites (nous ne stockons que les faces). Nous sommes en mesures de localiser le ième sommet car il est adjacent au ième diamant.
+Il suffit donc d'accéder au ième diamant/tétraèdre isolé. Si c'est un diamant, alors le sommet est commun à toutes les faces paires du diamant. Si c'est un tétraèdre isolé, alors le sommet est opposé à la première face et est donc adjacent au trois autres faces. La compléxité est O(n).
+METTRE PSEUDOCODE
 \subsection{Degré d'un sommet et Hypersphere d'un sommet}
 Calculer le degré d'un sommet est plus compliqué. On sait que le le ième sommet est adjacent au ième tetra. Par conséquent, on si le ième tetra est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si le diamant est un diamant isolé, alors le sommet cible est opposé à la première face et est donc adjacent aux trois autres faces. Puis, il suffit de suivre les diamant adjacents à chacune de ces faces.
 
 Quant à l'hypersphere d'un sommet, c'est exactement le même procédé que pour calculer le degré.
+\subsection{Parcours en profondeur du graphe}
+
 
 \subsection{Evaluation de notre structure de donneés}
 \subsubsection{Comment evaluer notre structure}
