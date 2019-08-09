@@ -140,14 +140,7 @@ vector<tuple<int,int,int>> Diamond::get_external_faces()
     {
         for (tuple<int,int,int> face : tetra->enumerate_faces())
         {
-            if (faces.count(face)==0)
-            {
-                faces[face]=1;
-            }
-            else
-            {
-                faces[face]+=1;
-            }
+            faces[face]++;
         }
     }
     // gather all faces appearing only once
@@ -167,6 +160,11 @@ void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
 {
     // cout<<this->tetra_list.size()<<endl;
     // if the diamond has n tetra => 2*n external faces
+    // if (face==tuple<int,int,int>{0,0,1})
+    // {
+    //     cout<<"problem "<<this->get_id()<<endl;
+    //     assert(true==false);
+    // }
     if (this->tetra_list.size()>1)
     {
         // we want to know which tetra has this face

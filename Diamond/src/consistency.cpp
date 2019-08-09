@@ -14,15 +14,16 @@ void check_1(vector<Diamond> &diamond_list)
     cout<<"Check 1 done"<<endl;
 }
 
-void check_2(int (tetra_array)[],int (diamond_array)[],int diamond_array_size)
+void check_2(int (diamond_array)[],int diamond_array_size)
 {
     for (int i=0;i<diamond_array_size;i++)
     {
         if (diamond_array[i]!=-1)
         {
-            if (diamond_array[i]!=diamond_array[diamond_array[i]])
+            if (i!=diamond_array[diamond_array[i]])
             {
-                // error in bijective redirection
+                cout<<i<<" "<<diamond_array[i]<<" "<<diamond_array[diamond_array[i]]<<endl;
+                cout<<"error in bijective redirection"<<endl;
                 assert(true==false);
             }
         }
@@ -222,3 +223,28 @@ void check_5(vector<Diamond> &diamond_list)
         }
     }
 }
+
+void check_6(bool diamond_extra_bytes_array[],int array_size,int tetra_list_size)
+{
+    int x=0;
+    int i=0;
+    while(i<array_size)
+    {   
+        int tmp = diamond_size(diamond_extra_bytes_array,array_size,i);
+        if (tmp==4)
+        {
+            x++;
+        }
+        else
+        {
+            x+=tmp/2;
+        }
+        i+=tmp;
+    }
+    if (x!=tetra_list_size)
+    {
+        cout<<"Wrong number of tetrahedron"<<endl;
+        assert(true==false);
+    }
+}
+

@@ -71,7 +71,7 @@ vector<tuple<int,int>> Tetrahedron::enumerate_edges()
     return edges;
 }
 
-// return edges id of a tetrahedron
+// return faces of a tetrahedron
 vector<tuple<int,int,int>> Tetrahedron::enumerate_faces()
 {
     int v0=this->vertices[0]->get_id();

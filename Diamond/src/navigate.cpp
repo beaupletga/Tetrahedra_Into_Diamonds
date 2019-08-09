@@ -1,45 +1,134 @@
 #include "../include/navigate.h"
 
-// this function doesn't work with isolated tetra
-int next_tetrahedron(int diamond_array[],int tetra_array[],bool diamond_extra_bytes_aray[],int tetra_index)
+// return the size of a diamond from an index
+// index is one of the faces of the targeted diamond
+int diamond_size(bool diamond_extra_bytes_array[],int array_size,int index)
 {
-    if(tetra_index%2==0 && diamond_extra_bytes_aray[tetra_index+2]==0)
+    int count = 1;
+    int i=index+1;
+    while (diamond_extra_bytes_array[i]!=1 && i<array_size)
     {
-        return tetra_index+2;        
+        // cout<<diamond_extra_bytes_array[i]<<endl;
+        count++;
+        i++;
     }
-    else if(tetra_index%2==1 && diamond_extra_bytes_aray[tetra_index+1]==0)
+    i=index;
+    while (diamond_extra_bytes_array[i]!=1)
     {
-        return tetra_index+1;     
+        // cout<<diamond_extra_bytes_array[i]<<endl;
+        count++;
+        i--;
     }
-    int i=tetra_index;
-    while (diamond_extra_bytes_aray[i]!=1)
+    return count;
+}
+
+// return the index of the first face of the targeted diamond
+int get_starting_index(bool diamond_extra_bytes_array[],int index)
+{
+    int i=index;
+    while(diamond_extra_bytes_array[i]!=1)
     {
         i--;
     }
     return i;
 }
 
-// this function doesn't work with isolated tetra
-int previous_tetrahedron(int diamond_array[],int tetra_array[],bool diamond_extra_bytes_aray[],int tetra_index)
+// return the index of the next diamond
+int next_diamond(bool diamond_extra_bytes_array[],int array_size,int i)
 {
-    if(tetra_index%2==0 && diamond_extra_bytes_aray[tetra_index-2]==0)
+    i++;
+    while (diamond_extra_bytes_array[i]!=1 & i<array_size)
     {
-        return tetra_index-2;        
+        i++;
     }
-    else if(tetra_index%2==1 && diamond_extra_bytes_aray[tetra_index-1]==0)
+    return i;
+}
+
+// return the index of the previous diamond
+int previous_diamond(bool diamond_extra_bytes_array[],int array_size,int i)
+{
+    i--;
+    while (diamond_extra_bytes_array[i]!=1 & i>0)
     {
-        return tetra_index-1;     
+        i--;
     }
-    else//if(diamond_extra_bytes_aray[tetra_index]==1 || diamond_extra_bytes_aray[tetra_index-1]==1)
+    return i;
+}
+
+// return the index of the next tetrahedron
+int next_tetrahedron(bool diamond_extra_bytes_array[],int array_size,int i)
+{
+    int size = diamond_size(diamond_extra_bytes_array,array_size,i);
+    if (size==4)
     {
-        int i=tetra_index;
-        while (diamond_extra_bytes_aray[i]!=1)
+        return next_diamond(diamond_extra_bytes_array,array_size,i);
+    }
+    else
+    {
+        if (i%2==0 & i+2<array_size)
         {
-            i++;
+            return i+2;
         }
-        return i-2;
+        else if (i+1<array_size)
+        {
+            return i+1;
+        }
+        else
+        {
+            cout<<"There is no next tetrahedron"<<endl;
+            assert(true==false);
+        }
     }
 }
+
+// return the index of the previous tetrahedron
+int previous_tetrahedron(bool diamond_extra_bytes_array[],int array_size,int i)
+{
+    int size = diamond_size(diamond_extra_bytes_array,array_size,i);
+    if (size==4)
+    {
+        return previous_diamond(diamond_extra_bytes_array,array_size,i);
+    }
+    else
+    {
+        if (i%2==0 & i-2>0)
+        {
+            return i-2;
+        }
+        else if (i-1>0)
+        {
+            return i-1;
+        }
+        else
+        {
+            cout<<"There is no previous tetrahedron"<<endl;
+            assert(true==false);
+        }
+    }
+}
+
+// return the index of the ith tetra
+int ith_tetra(bool diamond_extra_bytes_array[],int array_size,int i)
+{
+    int index=0;
+    for (int j=0;j<i;j++)
+    {
+        index = next_tetrahedron(diamond_extra_bytes_array,array_size,index);
+    }
+    return index;
+}
+
+// return the index of the ith diamond
+int ith_diamond(bool diamond_extra_bytes_array[],int array_size,int i)
+{
+    int index=0;
+    for (int j=0;j<i;j++)
+    {
+        index = next_diamond(diamond_extra_bytes_array,array_size,index);
+    }
+    return index;
+}
+
 
 void display_face(tuple<int,int,int> face)
 {
@@ -83,7 +172,6 @@ int index_to_diamond_id(bool diamond_extra_bytes_array[],int diamond_array_size,
             cout<<"No such diamond"<<endl;
             assert(true==false);
         }
-
     }
     // because diamond id starts at 0
     return count-1;
@@ -105,8 +193,7 @@ int diamond_id_to_index(bool diamond_extra_bytes_array[],int diamond_array_size,
     return i-1;
 }
 
-
-vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size,map<int,int> &index_to_diamond_id)
+vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size,int starting_diamond_index)
 {
     vector<int> path;
     queue<int> wait_list;
@@ -114,22 +201,18 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
     // wait_list.push(0);
     int q=0;
 
-    for(auto [key,val] : index_to_diamond_id)
-    {
-        if (val==100)
-        {
-            wait_list.push(key);
-            break;
-        }
-    }
-
+    int index = ith_diamond(diamond_extra_bytes_array,array_size,starting_diamond_index);
+    wait_list.push(get_starting_index(diamond_extra_bytes_array,index));
+    
+    // wait_list.push(index_to_diamond_id.begin()->first);
     while(!wait_list.empty())
     {
-        int index = wait_list.front();
+        index = wait_list.front();
         wait_list.pop();
         int i=index+1;
         // int diamond_id = index_to_diamond(diamond_extra_bytes_array,array_size,index);
-        int diamond_id = index_to_diamond_id[index];
+        // int diamond_id = index_to_diamond_id[index];
+        int diamond_id = get_starting_index(diamond_extra_bytes_array,index);
         if(lala.count(diamond_id)==0)
         {
             lala.insert(diamond_id);
@@ -157,10 +240,9 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
             }
             q++;            
         }
-        
-        if (q==500){
-            break;
-        }
+        // if (q==500){
+        //     break;
+        // }
     }
     return path;
 }
@@ -378,7 +460,7 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[0]/2]->get_id());
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[1]/2]->get_id());
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[2]/2]->get_id());
-                cout<<"1"<<endl;
+                // cout<<"1"<<endl;
                 display_face(current.to->neighbours_faces[indexes[0]]);
                 display_face(current.to->neighbours_faces[indexes[1]]);
                 display_face(current.to->neighbours_faces[indexes[2]]);
@@ -427,12 +509,12 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
                 {
                     start=1;
                 }
-                cout<<"2"<<endl;
-                for (int i : current.to->get_vertex_order())
-                {
-                    cout<<i<<" ";
-                }
-                cout<<endl;
+                // cout<<"2"<<endl;
+                // for (int i : current.to->get_vertex_order())
+                // {
+                //     cout<<i<<" ";
+                // }
+                // cout<<endl;
                 for (int i=start;i<current.to->get_neighbours().size();i+=2)
                 {
                     total_degree+=1;
@@ -538,38 +620,6 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
     return tetra_ids;
 }
 
-
-int diamond_size(bool diamond_extra_bytes_array[],int array_size,int index)
-{
-    int count = 1;
-    int i=index+1;
-    while (diamond_extra_bytes_array[i]!=1 && i<array_size)
-    {
-        // cout<<diamond_extra_bytes_array[i]<<endl;
-        count++;
-        i++;
-    }
-    i=index;
-    while (diamond_extra_bytes_array[i]!=1)
-    {
-        // cout<<diamond_extra_bytes_array[i]<<endl;
-        count++;
-        i--;
-    }
-    return count;
-}
-
-int get_starting_index(bool diamond_extra_bytes_array[],int index)
-{
-    int i=index;
-    while(diamond_extra_bytes_array[i]!=1)
-    {
-        i--;
-    }
-    return i;
-}
-
-
 struct Next_
 {
     int from_index;
@@ -579,19 +629,20 @@ struct Next_
 };
 
 
-int vertex_degree_with_minimal_array(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list,int (tetra_array)[],
-int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size,vector<tuple<int,int,int>> &permutation_array,
-vector<tuple<int,int,int>> &face_array,int id)
+int vertex_degree_with_minimal_array(int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size,
+vector<tuple<int,int,int>> &permutation_array,vector<tuple<int,int,int>> &face_array,int id)
 {
     unordered_set<int> diamond_ids;
     unordered_set<int> tetra_ids;
     stack<Next_> stack_face;
     int total_degree=0;
-
+    cout<<id<<endl;
     int index = diamond_id_to_index(diamond_extra_bytes_array,diamond_array_size,id);
-    // cout<<"index :"<<index<<endl;
+    cout<<"size "<<diamond_array_size<<endl;
+    cout<<"index :"<<index<<endl;
     // display_face_diamond(diamond_extra_bytes_array,face_array,id);
     int size = diamond_size(diamond_extra_bytes_array,diamond_array_size,index);
+    cout<<"size"<<endl;
     Next_ first;
     first.from_index=index;
     first.to_index=diamond_array[index];
@@ -601,19 +652,31 @@ vector<tuple<int,int,int>> &face_array,int id)
     if (size==4)
     {
         // cout<<"size is 4"<<endl;
+        cout<<"error0"<<endl;
+        
         first.from_index=index+1;
         first.from_face_index=1;
         first.vertex_index=0;
         first.to_index=diamond_array[index+1];
+        // display_face(face_array[index-3]);
+        // display_face(face_array[index-2]);
+        // display_face(face_array[index-1]);
+        display_face(face_array[index+1]);
+        display_face(face_array[index+2]);
+        display_face(face_array[index+3]);
+        display_face(face_array[diamond_array[index+3]]);
     }
     else
     {
+        cout<<"error1"<<endl;
         first.vertex_index=2;
     }
     if (first.to_index==-1)
     {
+        cout<<"error2"<<endl;
         if (size>4)
         {
+            cout<<"error3"<<endl;
             // cout<<"shit1"<<endl;
             for(int j=0;j<size;j+=2)
             {
@@ -628,6 +691,7 @@ vector<tuple<int,int,int>> &face_array,int id)
         }
         else
         {
+            cout<<"error4"<<endl;
             // cout<<"shit2"<<endl;
             if (diamond_array[index+2]!=-1)
             {
@@ -645,6 +709,7 @@ vector<tuple<int,int,int>> &face_array,int id)
     }
     if (first.to_index==-1)
     {
+        cout<<"error5"<<endl;
         // cout<<"shit3"<<endl;
         if (size==4)
         {
@@ -658,27 +723,39 @@ vector<tuple<int,int,int>> &face_array,int id)
 
     while (!stack_face.empty())
     {
-        // cout<<"a"<<endl;
+        cout<<"a"<<endl;
         int warning;
         Next_ current = stack_face.top();
         stack_face.pop();
-        if (current.to_index!=-1 && diamond_ids.count(get_starting_index(diamond_extra_bytes_array,current.to_index))==0)
+        cout<<"b"<<endl;
+        // cout<<"error_0"<<endl;
+        get_starting_index(diamond_extra_bytes_array,current.to_index);
+        cout<<"c"<<endl;
+        // cout<<"error_00"<<endl;
+        // cout<<"From index : "<<current.from_index<<endl;
+        // cout<<"To index : "<<current.to_index<<endl;
+        if (current.to_index>=0 && current.to_index<diamond_array_size && diamond_ids.count(get_starting_index(diamond_extra_bytes_array,current.to_index))==0)
         {
             diamond_ids.insert(get_starting_index(diamond_extra_bytes_array,current.to_index));
         }
         else
         {
+            cout<<"else "<<current.to_index<<endl;
+            cout<<stack_face.size()<<endl;
+            cout<<"x"<<endl;
             continue;
         }
-
+        // cout<<"error_01"<<endl;
         // cout<<"b"<<endl;
         // cout<<get_starting_index(diamond_extra_bytes_array,current.to_index)<<endl;        
 
-        // cout<<"ongoing face :" ;
+        cout<<"ongoing face :" ;
+        display_face(face_array[current.to_index]);
         // display_face(face_array[current.to_index]);
-        // display_face(face_array[current.to_index]);
-
-        int cc= index_to_diamond_id(diamond_extra_bytes_array,diamond_array_size,current.to_index);
+        // cout<<"error_0"<<endl;
+        cout<<current.to_index<<" "<<diamond_array_size<<endl;
+        int cc = index_to_diamond_id(diamond_extra_bytes_array,diamond_array_size,current.to_index);
+        // cout<<"error_1"<<endl;
         // cout<<"cc "<<cc<<endl;
         // cout<<endl;
         // display_face_diamond(diamond_extra_bytes_array,face_array,cc);
@@ -688,6 +765,7 @@ vector<tuple<int,int,int>> &face_array,int id)
         int neighbour_face_index = -1;
         // cout<<"c"<<endl;
         int neighbour_starting_index = get_starting_index(diamond_extra_bytes_array,current.to_index);
+        // cout<<"error_02"<<endl;
         if (neighbour_starting_index!=0)
         {
             neighbour_face_index=current.to_index % neighbour_starting_index;
@@ -697,18 +775,20 @@ vector<tuple<int,int,int>> &face_array,int id)
             neighbour_face_index=current.to_index;
         }
 
-        // cout<<"starting index : "<<neighbour_starting_index<<endl;
-        // cout<<"neighbour face index :"<<neighbour_face_index<<endl;
+        // cout<<"error_1"<<endl;
+        cout<<"starting index : "<<neighbour_starting_index<<endl;
+        cout<<"neighbour face index :"<<neighbour_face_index<<endl;
         if (neighbour_face_index==-1)
         {
             cout<<"unknown face"<<endl;
             assert(true==false);
         }
-        // cout<<"current.vertex_index : "<<current.vertex_index<<endl;
-        // cout<<"permutation : "<<get<0>(permutation_array[current.from_index])<<" "<<get<1>(permutation_array[current.from_index])<<" "<<get<2>(permutation_array[current.from_index])<<endl;
+        cout<<"current.vertex_index : "<<current.vertex_index<<endl;
+        cout<<"permutation : "<<get<0>(permutation_array[current.from_index])<<" "<<get<1>(permutation_array[current.from_index])<<" "<<get<2>(permutation_array[current.from_index])<<endl;
     //    cout<<"d"<<endl;
         if (neighbour_face_size>4)
         {
+            // cout<<"error_2"<<endl;
             // cout<<"x4"<<endl;
             if (get<0>(permutation_array[current.from_index])==current.vertex_index)
             {
@@ -732,16 +812,16 @@ vector<tuple<int,int,int>> &face_array,int id)
                 }
                 total_degree+=2;
 
-                // cout<<0<<endl;
+                cout<<0<<endl;
                 // cout<<diamond_array[neighbour_starting_index+indexes[0]]<<endl;
                 // cout<<diamond_array[neighbour_starting_index+indexes[1]]<<endl;
                 // cout<<diamond_array[neighbour_starting_index+indexes[2]]<<endl;
-                // cout<<neighbour_starting_index+indexes[0]<<endl;
-                // cout<<neighbour_starting_index+indexes[1]<<endl;
-                // cout<<neighbour_starting_index+indexes[2]<<endl;
-                // display_face(face_array[neighbour_starting_index+indexes[0]]);
-                // display_face(face_array[neighbour_starting_index+indexes[1]]);
-                // display_face(face_array[neighbour_starting_index+indexes[2]]);
+                cout<<neighbour_starting_index+indexes[0]<<endl;
+                cout<<neighbour_starting_index+indexes[1]<<endl;
+                cout<<neighbour_starting_index+indexes[2]<<endl;
+                display_face(face_array[neighbour_starting_index+indexes[0]]);
+                display_face(face_array[neighbour_starting_index+indexes[1]]);
+                display_face(face_array[neighbour_starting_index+indexes[2]]);
                 // display_face(face_array[diamond_array[neighbour_starting_index+indexes[0]]]);
                 // display_face(face_array[diamond_array[neighbour_starting_index+indexes[1]]]);
                 // display_face(face_array[diamond_array[neighbour_starting_index+indexes[2]]]);
@@ -781,10 +861,12 @@ vector<tuple<int,int,int>> &face_array,int id)
                     stack_face.push(next2);
                     
                 }
+                // cout<<"error_3"<<endl;
                 continue;
             }
             if (get<1>(permutation_array[current.from_index])==current.vertex_index)
             {
+                // cout<<"error_4"<<endl;
                 warning=1;
                 vector<int> indexes;
                 if (neighbour_face_index%2==0)
@@ -813,13 +895,13 @@ vector<tuple<int,int,int>> &face_array,int id)
                 // tetra_ids.insert(current.to->get_tetra_list()[indexes[1]/2]->get_id());
                 // tetra_ids.insert(current.to->get_tetra_list()[indexes[2]/2]->get_id());
                 
-                // cout<<1<<endl;
+                cout<<1<<endl;
                 // cout<<diamond_array[neighbour_starting_index+indexes[0]]<<endl;
                 // cout<<diamond_array[neighbour_starting_index+indexes[1]]<<endl;
                 // cout<<diamond_array[neighbour_starting_index+indexes[2]]<<endl;
-                // display_face(face_array[neighbour_starting_index+indexes[0]]);
-                // display_face(face_array[neighbour_starting_index+indexes[1]]);
-                // display_face(face_array[neighbour_starting_index+indexes[2]]);
+                display_face(face_array[neighbour_starting_index+indexes[0]]);
+                display_face(face_array[neighbour_starting_index+indexes[1]]);
+                display_face(face_array[neighbour_starting_index+indexes[2]]);
                 // display_face(face_array[diamond_array[neighbour_starting_index+indexes[0]]]);
                 // display_face(face_array[diamond_array[neighbour_starting_index+indexes[1]]]);
                 // display_face(face_array[diamond_array[neighbour_starting_index+indexes[2]]]);
@@ -854,10 +936,12 @@ vector<tuple<int,int,int>> &face_array,int id)
                     stack_face.push(next2);
                     
                 }
+                // cout<<"error_5"<<endl;
                 continue;
             }
             if (get<2>(permutation_array[current.from_index])==current.vertex_index)
             {
+                // cout<<"error_6"<<endl;
                 warning=2;
                 int start;
                 if (neighbour_face_index%2==0)
@@ -868,7 +952,7 @@ vector<tuple<int,int,int>> &face_array,int id)
                 {
                     start=1;
                 }
-                // cout<<2<<endl;
+                cout<<2<<endl;
                 
                 for (int i=start;i<neighbour_face_size;i+=2)
                 {
@@ -876,7 +960,7 @@ vector<tuple<int,int,int>> &face_array,int id)
                     // tetra_ids.insert(current.to->get_tetra_list()[i/2]->get_id());
                     if (diamond_array[neighbour_starting_index+i]!=-1)
                     {
-                        // display_face(face_array[neighbour_starting_index+i]);
+                        display_face(face_array[neighbour_starting_index+i]);
                         Next_ next;
                         next.from_index=neighbour_starting_index+i;
                         next.to_index=diamond_array[neighbour_starting_index+i];
@@ -886,11 +970,13 @@ vector<tuple<int,int,int>> &face_array,int id)
                         
                     }
                 }
+                // cout<<"error_7"<<endl;
                 continue;
             }
         }
         else
         {
+            // cout<<"error_8"<<endl;
             warning=3;
             total_degree+=1;
             // tetra_ids.insert(current.to->get_tetra_list()[0]->get_id());
@@ -914,7 +1000,7 @@ vector<tuple<int,int,int>> &face_array,int id)
                 indexes={0,1,2};
             }
 
-            // cout<<3<<endl;
+            cout<<3<<endl;
             // cout<<diamond_array[neighbour_starting_index+indexes[0]]<<endl;
             // cout<<diamond_array[neighbour_starting_index+indexes[1]]<<endl;
             // cout<<diamond_array[neighbour_starting_index+indexes[2]]<<endl;
@@ -924,7 +1010,12 @@ vector<tuple<int,int,int>> &face_array,int id)
             // display_face(face_array[diamond_array[neighbour_starting_index+indexes[0]]]);
             // display_face(face_array[diamond_array[neighbour_starting_index+indexes[1]]]);
             // display_face(face_array[diamond_array[neighbour_starting_index+indexes[2]]]);
-
+            cout<<endl;
+            for (int i=neighbour_starting_index;i<neighbour_starting_index+diamond_size(diamond_extra_bytes_array,diamond_array_size,neighbour_starting_index);i++)
+            {
+                display_face(face_array[i]);
+            }
+            cout<<endl;
             int which_case;
             if (get<0>(permutation_array[current.from_index])==current.vertex_index)
             {
@@ -969,12 +1060,14 @@ vector<tuple<int,int,int>> &face_array,int id)
 
                     stack_face.push(next0);
                     // cout<<"vertice "<<current.to->vertex_order[indexes[i]]<<endl;
-                    // display_face(current.to->neighbours_faces[indexes[i]]);
+                    display_face(face_array[neighbour_starting_index+indexes[i]]);
+                    // display_face(face_array[diamond_array[neighbour_starting_index+indexes[i]]]);
                 }
             }
+            // cout<<"error_9"<<endl;
         }       
         // sleep(1);
     }
-    // cout<<"degree : "<<total_degree<<endl;
+    cout<<"degree : "<<total_degree<<endl;
     return total_degree;
 }

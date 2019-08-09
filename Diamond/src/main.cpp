@@ -15,6 +15,7 @@
 #include "../include/visualization.h"
 #include "../include/navigate.h"
 #include "../include/consistency.h"
+#include "../include/benchmark.h"
 #include "../include/stats.h"
 #include "../include/step1.h"
 #include "../include/step2.h"
@@ -40,17 +41,45 @@ using namespace std;
 // - faire une reduction polynomiale afin de montrer que notre probleme est np-complet
 // faire une fonction qui permet d'encoder notre structure dans un fichier off
 
-int main() 
+int main(int argc, char** argv) 
 {
     vector<Vertex> vertex_list;
     vector<Tetrahedron> tetra_list;
     tuple<vector<vector<double>>,vector<vector<double>>> result;
+
+    if (argc==1)
+    {
+        return 0;
+    }
+    else
+    {
+        try
+        {
+            string filename =argv[1]; 
+            if (filename.substr(filename.length()-4)=="mesh")
+            {
+                result=read_mesh_file(filename);
+            }
+            else if (filename.substr(filename.length()-3)=="tet")
+            {
+                result=read_tet_file(filename);
+            }
+            
+            
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << endl;
+            return 0;
+        }        
+    }
+    
+    
     // return both the geometry and the connectivity as a tuple
     // result=read_tet_file("../data/delaunay3D_sphere870.tet");
     // result=read_tet_file("../data/hand.tet");
     // result=read_tet_file("../data/delaunay3D_sphere6k.tet");
-    result=read_mesh_file("../data/ball.mesh");
-
+    
     // read the result tuple and encapsulate the geom. and connect. in propers classes
     preprocessing_tetra(result,vertex_list,tetra_list);
 
@@ -80,10 +109,18 @@ int main()
     
     map<tuple<int,int>,vector<Tetrahedron*>> edge_to_tetra;
 
+
     // edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
-    edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
+    auto start = chrono::high_resolution_clock::now(); 
+    edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
+    // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
     // edge_to_tetra=step_1_edge_degree(vertex_list,tetra_list,edge_dict);
     // edge_to_vertex=step_1_vertex_choose_neighbour(vertex_list,tetra_list,edge_dict);
+    auto stop = chrono::high_resolution_clock::now(); 
+    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+    cout<<"Time for creating Diamonds : "<<duration.count()*1e-6<<" s"<<endl;
+
+    
 
     // this method doesn't work if you use step_1_vertex_choose_neighbour because all diamond are not cycles
     vector<Diamond> diamond_list=step_2(edge_to_tetra,tetra_list,edge_dict,face_dict,vertex_list);
@@ -91,7 +128,7 @@ int main()
     cout<<"Diamond list size : "<<diamond_list.size()<<endl;
 
     // check_1(diamond_list);
-    check_3(diamond_list);
+    // check_3(diamond_list);
     // vector<int> tetras_id= {3589,5208,10131,5575,14914,11636,16268};
 
     // 3589
@@ -111,17 +148,26 @@ int main()
     // return 0;
 
     stats(edge_to_tetra,tetra_list);
-    return 0;
+    // return 0;
 
     // visualize_diamond_isolated(vertex_list,tetra_list,edge_dict,edge_to_vertex);
     // visualize_all(vertex_list,tetra_list);
     // visualize(tetra_list);
     
     cout<<"Step3"<<endl;
+    start = chrono::high_resolution_clock::now(); 
+    // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
     step_3_0_set_central_edge(diamond_list,edge_dict,vertex_dict);
+    cout<<1<<endl;
     step_3_1_pair_vertices_as_anchor(diamond_list,vertex_list,vertex_dict,edge_dict);
+    cout<<1<<endl;
     step_3_2_pair_unpaired_vertices(diamond_list,vertex_list,vertex_dict);
+    cout<<1<<endl;
     step_3_3_connectivity(diamond_list);
+    cout<<1<<endl;
+    stop = chrono::high_resolution_clock::now(); 
+    duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+    cout<<"Time for choosing central edges and pair vertice with diamond : "<<duration.count()*1e-6<<" s"<<endl;
     map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
     
     // for each tetra, we assign its position in the diamond array
@@ -136,6 +182,7 @@ int main()
     int diamond8_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==8;});
     int diamond9_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==9;});
 
+    cout<<"attention "<<count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()>9;})<<endl;
     
     // array gathering all neighbours of the diamonds
     int array_size=diamond1_size*4+diamond3_size*6+diamond4_size*8+diamond5_size*10+
@@ -150,12 +197,97 @@ int main()
     
     step_3_5_set_neighbour_permutation(diamond_list);
 
-    vector<tuple<int,int,int>> permutation_array(array_size,tuple<int,int,int>{0,0,0});
-    vector<tuple<int,int,int>> face_array(array_size,tuple<int,int,int>{0,0,0});
+    // vector<tuple<int,int,int>> permutation_array(array_size,tuple<int,int,int>{0,0,0});
+    // vector<tuple<int,int,int>> face_array(array_size,tuple<int,int,int>{0,0,0});
+    vector<tuple<int,int,int>> permutation_array;
+    vector<tuple<int,int,int>> face_array;
+
+    for (tuple<int,int,int> face : face_array)
+    {
+        if (get<0>(face)==0 && get<1>(face)==0 && get<2>(face)==1)
+        {
+            cout<<"PROBLEM1"<<endl;
+            assert(true==false);
+        }
+    }
+
 
     cout<<"Step4"<<endl;
+    // start = chrono::high_resolution_clock::now(); 
     map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
     array_size,anchor_dict,permutation_array,face_array);
+    // cout<<10<<endl;
+    // stop = chrono::high_resolution_clock::now(); 
+    // duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+    // cout<<"Time for creating the array : "<<duration.count()<<endl;
+    
+    // for (tuple<int,int,int> face : face_array)
+    // {
+    //     if (get<0>(face)==0 && get<1>(face)==0 && get<2>(face)==1)
+    //     {
+    //         cout<<"PROBLEM2"<<endl;
+    //         assert(true==false);
+    //     }
+    // }
+
+    time_to_access_ith_tetra(diamond_extra_bytes_array,array_size,tetra_list.size());
+    time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());
+    time_to_compute_vertex_degree(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,vertex_list.size());
+    time_to_compute_BFS(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,diamond_list.size());
+    return 0;
+
+    // cout<<face_array.size()<<" "<<permutation_array.size()<<endl;
+
+    // for (int i=0;i<face_array.size();i++)
+    // {
+    //     cout<<get<0>(face_array[i])<<" "<<get<1>(face_array[i])<<" "<<get<2>(face_array[i])<<endl;
+    //     cout<<get<0>(permutation_array[i])<<" "<<get<1>(permutation_array[i])<<" "<<get<2>(permutation_array[i])<<endl;
+    // }
+
+    // return 0;
+
+    // map<tuple<int,int,int>,int> face_map;
+    // for (tuple<int,int,int> face : face_array)
+    // {
+    //     face_map[face]++;
+    // }
+    // for (pair<tuple<int,int,int>,int> i : face_map)
+    // {
+    //     if (i.second>2 && get<0>(i.first)!=0 && get<1>(i.first)!=0 && get<2>(i.first)!=0)
+    //     {
+    //         cout<<"problem with "<<i.second<<" "<<get<0>(i.first)<<" "<<get<1>(i.first)<<" "<<get<2>(i.first)<<endl;
+    //         assert(true==false);
+    //     }
+    // }
+
+    // for (pair<tuple<int,int,int>,vector<Tetrahedron*>> i : face_dict)
+    // {
+    //     if (i.second.size()>2 && get<0>(i.first)!=0 && get<1>(i.first)!=0 && get<2>(i.first)!=0)
+    //     {
+    //         cout<<"problem with face "<<get<0>(i.first)<<" "<<get<1>(i.first)<<" "<<get<2>(i.first)<<endl;
+    //         assert(true==false);
+    //     }
+    // }
+
+    // for (Tetrahedron tetra : tetra_list)
+    // {
+    //     for (tuple<int,int,int> face : tetra.enumerate_faces())
+    //     {
+    //         if (face==tuple<int,int,int>{0,0,1})
+    //         {
+    //             cout<<"problem "<<tetra.get_id()<<endl;
+    //             assert(true==false);
+    //         }
+    //     }
+    // }
+
+
+    // cout<<get<0>(face_array[3])<<" "<<get<1>(face_array[3])<<" "<<get<2>(face_array[3])<<endl;
+    // cout<<get<0>(face_array[72182])<<" "<<get<1>(face_array[72182])<<" "<<get<2>(face_array[72182])<<endl;
+    // cout<<get<0>(face_array[5426])<<" "<<get<1>(face_array[5426])<<" "<<get<2>(face_array[5426])<<endl;
+    // cout<<endl;
+    // check_2(diamond_array,array_size);
+    // return 0;
 
     // double count=0;
     // int x=0;
@@ -181,6 +313,7 @@ int main()
     // write_in_csv(tmp_vector);    
     // cout<<"oui"<<endl;
     // check_4(diamond_list);
+    cout<<10<<endl;
     // check_5(diamond_list);
     // return 0;
 
@@ -219,27 +352,68 @@ int main()
     
     // cout<<"real degree : "<<vertex_dict[14].size()<<endl;
    
+
+
     // int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
-    // array_size,permutation_array,face_array,102);
+    // array_size,permutation_array,face_array,105);
     // cout<<"degree : "<<v<<endl;
    
-   
-    // for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
-    // {
-        // int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
-        // array_size,permutation_array,face_array,i.first);
-        // if (v!=i.second.size())
+    
+    // cout<<"Time for creating the array : "<<duration.count()<<endl;
+
+    double vertex_degree_time=0;
+    double BFS_time=0;
+    int count=0;
+
+
+    // int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+    //     array_size,permutation_array,face_array,105);
+
+    // cout<<v<<" "<<vertex_dict[105].size()<<endl;
+    // return 0;
+    vector<int> cc;
+    for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
+    {
+
+        start = chrono::high_resolution_clock::now(); 
+        int v=vertex_degree_with_minimal_array(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,
+        face_array,i.first);
+        stop = chrono::high_resolution_clock::now(); 
+        duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+        cout<<"main1"<<endl;
+        if (v!=i.second.size())
+        {
+            cout<<v<<" "<<i.second.size()<<endl;
+            cout<<i.first<<endl;
+            cc.push_back(i.first);
+        }
+        cout<<"main2"<<endl;
+        vertex_degree_time+=duration.count();
+
+        // start = chrono::high_resolution_clock::now(); 
+        // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
+        // stop = chrono::high_resolution_clock::now(); 
+        // duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+        // BFS_time+=duration.count();
+
+        // count++;
+        // if (count==100)
         // {
-            // cout<<v<<" "<<i.second.size()<<endl;
-            // cout<<i.first<<endl;
+        //     break;
         // }
-    // }
+    }
+    cout<<"cc "<<cc.size()<<endl;
+    cout<<"BFS time : "<<BFS_time/100<<endl;
+    cout<<"Vertex degree time : "<<vertex_degree_time/100<<endl;
 
     // cout<<"Degree "<<vertex_degree(diamond_list,vertex)<<endl;
     // cout<<vertex_dict[102].size()<<endl;
-
-
+    // auto start = chrono::high_resolution_clock::now(); 
     // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
+    // auto stop = chrono::high_resolution_clock::now(); 
+    // auto duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+    // cout<<"Time for BFS : "<<duration.count()<<endl;
+    
 
     // for(Tetrahedron* tetra : vertex_dict[1])
     // {
@@ -250,13 +424,6 @@ int main()
     // cout<<edge_dict[{0,7}].size()<<endl;
     // visualize_diamond(vertex_list,tetra_list,diamond_list,path,index_to_diamond_id);  
     // visualize_central_edges(vertex_list,diamond_list);
-
-
-    
-    
-
-
     cout<<"Compression size : "<<(float)array_size/tetra_list.size()<<endl;
-
     return 0;
 }
