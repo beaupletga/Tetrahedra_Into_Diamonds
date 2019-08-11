@@ -113,7 +113,6 @@ int main(int argc, char** argv)
     // edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
     auto start = chrono::high_resolution_clock::now(); 
     edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
-    return 0;
     // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
     // edge_to_tetra=step_1_edge_degree(vertex_list,tetra_list,edge_dict);
     // edge_to_vertex=step_1_vertex_choose_neighbour(vertex_list,tetra_list,edge_dict);
@@ -130,21 +129,7 @@ int main(int argc, char** argv)
 
     // check_1(diamond_list);
     // check_3(diamond_list);
-    // vector<int> tetras_id= {3589,5208,10131,5575,14914,11636,16268};
 
-    // 3589
-    // 5208
-    // 10131
-    // 5575
-    // 14914
-    // 11636
-    // 16268
-
-    // for (Tetrahedron* tetra : diamond_list[2625].get_tetra_list())
-    // {
-    //     tetra->display_vertices_id();
-    // }    
-    // visualize_subset_tetra(vertex_list,tetra_list,tetras_id);
     // visualize_subset_diamond(vertex_list,diamond_list,ids);
     // return 0;
 
@@ -156,10 +141,15 @@ int main(int argc, char** argv)
     // vector<int> tetras_id;
     // for(int i=0;i<tetra_list.size();i++)
     // {
-    //     tetras_id.push_back(i);
+    //     if (tetra_list[i].get_in_diamond()==0)
+    //     {
+    //         tetras_id.push_back(i);
+    //     }
     // }
+
+    // visualize(tetra_list);
     // visualize_subset_tetra(vertex_list,tetra_list,tetras_id);
-    
+    // return 0;
     cout<<"Step3"<<endl;
     start = chrono::high_resolution_clock::now(); 
     // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
@@ -167,8 +157,12 @@ int main(int argc, char** argv)
     cout<<1<<endl;
     step_3_1_pair_vertices_as_anchor(diamond_list,vertex_list,vertex_dict,edge_dict);
     cout<<1<<endl;
+
     step_3_2_pair_unpaired_vertices(diamond_list,vertex_list,vertex_dict);
     cout<<1<<endl;
+
+    stats(edge_to_tetra,tetra_list);
+
     step_3_3_connectivity(diamond_list);
     cout<<1<<endl;
     stop = chrono::high_resolution_clock::now(); 
@@ -176,6 +170,8 @@ int main(int argc, char** argv)
     cout<<"Time for choosing central edges and pair vertice with diamond : "<<duration.count()*1e-6<<" s"<<endl;
     map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
     
+
+   
 
     // vector<int> isolated_diamond_ids;
     // for (int i=0;i<diamond_list.size();i++)
@@ -190,7 +186,7 @@ int main(int argc, char** argv)
     // visualize_central_edges(vertex_list,diamond_list);
 
 
-    return 0;
+    // return 0;
     // for each tetra, we assign its position in the diamond array
     int tetra_array[tetra_list.size()];
 
@@ -250,6 +246,44 @@ int main(int argc, char** argv)
     //         assert(true==false);
     //     }
     // }
+
+    float array[10]={0};
+
+    for (Diamond diamond : diamond_list)
+    {
+        array[diamond.get_tetra_list().size()]++;
+    }
+
+    for (int i=0;i<10;i++)
+    {
+        cout<<i<<" "<<array[i]*i/tetra_list.size()<<endl;
+    }
+
+    // double average=0;
+    // for (Vertex vertex : vertex_list)
+    // {
+    //     unordered_set<int> ids;
+    //     for (Tetrahedron* tetra : vertex_dict[vertex.get_id()])
+    //     {
+    //         ids.insert(tetra->get_diamond_ref()->get_id());
+    //     }
+    //     average+=ids.size();
+    // }
+
+    // cout<<"average : "<<average/vertex_list.size()<<endl;
+
+    // average=0;
+    // int x=0;
+    // for (Diamond diamond : diamond_list)
+    // {
+    //     if (diamond.get_tetra_list().size()>1)
+    //     {
+    //         average+=diamond.get_tetra_list().size();
+    //         x++;
+    //     }
+    // }
+    // cout<<"average : "<<average/x<<endl;
+
 
     time_to_access_ith_tetra(diamond_extra_bytes_array,array_size,tetra_list.size());
     time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());

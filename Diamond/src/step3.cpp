@@ -216,11 +216,7 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
             unpaired_vertices.erase(diamond.get_anchor_vertex()->get_id());
         }
     }
-    // for (int i : unpaired_vertices)
-    // {
-    //     cout<<i<<endl;
-    // }
-    cout<<"Number unpaired vertices : "<<unpaired_vertices.size()<<endl;
+    cout<<"Share of vertices not associated to diamond or isolated tetra : "<<(double)unpaired_vertices.size()/vertex_list.size()<<endl;
     for(int vertex_id : unpaired_vertices)
     {
         bool paired=false;
@@ -316,10 +312,7 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
                 {
                     diamond_list.insert( diamond_list.end(), c.begin(), c.end());
                     paired=true;
-                    // cout<<"before : "<<before*2<<endl;
-                    // cout<<"after : "<<4+c.size()*4<<endl;
-                    // // cout<<ab<<endl;
-                    // cout<<endl;
+                    
 
                     break;
                 }

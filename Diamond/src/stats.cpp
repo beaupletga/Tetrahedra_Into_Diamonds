@@ -38,67 +38,17 @@ double average_edges_per_vertex(vector<Vertex>& vertex_list)
 
 void stats(map<tuple<int,int>,vector<Tetrahedron*>>& edge_to_tetra,vector<Tetrahedron>& tetra_list)
 {
-    double count_failure=0;
-    double count_tetra_isolated=0;
-    int count_edges_in_tetra;
-    double b=0;
-    for (Tetrahedron &i : tetra_list)
-    {
-        vector<tuple<int,int>> edges = i.enumerate_edges();
-        // i.display_edges();S
-        count_edges_in_tetra=0;
-        for (tuple<int,int> j : edges)
-        {
-            if (edge_to_tetra.count(j)!=0)
-            {
-                count_edges_in_tetra++;
-                i.count_matched++;
-            }
-        }
-        if (count_edges_in_tetra>1)
-        {
-            count_failure++;
-        }
-        if (count_edges_in_tetra==0)
-        {
-            count_tetra_isolated++;
-            if (i.get_is_on_boundary())
-            {
-                b++;
-            }
-        }
-    }
-    cout<<b/tetra_list.size()<<endl;
-    cout<<"Share of Tetra isolated : "<<count_tetra_isolated/tetra_list.size()<<endl;
-    cout<<"Share of tetrahedra having at least 2 edges taken : "<<count_failure/tetra_list.size()<<endl;
+    double boundary_tetra = count_if(tetra_list.begin(),tetra_list.end(),
+    [](Tetrahedron tetra){return tetra.get_is_on_boundary();});
+    cout<<"Share of tetra on the boundary : "<<boundary_tetra/tetra_list.size()<<endl;
 
-    double count_tetra_diamond=0;
-    for (int i=0;i<tetra_list.size();i++)
-    {
-        count_tetra_diamond+=tetra_list[i].get_in_diamond();
-    }
-    cout<<"Share of tetra in full diamond : "<<count_tetra_diamond/tetra_list.size()<<endl;
+    double isolated_tetra = count_if(tetra_list.begin(),tetra_list.end(),
+    [](Tetrahedron tetra){return tetra.get_diamond_ref()->get_tetra_list().size()==1;});
+    cout<<"Share of isolated tetra : "<<isolated_tetra/tetra_list.size()<<endl;
 
-    count_tetra_isolated=0;
-    for (Tetrahedron tetra : tetra_list)
-    {
-        if (tetra.get_in_diamond()==false )
-        {
-            count_tetra_isolated++;
-        }
-    }
-    cout<<"Share of tetra isolated: "<<count_tetra_isolated/tetra_list.size()<<endl;
-
-    double count_tetra_in_diamond_boundary=0;
-    for (Tetrahedron tetra : tetra_list)
-    {
-        if (tetra.get_in_diamond()==false and tetra.get_is_on_boundary())
-        {
-            count_tetra_in_diamond_boundary++;
-        }
-    }
-    cout<<"Share of tetra isolated and on the boundary : "<<count_tetra_in_diamond_boundary/tetra_list.size()<<endl;
-
-
-    cout<<"Theorical Size : "<<2*count_tetra_diamond/tetra_list.size()+4*count_tetra_isolated/tetra_list.size()<<endl;
+    double tetra_in_diamond = count_if(tetra_list.begin(),tetra_list.end(),
+    [](Tetrahedron tetra){return tetra.get_diamond_ref()->get_tetra_list().size()>1;});
+    cout<<"Share of tetra in full diamond : "<<tetra_in_diamond/tetra_list.size()<<endl;
+    
+    cout<<"Theorical Size : "<<2*tetra_in_diamond/tetra_list.size()+4*isolated_tetra/tetra_list.size()<<endl;
 }
