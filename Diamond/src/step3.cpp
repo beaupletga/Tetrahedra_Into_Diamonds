@@ -116,6 +116,12 @@ map<int,vector<Tetrahedron*>> &vertex_dict,map<tuple<int,int>,vector<Tetrahedron
 {
     // foreach vertex, we add to a list the central edges adjacent to it
     map<int,vector<pair<int,int>>> remaining_vertices;
+    // vector<pair<int,vector<pair<int,int>>>> remaining_vertices;
+    // auto cmp = [](pair<int,vector<pair<int,int>>> left, pair<int,vector<pair<int,int>>> right)
+    //  { return left.second.size()<right.second.size();};
+    // priority_queue<pair<int,vector<pair<int,int>>>,vector<pair<int,vector<pair<int,int>>>>,decltype(cmp)> queue(cmp);
+
+
     for(Diamond &diamond : diamond_list)
     {  
         int vertex1 =  diamond.get_central_edge().first;
@@ -126,15 +132,15 @@ map<int,vector<Tetrahedron*>> &vertex_dict,map<tuple<int,int>,vector<Tetrahedron
 
     // we check that every vertex is adjacent to at least one central edge
     // otherwise we won't be able to pair it with a diamond
+    int count=0;
     for (int i=0;i<vertex_list.size();i++)
     {
         if (remaining_vertices.count(vertex_list[i].get_id())==0)
         {
-            cout<<"Vertex "<<vertex_list[i].get_id()<<" is not adjacent to any central edge"<<endl;
-            
+            count++;
         }
     }
-    // assert(true==false);
+    cout<<count<< " vertices are not adjacent to any central edge"<<endl;
 
     // while there is a vertex not associated to an central edge and which is adjacent to a non paired central edge
     while(remaining_vertices.size()>0)
