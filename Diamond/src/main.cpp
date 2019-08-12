@@ -17,6 +17,7 @@
 #include "../include/consistency.h"
 #include "../include/benchmark.h"
 #include "../include/stats.h"
+#include "../include/save.h"
 #include "../include/step1.h"
 #include "../include/step2.h"
 #include "../include/step3.h"
@@ -228,6 +229,12 @@ int main(int argc, char** argv)
         }
     }
 
+    cout<<"lala "<<(double)face_dict.size()/tetra_list.size()<<endl;
+    // save_full_structure_to_mesh(vertex_list,diamond_list,face_dict);
+    save_full_structure_to_off(vertex_list,diamond_list,face_dict);
+
+    return 0;
+
 
     cout<<"Step4"<<endl;
     // start = chrono::high_resolution_clock::now(); 
@@ -247,17 +254,18 @@ int main(int argc, char** argv)
     //     }
     // }
 
-    float array[10]={0};
+    // float array[10]={0};
 
-    for (Diamond diamond : diamond_list)
-    {
-        array[diamond.get_tetra_list().size()]++;
-    }
+    // for (Diamond diamond : diamond_list)
+    // {
+    //     array[diamond.get_tetra_list().size()]++;
+    // }
 
-    for (int i=0;i<10;i++)
-    {
-        cout<<i<<" "<<array[i]*i/tetra_list.size()<<endl;
-    }
+    // for (int i=0;i<10;i++)
+    // {
+    //     cout<<i<<" "<<array[i]*i/tetra_list.size()<<endl;
+    // }
+
 
     // double average=0;
     // for (Vertex vertex : vertex_list)
