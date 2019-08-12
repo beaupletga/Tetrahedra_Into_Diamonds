@@ -14,28 +14,27 @@
 \BOOKMARK [2][-]{subsection.4.2}{Evalution de notre structure de donn\351es}{section.4}% 14
 \BOOKMARK [2][-]{subsection.4.3}{Appariement des t\351tra\350dres en diamants}{section.4}% 15
 \BOOKMARK [3][-]{subsubsection.4.3.1}{Choisir l'ar\352te la plus pentu pour chaque sommet}{subsection.4.3}% 16
-\BOOKMARK [3][-]{subsubsection.4.3.2}{Parcours en largeur des t\351tra\350dres}{subsection.4.3}% 17
-\BOOKMARK [3][-]{subsubsection.4.3.3}{Optimisation al\351atoire}{subsection.4.3}% 18
-\BOOKMARK [3][-]{subsubsection.4.3.4}{Parcours en largeur et optimisation al\351atoire}{subsection.4.3}% 19
-\BOOKMARK [2][-]{subsection.4.4}{Choisir l'ancre}{section.4}% 20
-\BOOKMARK [2][-]{subsection.4.5}{La structure}{section.4}% 21
-\BOOKMARK [2][-]{subsection.4.6}{Calculer les permutations}{section.4}% 22
-\BOOKMARK [2][-]{subsection.4.7}{Les requ\352tes}{section.4}% 23
-\BOOKMARK [3][-]{subsubsection.4.7.1}{V\351rifier qu'un diamant est correct}{subsection.4.7}% 24
-\BOOKMARK [3][-]{subsubsection.4.7.2}{Acc\351der \340 la i\350me face}{subsection.4.7}% 25
-\BOOKMARK [3][-]{subsubsection.4.7.3}{Acceder au i\350me diamant ou t\351tra\350dre isol\351}{subsection.4.7}% 26
-\BOOKMARK [3][-]{subsubsection.4.7.4}{Parcourir les t\351tra\350dres d'un diamant}{subsection.4.7}% 27
-\BOOKMARK [3][-]{subsubsection.4.7.5}{Acceder au i\350me t\351tra\350dre}{subsection.4.7}% 28
-\BOOKMARK [3][-]{subsubsection.4.7.6}{Acceder au i\350me sommet}{subsection.4.7}% 29
-\BOOKMARK [3][-]{subsubsection.4.7.7}{Degr\351 et hypersph\350re d'un sommet}{subsection.4.7}% 30
-\BOOKMARK [3][-]{subsubsection.4.7.8}{Parcours en profondeur du graphe}{subsection.4.7}% 31
-\BOOKMARK [3][-]{subsubsection.4.7.9}{Retrouver l'indice d'un sommet}{subsection.4.7}% 32
-\BOOKMARK [2][-]{subsection.4.8}{Resultats}{section.4}% 33
-\BOOKMARK [2][-]{subsection.4.9}{Borne inf\351rieure th\351orique}{section.4}% 34
-\BOOKMARK [2][-]{subsection.4.10}{Sauvegarder notre structure}{section.4}% 35
-\BOOKMARK [2][-]{subsection.4.11}{Am\351liorations}{section.4}% 36
-\BOOKMARK [3][-]{subsubsection.4.11.1}{R\351f\351rences diff\351rentielles}{subsection.4.11}% 37
-\BOOKMARK [3][-]{subsubsection.4.11.2}{Dynamicit\351}{subsection.4.11}% 38
-\BOOKMARK [1][-]{section.5}{NP completude}{}% 39
-\BOOKMARK [1][-]{section.6}{Impl\351mentation}{}% 40
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 41
+\BOOKMARK [2][-]{subsection.4.4}{Choisir l'ar\352te de degr\351 maximum}{section.4}% 17
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Parcours en largeur des t\351tra\350dres}{subsection.4.4}% 18
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Optimisation al\351atoire}{subsection.4.4}% 19
+\BOOKMARK [3][-]{subsubsection.4.4.3}{R\351sultats}{subsection.4.4}% 20
+\BOOKMARK [2][-]{subsection.4.5}{Choisir l'ancre}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.6}{La structure}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.7}{Calculer les permutations}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.8}{Les requ\352tes}{section.4}% 24
+\BOOKMARK [3][-]{subsubsection.4.8.1}{V\351rifier qu'un diamant est correct}{subsection.4.8}% 25
+\BOOKMARK [3][-]{subsubsection.4.8.2}{Acc\351der \340 la i\350me face}{subsection.4.8}% 26
+\BOOKMARK [3][-]{subsubsection.4.8.3}{Acceder au i\350me diamant ou t\351tra\350dre isol\351}{subsection.4.8}% 27
+\BOOKMARK [3][-]{subsubsection.4.8.4}{Parcourir les t\351tra\350dres d'un diamant}{subsection.4.8}% 28
+\BOOKMARK [3][-]{subsubsection.4.8.5}{Acceder au i\350me t\351tra\350dre}{subsection.4.8}% 29
+\BOOKMARK [3][-]{subsubsection.4.8.6}{Acceder au i\350me sommet}{subsection.4.8}% 30
+\BOOKMARK [3][-]{subsubsection.4.8.7}{Degr\351 et hypersph\350re d'un sommet}{subsection.4.8}% 31
+\BOOKMARK [3][-]{subsubsection.4.8.8}{Parcours en profondeur du graphe}{subsection.4.8}% 32
+\BOOKMARK [3][-]{subsubsection.4.8.9}{Retrouver l'indice d'un sommet}{subsection.4.8}% 33
+\BOOKMARK [3][-]{subsubsection.4.8.10}{Resultats}{subsection.4.8}% 34
+\BOOKMARK [2][-]{subsection.4.9}{Borne inf\351rieure th\351orique}{section.4}% 35
+\BOOKMARK [2][-]{subsection.4.10}{Sauvegarder notre structure}{section.4}% 36
+\BOOKMARK [2][-]{subsection.4.11}{Am\351liorations}{section.4}% 37
+\BOOKMARK [1][-]{section.5}{NP completude}{}% 38
+\BOOKMARK [1][-]{section.6}{Impl\351mentation}{}% 39
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 40

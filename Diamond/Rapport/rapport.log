@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  12 AUG 2019 12:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  12 AUG 2019 19:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -761,9 +761,6 @@ LaTeX Warning: Unused global option(s):
 
 (./rapport.aux
 
-LaTeX Warning: Label `Tab:results_performances' multiply defined.
-
-
 LaTeX Warning: Label `fig:bfs_starting' multiply defined.
 
 )
@@ -907,22 +904,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--67
  []
 
 
-Overfull \hbox (3.75247pt too wide) in paragraph at lines 64--67
-\OT1/cmr/m/n/10.95 i^^Reme som-met, au i^^Reme t^^Setrah^^Redre et ^^Ra l'^^Set
-oile d'un som-met en temps constant. Son impl^^Sementation
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--83
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--83
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
@@ -977,7 +958,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 110--111
 
  []
 
-[3] <Images/edgebreaker.png, id=202, 1332.98pt x 325.215pt>
+[3] <Images/edgebreaker.png, id=197, 1332.98pt x 325.215pt>
 File: Images/edgebreaker.png Graphic file (type png)
 
 <use Images/edgebreaker.png>
@@ -998,91 +979,118 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--143
 
  []
 
-<Images/corner_table.png, id=204, 771.88374pt x 675.52374pt>
+
+LaTeX Warning: Citation `winged_edge' on page 4 undefined on input line 148.
+
+
+LaTeX Warning: Citation `quad_edge' on page 4 undefined on input line 148.
+
+<Images/corner_table.png, id=199, 771.88374pt x 675.52374pt>
 File: Images/corner_table.png Graphic file (type png)
 
 <use Images/corner_table.png>
 Package pdftex.def Info: Images/corner_table.png used on input line 152.
 (pdftex.def)             Requested size: 154.37401pt x 135.10236pt.
  [4 <./Images/edgebreaker.png>]
-Overfull \hbox (33.98563pt too wide) in paragraph at lines 162--178
+Underfull \hbox (badness 10000) in paragraph at lines 157--160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 157--160
+
+ []
+
+
+LaTeX Warning: Citation `2d_catalog' on page 5 undefined on input line 171.
+
+
+LaTeX Warning: Citation `star_vertices' on page 5 undefined on input line 173.
+
+
+LaTeX Warning: Citation `sot' on page 5 undefined on input line 174.
+
+
+LaTeX Warning: Citation `squad' on page 5 undefined on input line 175.
+
+
+Overfull \hbox (16.98563pt too wide) in paragraph at lines 163--179
 [][] 
  []
 
 [5 <./Images/corner_table.png>]
-<Images/full_diamond.png, id=236, 369.38pt x 354.32375pt>
+
+LaTeX Warning: Citation `squad' on page 6 undefined on input line 217.
+
+<Images/full_diamond.png, id=235, 369.38pt x 354.32375pt>
 File: Images/full_diamond.png Graphic file (type png)
 
 <use Images/full_diamond.png>
-Package pdftex.def Info: Images/full_diamond.png used on input line 213.
+Package pdftex.def Info: Images/full_diamond.png used on input line 231.
 (pdftex.def)             Requested size: 110.81485pt x 106.29794pt.
 
-<Images/not_full_diamond.png, id=237, 407.5225pt x 395.4775pt>
+<Images/not_full_diamond.png, id=236, 407.5225pt x 395.4775pt>
 File: Images/not_full_diamond.png Graphic file (type png)
 
 <use Images/not_full_diamond.png>
-Package pdftex.def Info: Images/not_full_diamond.png used on input line 219.
+Package pdftex.def Info: Images/not_full_diamond.png used on input line 237.
 (pdftex.def)             Requested size: 105.95334pt x 102.82172pt.
- [6 <./Images/full_diamond.png> <./Images/not_full_diamond.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 234--235
-
- []
-
-<Images/ball.png, id=247, 579.16376pt x 573.14125pt>
+ [6]
+<Images/ball.png, id=248, 579.16376pt x 573.14125pt>
 File: Images/ball.png Graphic file (type png)
  <use Images/ball.png>
-Package pdftex.def Info: Images/ball.png used on input line 242.
+Package pdftex.def Info: Images/ball.png used on input line 260.
 (pdftex.def)             Requested size: 115.83069pt x 114.6262pt.
 
-<Images/cow.png, id=248, 695.59875pt x 423.5825pt>
+<Images/cow.png, id=249, 695.59875pt x 423.5825pt>
 File: Images/cow.png Graphic file (type png)
  <use Images/cow.png>
-Package pdftex.def Info: Images/cow.png used on input line 248.
+Package pdftex.def Info: Images/cow.png used on input line 266.
 (pdftex.def)             Requested size: 139.11728pt x 84.715pt.
 
-<Images/hand.png, id=249, 711.65875pt x 484.81125pt>
+<Images/hand.png, id=250, 711.65875pt x 484.81125pt>
 File: Images/hand.png Graphic file (type png)
  <use Images/hand.png>
-Package pdftex.def Info: Images/hand.png used on input line 258.
+Package pdftex.def Info: Images/hand.png used on input line 276.
 (pdftex.def)             Requested size: 142.32922pt x 96.96053pt.
 
-<Images/skull.png, id=250, 435.6275pt x 446.66875pt>
+<Images/skull.png, id=251, 435.6275pt x 446.66875pt>
 File: Images/skull.png Graphic file (type png)
  <use Images/skull.png>
-Package pdftex.def Info: Images/skull.png used on input line 264.
+Package pdftex.def Info: Images/skull.png used on input line 282.
 (pdftex.def)             Requested size: 87.12395pt x 89.33215pt.
 
-Overfull \hbox (26.34608pt too wide) in paragraph at lines 272--286
+Overfull \hbox (26.34608pt too wide) in paragraph at lines 290--304
 [][]
  []
 
-[7 <./Images/ball.png> <./Images/cow.png> <./Images/hand.png> <./Images/skull.p
-ng>]
-Underfull \hbox (badness 10000) in paragraph at lines 306--325
+[7 <./Images/full_diamond.png> <./Images/not_full_diamond.png> <./Images/ball.p
+ng> <./Images/cow.png> <./Images/hand.png> <./Images/skull.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 329--348
 
  []
 
-<Images/isolated_tetra.png, id=262, 597.23125pt x 588.1975pt>
+<Images/isolated_tetra.png, id=263, 597.23125pt x 588.1975pt>
 File: Images/isolated_tetra.png Graphic file (type png)
 
 <use Images/isolated_tetra.png>
-Package pdftex.def Info: Images/isolated_tetra.png used on input line 331.
+Package pdftex.def Info: Images/isolated_tetra.png used on input line 354.
 (pdftex.def)             Requested size: 119.44412pt x 117.6374pt.
 
-<Images/diamond.png, id=263, 742.775pt x 740.7675pt>
+<Images/diamond.png, id=264, 742.775pt x 740.7675pt>
 File: Images/diamond.png Graphic file (type png)
  <use Images/diamond.png>
-Package pdftex.def Info: Images/diamond.png used on input line 337.
+Package pdftex.def Info: Images/diamond.png used on input line 360.
 (pdftex.def)             Requested size: 118.84642pt x 118.5252pt.
 
 [8] <Images/density_cow.png, id=274, 796.9775pt x 550.055pt>
 File: Images/density_cow.png Graphic file (type png)
 
 <use Images/density_cow.png>
-Package pdftex.def Info: Images/density_cow.png used on input line 348.
+Package pdftex.def Info: Images/density_cow.png used on input line 371.
 (pdftex.def)             Requested size: 239.0951pt x 165.01776pt.
 
-Overfull \hbox (11.47304pt too wide) in paragraph at lines 348--349
+Overfull \hbox (11.47304pt too wide) in paragraph at lines 371--372
  [][] 
  []
 
@@ -1090,10 +1098,10 @@ Overfull \hbox (11.47304pt too wide) in paragraph at lines 348--349
 File: Images/hand_density.png Graphic file (type png)
 
 <use Images/hand_density.png>
-Package pdftex.def Info: Images/hand_density.png used on input line 354.
+Package pdftex.def Info: Images/hand_density.png used on input line 377.
 (pdftex.def)             Requested size: 195.0747pt x 173.37408pt.
 
-Overfull \hbox (8.86969pt too wide) in paragraph at lines 342--358
+Overfull \hbox (8.86969pt too wide) in paragraph at lines 365--381
 \OT1/cmr/m/n/10.95 Sur Fig. []9[], on note une cer-taine ho-mog^^Sen^^Seit^^Se 
 des t^^Setra^^Redres isol^^Ses. En ana-ly-sant plus sp^^Secifiquement
  []
@@ -1102,146 +1110,128 @@ des t^^Setra^^Redres isol^^Ses. En ana-ly-sant plus sp^^Secifiquement
 File: Images/bfs_starting.png Graphic file (type png)
 
 <use Images/bfs_starting.png>
-Package pdftex.def Info: Images/bfs_starting.png used on input line 364.
+Package pdftex.def Info: Images/bfs_starting.png used on input line 387.
 (pdftex.def)             Requested size: 240.60072pt x 186.39781pt.
  [9 <./Images/isolated_tetra.png> <./Images/diamond.png> <./Images/density_cow.
 png> <./Images/hand_density.png>]
-Overfull \hbox (5.02147pt too wide) in paragraph at lines 374--380
+Overfull \hbox (5.02147pt too wide) in paragraph at lines 398--402
 \OT1/cmr/m/n/10.95 Notre probl^^Reme s'ex-prime fa-ci-le-ment comme un probl^^R
 eme d'op-ti-mi-sa-tion com-bi-na-toire en nombres
  []
 
-<Images/histograme.png, id=289, 795.97375pt x 360.34625pt>
+[10 <./Images/bfs_starting.png>]
+<Images/histograme.png, id=298, 795.97375pt x 360.34625pt>
 File: Images/histograme.png Graphic file (type png)
 
 <use Images/histograme.png>
-Package pdftex.def Info: Images/histograme.png used on input line 405.
+Package pdftex.def Info: Images/histograme.png used on input line 430.
 (pdftex.def)             Requested size: 358.18488pt x 162.15431pt.
- [10 <./Images/bfs_starting.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 413--415
+
+Underfull \hbox (badness 10000) in paragraph at lines 439--441
 
  []
 
-<Images/half_ball.png, id=296, 507.8975pt x 519.9425pt>
+<Images/half_ball.png, id=299, 507.8975pt x 519.9425pt>
 File: Images/half_ball.png Graphic file (type png)
 
 <use Images/half_ball.png>
-Package pdftex.def Info: Images/half_ball.png used on input line 424.
+Package pdftex.def Info: Images/half_ball.png used on input line 450.
 (pdftex.def)             Requested size: 101.5777pt x 103.98665pt.
 
-<Images/central_edges.png, id=297, 591.20876pt x 561.09625pt>
+<Images/central_edges.png, id=300, 591.20876pt x 561.09625pt>
 File: Images/central_edges.png Graphic file (type png)
 
 <use Images/central_edges.png>
-Package pdftex.def Info: Images/central_edges.png used on input line 430.
+Package pdftex.def Info: Images/central_edges.png used on input line 456.
 (pdftex.def)             Requested size: 118.23965pt x 112.21725pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 435--437
+ [11 <./Images/histograme.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 461--463
 
  []
 
-[11 <./Images/histograme.png> <./Images/half_ball.png> <./Images/central_edges.
-png>] <Images/central_edge_AB.png, id=306, 529.98pt x 554.07pt>
+<Images/central_edge_AB.png, id=308, 529.98pt x 554.07pt>
 File: Images/central_edge_AB.png Graphic file (type png)
 
 <use Images/central_edge_AB.png>
-Package pdftex.def Info: Images/central_edge_AB.png used on input line 447.
+Package pdftex.def Info: Images/central_edge_AB.png used on input line 473.
 (pdftex.def)             Requested size: 185.49577pt x 193.9274pt.
 
-<Images/explosion_diamond.png, id=307, 413.545pt x 477.785pt>
+<Images/explosion_diamond.png, id=309, 413.545pt x 477.785pt>
 File: Images/explosion_diamond.png Graphic file (type png)
 
 <use Images/explosion_diamond.png>
-Package pdftex.def Info: Images/explosion_diamond.png used on input line 453.
+Package pdftex.def Info: Images/explosion_diamond.png used on input line 479.
 (pdftex.def)             Requested size: 173.6877pt x 200.66832pt.
- [12 <./Images/central_edge_AB.png> <./Images/explosion_diamond.png>]
-<Images/structure.png, id=315, 1010.77625pt x 252.945pt>
+ [12 <./Images/half_ball.png> <./Images/central_edges.png> <./Images/central_ed
+ge_AB.png> <./Images/explosion_diamond.png>]
+<Images/structure.png, id=319, 1010.77625pt x 252.945pt>
 File: Images/structure.png Graphic file (type png)
 
 <use Images/structure.png>
-Package pdftex.def Info: Images/structure.png used on input line 509.
+Package pdftex.def Info: Images/structure.png used on input line 536.
 (pdftex.def)             Requested size: 454.84511pt x 113.82419pt.
-
-<Images/tetra_ordonnee.png, id=320, 336.25626pt x 352.31625pt>
+ [13]
+<Images/tetra_ordonnee.png, id=330, 336.25626pt x 352.31625pt>
 File: Images/tetra_ordonnee.png Graphic file (type png)
 
 <use Images/tetra_ordonnee.png>
-Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 525.
+Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 552.
 (pdftex.def)             Requested size: 151.3139pt x 158.54083pt.
- [13 <./Images/structure.png>]
-<Images/permutation_tetra_diamant.png, id=333, 336.25626pt x 347.2975pt>
+ [14 <./Images/structure.png> <./Images/tetra_ordonnee.png>]
+<Images/permutation_tetra_diamant.png, id=341, 336.25626pt x 347.2975pt>
 File: Images/permutation_tetra_diamant.png Graphic file (type png)
 
 <use Images/permutation_tetra_diamant.png>
 Package pdftex.def Info: Images/permutation_tetra_diamant.png used on input lin
-e 537.
+e 564.
 (pdftex.def)             Requested size: 151.3139pt x 156.28242pt.
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 550.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 577.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <9> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 550.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 550.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 577.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 577.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 550.
- [14 <./Images/tetra_ordonnee.png> <./Images/permutation_tetra_diamant.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 574--576
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 577.
+ [15 <./Images/permutation_tetra_diamant.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 601--603
 
  []
 
-[15] [16]
-Overfull \hbox (57.78548pt too wide) in paragraph at lines 663--677
-[][]
- []
-
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 718--719
-
- []
-
-
-Overfull \hbox (5.96825pt too wide) in paragraph at lines 727--728
- []\OT1/cmr/bx/n/10.95 R^^Sesultats[] \OT1/cmr/m/n/10.95 En th^^Seorie comme en
- pra-tique, notre struc-ture nous per-met d'^^Seconomiser en moyenne
- []
-
-[18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 778.
- [19] [20]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 778.
+[16] [17] [18] [19]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 806.
+ [20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 806.
  (./rapport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 778.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 778.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 806.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 806.
+Package rerunfilecheck Info: File `rapport.out' has not changed.
+(rerunfilecheck)             Checksum: 0A29FEE647F84A1CF4A7A0AA25E90964;3042.
 
 
-Package rerunfilecheck Warning: File `rapport.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: Checksums for `rapport.out':
-(rerunfilecheck)             Before: C8ACBB308FC213EDAD823B5C8F98F94A;3149
-(rerunfilecheck)             After:  A1B94AAA8DDF039A216B594C20A0428A;3151.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 778.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 806.
  ) 
 Here is how much of TeX's memory you used:
- 12099 strings out of 494883
- 172806 string characters out of 6178692
+ 12110 strings out of 494883
+ 172906 string characters out of 6178692
  322137 words of memory out of 5000000
- 15020 multiletter control sequences out of 15000+600000
+ 15027 multiletter control sequences out of 15000+600000
  15010 words of font info for 57 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 33i,19n,58p,1244b,1958s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 33i,19n,58p,1226b,1385s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
@@ -1264,10 +1254,10 @@ c/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
 msbm10.pfb>
-Output written on rapport.pdf (20 pages, 1264107 bytes).
+Output written on rapport.pdf (20 pages, 1268530 bytes).
 PDF statistics:
- 582 PDF objects out of 1000 (max. 8388607)
- 510 compressed objects within 6 object streams
- 192 named destinations out of 1000 (max. 500000)
- 434 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 586 PDF objects out of 1000 (max. 8388607)
+ 514 compressed objects within 6 object streams
+ 196 named destinations out of 1000 (max. 500000)
+ 426 words of extra memory for PDF output out of 10000 (max. 10000000)
 
