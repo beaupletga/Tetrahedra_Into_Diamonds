@@ -194,6 +194,10 @@ map<int,vector<Tetrahedron*>> &vertex_dict,map<tuple<int,int>,vector<Tetrahedron
             if (remaining_vertices[w.second.first].size()==0)
                 remaining_vertices.erase(w.second.first);
         }
+        if (remaining_vertices.size()%1000==0)
+        {
+            cout<<remaining_vertices.size()/(double)vertex_list.size()<<endl;
+        }
     }
 }
 

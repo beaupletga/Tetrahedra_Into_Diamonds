@@ -25,7 +25,7 @@
 
 using namespace std;
 
-
+# define my_sizeof(type) ((char *)(&type+1)-(char*)(&type)) 
 // to do : 
 
 // done // - utiliser les bits de services pour naviguer dans le graphe
@@ -114,7 +114,7 @@ int main(int argc, char** argv)
     // edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
     auto start = chrono::high_resolution_clock::now(); 
     edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
-    // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict);
+    // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict,edge_to_tetra);
     // edge_to_tetra=step_1_edge_degree(vertex_list,tetra_list,edge_dict);
     // edge_to_vertex=step_1_vertex_choose_neighbour(vertex_list,tetra_list,edge_dict);
     auto stop = chrono::high_resolution_clock::now(); 
@@ -229,11 +229,11 @@ int main(int argc, char** argv)
         }
     }
 
-    cout<<"lala "<<(double)face_dict.size()/tetra_list.size()<<endl;
+    // cout<<"lala "<<(double)face_dict.size()/tetra_list.size()<<endl;
     // save_full_structure_to_mesh(vertex_list,diamond_list,face_dict);
-    save_full_structure_to_off(vertex_list,diamond_list,face_dict);
+    // save_full_structure_to_off(vertex_list,diamond_list,face_dict);
 
-    return 0;
+    // return 0;
 
 
     cout<<"Step4"<<endl;
@@ -297,6 +297,8 @@ int main(int argc, char** argv)
     time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());
     time_to_compute_vertex_degree(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,vertex_list.size());
     time_to_compute_BFS(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,diamond_list.size());
+   
+    cout<<"size "<<(sizeof(diamond_array)+sizeof(diamond_extra_bytes_array)+sizeof(permutation_array))<<endl;
     return 0;
 
     // cout<<face_array.size()<<" "<<permutation_array.size()<<endl;

@@ -61,20 +61,16 @@ Vertex* pick_steepest_neighbour(Vertex& vertex,int lala)
     }
 }
 
-// function used for sorting the edges by number of adjacents tetra
-bool cmp_edge(pair<tuple<int,int>,vector<Tetrahedron*>> lhs, pair<tuple<int,int>,vector<Tetrahedron*>> rhs)
+bool cmp_edge(pair<tuple<int,int>,vector<Tetrahedron*>>  lhs, pair<tuple<int,int>,vector<Tetrahedron*>> rhs)
 {
     int a=0;
     int b=0;
-    // unordered_set<int> aa;
-    // unordered_set<int> bb;
     for (Tetrahedron* tetra : lhs.second)
     {
         for (Tetrahedron* neighbour : tetra->get_neighbours())
         {
             if (neighbour->get_in_diamond())
             {
-                // aa.insert(neighbour->get_id());
                 a++;
             }
         }
@@ -85,14 +81,11 @@ bool cmp_edge(pair<tuple<int,int>,vector<Tetrahedron*>> lhs, pair<tuple<int,int>
         {
             if (neighbour->get_in_diamond())
             {
-                // bb.insert(neighbour->get_id());
                 b++;
             }
         }
     }
     return a<b;
-    // return aa.size()<bb.size();
-    // return lhs.second.size()<rhs.second.size(); 
 }
 
 
@@ -133,16 +126,16 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_edge_degree(vector<Vertex>& vert
     return edge_to_tetra;
 }
 
-double fitness(map<tuple<int,int>,int> &values,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
+double fitness(map<tuple<int,int>,int>& values,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
 {
     double value=0;
     map<int,int> tetra_taken;
-    for (pair<tuple<int,int>,vector<Tetrahedron*>> i : edge_dict)
+    for (pair<tuple<int,int>,int> i : values)
     {
-        if (values[i.first]==1)
+        if (i.second==1)
         {
-            value+=i.second.size();
-            for (Tetrahedron* tetra : i.second)
+            value+=edge_dict[i.first].size();
+            for (Tetrahedron* tetra : edge_dict[i.first])
             {
                 tetra_taken[tetra->get_id()]+=1;
             }
@@ -152,7 +145,7 @@ double fitness(map<tuple<int,int>,int> &values,map<tuple<int,int>,vector<Tetrahe
     {
         if (i.second>1)
         {
-            value-=2*i.second;
+            value-=2*(i.second);
             // value+=1;
         }
     }
@@ -160,7 +153,8 @@ double fitness(map<tuple<int,int>,int> &values,map<tuple<int,int>,vector<Tetrahe
 }
 
 
-map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
+map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,
+map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict,map<tuple<int,int>,vector<Tetrahedron*>> &lala)
 {
     map<tuple<int,int>,int> values;
     map<tuple<int,int>,int> modified_keys;
@@ -170,28 +164,65 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_li
     {
         if (is_cycle(i.second))
         {
-            values[i.first]=0;
-        }   
+            if (lala.count(i.first)==1)
+            {
+                values[i.first]=1;
+            }
+            else
+            {
+                values[i.first]=0;
+            }
+        }
     }
+
+    double fit_before=0;
+    for (pair<tuple<int,int>,vector<Tetrahedron*>> i :lala)
+    {
+        fit_before+=i.second.size();
+    }
+
+    cout<<"fit before "<<fit_before/tetra_list.size()<<endl;
+
+    int v=0;
+    for (Tetrahedron tetra : tetra_list)
+    {
+        int c=0;
+        for (tuple<int,int> edge : tetra.enumerate_edges())
+        {
+            if (values[edge]==1)
+            {
+                c++;
+            }
+        }
+        if (c>1)
+        {
+            v++;
+        }
+    }
+    cout<<"edge twice "<<v<<endl;
+
 
     double fit=0;
     double new_fit=0;
-    int no_improvement=0;
+    int i=0;
+    double old_fit=0;
     while(true)
     {
-        // auto it = values.begin();
-        // std::advance(it, rand() % values.size());
-        // tuple<int,int> random_key = it->first;
-
+        auto it = values.begin();
+        std::advance(it, rand() % values.size());
+        tuple<int,int> random_key = it->first;
+        int count=0;
         for (pair<tuple<int,int>,int> i : values)
         {
-            if (rand() / double(RAND_MAX)<(double)1/(values.size()))
+            if (rand() / double(RAND_MAX)<(double)1/(0.9*values.size()))
             {
-                i.second=1-i.second;
+                values[i.first]=1-values[i.first];
                 modified_keys[i.first]=0;
+                
             }
         }
-
+        // values[random_key]=1-values[random_key];
+        // cout<<count<<endl;
         new_fit = fitness(values,edge_dict);
 
         if (fit>new_fit)
@@ -201,21 +232,21 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_li
             {
                 values[key.first]=1-values[key.first];
             }
-            no_improvement++;
         }
-        else
+
+        if (i%5000==0)
         {
-            no_improvement=0;
+            if (new_fit<old_fit)
+            {
+                break;
+            }
+            old_fit=new_fit;
         }
+        i++;
         // cout<<"size "<<modified_keys.size()<<endl;
         modified_keys.clear();
         fit=new_fit;
-        // cout<<"Fitness : "<<new_fit<<endl;
-
-        if (no_improvement==3)
-        {
-            break;
-        }
+        // cout<<i<<" Fitness : "<<new_fit<<endl;
     }
     unordered_set<int> count;
     for (pair<tuple<int,int>,int> i : values)
@@ -230,6 +261,24 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_random(vector<Vertex>& vertex_li
             }
         }
     }
+    v=0;
+    for (Tetrahedron tetra : tetra_list)
+    {
+        int c=0;
+        for (tuple<int,int> edge : tetra.enumerate_edges())
+        {
+            if (values[edge]==1)
+            {
+                c++;
+            }
+        }
+        if (c>1)
+        {
+            v++;
+        }
+    }
+    cout<<"edge twice "<<v<<endl;
+
     cout<<"Perf : "<<(float)count.size()/tetra_list.size()<<endl;
     cout<<"step 1 done"<<endl;
     return edge_to_tetra;
