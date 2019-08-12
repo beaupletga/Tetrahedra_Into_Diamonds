@@ -20,14 +20,13 @@
 
 
 using namespace std;
-
-vector<int> BFS(int [],bool [],int,map<int,int>&);
-unordered_set<int> vertex_degree(vector<Diamond> &,int );
-int vertex_degree_with_minimal_array(vector<Tetrahedron> &,
-vector<Diamond> &,int [],int [],bool [],int ,vector<tuple<int,int,int>>&,
-vector<tuple<int,int,int>>&,int);
+int ith_diamond(bool diamond_extra_bytes_array[],int array_size,int i);
+int ith_tetra(bool diamond_extra_bytes_array[],int array_size,int i);
+vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size,int starting_diamond_index);
+int vertex_degree_with_minimal_array(int (diamond_array)[],bool (diamond_extra_bytes_array)[],int diamond_array_size,
+vector<tuple<int,int,int>> &permutation_array,vector<tuple<int,int,int>> &face_array,int id);
 void display_face_diamond(bool diamond_extra_bytes_array[],vector<tuple<int,int,int>>& face_array,int id);
-
+int diamond_size(bool diamond_extra_bytes_array[],int array_size,int index);
 
 #endif
 

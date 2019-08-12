@@ -10,6 +10,7 @@
 #include <math.h>    
 #include <assert.h> 
 #include <unordered_set>
+#include <queue> 
 
 #include "Vertex.h"
 #include "Triangle.h"

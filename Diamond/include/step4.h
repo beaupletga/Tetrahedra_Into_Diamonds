@@ -17,8 +17,9 @@
 
 using namespace std;
 
-map<int,int> step_4(vector<Tetrahedron> &tetra_list,vector<Diamond> &diamond_list,int [],
-int [],bool [],int,map<int,Diamond*>&,vector<tuple<int,int,int>>&,vector<tuple<int,int,int>>&);
+map<int,int> step_4(vector<Tetrahedron>&,vector<Diamond>&,int [],
+int [],bool [],int,map<int,Diamond*>&,vector<tuple<int,int,int>>&,
+vector<tuple<int,int,int>>&);
 #endif
 
 
