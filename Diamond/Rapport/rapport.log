@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  4 AUG 2019 17:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  12 AUG 2019 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -729,35 +729,68 @@ Package: relsize 2013/03/29 ver 4.1
 \algocf@algoframe=\box38
 \algocf@algobox=\box39
 )
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+)
 
 LaTeX Warning: Unused global option(s):
     [openany].
 
-(./rapport.aux)
+(./rapport.aux
+
+LaTeX Warning: Label `Tab:results_performances' multiply defined.
+
+
+LaTeX Warning: Label `fig:bfs_starting' multiply defined.
+
+)
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Info: Redefining \degres on input line 25.
-LaTeX Info: Redefining \dots on input line 25.
-LaTeX Info: Redefining \up on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Info: Redefining \degres on input line 33.
+LaTeX Info: Redefining \dots on input line 33.
+LaTeX Info: Redefining \up on input line 33.
 
 
 Package frenchb.ldf Warning: OT1 encoding should not be used for French.
 (frenchb.ldf)                Add \usepackage[T1]{fontenc} to the preamble
-(frenchb.ldf)                of your document, on input line 25.
+(frenchb.ldf)                of your document, on input line 33.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -767,14 +800,14 @@ Package frenchb.ldf Warning: OT1 encoding should not be used for French.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(56.9055pt, 483.69687pt, 56.9055pt)
+* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
 * v-part:(T,H,B)=(42.67912pt, 759.6886pt, 42.67912pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=483.69687pt
+* \textwidth=455.24411pt
 * \textheight=759.6886pt
-* \oddsidemargin=-15.36449pt
-* \evensidemargin=-15.36449pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
 * \topmargin=-66.59087pt
 * \headheight=12.0pt
 * \headsep=25.0pt
@@ -822,7 +855,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box41
-Package hyperref Info: Link coloring OFF on input line 25.
+Package hyperref Info: Link coloring OFF on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -832,167 +865,361 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count144
 )
-LaTeX Info: Redefining \ref on input line 25.
-LaTeX Info: Redefining \pageref on input line 25.
-LaTeX Info: Redefining \nameref on input line 25.
+LaTeX Info: Redefining \ref on input line 33.
+LaTeX Info: Redefining \pageref on input line 33.
+LaTeX Info: Redefining \nameref on input line 33.
 
 (./rapport.out) (./rapport.out)
 \@outlinefile=\write3
 \openout3 = `rapport.out'.
 
 \c@lstlisting=\count145
-LaTeX Font Info:    Try loading font information for U+msa on input line 27.
+LaTeX Font Info:    Try loading font information for U+msa on input line 35.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 27.
+LaTeX Font Info:    Try loading font information for U+msb on input line 35.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 30--36
+Overfull \hbox (2.717pt too wide) in paragraph at lines 40--46
+\OT1/cmr/m/n/10.95 Un maillage repr^^Sesente un do-maine g^^Seometrique en le d
+is-cre-ti-sant en formes simples. Les maillages
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--46
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 54--57
+Underfull \hbox (badness 10000) in paragraph at lines 64--67
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Overfull \hbox (3.75247pt too wide) in paragraph at lines 64--67
+\OT1/cmr/m/n/10.95 i^^Reme som-met, au i^^Reme t^^Setrah^^Redre et ^^Ra l'^^Set
+oile d'un som-met en temps constant. Son impl^^Sementation
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--78
+Underfull \hbox (badness 10000) in paragraph at lines 69--83
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 87--88
+Underfull \hbox (badness 10000) in paragraph at lines 98--99
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--98
+Underfull \hbox (badness 10000) in paragraph at lines 108--109
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 99--100
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
 
  []
 
-<Images/edgebreaker.png, id=196, 1332.98pt x 325.215pt>
+[3] <Images/edgebreaker.png, id=202, 1332.98pt x 325.215pt>
 File: Images/edgebreaker.png Graphic file (type png)
 
 <use Images/edgebreaker.png>
-Package pdftex.def Info: Images/edgebreaker.png used on input line 128.
+Package pdftex.def Info: Images/edgebreaker.png used on input line 139.
 (pdftex.def)             Requested size: 266.59128pt x 65.04184pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--132
+Underfull \hbox (badness 10000) in paragraph at lines 133--143
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--132
+Underfull \hbox (badness 10000) in paragraph at lines 133--143
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--132
+Underfull \hbox (badness 10000) in paragraph at lines 133--143
 
  []
 
-[3] <Images/corner_table.png, id=209, 771.88374pt x 675.52374pt>
+<Images/corner_table.png, id=204, 771.88374pt x 675.52374pt>
 File: Images/corner_table.png Graphic file (type png)
 
 <use Images/corner_table.png>
-Package pdftex.def Info: Images/corner_table.png used on input line 141.
+Package pdftex.def Info: Images/corner_table.png used on input line 152.
 (pdftex.def)             Requested size: 154.37401pt x 135.10236pt.
  [4 <./Images/edgebreaker.png>]
-Overfull \hbox (5.53287pt too wide) in paragraph at lines 151--167
+Overfull \hbox (33.98563pt too wide) in paragraph at lines 162--178
 [][] 
  []
 
 [5 <./Images/corner_table.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 208--215
+<Images/full_diamond.png, id=236, 369.38pt x 354.32375pt>
+File: Images/full_diamond.png Graphic file (type png)
+
+<use Images/full_diamond.png>
+Package pdftex.def Info: Images/full_diamond.png used on input line 213.
+(pdftex.def)             Requested size: 110.81485pt x 106.29794pt.
+
+<Images/not_full_diamond.png, id=237, 407.5225pt x 395.4775pt>
+File: Images/not_full_diamond.png Graphic file (type png)
+
+<use Images/not_full_diamond.png>
+Package pdftex.def Info: Images/not_full_diamond.png used on input line 219.
+(pdftex.def)             Requested size: 105.95334pt x 102.82172pt.
+ [6 <./Images/full_diamond.png> <./Images/not_full_diamond.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 234--235
 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 230--249
+<Images/ball.png, id=247, 579.16376pt x 573.14125pt>
+File: Images/ball.png Graphic file (type png)
+ <use Images/ball.png>
+Package pdftex.def Info: Images/ball.png used on input line 242.
+(pdftex.def)             Requested size: 115.83069pt x 114.6262pt.
+
+<Images/cow.png, id=248, 695.59875pt x 423.5825pt>
+File: Images/cow.png Graphic file (type png)
+ <use Images/cow.png>
+Package pdftex.def Info: Images/cow.png used on input line 248.
+(pdftex.def)             Requested size: 139.11728pt x 84.715pt.
+
+<Images/hand.png, id=249, 711.65875pt x 484.81125pt>
+File: Images/hand.png Graphic file (type png)
+ <use Images/hand.png>
+Package pdftex.def Info: Images/hand.png used on input line 258.
+(pdftex.def)             Requested size: 142.32922pt x 96.96053pt.
+
+<Images/skull.png, id=250, 435.6275pt x 446.66875pt>
+File: Images/skull.png Graphic file (type png)
+ <use Images/skull.png>
+Package pdftex.def Info: Images/skull.png used on input line 264.
+(pdftex.def)             Requested size: 87.12395pt x 89.33215pt.
+
+Overfull \hbox (26.34608pt too wide) in paragraph at lines 272--286
+[][]
+ []
+
+[7 <./Images/ball.png> <./Images/cow.png> <./Images/hand.png> <./Images/skull.p
+ng>]
+Underfull \hbox (badness 10000) in paragraph at lines 306--325
 
  []
 
-[7]
-Overfull \hbox (4.3283pt too wide) in paragraph at lines 302--304
-\OT1/cmr/m/n/10.95 SIEURS FORMES (NOMBRE DE SOM-METS SANS ANCRE, PER-FOR-MANCE 
-AVANT ET APRES
+<Images/isolated_tetra.png, id=262, 597.23125pt x 588.1975pt>
+File: Images/isolated_tetra.png Graphic file (type png)
+
+<use Images/isolated_tetra.png>
+Package pdftex.def Info: Images/isolated_tetra.png used on input line 331.
+(pdftex.def)             Requested size: 119.44412pt x 117.6374pt.
+
+<Images/diamond.png, id=263, 742.775pt x 740.7675pt>
+File: Images/diamond.png Graphic file (type png)
+ <use Images/diamond.png>
+Package pdftex.def Info: Images/diamond.png used on input line 337.
+(pdftex.def)             Requested size: 118.84642pt x 118.5252pt.
+
+[8] <Images/density_cow.png, id=274, 796.9775pt x 550.055pt>
+File: Images/density_cow.png Graphic file (type png)
+
+<use Images/density_cow.png>
+Package pdftex.def Info: Images/density_cow.png used on input line 348.
+(pdftex.def)             Requested size: 239.0951pt x 165.01776pt.
+
+Overfull \hbox (11.47304pt too wide) in paragraph at lines 348--349
+ [][] 
  []
 
-[8]
-Overfull \hbox (6.95634pt too wide) in paragraph at lines 328--330
-[]\OT1/cmr/m/n/10.95 METTRE DEUX IMAGE A COT[]E : DIA-MANT/-NU-ME-RO-TA-TION DE
-S SOM-METS ET ORDRE
+<Images/hand_density.png, id=275, 848.16875pt x 753.81625pt>
+File: Images/hand_density.png Graphic file (type png)
+
+<use Images/hand_density.png>
+Package pdftex.def Info: Images/hand_density.png used on input line 354.
+(pdftex.def)             Requested size: 195.0747pt x 173.37408pt.
+
+Overfull \hbox (8.86969pt too wide) in paragraph at lines 342--358
+\OT1/cmr/m/n/10.95 Sur Fig. []9[], on note une cer-taine ho-mog^^Sen^^Seit^^Se 
+des t^^Setra^^Redres isol^^Ses. En ana-ly-sant plus sp^^Secifiquement
  []
 
-[9] [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 423.
- [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 423.
+<Images/bfs_starting.png, id=277, 801.99625pt x 621.32124pt>
+File: Images/bfs_starting.png Graphic file (type png)
+
+<use Images/bfs_starting.png>
+Package pdftex.def Info: Images/bfs_starting.png used on input line 364.
+(pdftex.def)             Requested size: 240.60072pt x 186.39781pt.
+ [9 <./Images/isolated_tetra.png> <./Images/diamond.png> <./Images/density_cow.
+png> <./Images/hand_density.png>]
+Overfull \hbox (5.02147pt too wide) in paragraph at lines 374--380
+\OT1/cmr/m/n/10.95 Notre probl^^Reme s'ex-prime fa-ci-le-ment comme un probl^^R
+eme d'op-ti-mi-sa-tion com-bi-na-toire en nombres
+ []
+
+<Images/histograme.png, id=289, 795.97375pt x 360.34625pt>
+File: Images/histograme.png Graphic file (type png)
+
+<use Images/histograme.png>
+Package pdftex.def Info: Images/histograme.png used on input line 405.
+(pdftex.def)             Requested size: 358.18488pt x 162.15431pt.
+ [10 <./Images/bfs_starting.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 413--415
+
+ []
+
+<Images/half_ball.png, id=296, 507.8975pt x 519.9425pt>
+File: Images/half_ball.png Graphic file (type png)
+
+<use Images/half_ball.png>
+Package pdftex.def Info: Images/half_ball.png used on input line 424.
+(pdftex.def)             Requested size: 101.5777pt x 103.98665pt.
+
+<Images/central_edges.png, id=297, 591.20876pt x 561.09625pt>
+File: Images/central_edges.png Graphic file (type png)
+
+<use Images/central_edges.png>
+Package pdftex.def Info: Images/central_edges.png used on input line 430.
+(pdftex.def)             Requested size: 118.23965pt x 112.21725pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 435--437
+
+ []
+
+[11 <./Images/histograme.png> <./Images/half_ball.png> <./Images/central_edges.
+png>] <Images/central_edge_AB.png, id=306, 529.98pt x 554.07pt>
+File: Images/central_edge_AB.png Graphic file (type png)
+
+<use Images/central_edge_AB.png>
+Package pdftex.def Info: Images/central_edge_AB.png used on input line 447.
+(pdftex.def)             Requested size: 185.49577pt x 193.9274pt.
+
+<Images/explosion_diamond.png, id=307, 413.545pt x 477.785pt>
+File: Images/explosion_diamond.png Graphic file (type png)
+
+<use Images/explosion_diamond.png>
+Package pdftex.def Info: Images/explosion_diamond.png used on input line 453.
+(pdftex.def)             Requested size: 173.6877pt x 200.66832pt.
+ [12 <./Images/central_edge_AB.png> <./Images/explosion_diamond.png>]
+<Images/structure.png, id=315, 1010.77625pt x 252.945pt>
+File: Images/structure.png Graphic file (type png)
+
+<use Images/structure.png>
+Package pdftex.def Info: Images/structure.png used on input line 509.
+(pdftex.def)             Requested size: 454.84511pt x 113.82419pt.
+
+<Images/tetra_ordonnee.png, id=320, 336.25626pt x 352.31625pt>
+File: Images/tetra_ordonnee.png Graphic file (type png)
+
+<use Images/tetra_ordonnee.png>
+Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 525.
+(pdftex.def)             Requested size: 151.3139pt x 158.54083pt.
+ [13 <./Images/structure.png>]
+<Images/permutation_tetra_diamant.png, id=333, 336.25626pt x 347.2975pt>
+File: Images/permutation_tetra_diamant.png Graphic file (type png)
+
+<use Images/permutation_tetra_diamant.png>
+Package pdftex.def Info: Images/permutation_tetra_diamant.png used on input lin
+e 537.
+(pdftex.def)             Requested size: 151.3139pt x 156.28242pt.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 550.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <9> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 550.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 550.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 550.
+ [14 <./Images/tetra_ordonnee.png> <./Images/permutation_tetra_diamant.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 574--576
+
+ []
+
+[15] [16]
+Overfull \hbox (57.78548pt too wide) in paragraph at lines 663--677
+[][]
+ []
+
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 718--719
+
+ []
+
+
+Overfull \hbox (5.96825pt too wide) in paragraph at lines 727--728
+ []\OT1/cmr/bx/n/10.95 R^^Sesultats[] \OT1/cmr/m/n/10.95 En th^^Seorie comme en
+ pra-tique, notre struc-ture nous per-met d'^^Seconomiser en moyenne
+ []
+
+[18]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 778.
+ [19] [20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 778.
  (./rapport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 423.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 423.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 778.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 778.
 
 
 Package rerunfilecheck Warning: File `rapport.out' has changed.
@@ -1000,46 +1227,47 @@ Package rerunfilecheck Warning: File `rapport.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `rapport.out':
-(rerunfilecheck)             Before: 09762049018DA29974279CB652F7F41F;2984
-(rerunfilecheck)             After:  9C9D08C71ACF84AA244FD4A73760EC6C;3279.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 423.
+(rerunfilecheck)             Before: C8ACBB308FC213EDAD823B5C8F98F94A;3149
+(rerunfilecheck)             After:  A1B94AAA8DDF039A216B594C20A0428A;3151.
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 778.
  ) 
 Here is how much of TeX's memory you used:
- 10879 strings out of 494883
- 157514 string characters out of 6178692
- 270023 words of memory out of 5000000
- 13952 multiletter control sequences out of 15000+600000
- 14189 words of font info for 54 fonts, out of 8000000 for 9000
+ 12099 strings out of 494883
+ 172806 string characters out of 6178692
+ 322137 words of memory out of 5000000
+ 15020 multiletter control sequences out of 15000+600000
+ 15010 words of font info for 57 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 29i,19n,32p,911b,470s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsubsection.4.15.2} has been referenced but doe
-s not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsubsection.4.15.1} has been referenced but does 
-not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsubsection.4.11.1} has been referenced but does 
-not exist, replaced by a fixed one
-
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on rapport.pdf (11 pages, 341504 bytes).
+ 33i,19n,58p,1244b,1958s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm10.pfb>
+Output written on rapport.pdf (20 pages, 1264107 bytes).
 PDF statistics:
- 349 PDF objects out of 1000 (max. 8388607)
- 314 compressed objects within 4 object streams
- 81 named destinations out of 1000 (max. 500000)
- 347 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 582 PDF objects out of 1000 (max. 8388607)
+ 510 compressed objects within 6 object streams
+ 192 named destinations out of 1000 (max. 500000)
+ 434 words of extra memory for PDF output out of 10000 (max. 10000000)
 
