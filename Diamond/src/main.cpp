@@ -170,8 +170,10 @@ int main(int argc, char** argv)
     duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
     cout<<"Time for choosing central edges and pair vertice with diamond : "<<duration.count()*1e-6<<" s"<<endl;
     map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
-    
 
+
+
+    return 0;
    
 
     // vector<int> isolated_diamond_ids;
@@ -236,7 +238,9 @@ int main(int argc, char** argv)
     // return 0;
 
 
+
     cout<<"Step4"<<endl;
+    cout<<anchor_dict[12560]<<endl;
     // start = chrono::high_resolution_clock::now(); 
     map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
     array_size,anchor_dict,permutation_array,face_array);
@@ -293,10 +297,12 @@ int main(int argc, char** argv)
     // cout<<"average : "<<average/x<<endl;
 
 
-    time_to_access_ith_tetra(diamond_extra_bytes_array,array_size,tetra_list.size());
-    time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());
-    time_to_compute_vertex_degree(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,vertex_list.size());
-    time_to_compute_BFS(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,diamond_list.size());
+    
+
+    // time_to_access_ith_tetra(diamond_extra_bytes_array,array_size,tetra_list.size());
+    // time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());
+    // time_to_compute_vertex_degree(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,vertex_list.size());
+    // time_to_compute_BFS(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,diamond_list.size());
    
     cout<<"size "<<(sizeof(diamond_array)+sizeof(diamond_extra_bytes_array)+sizeof(permutation_array))<<endl;
     return 0;

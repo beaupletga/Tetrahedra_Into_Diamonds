@@ -89,6 +89,23 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
     }
 }
 
+unordered_set<int> Diamond::get_vertices_id()
+{
+    unordered_set<int> ids;
+    cout<<"a"<<endl;
+    for (Tetrahedron* tetra : this->tetra_list)
+    {
+        cout<<"b"<<endl;
+        for (Vertex* vertex : tetra->get_vertices())
+        {
+            ids.insert(vertex->get_id());
+        }
+        cout<<"c"<<endl;
+    }
+    cout<<"d"<<endl;
+    return ids;
+}
+
 
 int Diamond::get_id()
 {
