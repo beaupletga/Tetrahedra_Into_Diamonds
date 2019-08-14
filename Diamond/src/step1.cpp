@@ -122,6 +122,11 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_edge_degree(vector<Vertex>& vert
             tetra->set_in_diamond(true);
         }
         edge_to_tetra[maximum.first]=maximum.second;
+        
+        if (edge_to_tetra.size()%1000)
+        {
+            cout<<(double)edge_to_tetra.size()/edge_dict.size()<<endl;
+        }
     }
     return edge_to_tetra;
 }
@@ -285,16 +290,14 @@ map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict,map<tuple<int,int>,vector<Te
 }
 
 
+
 map<tuple<int,int>,vector<Tetrahedron*>> step_1_bfs(vector<Vertex>& vertex_list,vector<Tetrahedron>& tetra_list,map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict)
 {
-    // map<tuple<int,int>,vector<Tetrahedron*>> ww;
-    // ofstream output;
-    // output.open("../data/Visualisation/bfs_starting.csv",std::ios_base::app);
-    // for (int first_tetra_index=25;first_tetra_index<tetra_list.size();first_tetra_index+=100)
-    // {
     map<tuple<int,int>,vector<Tetrahedron*>> diamond_list;
     unordered_set<int> visited_tetra;
     queue<Tetrahedron*> wait_list;
+    vector<tuple<int,int,int>> ocurrences;
+
     int first_tetra_index=rand()%tetra_list.size();
     wait_list.push(&tetra_list[first_tetra_index]);
     while(!wait_list.empty())
@@ -307,7 +310,7 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_bfs(vector<Vertex>& vertex_list,
         {
             visited_tetra.insert(tetra->get_id());
             // enumerate the 6 edges of the treta to get the adjacents tetra
-            vector<tuple<int,int,int>> ocurrences;
+            ocurrences.clear();
             for (tuple<int,int> edge : tetra->enumerate_edges())
             {
                 // if we haven't already took this edge to form a diamond
@@ -350,21 +353,6 @@ map<tuple<int,int>,vector<Tetrahedron*>> step_1_bfs(vector<Vertex>& vertex_list,
             wait_list.pop();
         }
     }
-    //     double score = 0;
-    //     for (Tetrahedron &tetra : tetra_list)
-    //     {
-    //         if (tetra.get_in_diamond())
-    //         {
-    //             score++;
-    //         }
-    //         tetra.set_in_diamond(false);
-    //     }
-    //     score/=tetra_list.size();
-    //     output<<get<0>(tetra_list[first_tetra_index].get_barycenter())<<","<<get<1>(tetra_list[first_tetra_index].get_barycenter())<<",";
-    //     output<<get<2>(tetra_list[first_tetra_index].get_barycenter())<<","<<score<<"\n";
-    //     // cout<<first_tetra_index<<" "<<score<<endl;
-    // }
-    // output.close();
     return diamond_list;
 }
 

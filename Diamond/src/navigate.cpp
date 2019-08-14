@@ -193,6 +193,39 @@ int diamond_id_to_index(bool diamond_extra_bytes_array[],int diamond_array_size,
     return i-1;
 }
 
+vector<int> BFS_full_structure(vector<Diamond> &diamond_list,int starting_diamond_index)
+{
+    vector<int> path;
+    queue<Diamond*> wait_list;
+    unordered_set<int> lala;
+    int q=0;
+
+    wait_list.push(&diamond_list[starting_diamond_index]);
+    while(!wait_list.empty())
+    {
+        // cout<<2<<endl;
+        Diamond* index = wait_list.front();
+        wait_list.pop();
+        if (index==NULL)
+        {
+            continue;
+        }
+        int diamond_id = index->get_id();
+        if(lala.count(diamond_id)==0)
+        {
+            lala.insert(diamond_id);
+            path.push_back(diamond_id);
+            for (int i=0;i<index->get_neighbours().size();i++)
+            {
+                wait_list.push(index->get_neighbours()[i]);
+            }
+        }
+    }
+    return path;
+}
+
+
+
 vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_size,int starting_diamond_index)
 {
     vector<int> path;
@@ -240,9 +273,6 @@ vector<int> BFS(int diamond_array[],bool diamond_extra_bytes_array[],int array_s
             }
             q++;            
         }
-        // if (q==500){
-        //     break;
-        // }
     }
     return path;
 }
@@ -255,7 +285,7 @@ struct Next
     int last_index;
 };
 
-unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
+unordered_set<int> vertex_degree_full_structure(vector<Diamond> &diamond_list,int id)
 {
     unordered_set<int> diamond_ids;
     unordered_set<int> tetra_ids;
@@ -392,9 +422,9 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
                 // cout<<neighbour_face_index<<" "<<(neighbour_face_size+(neighbour_face_index-2)%neighbour_face_size)%neighbour_face_size<<endl;
                 // cout<<indexes[0]<<" "<<indexes[1]<<" "<<indexes[2]<<endl;
                 // cout<<"0"<<endl;
-                display_face(current.to->neighbours_faces[indexes[0]]);
-                display_face(current.to->neighbours_faces[indexes[1]]);
-                display_face(current.to->neighbours_faces[indexes[2]]);
+                // display_face(current.to->neighbours_faces[indexes[0]]);
+                // display_face(current.to->neighbours_faces[indexes[1]]);
+                // display_face(current.to->neighbours_faces[indexes[2]]);
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[0]/2]->get_id());
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[1]/2]->get_id());
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[2]/2]->get_id());
@@ -461,9 +491,9 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[1]/2]->get_id());
                 tetra_ids.insert(current.to->get_tetra_list()[indexes[2]/2]->get_id());
                 // cout<<"1"<<endl;
-                display_face(current.to->neighbours_faces[indexes[0]]);
-                display_face(current.to->neighbours_faces[indexes[1]]);
-                display_face(current.to->neighbours_faces[indexes[2]]);
+                // display_face(current.to->neighbours_faces[indexes[0]]);
+                // display_face(current.to->neighbours_faces[indexes[1]]);
+                // display_face(current.to->neighbours_faces[indexes[2]]);
                 
                 if (current.to->neighbours_faces[indexes[0]]!=tuple<int,int,int>{0,0,0})
                 {
@@ -561,10 +591,10 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
             // cout<<"Careful"<<endl;
             // cout<<current.from->get_permutation(current.from_face_index)[0]<<" "<<current.from->get_permutation(current.from_face_index)[1]<<" "<<current.from->get_permutation(current.from_face_index)[2]<<endl;
             // cout<<current.last_index<<" "<<neighbour_face_index<<endl;
-            display_face(current.to->neighbours_faces[0]);
-            display_face(current.to->neighbours_faces[1]);
-            display_face(current.to->neighbours_faces[2]);
-            display_face(current.to->neighbours_faces[3]);
+            // display_face(current.to->neighbours_faces[0]);
+            // display_face(current.to->neighbours_faces[1]);
+            // display_face(current.to->neighbours_faces[2]);
+            // display_face(current.to->neighbours_faces[3]);
             // cout<<endl;
 
             int which_case;
@@ -610,10 +640,10 @@ unordered_set<int> vertex_degree(vector<Diamond> &diamond_list,int id)
             }
             // cout<<"end"<<endl;
         }
-        if (tetra_ids.size()!=total_degree)
-        {
-            cout<<warning<<endl;
-        }
+        // if (tetra_ids.size()!=total_degree)
+        // {
+        //     cout<<warning<<endl;
+        // }
         
         // sleep(1);
     }

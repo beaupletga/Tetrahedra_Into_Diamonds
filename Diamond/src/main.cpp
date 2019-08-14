@@ -170,11 +170,10 @@ int main(int argc, char** argv)
     duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
     cout<<"Time for choosing central edges and pair vertice with diamond : "<<duration.count()*1e-6<<" s"<<endl;
     map<int,Diamond*> anchor_dict=step_3_4_anchor_dict(diamond_list);
-
-
-
-    return 0;
    
+
+//    cout<<"degree "<<vertex_dict[12560].size()<<endl;
+//    return 0;
 
     // vector<int> isolated_diamond_ids;
     // for (int i=0;i<diamond_list.size();i++)
@@ -191,11 +190,13 @@ int main(int argc, char** argv)
 
     // return 0;
     // for each tetra, we assign its position in the diamond array
-    int tetra_array[tetra_list.size()];
+    cout<<"a"<<endl;
+    cout<<"b"<<endl;
 
     int diamond1_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==1;});
     int diamond3_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==3;});
     int diamond4_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==4;});
+    cout<<"c"<<endl;
     int diamond5_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==5;});
     int diamond6_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==6;});
     int diamond7_size=count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()==7;});
@@ -204,17 +205,21 @@ int main(int argc, char** argv)
 
     cout<<"attention "<<count_if(diamond_list.begin(),diamond_list.end(),[](Diamond i){return i.get_tetra_list().size()>9;})<<endl;
     
+
+
     // array gathering all neighbours of the diamonds
     int array_size=diamond1_size*4+diamond3_size*6+diamond4_size*8+diamond5_size*10+
     diamond6_size*12+diamond7_size*14+diamond8_size*16+diamond9_size*18;
-    int diamond_array[array_size];
-    
+    cout<<"d"<<endl;
+    int* diamond_array[array_size];
+    cout<<"e"<<endl;
     // 1 if it's a new diamond, 0 ow
     // we dont count this array at the end because we can include each value as a reference bit into the diamond_array
-    bool diamond_extra_bytes_array[array_size]={0};
-
+    bool* diamond_extra_bytes_array[array_size]={0};
+    cout<<"d"<<endl;
     cout<<"Array size : "<<array_size<<endl;
     
+    return 0;
     step_3_5_set_neighbour_permutation(diamond_list);
 
     // vector<tuple<int,int,int>> permutation_array(array_size,tuple<int,int,int>{0,0,0});
@@ -240,10 +245,10 @@ int main(int argc, char** argv)
 
 
     cout<<"Step4"<<endl;
-    cout<<anchor_dict[12560]<<endl;
+    // cout<<anchor_dict[12560]<<endl;
     // start = chrono::high_resolution_clock::now(); 
-    map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
-    array_size,anchor_dict,permutation_array,face_array);
+    // map<int,int> index_to_diamond_id = step_4(tetra_list,diamond_list,diamond_array,diamond_extra_bytes_array,
+    // array_size,anchor_dict,permutation_array,face_array);
     // cout<<10<<endl;
     // stop = chrono::high_resolution_clock::now(); 
     // duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
@@ -297,14 +302,18 @@ int main(int argc, char** argv)
     // cout<<"average : "<<average/x<<endl;
 
 
-    
-
-    // time_to_access_ith_tetra(diamond_extra_bytes_array,array_size,tetra_list.size());
-    // time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());
     // time_to_compute_vertex_degree(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,vertex_list.size());
     // time_to_compute_BFS(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,diamond_list.size());
    
-    cout<<"size "<<(sizeof(diamond_array)+sizeof(diamond_extra_bytes_array)+sizeof(permutation_array))<<endl;
+    // time_to_compute_vertex_degree_full_structure(diamond_list,vertex_list.size());
+    // time_to_compute_BFS_full_structure(diamond_list,diamond_list.size());
+
+    // // time_to_access_ith_tetra(diamond_extra_bytes_array,array_size,tetra_list.size());
+    // // time_to_access_ith_diamond(diamond_extra_bytes_array,array_size,diamond_list.size());
+    // // time_to_compute_vertex_degree(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,vertex_list.size());
+    // // time_to_compute_BFS(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,face_array,diamond_list.size());
+   
+    // cout<<"size "<<(sizeof(diamond_array)+sizeof(diamond_extra_bytes_array)+sizeof(permutation_array))<<endl;
     return 0;
 
     // cout<<face_array.size()<<" "<<permutation_array.size()<<endl;
@@ -432,50 +441,50 @@ int main(int argc, char** argv)
     
     // cout<<"Time for creating the array : "<<duration.count()<<endl;
 
-    double vertex_degree_time=0;
-    double BFS_time=0;
-    int count=0;
+    // double vertex_degree_time=0;
+    // double BFS_time=0;
+    // int count=0;
 
 
-    // int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
-    //     array_size,permutation_array,face_array,105);
+    // // int v=vertex_degree_with_minimal_array(tetra_list,diamond_list,tetra_array,diamond_array,diamond_extra_bytes_array,
+    // //     array_size,permutation_array,face_array,105);
 
-    // cout<<v<<" "<<vertex_dict[105].size()<<endl;
-    // return 0;
-    vector<int> cc;
-    for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
-    {
+    // // cout<<v<<" "<<vertex_dict[105].size()<<endl;
+    // // return 0;
+    // vector<int> cc;
+    // for (pair<int,vector<Tetrahedron*>> i : vertex_dict)
+    // {
 
-        start = chrono::high_resolution_clock::now(); 
-        int v=vertex_degree_with_minimal_array(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,
-        face_array,i.first);
-        stop = chrono::high_resolution_clock::now(); 
-        duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
-        cout<<"main1"<<endl;
-        if (v!=i.second.size())
-        {
-            cout<<v<<" "<<i.second.size()<<endl;
-            cout<<i.first<<endl;
-            cc.push_back(i.first);
-        }
-        cout<<"main2"<<endl;
-        vertex_degree_time+=duration.count();
+    //     start = chrono::high_resolution_clock::now(); 
+    //     int v=vertex_degree_with_minimal_array(diamond_array,diamond_extra_bytes_array,array_size,permutation_array,
+    //     face_array,i.first);
+    //     stop = chrono::high_resolution_clock::now(); 
+    //     duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+    //     cout<<"main1"<<endl;
+    //     if (v!=i.second.size())
+    //     {
+    //         cout<<v<<" "<<i.second.size()<<endl;
+    //         cout<<i.first<<endl;
+    //         cc.push_back(i.first);
+    //     }
+    //     cout<<"main2"<<endl;
+    //     vertex_degree_time+=duration.count();
 
-        // start = chrono::high_resolution_clock::now(); 
-        // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
-        // stop = chrono::high_resolution_clock::now(); 
-        // duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
-        // BFS_time+=duration.count();
+    //     // start = chrono::high_resolution_clock::now(); 
+    //     // vector<int> path= BFS(diamond_array,diamond_extra_bytes_array,array_size,index_to_diamond_id);
+    //     // stop = chrono::high_resolution_clock::now(); 
+    //     // duration = chrono::duration_cast<chrono::microseconds>(stop - start); 
+    //     // BFS_time+=duration.count();
 
-        // count++;
-        // if (count==100)
-        // {
-        //     break;
-        // }
-    }
-    cout<<"cc "<<cc.size()<<endl;
-    cout<<"BFS time : "<<BFS_time/100<<endl;
-    cout<<"Vertex degree time : "<<vertex_degree_time/100<<endl;
+    //     // count++;
+    //     // if (count==100)
+    //     // {
+    //     //     break;
+    //     // }
+    // }
+    // cout<<"cc "<<cc.size()<<endl;
+    // cout<<"BFS time : "<<BFS_time/100<<endl;
+    // cout<<"Vertex degree time : "<<vertex_degree_time/100<<endl;
 
     // cout<<"Degree "<<vertex_degree(diamond_list,vertex)<<endl;
     // cout<<vertex_dict[102].size()<<endl;

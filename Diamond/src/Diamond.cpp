@@ -261,6 +261,11 @@ void Diamond::set_central_edge(pair<int,int> edge)
 
 void Diamond::set_anchor_vertex(Vertex* anchor)
 {
+    if (this->has_anchor)
+    {
+        cout<<"already has an anchor"<<endl;
+        assert(true==false);
+    }
     this->anchor_vertex=anchor;
     this->vertex_order.clear();
     if (this->tetra_list.size()==1)
