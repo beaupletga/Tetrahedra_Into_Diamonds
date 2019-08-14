@@ -56,6 +56,8 @@ Je tiens à remercier mon superviseur Luca Castelli Aleardi pour sa précieuse a
 
 \newpage
 \section{Préliminaires}
+\noindent
+Ce rapport fait appel à des notions de géométrie. Afin que tous les termes employés soient compris par le lecteur, nous allons définir des termes qui seront employés tout au long de ce rapport.
 \subsection{Définitions}
 \noindent
 \textbf{Simplexe}. Un simplex $\sigma^p$ de dimension $p$ est l'enveloppe convexe de $p+1$ points $\{v_0,v_1,...v_p\}$, où $v_i\, \in R^n$ et les vecteurs $v_1-v_0,v_2-v_0...$ sont linéairement indépendants. Les simplexes de dimensions 0, 1, 2 et 3 sont respectivement les sommets, arêtes, triangles et tétraèdres.\\\\
@@ -71,7 +73,6 @@ Je tiens à remercier mon superviseur Luca Castelli Aleardi pour sa précieuse a
 \textbf{Maillage}. Un maillage est un complexe simplicial représentant un objet géométrique. Il a la même dimension que l'objet qu'il représente. Ainsi, pour tout objet en 1, 2 ou 3D, les maillages respectifs seront en dimensions 1, 2 ou 3. Dans un maillage de dimension d, les simplexes de dimensions (d-1) sont appelées des facettes. Ainsi, les facettes d'un tétraèdre sont ses faces, les facettes d'une face sont ses arêtes et les facettes d'une arête sont ses sommets.\\\\
 \textbf{Le degré}. Le degré d'un k-simplexe est le nombre de (k+1)-simplexes adjacents. Ainsi le degré d'un sommet est le nombre d'arêtes adjacentes et le degré d'une arête est le nombre de faces adjacentes.\\\\
 \textbf{Etoile}. L'étoile d'un sommet est l'ensemble des k-simplexes adjacents à un sommet. C'est l'ensemble des triangles (resp. tétraèdres) adjacents à un sommet dans le cas surfacique (resp. volumique). Dans ce dernier cas, on appelle cela l'hypersphère.
-\textbf{Polytope}. 
 
 %Nous traitons dans ce rapport de maillages tetrahedriques dans un espace Euclidien à 3 dimensions. Deux tetrahedres sont dit adjacents s'ils partagent une face. On dénote par V l'ensemble des sommets, E l'ensemble des arêtes, F l'ensemble des faces et T l'ensemble des tetrahedres du maillage.\\
 %En utilisant l'équation d'Euler, on a la relation suivante : 
