@@ -729,11 +729,33 @@ C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 \label{fig:histogramme}
 \end{center}
 \end{figure}
+\begin{figure}
+\pgfplotsset{width=15cm,height=7cm}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    enlargelimits=0.15,
+    legend style={at={(0.6,0.9)},
+      anchor=north,legend columns=-1},
+    ylabel={RPT},
+    xlabel={Nombre de tétraèdres par arête},
+    symbolic x coords={3.9,4.29,4.43,4.93,5.08,5.10},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    ]
+\addplot coordinates {(3.9,2.69)(4.29,2.44)(4.43,2.44)(4.93,2.39)(5.08,2.37)(5.10,2.35) };
+\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,) };
+\legend{Parcours en largeur,Arête de maximum degré}
+\end{axis}
+\end{tikzpicture}
+\caption{Nombre de références par tétraèdre (rpt) en fonction du nombre de tétraèdres par arête}
+\label{fig:graphique}
+\end{figure}
+
+\vspace{0.1cm}
 \noindent
-
-AJOUTER GRAPHE : PART DE BORDS MAILLAGE / RPT
-
-Compte tenu des résultats de Tab. \ref{tab:results_performances}, nous avons choisi d'utiliser le parcours en largeur pour appareiller les tétraèdres en diamants. Le parcours en largeur est rapide et permet d'associer en moyenne 76\% des tétraèdres en diamants. Il pourrait probablement être amélioré en étant exécuté en parallèle ou en choisissant plus spécifiquement un tétraèdre de départ (Fig. \ref{fig:bfs_starting}). On remarque aussi que 50\% des tétraèdres sont dans des diamants possédant 5 ou 6 tétraèdres (Fig. \ref{fig:histogramme}).\\\\
+On note sur la Fig. \ref{fig:graphique} qu'il semble avoir un lien entre le nombre de tétraèdres par arête et les performances de nos algorithmes de création de diamants. Ce comportement ne semble pas étonnant étant donné que plus le nombre de tétraèdres par arête est important, plus les diamants peuvent contenir un nombre important de tétraèdres. Compte tenu des résultats de Tab. \ref{tab:results_performances}, nous avons choisi d'utiliser le parcours en largeur pour appareiller les tétraèdres en diamants. Le parcours en largeur est rapide et permet d'associer en moyenne 76\% des tétraèdres en diamants. Néanmoins, notre algorithme pourrait probablement être amélioré en étant exécuté en parallèle ou en choisissant plus spécifiquement un tétraèdre de départ (Fig. \ref{fig:bfs_starting}). On remarque que 50\% des tétraèdres sont dans des diamants possédant 5 ou 6 tétraèdres (Fig. \ref{fig:histogramme}).
 
 \subsection{Ancrage des sommets}
 \begin{table}[H]
@@ -748,7 +770,7 @@ structure&avec des diamants  & des diamants avant & des diamants après \\
 B1 & 6 & 76& 65 \\
 B2 & 0.08& 80 & 80 \\
 B3 & 0.03& 82 & 82\\
-B4 &  &  & \\
+B4 & 0.01 & 82 & 82\\
 B5 &  &  & \\
 V1 & 0.8  & 77 & 76 \\
 M1 & 0.7 & 77& 76\\
@@ -767,19 +789,19 @@ Pour évaluer le temps nécessaire pour répondre à une requête, nous évaluon
 \begin{table}[h]
 \footnotesize
 \centering
-\begin{tabular}{| c | c | c | c| c |c |}
+\begin{tabular}{| c | c | c| c |c |}
 \hline
-Nom de la  & Choisir les arêtes centrales & Accès au& Accès au & Degré d'un & Parcours en\\
-structure & et appareiller sommet/diamant (s) &ième tétraèdre (s)& ième diamant (s) &sommet (s)&prodondeur (s)\\
+Nom de la & Accès au& Accès au & Degré d'un & Parcours en\\
+structure &ième tétraèdre (s)& ième diamant (s) &sommet (s)&prodondeur (s)\\
 \hline
-B1  & 0.06 & 1e-5 & 5e-6 & 1.9e-5 & 6e-4\\
-B2 & 21.34 &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01\\
-B3 & 33.29 & & & & \\
-B4 &  & & & & \\
-B5 &  & & & & \\
-V1 & 88.22 &  & & \\
-M1  & 50.6 & 6.4e-4 & 2.6e-4 & 2.2e-4 & 0.02\\
-C1  & 96.71 & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
+B1  & 1e-5 & 5e-6 & 1.9e-5 & 6e-4\\
+B2  &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01\\
+B3 & 0.011 & 0.0042 & 0.002 & \\
+B4 & 0.01 & 0.01 & 0.01 & 4.6\\
+B5 & & & & \\
+V1 & & & & \\
+M1  & 6.4e-4 & 2.6e-4 & 2.2e-4 & 0.02\\
+C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 \hline  
 \end{tabular}
 \label{table:results_time}
@@ -799,13 +821,27 @@ METTRE GRAPHE EN COMPARANT STRUCTURE COMPLETE ET STRUCTURE COMPACTE
 \section{Partie Théorique}
 \subsection{Borne inférieure théorique}
 \subsection{NP-Complétude}
-%\noindent
-%La pierre angulaire de notre structure est la constuction des diamants. Si tous les tétraèdres étaient regroupés en diamants, alors nous achèverions un encodage de la connectivité avec 2 rpt. Le parcours en largeur est satisfaisant mais existe-il un algorithme optimal en temps polynomial. Nous allons montrer dans cette section que le problème est en réalité NP-dur.
+\noindent
+%La pierre angulaire de notre structure est la constuction des diamants. Si tous les tétraèdres étaient regroupés en diamants, alors nous achèverions un encodage de la connectivité avec 2 rpt. Le parcours en largeur est satisfaisant mais existe-il un algorithme optimal en temps polynomial ? Nous allons montrer dans cette section que le problème est en réalité NP-dur.\\
+%Notre problème est le suivant : \textbf{Existe-il une couverture des tétraèdres en diamants contenant plus de k tétraèdres ?}\\
+%Pour cela, nous allons procéder en 3 étapes :
+%\begin{itemize}
+%\item Transformer notre maillage en graphe en temps polynomial
+%\item Transformer notre graphe en temps polynomial
+%\item Résoudre MIS sur ce nouveau graphe
+%\item Montrer que si l'on a une solution de MIS sur ce graphe alors on a une solution pour notre problème.
+%\end{itemize}
 %
-%\paragraph{Existe-il une couverture des tétraèdres en diamants contenant plus de k tétraèdres ?}
 %Pour rappel, notre problème consiste à choisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. On peut alors créer un autre graphe où chaque arête du graphe initial est modélisée par un sommet. Deux sommets dans ce nouveau graphe sont connectées si et seulement si leurs arêtes dans le graphe original appartiennent au même tetra. La création de ce nouveau graphe se fait en temps polynomial (en fonction des arêtes).
+%Dans ce nouveau graphe, notre problème devient le même que le maximum independant set (MIS). A savoir que l'on recherche un ensemble maximum de sommets (donc d'arêtes dans notre graphe initial) tel qu'aucun de ces sommets ne soient connectés (i.e que les arêtes dans le graphe initial n'appartiennent pas au même tétraèdre).
 %
-%Dans ce nouveau graphe, notre problème devient le même que le maximum independant set (MIS). A savoir que l'on recherche un ensemble maximum de sommets (donc d'aretes dans notre graphe initial) tel qu'aucun de ces sommets de soient connectés (donc que leur aretes appartiennent au même tetra dans le graphe initial).
+%Montrons d'abord que notre problème appartient à NP. Pour que ce soit le cas, il faut montrer que l'on peu vérifier la validité de notre solution en temps polynomial.\\
+%Pour cela, on construit le graphe annexe précisé au dessus en temps O(E). Puis pour chaque sommet choisi dans ce graphe, on vérifie qu'aucun des sommet voisins n'a été pris. Ceci se fait en temps O(V). Par conséquent, on peut vérifier la validité d'une solution en temps O(E+V). Notre problème est donc NP.\\
+%
+%Une solution est un ensemble d'arêtes. 
+%
+%
+%
 %En revanche, notre instance du MIS est une instance pondérée, où chaque sommet à un poids correspondant au nombre de tetra adjacent à l'arete dans le graphe initial.
 
 \section{Travail Futur}
