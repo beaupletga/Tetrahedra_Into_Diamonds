@@ -1,0 +1,25 @@
+\section{Partie Théorique}
+\subsection{Borne inférieure théorique}
+\subsection{NP-Complétude}
+\noindent
+%La pierre angulaire de notre structure est la constuction des diamants. Si tous les tétraèdres étaient regroupés en diamants, alors nous achèverions un encodage de la connectivité avec 2 rpt. Le parcours en largeur est satisfaisant mais existe-il un algorithme optimal en temps polynomial ? Nous allons montrer dans cette section que le problème est en réalité NP-dur.\\
+%Notre problème est le suivant : \textbf{Existe-il une couverture des tétraèdres en diamants contenant plus de k tétraèdres ?}\\
+%Pour cela, nous allons procéder en 3 étapes :
+%\begin{itemize}
+%\item Transformer notre maillage en graphe en temps polynomial
+%\item Transformer notre graphe en temps polynomial
+%\item Résoudre MIS sur ce nouveau graphe
+%\item Montrer que si l'on a une solution de MIS sur ce graphe alors on a une solution pour notre problème.
+%\end{itemize}
+%
+%Pour rappel, notre problème consiste à choisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. On peut alors créer un autre graphe où chaque arête du graphe initial est modélisée par un sommet. Deux sommets dans ce nouveau graphe sont connectées si et seulement si leurs arêtes dans le graphe original appartiennent au même tetra. La création de ce nouveau graphe se fait en temps polynomial (en fonction des arêtes).
+%Dans ce nouveau graphe, notre problème devient le même que le maximum independant set (MIS). A savoir que l'on recherche un ensemble maximum de sommets (donc d'arêtes dans notre graphe initial) tel qu'aucun de ces sommets ne soient connectés (i.e que les arêtes dans le graphe initial n'appartiennent pas au même tétraèdre).
+%
+%Montrons d'abord que notre problème appartient à NP. Pour que ce soit le cas, il faut montrer que l'on peu vérifier la validité de notre solution en temps polynomial.\\
+%Pour cela, on construit le graphe annexe précisé au dessus en temps O(E). Puis pour chaque sommet choisi dans ce graphe, on vérifie qu'aucun des sommet voisins n'a été pris. Ceci se fait en temps O(V). Par conséquent, on peut vérifier la validité d'une solution en temps O(E+V). Notre problème est donc NP.\\
+%
+%Une solution est un ensemble d'arêtes. 
+%
+%
+%
+%En revanche, notre instance du MIS est une instance pondérée, où chaque sommet à un poids correspondant au nombre de tetra adjacent à l'arete dans le graphe initial.

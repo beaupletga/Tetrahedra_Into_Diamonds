@@ -1,0 +1,16 @@
+\section{Travail Futur}
+\subsection{Améliorations}
+\paragraph{Références différentielles}
+Dans notre tableau A, chaque face est représentée par un indice sur 32 bits, qui est la taille minimale d'un entier en C\texttt{++}. Néanmoins, nous pourrions représenter l'adjacence par la différence entre les indices des deux faces. Malheureusement, les faces sont seulement ordonneés de manière à ce que le ième sommet soit adjacent au ième diamant. Par conséquent, nous n'avons aucune garanti sur l'éloignement (dans le tableau A) de deux faces opposées. Etant donné que le gain semblait mineur, nous avons choisi de ne pas implémenter cette fonction.
+
+\paragraph{Dynamicité}
+Une structure de données compacte est dîtes dynamique lorsqu'on peut modifier les données localement (i.e de manière instantanée). Dans notre cas, modifier les données peut revenir à ajouter un sommet, ajouter une face, supprimer un tétraèdre... Cependant, ces fonctions ne sont pas triviales et nous n'en n'avons encore implémenté encore aucune.
+
+\subsection{Défaut}
+\noindent
+Afin d'appareiller les tétraèdres en diamants, nous réalisons un parcours en largeur de notre maillage. Seulement, pour parcourir le maillage, nous lisons entièrement le fichier original car nous n'avons aucune garantie géométrique sur la manière dont sont énumérés les tétraèdres. Si les tétraèdres sont énumérés dans le fichier original par proximité alors nous pouvons maintenir un cache de tétraèdres puis les associer au moment voulu. Sans-cela, nous devons lire le fichier entièrement et cela représente un vrai goulot d'étranglement.
+
+
+\section{Conclusion}
+\noindent
+Nous avons présenté dans ce rapport une nouvelle structure de données compacte afin de représenter les maillages tétraèdriques en utilisant en moyenne 2.4 rpt. Cela représente une économie de 40\% de références par tétraèdres en comparaison avec l'état de l'art (SOT). Notre structure s'adapte ainsi parfaitement aux maillages très volumineux. La navigation dans le maillage est intuitive car notre structure utilise les faces des tétraèdres. L'accès au ième sommet, ième tétraèdre se fait en temps constant et le calcul de l'hypersphère d'un sommet est proportionnel au degré du sommet. Finalement, nous avons aussi réussi à enregistrer notre structure dans un nouveau format de fichier afin que celle-ci puisse se partager facilement.
