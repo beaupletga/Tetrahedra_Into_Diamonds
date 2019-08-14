@@ -1,7 +1,7 @@
 \documentclass[a4paper,11pt,openany]{article}
 \usepackage[noconfigs,french]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm]{geometry}
+\usepackage[left=2cm,right=2cm,top=1.5cm,bottom=1.5cm]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{float}
@@ -11,6 +11,8 @@
 \usepackage{listings}  
 \usepackage{mathtools}
 \usepackage{multirow}
+\usepackage{subcaption}
+\usepackage[noabbrev]{cleveref}
 %\usepackage{algorithm}
 %\usepackage{algorithmic}
 \usepackage[]{algorithm2e}
@@ -25,6 +27,7 @@
     \begin{center}\large#1\end{center}
     \vskip0.5em}%
 }
+
 \lstset { %
     language=C++,
     backgroundcolor=\color{black!5}, % set backgroundcolor
@@ -35,7 +38,7 @@
 \author{
    Gabriel Beauplet\thanks{LIX, Ecole Polytechnique, Palaiseau, France} supervisé par Luca Castelli Aleardi\thanks{LIX, Ecole Polytechnique, Palaiseau, France}
 %   \and
-%   Olivier Devilliers\thanks{INRIA, CNRS, Loria, Université de Lorraine, France}
+%   Olivier Devillers\thanks{INRIA, CNRS, Loria, Université de Lorraine, France}
 }
 \subtitle{Stage de M2 MPRI (Master Parisien de Recherche en Informatique)}
 \vspace{1cm}
@@ -44,38 +47,64 @@
 \begin{document}
 \maketitle
 
-\section{Résumé}
+%\section{Résumé}
+%\noindent
+%De nombreuses structures de données compactes ont été développées pour les triangulations 2D mais très peu pour les tétraèdrisations 3D. Nous introduisons dans ce rapport, une nouvelle structure de donneés compacte pour les tétraèdrisations. Nous nous concentrons seulement sur les informations de connectivité plutôt que sur les informations géométriques (les coordonnées des sommets). L'idée principale est de regrouper les tétraèdres en diamants de telle manière à économiser les références d'adjacence entre deux tétraèdres du même diamant. Nous définissons un diamant comme un ensemble de tétraèdres formant un cycle autour d'une arête. Notre structure de données permet de représenter la connectivité d'un maillage en utilisant en moyenne 2.4 références par tétraèdre tout en permettant l'exécution de requêtes simples. Nous présentons des résultats pratiques de notre structure de donneés ainsi que des résultats plus théoriques.
+\subsection*{Le contexte général}
 \noindent
-De nombreuses structures de données compactes ont été développées pour les triangulations 2D mais très peu pour les tétraèdrisations 3D. Nous introduisons dans ce rapport, une nouvelle structure de donneés compacte pour les tétraèdrisations. Nous nous concentrons seulement sur les informations de connectivité plutôt que sur les informations géométriques (les coordonnées des sommets). L'idée principale est de regrouper les tétraèdres en diamants de telle manière à économiser les références d'adjacence entre deux tétraèdres du même diamant. Nous définissons un diamant comme un ensemble de tétraèdres formant un cycle autour d'une arête. Notre structure de données permet de représenter la connectivité d'un maillage en utilisant en moyenne 2.4 références par tétraèdre tout en permettant l'exécution de requêtes simples. Nous présentons des résultats pratiques de notre structure de donneés ainsi que des résultats plus théoriques.
-\section{Introduction}
+%De quoi s'agit-il ? 
+%D'où vient-il ? 
+%Quels sont les travaux déjà accomplis dans ce domaine dans le monde ?
+Un maillage représente un domaine géometrique en le discretisant en formes simples. Les maillages permettent de représenter des objets géométriques en 1, 2 ou 3D à des fins scientifiques ou industrielles par exemple. En 2D, les maillages representent des surfaces et sont constitués de polygones (triangles, carrés...) reliés deux à deux par une arête. On parle de maillages surfaciques. En 3D, les maillages représentent des volumes à l'aide de polyèdres (tétraèdres, pyramides...) partageant une face commune. On parle alors de maillages volumiques. Les maillages sont très utilisés pour la visualisation de volume, calculs de solutions pour des équations aux dérivées partielles... Cependant, ce sont des structures complexes qui peuvent devenir très volumineuses et dont on essaye de réduire la taille mémoire.
+
+\subsection*{Le problème étudié}
 \noindent
-Un maillage représente un domaine géometrique en le discretisant en formes simples. Les maillages permettent de représenter des objets géométriques en 1, 2 ou 3D à des fins scientifiques ou industrielles par exemple. En 2D, les maillages representent des surfaces et sont constitués de polygones (triangles, carrés...) reliés deux à deux par une arête. En 3D, les maillages représentent des volumes à l'aide de polyèdres (tétraèdres, pyramides...) partageant une face commune. Les maillages sont très utilisés pour la visualisation de volume, calculs de solutions pour des équations aux dérivées partielles... Cependant, les maillages sont des structures complexes qui peuvent devenir très volumineuses et dont on essaye de réduire la taille mémoire.\\
+%Quelle est la question que vous avez abordée ? 
+%Pourquoi est-elle importante, à quoi cela sert-il d'y répondre ?  
+%Est-ce un nouveau problème ?
+%Si oui, pourquoi êtes-vous le premier chercheur de l'univers à l'avoir posée ?
+%Si non, pourquoi pensiez-vous pouvoir apporter une contribution originale ?
 La compression de données est omniprésente en informatique, avec des formats compressés génériques comme \textit{gzip} mais aussi dédiés comme \textit{mp3} pour les fichiers audios. Ce besoin de compresser les données est grandissant car de plus en plus de fichiers sont stockés à distance sur des serveurs et la moindre économie de stockage a d'importantes répercussions. Néanmoins, sous certains formats compressés, les données originales deviennent inutilisables (ex : \textit{rar}). Cela pose problème quand l'on souhaite accéder aux données  sans passer par l'étape de décompression.\\
 Une structure de données est une manière d'organiser les données pour faciliter leur traitement. Les listes, arbres et graphes sont des exemples de structures de données. Leur but n'est pas de limiter l'usage mémoire mais seulement de faciliter l'utilisation des données. Ainsi, pour certains formats volumineux, des structures de données compactes ont été inventées. Ce sont des structures de données compressées, c'est à dire des structures de données dont l'utilisation de la mémoire est limitée.\\
-Si l'on revient aux maillages, les algorithmes de compression limitent au maximum l'usage mémoire du maillage et il devient inutilisable sous forme compressé tandis que la structure de données pré-traite le maillage en réduisant l'usage mémoire mais celui-ci reste utilisable. Les maillages en deux dimensions sont majoritairement utilisés car ils sont plus léger, et permettent de représenter implicitement des volumes (la frontière). Par conséquent, de nombreuses structures de données compactes ont été créees afin de faciliter leur utilisation. Les maillages 3D étant beaucoup moins utilisés pour l'instant, peu de structure de données compactes leur sont dévolues. Néanmoins, leur utilisation croissante incite à procéder de même. La suite de ce rapport sera principalement consacrée aux structures de données compactes pour maillages 3D tétraèdriques.\\\\
+Si l'on revient aux maillages, les algorithmes de compression limitent au maximum l'usage mémoire du maillage et il devient alors inutilisable sous forme compressé tandis que la structure de données pré-traite le maillage en réduisant l'usage mémoire mais celui-ci reste utilisable. Les maillages surfaciques sont majoritairement utilisés car ils sont plus léger, et permettent de représenter implicitement des volumes (la frontière). Par conséquent, de nombreuses structures de données compactes ont été créees afin de faciliter leur utilisation. Les maillages volumiques étant beaucoup moins utilisés pour l'instant, peu de structure de données compactes leur sont dévolues. Néanmoins, leur utilisation croissante incite à procéder de même. La suite de ce rapport sera principalement consacrée aux structures de données compactes pour maillages volumiques tétraèdriques.
+
+\subsection*{La contribution proposée}
+\noindent
 De manière générale, un structure de données pour maillage stocke trois types d'informations :
 \begin{itemize}
 \item La géometrie, c'est à dire les positions des sommets
 \item La connectivité, les relations d'adjacence entre les tétraèdres
-\item Des attributs (par sommet, par arête, par face, par tétraèdre)
+\item Des attributs (par sommet, par arête, par face, par tétraèdre)\\
 \end{itemize}
-La structure de données doit supporter des requêtes simples :
+Elle doit par ailleurs supporter des requêtes simples :
 \begin{itemize}
 \item Quels sont les sommets de la ième face ?
 \item Quel est le degré du ième sommet ?
 \item Quelles sont les tétraèdres adjacents au ième tétraèdre ?
 \item ...
 \end{itemize}
-Par ailleurs, suivant l'utilisation ciblée, la structure de données devra être en mesure de satisfaire des opérations de modification :
-\begin{itemize}
-\item Ajouter/Enlever un sommet
-\item Ajouter/Enlever/Séparer un tetra\\
-\end{itemize}
-%Finalement, le fonctionnement de la structure de donnée doit être simple pour permettre sa ré-implémentation.\\
-On évalue une telle structure de données en analysant le temps nécessaire à sa construction, à l'exécution d'une requête, à une opération de modification et surtout en observant la quantité de stockage nécessaire pour l'utiliser.\\\\
-\textbf{Contributions}. Dans ce rapport, nous présentons une structure de données permettant de représenter la connectivité d'un maillage tétraèdrique en utilisant en moyenne 2.4 références par tétraèdre. Notre structure s'appelle \textbf{Tétraèdres en Diamants}. Elle permet l'accès au ième sommet, au ième tétrahèdre en temps constant et à l'hypersphère d'un sommet en temps proportionnel au degré du sommet. Son implémentation est simple et l'utilisation d'un tableau d'entiers afin de représenter les références permet une interopérabilité entre les languages de programmation.\\
-Nous allons d'abord définir les principaux termes utilisés et rapeller les algorithmes de compression et structures de données déjà développés en deux et trois dimensions. Puis nous présenterons le fonctionnement de notre structure ainsi que les requêtes possibles.
+%Par ailleurs, suivant l'utilisation ciblée, la structure de données devra être en mesure de satisfaire des opérations de modification :
+%\begin{itemize}
+%\item Ajouter/Enlever un sommet
+%\item Ajouter/Enlever/Séparer un tetra\\
+%\end{itemize}
+Dans ce rapport, nous présentons une structure de données compacte permettant de représenter la connectivité d'un maillage tétraèdrique en utilisant en moyenne 2.4 références par tétraèdre. Le principe de notre structure consiste à regrouper les tétraèdres en diamants. Nous exploitons le fait que les tétraèdres puissent être ordonnés autour d'une arête. Cet ordre permet d'omettre des informations de connectivité. Notre structure de données permet l'accès au ième sommet, au ième tétraèdre en temps constant et à l'hypersphère d'un sommet en temps proportionnel au degré du sommet. Son implémentation est simple et l'utilisation d'un tableau d'entiers afin de représenter les références permet une interopérabilité entre les languages de programmation.
 
+\subsection*{Les arguments en faveur de sa validité}
+\noindent
+Notre structure de données est en moyenne 40\% plus économique que la meilleure structure de données disponible actuellement pour les maillages tétraèdriques. Cette économie est purement empirique et nous n'apportons pas de garanties théoriques concernant la place mémoire occupée par notre structure. La validité de la solution que nous proposons est directement liée aux expériences menées. Par conséquent, afin que nos résultats soient  fidèles à la réalité, nous évaluons notre structure sur une dizaine de maillages aux propriétés différentes en prétant particulièrement attention au temps requis pour la construction, au temps nécessaire pour répondre à de simples requêtes et à la taille mémoire consommée.
+
+\subsection*{Le bilan et les perspectives}
+\noindent
+Notre structure permet d'encoder de réduire la taille mémoire de la connectitivé du maillage sans utiliser sa géométrie. Par conséquent, cela rend notre approche très générale.\\
+Néanmoins, notre structure de données est statique. Elle ne permet pas de modifier le maillage localement. Rendre notre structure dynamique en permettant l'ajout de sommets ou l'ajout de tétraèdres permettrait une utilisation encore plus étendue.\\
+Par ailleurs, notre structure est destinée aux maillages tétraèdriques et plus particulièrement aux variétés tétraèdriques. Cependant, les maillages hexaèdriques sont souvent préférés aux maillages tétraèdriques car ils offrent un meilleur ratio entre précision et temps de calcul. Une autre piste de recherche intéressante serait donc l'extension de notre structure aux maillages hexaèdriques.
+
+\subsection*{Remerciements}
+\noindent
+Je tiens à remercier mon superviseur Luca Castelli Aleardi pour sa précieuse aide ainsi que pour ses très intéressantes pistes de réflexion. Je remercie aussi Olivier Devillers pour ses explications des travaux effectués en compression de maillages.
+
+\newpage
 \section{Préliminaires}
 \subsection{Définitions}
 \noindent
@@ -92,6 +121,7 @@ Nous allons d'abord définir les principaux termes utilisés et rapeller les alg
 \textbf{Maillage}. Un maillage est un complexe simplicial représentant un objet géométrique. Il a la même dimension que l'objet qu'il représente. Ainsi, pour tout objet en 1, 2 ou 3D, les maillages respectifs seront en dimensions 1, 2 ou 3. Dans un maillage de dimension d, les simplexes de dimensions (d-1) sont appelées des facettes. Ainsi, les facettes d'un tétraèdre sont ses faces, les facettes d'une face sont ses arêtes et les facettes d'une arête sont ses sommets.\\\\
 \textbf{Le degré}. Le degré d'un k-simplexe est le nombre de (k+1)-simplexes adjacents. Ainsi le degré d'un sommet est le nombre d'arêtes adjacentes et le degré d'une arête est le nombre de faces adjacentes.\\\\
 \textbf{Etoile}. L'étoile d'un sommet est l'ensemble des k-simplexes adjacents à un sommet. C'est l'ensemble des triangles (resp. tétraèdres) adjacents à un sommet dans le cas surfacique (resp. volumique). Dans ce dernier cas, on appelle cela l'hypersphère.
+\textbf{Polytope}. 
 
 %Nous traitons dans ce rapport de maillages tetrahedriques dans un espace Euclidien à 3 dimensions. Deux tetrahedres sont dit adjacents s'ils partagent une face. On dénote par V l'ensemble des sommets, E l'ensemble des arêtes, F l'ensemble des faces et T l'ensemble des tetrahedres du maillage.\\
 %En utilisant l'équation d'Euler, on a la relation suivante : 
@@ -101,7 +131,7 @@ Nous allons d'abord définir les principaux termes utilisés et rapeller les alg
 
 \subsection{Combinatoire}
 \noindent
-En mathématique et en optimisation combinatoire, la caractéristique d'Euler $\chi$ est un invariant topologique décrivant la forme d'un objet géométrique.
+En mathématique et en optimisation combinatoire, la caractéristique d'Euler $\chi$ est un invariant topologique décrivant la forme d'un objet géométrique. Par conséquent, la valeur de $\chi$ ne change pas après déformation continue de l'objet géométrique.
 \begin{equation}
 \chi = \sum_{i=0} (-1)^i \, |dim(H_i)| = 2-2g
 \end{equation}
@@ -110,27 +140,50 @@ En mathématique et en optimisation combinatoire, la caractéristique d'Euler $\
 \item $g$ est le genre (le nombre de trou de l'objet étudié)\\ 
 \end{itemize}
 
+\begin{figure}[th]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.3]{Images/planar_graph}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.18]{Images/4cubes}
+\end{subfigure}
+\caption{\textbf{Gauche} : Graphe planaire ($|V|=8$,$|E|=15$,$|F|=9$). \textbf{Droite} : Polyèdre ($|V|=18$,$|E|=33$,$|F|=20$,$|T|=4$)}
+\label{fig:planar_graph_4cubes}
+\end{figure}
+\noindent
+
 \subsubsection{Cas surfacique}
+\label{combi_2d}
 \noindent
 Dans le cas surfacique, la formule devient :
 \begin{equation}
+\label{eq:euler_surfacique}
 \chi = |V|-|E|+|F|
 \end{equation}
 \begin{itemize}
 \item $V$ est l'ensemble des sommets
 \item $E$ est l'ensemble des arêtes
-\item $F$ est l'ensemble des faces (ie. polygone)\\
+\item $F$ est l'ensemble des faces (ie. polygones)\\
 \end{itemize}
+Si nous sommes dans le cadre d'une triangulation surfacique et sans trou, alors chaque face est bordée par 3 arêtes et chaque arête n'étant par sur les bords appartient à 2 faces. Par conséquent $3F\leqslant 2E$. Ainsi l'équation \ref{eq:euler_surfacique} devient :\\
+\begin{align*}
+2 &\leqslant |V| - |E| + \frac{2}{3}|E| = |V| - \frac{1}{3}|E|\\
+|E|&\leqslant 3|V|-6
+\end{align*}
+Il y a donc dans une triangulation surfacique environ 3 fois plus d'arêtes que de sommets.
 \subsubsection{Cas volumique}
 \noindent
-Ainsi, pour un polytope de dimension 4, la formule d'Euler devient :\\
+Pour un maillage volumique, la formule d'Euler contient un terme de plus :\\
 \begin{equation}
 \chi = |V|-|E|+|F|-|T|
 \end{equation}
 \begin{itemize}
-\item $T$ est l'ensemble des tétraèdres\\
+\item $T$ est l'ensemble des polytopes de dimensions 3 (tétraèdres, hexaèdres...)\\
 \end{itemize}
-Sachant que chaque face qui n'est pas sur les bords du volume est partagée par deux tétraèdres, alors :\\
+Si l'objet considéré est une variété alors chaque facette qui n'est pas sur les bords du volume est partagée par deux polytopes de dimensions 3, alors :\\
 \begin{equation}
 |F|\simeq 2|T|
 \end{equation}
@@ -138,11 +191,11 @@ Ainsi :
 \begin{equation}
 \chi \simeq |V|-|E|+|T|
 \end{equation}
-Il y a donc autant d'arêtes que de tétraèdres et sommets réunis.
+Il y a donc autant d'arêtes que de polytopes de dimension 3 et sommets réunis (Tab. \ref{tab:caract_maillages}).
 
 \section{Etat de l'art}
 \noindent
-Les maillages sont la pluspart du temps stockés sous forme indexés. Dans un premiers temps, on énumère pour chaque sommet ses coordonnées géométriques. Puis pour chaque face (resp. tétraèdre), les indices de ses 3 (resp. 4) sommets. D'autres attributs peuvent être stockés (normales, couleurs...) mais nous n'en discuterons pas ici. Les formats indexés ne sont pas les formats les plus concis pour sauvegarder des maillages. En effet, la connectivité occupe une place très importante. Tandis que dans les maillages 2D, le degré moyen des sommets est de 6, il est de 22 dans les maillages tétraèdriques. Par conséquent, dans ce type de format, un sommet apparaitra dans 22 tétraèdres différents.\\
+Les maillages sont la pluspart du temps stockés sous forme indexés. Dans un premiers temps, on énumère pour chaque sommet ses coordonnées géométriques. Puis pour chaque face (resp. tétraèdre), les indices de ses 3 (resp. 4) sommets. D'autres attributs peuvent être stockés (normales, couleurs...) mais nous n'en discuterons pas ici. Les formats indexés ne sont pas les formats les plus concis pour sauvegarder des maillages. En effet, la connectivité occupe une place très importante. Tandis que dans les maillages triangulaires surfaciques, le degré moyen d'un sommet est 6, il est de 22 dans les maillages tétraèdriques. Par conséquent, dans ce type de format, un sommet apparaitra dans 22 tétraèdres différents.\\
 %La compression de maillages peut être séparer en 3 catégories : simplification polyhedrale, compression de positions, compression des informations de connectivités.\\\\
 %\textbf{La simplification polyhedrale} consiste à simplifier le maillages en réduisant le nombre de sommets et en modifiant leurs positions afin que le nouveaux maillages reste aussi proche que possible de l'ancien. Ce sont des compression de maillages avec perte et ne sont donc pas adaptés aux usages nécessitant le maillage exact.\\\\
 %\textbf{Compression des positions}\\\\
@@ -150,7 +203,7 @@ Les maillages sont la pluspart du temps stockés sous forme indexés. Dans un pr
 %En effet, comme dit dans la première partie, la structure de données doit être capable de répondre à des requetes simples (ex: donner les tetras adjacents à un tetra). Sans compression, cela signifie que chaque tetra doit stocker 4 références vers ses 4 tetras voisins. De plus, si l'on veut connaître les sommets composants un tetra, il est nécessaire de sauvegarder 4 references vers les 4 sommets composant le tetra. Ainsi, nous avons 8 références par tetra. Par conséquent, dans un maillage contenant 10000 tetras et en utilisant des références sur 32 bits, nous utiliserions 10000*8*32=2mo de références.
 %On distingue les algorithmes de compression de maillages des structure de données pour maillages. Les premiers tentent de limiter au maximum l'usage mémoire du maillage en compressant le maillage. Le maillage devient inutilisable sous forme compressé, il est nécessaire de le décompresser pour l'utiliser à nouveau. En revanche, la structure de données pré-traite le maillage mais le maillage reste utilisable sous forme compressé.\\
 La mesure utilisée pour évaluer la qualité d'une compression est le nombre de bits par sommets (bits per vertex ou bpv) tandis que la mesure utilisée pour évaluer la qualité d'une structure de données compacte est le nombre de références par triangle (resp. tétraèdre) rpt pour les maillages surfaciques (resp. volumiques).\\
-On peut compresser un maillage en le simplifiant (supprimer des sommets...), en encodant la géométrie et/ou la connectivité du maillage. Nous ne nous intéresserons dans cette partie qu'à la compression de la connectivité puisque c'est la plus gourmande en mémoire. Par ailleurs, nous détaillerons d'abord le travail effectué en 2D puis en 3D. Bien que notre travail soit uniquement centré sur les maillages 3D, l'essentiel des travaux effectués jusqu'à présent est en 2D.
+On peut compresser un maillage en le simplifiant (supprimer des sommets...), en encodant la géométrie et/ou la connectivité du maillage. Nous ne nous intéresserons dans cette partie qu'à la compression de la connectivité puisque c'est la plus gourmande en mémoire. Par ailleurs, nous détaillerons d'abord le travail effectué dans le cadre surfacique puis volumique. Bien que notre travail soit uniquement centré sur les maillages volumiques, l'essentiel des travaux effectués jusqu'à présent est consacré aux maillages surfaciques.
 \subsection{Maillages 2D}
 \subsubsection{Compression}
 \noindent
@@ -169,10 +222,10 @@ La Corner Table (CT) est à la base de plusieurs structures de données. Elle ut
 \label{fig:corner_table}
 \end{center}
 \end{figure}
-\noindent
+\noindent\ignorespacesafterend
 \textbf{VOT}. La structure de données VOT (Vertex Opposite Table) est la première structure de données à utiliser cette 'Corner Table'. Elle permet une répresentation simple et efficace des maillages avec 6 références par triangle (3 références pour les sommets dans la table V et 3 références pour les coins dans la table O).\\
-\textbf{SOT}. Développée par Rossignac \cite{SOT}, c'est une amélioration de VOT où la table O est réordonnée et la table V supprimée. Néanmoins, l'accès au coin d'un sommet et à l'étoile d'un sommet sont toujours en temps constant. Cette dernière structure de données utilise 3 rpt en moyenne.\\\\
-
+\textbf{SOT}. Développée par Rossignac \cite{SOT}, c'est une amélioration de VOT où la table O est réordonnée et la table V supprimée. Néanmoins, l'accès au coin d'un sommet et à l'étoile d'un sommet sont toujours en temps constant. Cette dernière structure de données utilise 3 rpt en moyenne.\\
+\textbf{SQUAD}. Dans SQUAD \cite{squad}, les auteurs traversent le graphe en prodondeur afin d'appareiller les triangles deux à deux avec l'un de leurs sommet partagé. Cela leur permet d'avoir 4 références par quad (i.e pair de triangles) et donc d'économiser une référence par triangle. Quant aux triangles non appareillés, ils sont déguisés comme des quads. D'autre part, tout comme SOT, ils utilisent l'ordre des quads tel-que le ième quad soit associé au ième sommet. Dans un maillage surfacique, il y a deux fois plus de triangles que de sommets (cf. \ref{combi_2d}). Par conséquent, le nombre de quads et le nombres de sommets devrait être assez proche. Leur structure utilise en moyenne 2 rpt.\\
 \begin{table}[th]
 \footnotesize
 \begin{tabular}{|c | c | c | c | c|}
@@ -210,7 +263,7 @@ SQUAD \cite{squad}& $(4+\epsilon)$n & O(1) & O(d) & non\\
 \noindent
 \textbf{VOT}. La Corner Table a été adapté par Rossignac aux maillages tétraèdriques (VOT). Elle demande 8 rpt (4 pour les sommets et 4 pour les coins opposés). Un index dans ces listes identifie un coin particulier à un tétraèdre. Ainsi, les tables O et V ont toutes les deux $4|T|$ entrées. Les coins de chaque tetrahèdre sont consécutifs dans les deux listes (les quatres coins du ième tetra sont stockées aux entrées  4i+j, where j = 0,1,2,3) et sont listés dans un ordre consistent avec l'orientation du tétrahèdre (les sommets des coins j=1,2,3 apparaissent dans le sens inverse des aiguilles d'une montre depuis le sommet du coin 0).\\
 \textbf{Bande de Triangles}. Weiler et al. \cite{triangle_strips_weiler} encode les tétrahèdres en bandes. L'inclusion d'une petite quantité d'informations d'adjacence leur permet d'accéder aux faces voisines en temps constant. Leur algorithme stocke en moyenne 5.1 rpt.\\
-\textbf{SOT}. La dernière structure de données développée est SOT \cite{SOT} par Rossignac. Elle améliore sa première structure de données VOT en triant la table O et en supprimant la table V. La structure de données utilise 4 références et 9 bits par tétraèdre en moyenne et permet l'accès à l'étoile d'un sommet en temps constant.
+\textbf{SOT}. La dernière structure de données développée est SOT \cite{SOT} par Rossignac. Elle améliore sa première structure de données VOT en triant la table O et en supprimant la table V. La structure de données utilise 4 références et 9 bits par tétraèdre en moyenne et permet l'accès à l'étoile d'un sommet en temps proportionel à son degré.
 
 \begin{table}[th]
 \footnotesize
@@ -230,51 +283,48 @@ SOT \cite{SOT} & 4t & O(1) & O(d)  & non\\
 \section{Notre Contribution : Tétraèdres en Diamants}
 \subsection{Principe général}
 \noindent
-Dans SQUAD \cite{squad}, les auteurs traversent le graphe en prodondeur afin d'appareiller les triangles deux à deux avec l'un de leurs sommet partagé. Cela leur permet d'avoir 4 références par quad (i.e pair de triangle) et donc d'économiser une référence par triangle. Quant aux triangles non appareillés, ils sont déguisés comme des quads. D'autre part, tout comme SOT, ils utilisent l'ordre des quads tel-que le ième quad soit associé au ième sommet. Dans un maillage 2D, il y a deux fois plus de triangles que de sommets. Par conséquent, le nombre de quads et le nombres de sommets devrait être assez proche.\\
 Notre algorithme s'inspire fortement de SQUAD. Seulement, appareiller les tétraèdres deux à deux permet seulement d'économiser une référence par cube, c'est à dire de passer de 4 références par tétraèdre à 3.\\
-L'idée ici est de regrouper les tétraèdres partageant une même arête. On appelle un tel regroupement \textbf{un diamant}. Il combine plusieurs idées :
+L'idée ici est de regrouper les tétraèdres partageant une même arête. On appelle un tel regroupement : \textbf{un diamant}. Notre algorithme plusieurs idées :
 \begin{itemize}
 \item Regroupement des tétraèdres comme SQUAD
 \item Ancrer un sommet avec un diamant comme SOT
 \item Ordonner les diamants tel que le ième sommet soit au sein du ième diamant comme SOT
-\item Passage d'un tétraèdre à l'autre en utilisant les faces (et non les coins)
+\item Passage d'un tétraèdre à l'autre en utilisant les faces (et non les coins)\\
 \end{itemize}
-Un diamant est un ensemble de tétraèdres adjacents deux à deux, partageant une arête commune et formant un cycle (fig. \ref{fig:full_diamond2}). Dès lors que l'ensemble des tétraèdres n'est pas cyclique, la figure géométrique n'est plus un diamant (fig. \ref{fig:not_full_diamond}). 
-\begin{figure}[th]
+Un diamant est un ensemble de tétraèdres adjacents deux à deux, partageant une arête commune et formant un cycle (Fig. \ref{fig:full_diamond2}). Dès lors que l'ensemble des tétraèdres n'est pas cyclique, la figure géométrique n'est plus un diamant (Fig. \ref{fig:not_full_diamond}).
+\begin{figure}[H]
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.3]{Images/full_diamond}
-  \caption{figure}{Exemple de diamant contenant 5 tétraèdres et dont l'arête centrale commune est AB}
+  \caption{}
   \label{fig:full_diamond2}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.26]{Images/not_full_diamond}
-  \caption{figure}{Exemple n'étant pas un diamant car les tétraèdres ne sont pas cycliques (bien que tous les tétraèdres partagent la même arête AB)}
+  \caption{}
   \label{fig:not_full_diamond}
-\end{minipage}
+\end{subfigure}
+\caption{\textbf{Gauche} : Exemple de diamant contenant 5 tétraèdres et dont l'arête centrale commune est AB. \textbf{Droite} : Exemple n'étant pas un diamant car les tétraèdres ne sont pas cycliques (bien que tous les tétraèdres partagent la même arête AB)}
+%\label{fig:kvqkq}
 \end{figure}
 \noindent
-Au sein d'un diamant, les tétraèdres sont ordonnés. Ainsi, on peut oublier les références de voisinage entre deux tétraèdres du même diamant. Pour les tétraèdres au sein d'un diamant, seules les références vers des tétraèdres extérieurs au diamant sont nécessaires. Un diamant D contenant $|D|$ tétraèdres a $2|D|$ faces extérieures donc $2|D|$ références.
-%Sur la figure \ref{fig:full_diamond2}, on peut ordonner les tétraèdres tel-que :
-%\begin{itemize}
-%\item Tétraèdre 0 : ABCD
-%\item Tétraèdre 1 : ABDE
-%\item Tétraèdre 2 : ABEG
-%\item Tétraèdre 3 : ABGF
-%\item Tétraèdre 4 : ABFC
-%\end{itemize}
-Sur la Fig. \ref{fig:full_diamond2}, les faces ABD,ABE,ABG,ABF,ABC n'apparaitront pas dans notre structure car nous savons implicitement que pour passer d'un tétraèdre à l'autre dans ce diamant, nous utilisons une de ces faces.
+Au sein d'un diamant, les tétraèdres sont ordonnés. Ainsi, on peut oublier les références de voisinage entre deux tétraèdres du même diamant. Pour les tétraèdres au sein d'un diamant, seules les références vers des tétraèdres extérieurs au diamant sont nécessaires. Un diamant $D_i$ contenant $|D_i|$ tétraèdres a $2|D_i|$ faces extérieures donc $2|D_i|$ références. Sur la Fig. \ref{fig:full_diamond2}, les faces ABD,ABE,ABG,ABF,ABC n'apparaitront pas dans notre structure car nous savons implicitement que pour passer d'un tétraèdre à l'autre dans ce diamant, nous utilisons une de ces faces.
 
 \subsection{Appariement des tétraèdres en diamants}
 \noindent
-La première étape consiste à regrouper les tétraèdres en diamants. On peut ramener ce problème à un problème d'optimisation dans les graphes. En considérant notre maillage 3D comme un graphe, il s'agit de choisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. Les arêtes candidates pour appartenir à $E'$ sont toutes les arêtes qui ne sont pas situées sur les bords du maillage. Par exemple, sur Fig. \ref{fig:not_full_diamond}, l'arête AB est située sur le bord du maillage et n'est donc pas candidate pour appartenir à $E'$.\\
-Pour chaque arête selectionnée, le diamant est constitué de tous les tétraèdres possedant cette arête. Tous les tétraèdres n'ayant pas d'arêtes dans $E'$ sont appelés les tétraèdres isolés.\\
+La première étape consiste à regrouper les tétraèdres en diamants. On peut ramener ce problème à un problème d'optimisation dans les graphes. En considérant notre maillage tétraèdrique comme un graphe (i.e en ne conservant que les arêtes et les sommets), il s'agit de choisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. Les arêtes candidates pour appartenir à $E'$ sont toutes les arêtes qui ne sont pas situées sur les bords du maillage. Par exemple, sur Fig. \ref{fig:not_full_diamond}, l'arête AB est située sur le bord du maillage et n'est donc pas candidate pour appartenir à $E'$. Pour chaque arête selectionnée, le diamant est constitué de tous les tétraèdres possedant cette arête. Tous les tétraèdres n'ayant pas d'arêtes dans $E'$ sont appelés les tétraèdres isolés.\\
 Pour trouver cet ensemble d'arêtes, nous avons essayé plusieurs algorithmes.
 \subsubsection{Choisir une direction pour chaque sommet}
 \noindent
 La première méthode consiste à prendre pour chaque sommet, une arête dans une direction pré-définie. Néanmoins, cette méthode a deux inconvénients majeurs : deux arêtes peuvent être choisies et appartenir au même tétraèdre et elle utilise la géometrie du domaine (et donc peut sembler moins générique). Nous avons donc choisi de ne pas utiliser cette méthode.
+
+\subsubsection{Optimisation aléatoire}
+\noindent
+Notre problème s'exprime facilement comme un problème d'optimisation combinatoire en nombres entiers. Malheureusement, la résolution de ces problèmes NP-difficile, ce qui signifie qu'aucun algorithme ne peut trouver une solution optimale en temps polynomial. Néanmoins, on peut utiliser des algorithmes d'optimisation aléatoire afin de trouver une solution approchée. Ce sont des algorithmes très utilisés en pratique qui visitent plus ou moins aléatoirement l'espace des solutions.\\
+Soit $f$ la fonction aléatoire à maximiser, l'idée est de partir d'une solution initiale x et tant que la condition d'arrêt n'est pas remplie, de créer une solution y à partir de x puis de remplacer x par y si f(y)$>$f(x).\\
+Dans notre cas, une solution est un ensemble d'arêtes. Elle est faisable si pour toute paire d'arêtes de notre solution, aucunes n'appartiennent au même tétraèdre. On peut donc matérialiser notre solution comme un vecteur de 0 et 1 pour chaque arête du graphe (1 si l'arête appartient à la solution, 0 sinon). Pour calculer la valeur de notre solution, on ajoute pour chaque arête de la solution le nombre de tétraèdres utilisant l'arête et si deux arêtes appartiennent au même tétraèdre alors on inflige une pénalité en soustrayant le nombre de tétraèdres adjacents à ces deux arêtes. L'inconvénient majeur de cet algorithme est sa lenteur. Il permet de trouver des solutions quasi optimales pour des maillages avec quelques milliers d'arêtes rapidement mais ne permet pas de trouver des solutions convenables au dela dans un temps raisonable. Nous avons donc décidé de ne pas retenir cette solution.
 
 \subsubsection{Choisir l'arête de degré maximum}
 \noindent
@@ -304,36 +354,38 @@ La troisième approche consiste à parcourir le maillage en largeur. On choisit 
 
 \begin{figure}[th]
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.2]{Images/isolated_tetra}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+  \caption{}
+  \label{fig:isolated_tetra}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.16]{Images/diamond}
-\end{minipage}
-\label{}
-\caption{\textbf{Gauche} : Vue de coupe des tétraèdres isolés après exécution du parcours en largeur pour créer les diamants. Chaque couleur représente un tétraèdre. \textbf{Droite} : Vue de coupe des diamants après exécution du parcours en largeur pour créer les diamants. Chaque couleur représente un diamant.}
+   \caption{}
+  \label{fig:diamond}
+\end{subfigure}
+\caption{\textbf{Gauche} : Vue de coupe des tétraèdres isolés après exécution du parcours en largeur pour créer les diamants. Chaque couleur représente un tétraèdre isolé. \textbf{Droite} : Vue de coupe des diamants après exécution du parcours en largeur pour créer les diamants. Chaque couleur représente un diamant.}
 \end{figure}
 \noindent
-Sur Fig. \ref{fig:isolated_tetra}, on note une certaine homogénéité des tétraèdres isolés. En analysant plus spécifiquement la concentration des tétraèdres isolés, on remarque sur les Fig. \ref{fig:density_cow} et Fig. \ref{fig:hand_density} qu'ils sont particulièrement situé sur les bords et dans des régions à courbures \footnote{Afin que la densité ne soit pas biaisée, nous avons soustrait la densité originale du maillage. Le fait qu'une région soit plus densément peuplée en tétraèdres n'influence donc pas le résultat.}.
+Sur Fig. \ref{fig:isolated_tetra}, on note une certaine homogénéité des tétraèdres isolés. En analysant plus spécifiquement la concentration des tétraèdres isolés, on remarque sur la Fig. \ref{fig:density_cow_hand} qu'ils sont particulièrement situé sur les bords et dans des régions à courbures \footnote{Afin que la densité ne soit pas biaisée, nous avons soustrait la densité originale du maillage. Le fait qu'une région soit plus densément peuplée en tétraèdres n'influence donc pas le résultat.}.
 \begin{figure}[th]
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.25]{Images/density_cow}
-  \label{fig:density_cow}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.22]{Images/hand_density}
-  \label{fig:hand_density}
-\end{minipage}
+\end{subfigure}
 \caption{Distribution des tétraèdres isolés. Chaque point représente le barycentre d'un tétraèdre et sa couleur indique la densité (le nombre de tétraèdres isolés à proximité).}
+\label{fig:density_cow_hand}
 \end{figure}
 
 \paragraph{Choix du tétraèdre de départ}
-Suivant le premier tétraèdre choisi pour lancer l'algorithme de parcours en largeur (fig. \ref{fig:bfs_starting}), le taux de tétraèdres appareillés dans des diamants varie peu (1\% d'écart). Il semble néanmoins plus intéressant de commencer par les régions étroites.
+Suivant le premier tétraèdre choisi pour lancer l'algorithme de parcours en largeur (Fig. \ref{fig:bfs_starting}), le taux de tétraèdres appareillés dans des diamants varie peu (1\% d'écart). Il semble néanmoins plus intéressant de commencer par les régions étroites.
 \begin{figure}[th]
 \begin{center}
 \includegraphics[scale=0.3]{Images/bfs_starting}
@@ -342,27 +394,8 @@ Suivant le premier tétraèdre choisi pour lancer l'algorithme de parcours en la
 \end{center}
 \end{figure}
 
-\subsubsection{Optimisation aléatoire}
-\noindent
-Notre problème s'exprime facilement comme un problème d'optimisation combinatoire en nombres entiers. Malheureusement, la résolution de ces problèmes NP-difficile, ce qui signifie qu'aucun algorithme ne peut trouver une solution optimale en temps polynomial. Néanmoins, on peut utiliser des algorithmes d'optimisation aléatoire afin de trouver une solution approchée. Ce sont des algorithmes très utilisés en pratique qui visitent plus ou moins aléatoirement l'espace des solutions.\\
-Soit $f$ la fonction aléatoire à minimiser, l'idée est de partir d'une solution initiale x et tant que la condition d'arrêt n'est pas remplie, de créer une solution y à partir de x puis de remplacer x par y si f(y)$>$f(x).\\
-Dans notre cas, une solution est un ensemble d'arêtes. Elle est faisable si pour toute paire d'arêtes de notre solution, aucunes n'appartiennent au même tétraèrdre. On peut donc matérialiser notre solution comme un vecteur de 0 et 1 pour chaque arête du graphe (1 si l'arête appartient à la solution, 0 sinon). Pour calculer la valeur de notre solution, on ajoute pour chaque arête de la solution le nombre de tétraèdre utilisant l'arête et si deux arêtes appartiennent au même tétraèdre alors on inflige une pénalité en soustrayant le nombre de tétraèdres adjacents à ces deux arêtes. L'inconvénient majeur de cet algorithme est sa lenteur. Il permet de trouver des solutions quasi optimales pour des maillages avec quelques milliers d'arêtes en quelques secondes mais ne permet pas de trouver des solutions convenables au dela. Nous avons donc décidé de ne pas retenir cette solution.
+%\subsubsection{Résultats}
 
-\subsubsection{Résultats}
-\noindent
-Pour calculer le nombre de références par tétraèdre (rpt), nous appliquons la formule suivante :\\
-\begin{equation}
-\text{rpt} = \frac{2\cdot \text{Nombre de tétraèdres dans des diamants}+4\cdot \text{Nombre de tétraèdres isolés}}{\text{Nombre de tétraèdres total}}
-\end{equation}
-\noindent
-Compte tenu des résultats du tableau \ref{table:results_performances}, nous avons choisi d'utiliser le parcours en largeur pour appareiller les tétraèdres en diamants. Le parcours en largeur est rapide et permet d'associer en moyenne 76\% des tétraèdres en diamants. Il pourrait probablement être amélioré en étant exécuté en parallèle ou en choisissant plus spécifiquement un tétraèdre de départ. Finalement, on remarque aussi que 50\% des tétraèdres sont dans des diamants possedant 5 ou 6 tétraèdres (Fig. \ref{fig:bfs_starting}).
-\begin{figure}[th]
-\begin{center}
-\includegraphics[scale=0.35]{Images/histograme}
-\caption{Histograme de la part de tétraèdres parmi les tétraèdres isolés et diamants en utilisant le parcours en largeur}
-\label{fig:bfs_starting}
-\end{center}
-\end{figure}
 
 %\begin{tikzpicture}
 %\begin{axis}[
@@ -397,7 +430,7 @@ Le but de cette section est d'associer chaque sommet à un diamant ou un tétra�
 \begin{itemize}
 \item Un diamant ne peut être associé qu'à un sommet de son arête centrale
 \item Un tétraèdre isolé peut être associé à n'importe lequel de ses quatres sommets
-\item On associe en priorité les sommets à des diamants afin de calculer plus rapidement le degré du sommet
+\item On associe en priorité les sommets à des diamants afin de calculer plus rapidement le degré du sommet\\
 \end{itemize}
 \begin{figure}[th]
 \begin{center}
@@ -411,25 +444,27 @@ Les différents cas possibles pour l'association des sommets sont les suivants :
 \begin{itemize}
 \item Le sommet est adjacent à une arête centrale disponible. On associe le sommet à cette arête.
 \item Le sommet n'est adjacent à aucune arête centrale et il est adjacent à un tétraèdre isolé libre. Alors on associe le sommet à ce tétraèdre libre.
-\item Le sommet n'est adjacent à aucune arête centrale, n'est pas adjacent à un tétraèdre isolé libre mais est adjacent à un diamant. On "explose" alors le diamant, c'est à dire qu'on fait comme s'il était constitué que de tétraèdres isolés. Sur la Fig. \ref{fig:central_edge_AB}, le sommet F n'est pas sur une arête centrale. Si le diamant est déjà associé au sommet A (resp. B) alors on explose le diamant. On peut alors associer le sommet F (Fig. \ref{fig:explosion_diamond}) aux tétraèdres ABFG ou ABFC et le sommet A (resp. B) aux tétraèdres ACDB ou ADEB ou ABEG.
+\item Le sommet n'est adjacent à aucune arête centrale, n'est pas adjacent à un tétraèdre isolé libre mais est adjacent à un diamant. On "explose" alors le diamant, c'est à dire qu'on fait comme s'il était constitué que de tétraèdres isolés. Sur la Fig. \ref{fig:central_edge_AB}, le sommet F n'est pas sur une arête centrale. Si le diamant est déjà associé au sommet A (resp. B) alors on explose le diamant. On peut alors associer le sommet F (Fig. \ref{fig:explosion_diamond}) aux tétraèdres ABFG ou ABFC et le sommet A (resp. B) aux tétraèdres ACDB ou ADEB ou ABEG.\\
 \end{itemize}
 
 \begin{figure}[th]
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.25]{Images/central_edge_AB}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+  \caption{}
+  \label{fig:central_edge_AB}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[scale=0.32]{Images/explosion_diamond}
-\end{minipage}
-\label{fig:explosion_diamond}
+  \caption{}
+  \label{fig:explosion_diamond}
+\end{subfigure}
 \caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres dont l'arête centrale est le segment AB et ancré au sommet A. \textbf{Droite} : 5 tétraèdres isolés (chaque couleur est un tétraèdre différent)}
 \end{figure}
 \noindent
-Afin d'ancrer les sommets aux diamants/tétraèdres isolés, nous appliquons un algorithme glouton affectant en priorité les sommets adjacents à peu d'arêtes centrales et de tétraèdres isolés. On remarque sur le tableau \ref{table:results_ancres} qu'en appliquant cet algorithme, une part minime des sommets demeure non ancré. Par ailleurs, on note que la destruction de certains diamants pour associer des sommets à des tétraèdres n'a que peu d'incidence sur les performances tant que le nombre de sommets est important.
-
+Afin d'ancrer les sommets aux diamants/tétraèdres isolés, nous appliquons un algorithme glouton affectant en priorité les sommets adjacents à peu d'arêtes centrales et de tétraèdres isolés. Puis si nécessaire, nous explosons des diamants afin que tous les sommets soient appareillés avec des diamants/tétraèdres isolés différents.
 \subsection{La structure}
 \noindent
 Désormais, nos diamants sont formés et les sommets sont associés à des diamants (ou des tétraèdres isolés).\\
@@ -472,7 +507,7 @@ L'ordre des faces dans un diamant respecte celui des tétraèdres. Pour le ième
 \paragraph{Ordre des faces dans un tétraèdre isolé}
 Les faces d'un tétraèdre isolé sont ordonnées de manière arbitraire. Seulement, si le tétraèdre isolé est ancré à un sommet, alors la première face doit être la face opposée à l'ancre.
 \paragraph{Ordre des sommets dans les diamants}
-\label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant D possedant $|D|$ tétraèdres contient $|D|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.
+\label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant $D_i$ possedant $|D_i|$ tétraèdres contient $|D_i|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.
 \begin{figure}[th]
 \begin{center}
 \includegraphics[scale=0.45]{Images/tetra_ordonnee}
@@ -492,35 +527,36 @@ Au sein d'un tétraèdre, les sommets sont ordonnés tel-que le ième sommet est
 \end{center}
 \end{figure}
 \noindent
-Pour calculer la permutation vue du tétraèdre isolé de la face CAD, il suffit de comparer l'ordre des sommets du tétraèdre isolé et du diamant. Si l'on garde seulement les 3 sommets qui nous intéresse dans les deux classements, on a : A,D,C et C,D,A. La permutation est donc (2,1,0). Bien entendu, la permutation pour la même face du point de vue du diamant est la même.\\
+Calculer les permutations des sommets entre deux faces est primordial car cela permet de connaître la position d'un sommet dans la face opposée. On utilise notamment les permutations pour calculer le degré d'un sommet.\\
+Dans la Fig. \ref{fig:permutation_tetra_diamant}, pour calculer la permutation vue du tétraèdre isolé de la face CAD, il suffit de comparer l'ordre des sommets du tétraèdre isolé et du diamant. Si l'on garde seulement les 3 sommets qui nous intéresse dans les deux classements, on a : A,D,C et C,D,A. La permutation est donc (2,1,0). Bien entendu, la permutation pour la même face du point de vue du diamant est la même.\\
 Il y a 3!=6 permutations possibles et donc 3 bits sont nécessaires pour représenter ces permutations.
 \subsection{Les requêtes}
 \subsubsection{Accéder à la ième face}
 \noindent
-Pour accéder à la ième face, il suffit d'accéder à la cellule F[i] dans laquelle se trouve la face opposée à la ième face. L'accès est donc en temps O(1).
+Pour accéder à la ième face, il suffit d'accéder à la cellule A[i] dans laquelle se trouve la face opposée à la ième face. L'accès est donc en temps O(1).
 \subsubsection{Accéder au ième diamant ou tétraèdre isolé}
 \noindent
-Il suffit de parcourir le tableau $F$ et de regarder pour chaque face si le premier bit de service vaut 1. On s'arrête alors dès que l'on a parcouru i faces dont la valeur du premier bit de service est 1. En utilisant une structure adaptée au 'Rank and Select' \footnote{Dans un tableau de bits $B[0..n-1]$, $rank(x) = |\{k\in [0..x] : B[k]=1\}|$ et $select(x)=min\{k\in [0..n-1) : rank(k)=x\}$}, la compléxité est O(1) \cite{rank_and_select}.
+Il suffit de parcourir le tableau A et de regarder pour chaque face si le premier bit de service vaut 1. On s'arrête alors dès que l'on a parcouru i faces dont la valeur du premier bit de service est 1. En utilisant une structure adaptée au 'Rank and Select' \footnote{Dans un tableau de bits $B[0..n-1]$, $rank(x) = |\{k\in [0..x] : B[k]=1\}|$ et $select(x)=min\{k\in [0..n-1) : rank(k)=x\}$}, la compléxité est O(1) \cite{rank_and_select}.
 \subsubsection{Parcourir les tétraèdres d'un diamant}
 \noindent
-Les faces au sein d'un diamant sont ordonnées. Les faces consécutives dans le tableau (modulo la taille du diamant) sont adjacentes dans le diamant. Par conséquent, pour accéder aux faces du ième tétraèdre d'un diamant $D$, il suffit d'aller à la $2i$ et $2i+1$ ièmes faces du diamant (modulo $|D|$). La compléxité est O(1).
+Les faces au sein d'un diamant sont ordonnées. Les faces consécutives dans le tableau (modulo la taille du diamant) sont adjacentes dans le diamant. Par conséquent, pour accéder aux faces du jème tétraèdre d'un diamant $D_i$, il suffit d'aller aux faces d'indices $2j$ et $2j+1$ (modulo $|D_i|$). La compléxité est O(1).
 \subsubsection{Accéder au ième tétraèdre}
 \noindent
 Lors du regroupement des tétraèdres en diamants, l'ordre des diamants n'est plus le même que l'ordre initial (à la lecture du fichier OFF). Néanmoins, on peut re-ordonner les tétraèdres dans le fichier original afin que l'ordre des tétraèdres soit les mêmes. De cette manière on peut accéder au ième tétraèdre en O(1).
 \subsubsection{Accéder au ième sommet}
 \noindent
 Bien que nous ne stockions pas les sommets de manière explicite (nous ne stockons que les faces). Nous sommes en mesures de localiser le ième sommet car il est adjacent au ième diamant/tétraèdre isolé.
-Il suffit donc d'accéder au ième diamant/tétraèdre isolé. Si c'est un diamant, alors le sommet est adjacent à toutes les faces paires du diamant. Si c'est un tétraèdre isolé, alors le sommet est opposé à la première face et est donc adjacent au trois autres faces. La compléxité est la même que pour accéder au ième diamant/tétraèdre isolé, O(1).
+Il suffit donc d'accéder au ième diamant/tétraèdre isolé. Si c'est un diamant, alors le sommet est adjacent à toutes les faces paires du diamant. Si c'est un tétraèdre isolé, alors le sommet est opposé à la première face et est donc adjacent au trois autres faces. La complexité est la même que pour accéder au ième diamant/tétraèdre isolé, O(1).
 \subsubsection{Degré et hypersphère d'un sommet}
 \noindent
-Calculer le degré d'un sommet est plus compliqué. On sait que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet cible est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau $F$. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
-\subsubsection{Parcours en profondeur du graphe}
+Calculer le degré d'un sommet est plus compliqué. On sait que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet cible est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau A. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
+\subsubsection{Parcours en largeur du graphe}
 \noindent
-Parcourir en profondeur le graphe est plus facile que de calculer le degré d'un sommet. Il suffit d'utiliser une file et un bit de service pour chaque tétraèdre afin de savoir si celui-ci a été visité. Le passage d'un tétraèdre à l'autre est rendu très facile grace à notre tableau représentant les faces adjacentes. 
+Parcourir en largeur le graphe est plus facile que de calculer le degré d'un sommet. Il suffit d'utiliser une file et un bit de service pour chaque tétraèdre afin de savoir si celui-ci a été visité. Le passage d'un tétraèdre à l'autre est rendu très facile grace à notre tableau représentant les faces adjacentes. 
 \subsubsection{Retrouver l'indice d'un sommet}
 \label{Retrouver l'indice d'un sommet}
 \noindent
-Retrouver l'indice d'un sommet est une procédure courante. En effet lorsque on est sur une face, on peut vouloir connaître les trois sommets qui la compose. Pour connaître l'indice d'un sommet, on calcule son hypersphère. Puis pour chaque diamant ou tétraèdre isolé dans l'hypersphère dont l'indice de la première face est inférieur à la limite\footnote{La limite est l'index à partir duquel les diamant et tétraèdres isolés ne sont plus associés à des sommets}, on calcule alors l'hypersphère du sommet ancré. Il suffit de comparer l'hypersphère de notre sommet cible avec les hypersphère des sommets ancrés et de renvoyer l'indice du sommet ayant la même hypersphère. Cette opération peut s'avérer néanmoins très couteuse. La compléxité pour calculer l'hypersphère d'un sommet est O(d). En utilisant notre algorithme pour appareiller les tétraèdres en diamants, les sommets sont en moyennes adjacents à 8 diamants/tétraèdres isolés. Seulement parmi ces 8 diamants/tétraèdres isolés, en moyenne 65\% \footnote{$\frac{|Diamants|+|T\acute{e}tra\grave{e}dres\; isol\acute{e}s|}{|V|}$} auront un indice inférieur à la limite. Par conséquent, retrouver l'indice d'un sommet nécessite de calculer en moyenne 6 (0.65*8+1) hypersphères.
+Retrouver l'indice d'un sommet est une procédure courante. En effet lorsque on est sur une face, on peut vouloir connaître les indices des trois sommets qui la compose. Pour connaître l'indice d'un sommet, on calcule son hypersphère. Puis pour chaque diamant ou tétraèdre isolé dans l'hypersphère dont l'indice de la première face est inférieur à la limite\footnote{La limite est l'index à partir duquel les diamant et tétraèdres isolés ne sont plus associés à des sommets}, on calcule alors l'hypersphère du sommet ancré. Il suffit de comparer l'hypersphère de notre sommet cible avec les hypersphère des sommets ancrés et de renvoyer l'indice du sommet ayant la même hypersphère. Cette opération peut s'avérer néanmoins très couteuse. La compléxité pour calculer l'hypersphère d'un sommet est O(d). En utilisant notre algorithme pour appareiller les tétraèdres en diamants, les sommets sont en moyennes adjacents à 8 diamants/tétraèdres isolés. Seulement parmi ces 8 diamants/tétraèdres isolés, en moyenne 65\% \footnote{$\frac{|Diamants|+|T\acute{e}tra\grave{e}dres\; isol\acute{e}s|}{|V|}$} auront un indice inférieur à la limite. Par conséquent, retrouver l'indice d'un sommet nécessite de calculer en moyenne 6 (0.65*8+1) hypersphères.
 
 %\begin{tikzpicture}
 %\begin{axis}[
@@ -573,7 +609,7 @@ Retrouver l'indice d'un sommet est une procédure courante. En effet lorsque on 
 \noindent
 Les fichiers OFF encodent d'abord les coordonnées géométriques de chaque sommet puis les indices des 4 sommets de chaque tétraèdre. Ils sont ainsi très faciles à manipuler mais ne sont pas concis (un sommet apparaît en moyenne 22 fois dans une tétraèdrisation).
 \paragraph{Encodage de la structure}
-Comme exprimé dans la partie \ref{Retrouver l'indice d'un sommet}, un sommet dans notre structure est adjacent en moyenne à 8 diamants/tétraèdres isolés. Par conséquent, plutôt que de décrire pour chaque face les 3 indices des 3 sommets, nous pouvons encoder les indices des sommets composant un diamant. Les sommets sont ordonnés dans un diamant (\ref{Ordre des sommets dans les diamants}). Par conséquent, en ayant juste l'ordre des sommets, nous sommes en mesure de retrouver les faces (la première face est bordée par le premier, le deuxième et l'avant dernier sommet).\\
+Comme exprimé dans la partie \ref{Retrouver l'indice d'un sommet}, un sommet dans notre structure est adjacent en moyenne à 8 diamants/tétraèdres isolés. Par conséquent, plutôt que de décrire pour chaque tétraèdre les 4 indices des 4 sommets, nous pouvons encoder les indices des sommets composant un diamant. Les sommets sont ordonnés dans un diamant (\ref{Ordre des sommets dans les diamants}). Ainsi, en ayant juste l'ordre des sommets, nous sommes en mesure de retrouver les faces (la première face est bordée par le premier, le deuxième et l'avant dernier sommet).\\
 Cependant, notre structure ne stocke pas implicitement les sommets. Nous savons seulement que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Néanmoins, en calculant l'hypersphère d'un sommet, nous informons les faces adjacentes qu'elles possèdent ce sommet. En faisant ainsi pour tous les sommets du maillage, nous associons alors à chaque face ses 3 sommets bordants.\\
 Il est alors facile de retrouver l'ordre des sommets dans un diamant à partir des sommets bordants chaque face du diamant. Il suffit de prendre tous les sommets qui apparaissent exactement deux fois dans toutes les faces (i.e les sommets qui n'appartiennent pas à l'arête centrale). Puis de les ordonner afin qu'ils décrivent un cycle.\\
 Par exemple, sur la Fig. \ref{fig:tetra_ordonnee}, à partir du calcul de l'hypersphère de chaque sommet, nous saurions alors que :
@@ -582,7 +618,7 @@ Par exemple, sur la Fig. \ref{fig:tetra_ordonnee}, à partir du calcul de l'hype
 \item Les faces 2 et 3 contiennent les sommets E et D
 \item Les faces 4 et 5 contiennent les sommets G et E
 \item Les faces 6 et 7 contiennent les sommets F et G
-\item Les faces 8 et 9 contiennent les sommets C et F
+\item Les faces 8 et 9 contiennent les sommets C et F\\
 \end{itemize}
 Trouver l'ordre des sommets est alors aisé. On commence par trouver le sommet commun à la première et dernière face (i.e C), puis le sommet commun à la première et deuxième face (i.e D) et ainsi de suite pour finalement obtenir : C,D,E,G,F,A,B (les deux derniers sommets sont communs à toute les faces).
 
@@ -599,43 +635,43 @@ En théorie comme en pratique, notre structure nous permet de reduire en moyenne
 \noindent
 Tout le code est implémenté en C\texttt{++} natif, sans l'aide d'aucune bibliothèque extérieure. Le code source est compilé avec g\texttt{++} sous Elementary OS. Tous les algorithmes ont été exécutés sur une machine avec un processeur i5-5300U et 16Go de RAM. L'ensemble du code est open-source et disponible sur github : \url{https://github.com/beaupletga/3D-Mesh-Compression}.\\
 Des classes représentent chaque forme géométrique (sommet, tétraèdre, diamant) permettant un code modulable et facilement exploitable. Nous utilisons cette représentation sous forme de classe pour la construction de notre structure mais elle est tout à fait absente dans son utilisation. \\
-En ce qui concerne cette dernière, le tableau $F$ est un tableau d'entiers codés sur 32 bits. Bien que nous aurions pu inclure les 4 bits de services dans les 32 bits de chaque entier, nous avons préféré utiliser deux tableaux annexes pour représenter ces bits de service. Le premier bit de service est stocké dans un tableau de booléens et les 3 autres bits de service sont stockés dans un tableau d'entiers. En codant les indices dans le tableau $F$ sur 28 bits et en utilisant les 4 derniers bits comme bits de service, nous pouvons encoder des maillages ayant jusqu'à $2^{28}=268$ millions de faces.
+En ce qui concerne cette dernière, le tableau A est un tableau d'entiers codés sur 32 bits. Bien que nous aurions pu inclure les 4 bits de services dans les 32 bits de chaque entier, nous avons préféré utiliser deux tableaux annexes pour représenter ces bits de service. Le premier bit de service est stocké dans un tableau de booléens et les 3 autres bits de service sont stockés dans un tableau d'entiers. En codant les indices dans le tableau $F$ sur 28 bits et en utilisant les 4 derniers bits comme bits de service, nous pouvons encoder des maillages ayant jusqu'à $2^{28}=268$ millions de faces.
 
 \section{Résultats}
-%\subsection{Evaluation de notre structure de données}
+\subsection{Procédure d'évaluation}
 \noindent
-Nous devons évaluer notre structure afin de comparer ses performances aux résultats pré-existants. Pour cela, nous avons choisi une dizaine de maillages avec des formes, des tailles, et des tétraèdrisations différentes. La pluspart des maillages ont été réalisés avec la bibliothèque CGAL \cite{CGAL}. Nous ne présentons les résultats de nos algorithmes que sur 6 de ces maillages.
+Nous devons évaluer notre structure afin de comparer ses performances aux résultats pré-existants. Pour cela, nous avons choisi une dizaine de maillages avec des formes, des tailles, et des tétraèdrisations différentes (Fig. \ref{fig:exemples_maillages}). Les boules ont été générées avec CGAL \cite{CGAL} en utilisant le module de génération de sphères implicites. Les autres tétraèdrisations ont été pris le site "". Nous ne présentons les résultats de nos algorithmes que sur 8 de ces maillages.
 \begin{figure}[th]
 \centering
-\begin{minipage}{.24\textwidth}
+\begin{subfigure}{.24\textwidth}
   \centering
   \includegraphics[scale=0.12]{Images/ball}
 %  \caption{figure}{Tétraèdrisation d'une boule}
 %  \label{fig:ball}
-\end{minipage}%
-\begin{minipage}{.24\textwidth}
+\end{subfigure}%
+\begin{subfigure}{.24\textwidth}
   \centering
   \includegraphics[scale=0.12]{Images/cow}
 %  \caption{figure}{Tétraèdrisation d'une vache}
 %  \label{fig:cow}
-\end{minipage}
-\begin{minipage}{.24\textwidth}
+\end{subfigure}
+\begin{subfigure}{.24\textwidth}
   \centering
   \includegraphics[scale=0.12]{Images/hand}
 %  \caption{figure}{Tétraèdrisation d'une main}
 %  \label{fig:hand}
-\end{minipage}%
-\begin{minipage}{.24\textwidth}
+\end{subfigure}%
+\begin{subfigure}{.24\textwidth}
   \centering
   \includegraphics[scale=0.14]{Images/skull}
 %  \caption{figure}{Tétraèdrisation d'un crane}
 %  \label{fig:skull}
-\end{minipage}
-\label{exemples_maillages}
+\end{subfigure}
 \caption{Exemples de maillages tétraèdriques utilisés pour évaluer notre structure de données.}
+\label{fig:exemples_maillages}
 \end{figure}
 
-\begin{table}[th]
+\begin{table}[H]
 \footnotesize
 \begin{tabular}{|c | c | c | c | c| c | c |}
 \hline
@@ -645,16 +681,24 @@ structure&sommets&d'arêtes &tétraèdres&sur les bords&tétraèdres par sommet 
 Boule (B1) & 1k & 5k & 3k & 0.45 & 13.52 & 10.32 \\
 Boule (B2)& 15k & 101k & 83k & 0.07 & 22.15 & 13.45\\
 Boule (B3)& 378k & 2M & 2.2M & 0.05 & 23.70 & 13.98 \\
+Boule (B4)& 1.3M & 9.5M & 8.1M & 0.01 & 24 & 14 \\
+Boule (B5)& 2.9M &  &  &  &  &  \\
 Vache (V1)& 30k & 182k & 134k & 0.24 & 17.48 & 11.82 \\
 Main (M1)& 28k & 169k & 125k & 0.24 & 17.38 & 11.74\\
 Crane (C1)& 37k & 217k & 156k & 0.30 & 16.51 & 11.52 \\ 
 \hline  
 \end{tabular}
-\label{table:results_performances}
 \caption{Caractéristiques des maillages tétraèdriques utilisés pour évaluer notre structure}
+\label{tab:caract_maillages}
 \end{table}
 
-\begin{table}[th]
+\subsection{Appareillage en diamants}
+\noindent
+On peut évaluer l'appareillage des tétraèdres en diamants en regardant la part des tétraèdres dans des diamants ou en calculant le nombre de références par tétraèdre (rpt). On calcule ce dernier de cette manière :\\
+\begin{equation}
+\text{rpt} = \frac{2\cdot T_D+4\cdot T_i}{|T|}
+\end{equation}
+\begin{table}[H]
 \centering
 \footnotesize
 \begin{tabular}{|c | c | c | c| c | c | c |}
@@ -662,63 +706,95 @@ Crane (C1)& 37k & 217k & 156k & 0.30 & 16.51 & 11.52 \\
 & \multicolumn{3}{|c|}{Parcours en largeur}& \multicolumn{3}{|c|}{Degré de l'arête}\\
 \hline
 Nom de la & Part des tétraèdres & RPT & Temps (s) & Part des tétraèdres & RPT & Temps (s)\\
-structure&dans des diamants&&&dans des diamants&&\\
+structure&dans des diamants (\%)&&&dans des diamants (\%)&&\\
 \hline
-B1 & 0.76 & 2.69 & 0.03 & 0.81 & 2.36 & 0.47 \\
-B2 &  0.80 & 2.39 & 1.02 & 0.85 & 2.29 & 497 \\
-B3 & 0.81 & 2.37 & 39.79 &  &  &\\
-V1 & 0.77 & 2.44 & 1.56 & 0.81 & 2.36 & 922\\
-M1 & 0.77 & 2.44 & 1.26 & 0.83 & 2.34 & 794\\
-C1 & 0.77 & 2.44 & 1.48 & 0.80 & 2.38 & 1262\\
+B1 & 76 & 2.69 & 0.03 & 81 & 2.36 & 0.47 \\
+B2 &  80 & 2.39 & 1.02 & 85 & 2.29 & 497 \\
+B3 & 81& 2.37 & 39.79 &  &  &\\
+B4 & 82& 2.35 & 150 &  &  &\\
+B5 &  &  &  &  &  &\\
+V1 & 77& 2.44 & 1.56 & 81& 2.36 & 922\\
+M1 & 77& 2.44 & 1.26 & 83 & 2.34 & 794\\
+C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 \hline  
 \end{tabular}
-\label{table:results_performances}
 \caption{Résultats des algorithmes d'appareillage des tétraèdres en diamants}
+\label{tab:results_performances}
 \end{table}
 
-\begin{table}[th]
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.35]{Images/histograme}
+\caption{Histogramme de la part de tétraèdres parmi les tétraèdres isolés et diamants en utilisant le parcours en largeur}
+\label{fig:histogramme}
+\end{center}
+\end{figure}
+\noindent
+
+AJOUTER GRAPHE : PART DE BORDS MAILLAGE / RPT
+
+Compte tenu des résultats de Tab. \ref{tab:results_performances}, nous avons choisi d'utiliser le parcours en largeur pour appareiller les tétraèdres en diamants. Le parcours en largeur est rapide et permet d'associer en moyenne 76\% des tétraèdres en diamants. Il pourrait probablement être amélioré en étant exécuté en parallèle ou en choisissant plus spécifiquement un tétraèdre de départ (Fig. \ref{fig:bfs_starting}). On remarque aussi que 50\% des tétraèdres sont dans des diamants possédant 5 ou 6 tétraèdres (Fig. \ref{fig:histogramme}).\\\\
+
+\subsection{Ancrage des sommets}
+\begin{table}[H]
 \footnotesize
 \centering
 \begin{tabular}{|c | c | c | c |}
 \hline
 Nom de la & Part de sommets non associés & Part de tétraèdres dans  & Part de tétraèdres dans \\
 structure&avec des diamants  & des diamants avant & des diamants après \\
-& ou tétraèdres isolés & choix des ancres& choix des ancres\\
+& ou tétraèdres isolés (\%) & choix des ancres (\%)& choix des ancres (\%)\\
 \hline
-B1 & 0.06 & 0.76 & 0.65 \\
-B2 & 8e-4 & 0.80 & 0.80 \\
-B3 & 3e-4 & 0.82 & 0.82\\
-V1 & 8e-3  & 0.77 & 0.76 \\
-M1 & 7e-3 & 0.77 & 0.76\\
-C1 & 8e-3 & 0.77 & 0.76 \\
+B1 & 6 & 76& 65 \\
+B2 & 0.08& 80 & 80 \\
+B3 & 0.03& 82 & 82\\
+B4 &  &  & \\
+B5 &  &  & \\
+V1 & 0.8  & 77 & 76 \\
+M1 & 0.7 & 77& 76\\
+C1 & 0.8 & 77 & 76 \\
 \hline  
 \end{tabular}
-\label{table:results_ancres}
-\caption{Ancrage des sommets aux diamant/tétraèdres isolés}
+\caption{Résultats de l'ancrage des sommets aux diamant/tétraèdres isolés en utlisant un algorithme glouton affectant en priorité les sommets adjacents à peu de diamants/tétraèdres isolés}
+\label{tab:results_ancres}
 \end{table}
 \noindent
-\begin{table}[th]
+On remarque sur le Tab. \ref{tab:results_ancres} qu'en appliquant l'algorithme glouton afin d'appareiller sommet et diamant/tétraèdre isolé, une part minime des sommets demeure non ancrés (1ère colonne). Par ailleurs, on note que la destruction de certains diamants pour associer des sommets à des tétraèdres n'a que peu d'incidence sur les performances tant que le nombre de sommets est important (2ème et 3ème colonnes).
+
+\subsection{Les requêtes}
+\noindent
+Pour évaluer le temps nécessaire pour répondre à une requête, nous évaluons celle-ci après 10 000 essais aléatoires. Les temps sont obtenus en utilisant l'optimisation '-O3' de C\texttt{++}.
+\begin{table}[h]
 \footnotesize
 \centering
 \begin{tabular}{| c | c | c | c| c |c |}
 \hline
 Nom de la  & Choisir les arêtes centrales & Accès au& Accès au & Degré d'un & Parcours en\\
-structure & et appareiller sommet/diamant &ième tétraèdre& ième diamant &sommet&prodondeur\\
+structure & et appareiller sommet/diamant (s) &ième tétraèdre (s)& ième diamant (s) &sommet (s)&prodondeur (s)\\
 \hline
 B1  & 0.06 & 1e-5 & 5e-6 & 1.9e-5 & 6e-4\\
 B2 & 21.34 &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01\\
 B3 & 33.29 & & & & \\
-%Vache & 1.37 & 
+B4 &  & & & & \\
+B5 &  & & & & \\
+V1 & 88.22 &  & & \\
 M1  & 50.6 & 6.4e-4 & 2.6e-4 & 2.2e-4 & 0.02\\
 C1  & 96.71 & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 \hline  
 \end{tabular}
 \label{table:results_time}
-\caption{Tableau des temps de chaque requête en secondes sur plusieurs maillages}
+\caption{Temps requis pour répondre aux requêtes sur plusieurs maillages}
 \end{table}
 \noindent
-Les résultats du tableau \ref{table:results_time} sont obtenus en utilisant l'optimisation '-O3' de C\texttt{++}. Les résultats obtenus sont des moyennes calculées après 10 000 essais.
 
+%B1  & 
+%B2 & 1.4e-4 & 0.032
+%B3 & 
+%%Vache &  
+%M1  & 3e-4 &  0.49
+%C1  &
+
+METTRE GRAPHE EN COMPARANT STRUCTURE COMPLETE ET STRUCTURE COMPACTE
 
 \section{Partie Théorique}
 \subsection{Borne inférieure théorique}
@@ -735,20 +811,19 @@ Les résultats du tableau \ref{table:results_time} sont obtenus en utilisant l'o
 \section{Travail Futur}
 \subsection{Améliorations}
 \paragraph{Références différentielles}
-Dans notre tableau T, chaque face est représenté par un indice sur 32 bits, qui est la taille minimale d'un entier en C\texttt{++}. Néanmoins, nous pourrions représenter l'adjacence par la différence entre les indices des deux faces. Malheureusement, les faces sont seulement ordonneés de manière à ce que le ième sommet soit adjacent au ième diamant. Par conséquent, nous n'avons aucune garanti sur l'éloignement (dans le tableau $F$) de deux faces opposées. Etant donné que le gain semblait mineur, nous avons choisi de ne pas implémenter cette fonction.
+Dans notre tableau A, chaque face est représentée par un indice sur 32 bits, qui est la taille minimale d'un entier en C\texttt{++}. Néanmoins, nous pourrions représenter l'adjacence par la différence entre les indices des deux faces. Malheureusement, les faces sont seulement ordonneés de manière à ce que le ième sommet soit adjacent au ième diamant. Par conséquent, nous n'avons aucune garanti sur l'éloignement (dans le tableau A) de deux faces opposées. Etant donné que le gain semblait mineur, nous avons choisi de ne pas implémenter cette fonction.
 
 \paragraph{Dynamicité}
-Une structure de données compacte est dîtes dynamique lorsqu'on peut modifier les données localement (i.e de manière instantanée). Dans notre cas, modifier les données peut revenir à ajouter un sommet, ajouter une face, supprimer un tétraèdre...\\
-Malheureusement, nous n'avons encore implémenté encore aucune de ces fonctions.
+Une structure de données compacte est dîtes dynamique lorsqu'on peut modifier les données localement (i.e de manière instantanée). Dans notre cas, modifier les données peut revenir à ajouter un sommet, ajouter une face, supprimer un tétraèdre... Cependant, ces fonctions ne sont pas triviales et nous n'en n'avons encore implémenté encore aucune.
 
 \subsection{Défaut}
 \noindent
-Afin d'appareiller les tétraèdres en diamants, nous réalisons un parcours en largeur de notre maillage. Seulemen, pour parcourir le maillage, nous lisons entièrement le fichier original car nous n'avons aucune garantie géométrique sur la manière dont sont énumérés les tétraèdres. Si les tétraèdres sont énumérés dans le fichier original par proximité alors nous pouvons maintenir un cache de tétraèdres puis les associer au moment voulu. Sans-cela, nous devons lire le fichier entièrement et cela représente un vrai goulot d'étranglement.
+Afin d'appareiller les tétraèdres en diamants, nous réalisons un parcours en largeur de notre maillage. Seulement, pour parcourir le maillage, nous lisons entièrement le fichier original car nous n'avons aucune garantie géométrique sur la manière dont sont énumérés les tétraèdres. Si les tétraèdres sont énumérés dans le fichier original par proximité alors nous pouvons maintenir un cache de tétraèdres puis les associer au moment voulu. Sans-cela, nous devons lire le fichier entièrement et cela représente un vrai goulot d'étranglement.
 
 
 \section{Conclusion}
 \noindent
-Nous avons présenté dans ce rapport une nouvelle structure de données compacte afin de représenter les maillages tétraèdriques en utilisant en moyenne 2.4 rpt. Cela représente une économie de 60\% de références par tétraèdres en comparaison avec l'état de l'art (SOT). Notre structure s'adapte ainsi parfaitement aux maillages très volumineux. La navigation dans le maillage est intuitive car notre structure utilise les faces des tétraèdres. L'accès au ième sommet, ième tétraèdre se fait en temps constant et le calcul de l'hypersphère d'un sommet est proportionnel au degré du sommet. Finalement, nous avons aussi réussi à enregistrer notre structure dans un fichier afin que celle-ci puisse se partager facilement.
+Nous avons présenté dans ce rapport une nouvelle structure de données compacte afin de représenter les maillages tétraèdriques en utilisant en moyenne 2.4 rpt. Cela représente une économie de 40\% de références par tétraèdres en comparaison avec l'état de l'art (SOT). Notre structure s'adapte ainsi parfaitement aux maillages très volumineux. La navigation dans le maillage est intuitive car notre structure utilise les faces des tétraèdres. L'accès au ième sommet, ième tétraèdre se fait en temps constant et le calcul de l'hypersphère d'un sommet est proportionnel au degré du sommet. Finalement, nous avons aussi réussi à enregistrer notre structure dans un nouveau format de fichier afin que celle-ci puisse se partager facilement.
 
 \begin{thebibliography}{999}
 \bibitem{triangle_strips}Deering,\emph{Geometry Compression}. 
