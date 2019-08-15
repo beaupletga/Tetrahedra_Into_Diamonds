@@ -40,17 +40,17 @@ La première méthode consiste à prendre pour chaque sommet, une arête dans un
 
 \subsubsection{Optimisation aléatoire}
 \noindent
-Notre problème s'exprime facilement comme un problème d'optimisation combinatoire en nombres entiers. Malheureusement, la résolution de ces problèmes NP-difficile, ce qui signifie qu'aucun algorithme ne peut trouver une solution optimale en temps polynomial. Néanmoins, on peut utiliser des algorithmes d'optimisation aléatoire afin de trouver une solution approchée. Ce sont des algorithmes très utilisés en pratique qui visitent plus ou moins aléatoirement l'espace des solutions.\\
+Notre problème s'exprime facilement comme un problème d'optimisation combinatoire en nombres entiers. Malheureusement, la résolution de ces problèmes est NP-difficile, ce qui signifie qu'aucun algorithme ne peut trouver une solution optimale en temps polynomial. Néanmoins, on peut utiliser des algorithmes d'optimisation aléatoire afin de trouver une solution approchée. Ce sont des algorithmes très utilisés en pratique qui visitent plus ou moins aléatoirement l'espace des solutions.\\
 Soit $f$ la fonction aléatoire à maximiser, l'idée est de partir d'une solution initiale x et tant que la condition d'arrêt n'est pas remplie, de créer une solution y à partir de x puis de remplacer x par y si f(y)$>$f(x).\\
 Dans notre cas, une solution est un ensemble d'arêtes. Elle est faisable si pour toute paire d'arêtes de notre solution, aucunes n'appartiennent au même tétraèdre. On peut donc matérialiser notre solution comme un vecteur de 0 et 1 pour chaque arête du graphe (1 si l'arête appartient à la solution, 0 sinon). Pour calculer la valeur de notre solution, on ajoute pour chaque arête de la solution le nombre de tétraèdres utilisant l'arête et si deux arêtes appartiennent au même tétraèdre alors on inflige une pénalité en soustrayant le nombre de tétraèdres adjacents à ces deux arêtes. L'inconvénient majeur de cet algorithme est sa lenteur. Il permet de trouver des solutions quasi optimales pour des maillages avec quelques milliers d'arêtes rapidement mais ne permet pas de trouver des solutions convenables au dela dans un temps raisonable. Nous avons donc décidé de ne pas retenir cette solution.
 
 \subsubsection{Choisir l'arête de degré maximum}
 \noindent
-Le degré d'une arête est le nombre de tétraèdres possédant cette arête. Une heuristique très simple consiste à prendre en priorité les arêtes ayant un degré important. C'est un algorithme glouton dans la mesure où seulement la récompense immédiate nous intéresse. Il est nécessaire de trouver l'arête maximum à chaque itération de l'algorithme. Cela a pour conséquence un temps d'exécution relativement long.
+Le degré d'une arête est le nombre de tétraèdres possédant cette arête. Une heuristique très simple consiste à prendre en priorité les arêtes ayant un degré important. C'est un algorithme glouton dans la mesure où seulement la récompense immédiate nous intéresse. Il est nécessaire de trouver l'arête maximum à chaque itération de l'algorithme et cela a pour conséquence un temps d'exécution relativement long.
 \subsubsection{Parcours en largeur des tétraèdres}
 \label{parcours_largeur}
 \noindent
-La troisième approche consiste à parcourir le maillage en largeur. On choisit un tétraèdre au début de l'algorithme puis on regarde pour chacune de ses arêtes si les tétraèdres partageant cette arète forment un diamant et qu'aucun n'appartienne déja à un diamant. Si ces deux conditions sont remplies, on crée un nouveau diamant avec cette arête centrale. Puis on ajoute à la file les tétraèdres adjacents et non visités au tétraèdre choisi. On exécute ainsi cet algorithme tant que la file n'est pas vide.\\
+La troisième approche consiste à parcourir le maillage en largeur. On choisit un tétraèdre au début de l'algorithme puis on regarde pour chacune de ses arêtes si les tétraèdres partageant cette arête forment un diamant et qu'aucun n'appartienne déja à un diamant. Si ces deux conditions sont remplies, on crée un nouveau diamant avec cette arête centrale. Puis on ajoute à la file les tétraèdres adjacents et non visités au tétraèdre choisi. On exécute ainsi cet algorithme tant que la file n'est pas vide.\\
 \begin{algorithm}[th]
 \SetAlgoLined	
  Soit F une file;\\
@@ -196,6 +196,8 @@ L'ordre des faces dans un diamant respecte celui des tétraèdres. Pour le ième
 Les faces d'un tétraèdre isolé sont ordonnées de manière arbitraire. Seulement, si le tétraèdre isolé est ancré à un sommet, alors la première face doit être la face opposée à l'ancre.
 \paragraph{Ordre des sommets dans les diamants}
 \label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant $D_i$ possedant $|D_i|$ tétraèdres contient $|D_i|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.\\
+\paragraph{Ordre des sommets dans les tétraèdres}
+Au sein d'un tétraèdre, les sommets sont ordonnés tel-que le ième sommet est opposé à la ième face. Si un sommet est associé au tétraèdre alors ce sommet est opposé à la première face.
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
@@ -208,11 +210,11 @@ Les faces d'un tétraèdre isolé sont ordonnées de manière arbitraire. Seulem
   \centering
   \includegraphics[scale=0.4]{Images/permutation_tetra_diamant}
   \caption{}
-  
   \label{fig:permutation_tetra_diamant}
 \end{subfigure}
 \caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. L'ordre des sommets est : C,D,E,G,F,A,B. \textbf{Droite} : Un diamant partage une face avec un tétraèdre isolé. En vert est l'ordre des face du tétraèdre. L'ordre des sommets du tétraèdre est A,D,C,H et celui du diamant est C,D,E,G,F,A,B.}
 \end{figure}
+\subsection{Calcul des permutations}
 \noindent
 %Calculer les permutations des sommets entre deux faces est primordial car cela permet de connaître la position d'un sommet dans la face opposée.\\
 Avec la structure naïve décrite dans la partie \ref{representation_maillages_tetra}, chaque tétraèdre possède 4 références vers ses 4 sommets. Ainsi, pour deux tétraèdres adjacents, il suffit de comparer les références de leurs sommets respectifs pour identifier les sommets communs.\\
@@ -246,9 +248,6 @@ Pour résumer, voici notre structure de données :
 \label{fig:structure}
 \end{center}
 \end{figure}
-
-\paragraph{Ordre des sommets dans les tétraèdres}
-Au sein d'un tétraèdre, les sommets sont ordonnés tel-que le ième sommet est opposé à la ième face. Si un sommet est associé au tétraèdre alors ce sommet est opposé à la première face.
 \subsection{Les requêtes}
 \noindent
 Notre structure de données permet de réaliser des requêtes simples et courantes sur le maillage. Nous détaillons dans cette partie comment ces requêtes ont été implémentées et la complexité pour chacune d'elle.
@@ -271,6 +270,9 @@ Il suffit donc d'accéder au ième diamant/tétraèdre isolé. Si c'est un diama
 \subsubsection{Degré et hypersphère d'un sommet}
 \noindent
 Calculer le degré d'un sommet est plus compliqué. On sait que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet cible est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau A. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
+
+AJOUTER PSEUDOCODE
+
 \subsubsection{Parcours en largeur du graphe}
 \noindent
 Parcourir en largeur le graphe est plus facile que de calculer le degré d'un sommet. Il suffit d'utiliser une file et un bit de service pour chaque tétraèdre afin de savoir si celui-ci a été visité. Le passage d'un tétraèdre à l'autre est rendu très facile grace à notre tableau représentant les faces adjacentes. La complexité est donc la même que dans le maillage original : O($|$T$|$).

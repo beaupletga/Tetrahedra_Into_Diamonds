@@ -148,7 +148,7 @@ Il y a donc autant d'arêtes que de polytopes de dimension 3 et sommets réunis 
 \subsubsection{Représentation des maillages tétraèdriques}
 \label{representation_maillages_tetra}
 \noindent
-Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, elle doit permettre une certaine utilisation du maillage. Voici certaines des opérations qu'elle doit supporter :\\
+Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, une structure de données doit permettre une certaine utilisation du maillage. Voici certaines des opérations qu'elle doit supporter :\\
 \textbf{ith\_face(i,t)} Cette fonction doit donc permettre l'accès à la ième face du tétraèdre t. \\
 \textbf{ith\_tetrahedron(i)} Cette fonction doit permettre l'accès au ième tétraèdre en temps constant.\\
 \textbf{ith\_vertex(i)} Cette fonction doit retourner un des tétraèdres adjacents au ième sommet.\\ 
@@ -162,4 +162,4 @@ Une structure de données naïve pour représenter un maillage tétraèdrique co
 \item 4 référence par tétraèdre pointant vers ses sommets
 \item 1 référence par sommet pointant vers un de ses tétraèdres adjacents
 \end{itemize}
-Au total cela fait donc 8 références par tétraèdre et 1 référence par sommet (8$|$T$|$+$|$V$|$). Avec ces références, on peut répondre à toutes les requêtes ci-dessus.
+Au total cela fait donc 8 références par tétraèdre et 1 référence par sommet (8$|$T$|$+$|$V$|$). Avec ces références, on peut mettre au point des algorithmes pour répondre à toutes les requêtes ci-dessus.
