@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  15 AUG 2019 00:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  15 AUG 2019 10:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1185,7 +1185,14 @@ File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 LaTeX Warning: Unused global option(s):
     [openany].
 
-(./rapport.aux)
+(./rapport.aux
+
+LaTeX Warning: Label `fig:graphique' multiply defined.
+
+
+LaTeX Warning: Label `fig:graphique@cref' multiply defined.
+
+)
 \openout1 = `rapport.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
@@ -1591,7 +1598,7 @@ also unbounded coords=jump).
 NOTE: coordinate (5.11,) has been dropped because of a coordinate filter. (see 
 also unbounded coords=jump). 
 [17 <./Images/histograme.png>]) (./partie_theorique.tex)
-(./travail_futur_conclusion.tex [18]) [19]
+(./travail_futur_conclusion.tex [18]) [19] [20]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 87.
 LaTeX Font Info:    Try loading font information for OML+cmr on input line 90.
@@ -1601,21 +1608,25 @@ File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <9> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 90.
- [20]
+ [21]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 149.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 149.
  (./rapport.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 149.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 149.
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 4E7CDAC3A309426F39C7CD1D830C97CB;3705.
+(rerunfilecheck)             Checksum: E5AB28C022EC52112D3A3CD345EA6780;3705.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 149.
  ) 
 Here is how much of TeX's memory you used:
- 33931 strings out of 494883
- 760464 string characters out of 6178692
- 981924 words of memory out of 5000000
- 36469 multiletter control sequences out of 15000+600000
+ 33956 strings out of 494883
+ 760967 string characters out of 6178692
+ 982926 words of memory out of 5000000
+ 36492 multiletter control sequences out of 15000+600000
  15616 words of font info for 59 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  62i,20n,100p,1339b,2330s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1648,10 +1659,10 @@ ts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 am10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msb
 m10.pfb>
-Output written on rapport.pdf (20 pages, 1300448 bytes).
+Output written on rapport.pdf (21 pages, 1306389 bytes).
 PDF statistics:
- 638 PDF objects out of 1000 (max. 8388607)
- 565 compressed objects within 6 object streams
- 198 named destinations out of 1000 (max. 500000)
+ 644 PDF objects out of 1000 (max. 8388607)
+ 570 compressed objects within 6 object streams
+ 200 named destinations out of 1000 (max. 500000)
  510 words of extra memory for PDF output out of 10000 (max. 10000000)
 
