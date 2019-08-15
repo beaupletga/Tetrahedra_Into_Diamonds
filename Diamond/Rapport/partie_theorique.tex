@@ -2,24 +2,19 @@
 \subsection{Borne inférieure théorique}
 \subsection{NP-Complétude}
 \noindent
-%La pierre angulaire de notre structure est la constuction des diamants. Si tous les tétraèdres étaient regroupés en diamants, alors nous achèverions un encodage de la connectivité avec 2 rpt. Le parcours en largeur est satisfaisant mais existe-il un algorithme optimal en temps polynomial ? Nous allons montrer dans cette section que le problème est en réalité NP-dur.\\
-%Notre problème est le suivant : \textbf{Existe-il une couverture des tétraèdres en diamants contenant plus de k tétraèdres ?}\\
-%Pour cela, nous allons procéder en 3 étapes :
-%\begin{itemize}
-%\item Transformer notre maillage en graphe en temps polynomial
-%\item Transformer notre graphe en temps polynomial
-%\item Résoudre MIS sur ce nouveau graphe
-%\item Montrer que si l'on a une solution de MIS sur ce graphe alors on a une solution pour notre problème.
-%\end{itemize}
-%
-%Pour rappel, notre problème consiste à choisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. On peut alors créer un autre graphe où chaque arête du graphe initial est modélisée par un sommet. Deux sommets dans ce nouveau graphe sont connectées si et seulement si leurs arêtes dans le graphe original appartiennent au même tetra. La création de ce nouveau graphe se fait en temps polynomial (en fonction des arêtes).
-%Dans ce nouveau graphe, notre problème devient le même que le maximum independant set (MIS). A savoir que l'on recherche un ensemble maximum de sommets (donc d'arêtes dans notre graphe initial) tel qu'aucun de ces sommets ne soient connectés (i.e que les arêtes dans le graphe initial n'appartiennent pas au même tétraèdre).
-%
-%Montrons d'abord que notre problème appartient à NP. Pour que ce soit le cas, il faut montrer que l'on peu vérifier la validité de notre solution en temps polynomial.\\
-%Pour cela, on construit le graphe annexe précisé au dessus en temps O(E). Puis pour chaque sommet choisi dans ce graphe, on vérifie qu'aucun des sommet voisins n'a été pris. Ceci se fait en temps O(V). Par conséquent, on peut vérifier la validité d'une solution en temps O(E+V). Notre problème est donc NP.\\
-%
-%Une solution est un ensemble d'arêtes. 
-%
-%
-%
-%En revanche, notre instance du MIS est une instance pondérée, où chaque sommet à un poids correspondant au nombre de tetra adjacent à l'arete dans le graphe initial.
+La pierre angulaire de notre structure est la constuction des diamants. Si tous les tétraèdres étaient regroupés en diamants, alors nous achèverions un encodage de la connectivité avec 2 rpt. Le parcours en largeur est satisfaisant mais existe-il un algorithme optimal en temps polynomial ? Nous allons montrer dans cette section que le problème est en réalité NP-dur.\\
+Notre problème est le suivant : \textbf{Existe-il une couverture des tétraèdres en diamants contenant plus de k diamants ?}\\
+Pour cela, nous allons procéder en 4 étapes :
+\begin{enumerate}
+\item Montrer que notre problème est NP
+\item Transformer notre maillage tétraèdrique en graphe en temps polynomial
+\item Résoudre MIS sur ce nouveau graphe
+\item Montrer que si l'on a une solution de MIS sur ce graphe alors on a une solution pour notre problème.
+\end{enumerate}
+Pour rappel, notre problème consiste à choisir un ensemble $E'$ d'arêtes tel-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre.\\
+1- Commencons par montrer que notre problème appartient à NP. Une solution est un ensemble d'arêtes (les arêtes centrales des diamants). Il suffit de vérifier pour chaque arête que A COMPLETER
+2- On peut créer un autre graphe où chaque arête du graphe initial est modélisée par un sommet. Deux sommets dans ce nouveau graphe sont connectées si et seulement si leurs arêtes dans le graphe original appartiennent au même tétraèdre. La création de ce nouveau graphe se fait en temps polynomial (en fonction des arêtes).\\
+3- Calculer un Stable Maximum (Maximum Indepent Set ou MIS en anglais) sur ce nouveau graphe signifie trouver un ensemble de sommets non connectés dans le graphe. C'est équivalent à trouver un ensemble d'arêtes n'appartenant pas aux mêmes tétraèdres dans notre maillage.\\
+4- Ainsi, calculer un MIS sur ce nouveau graphe est similaire à trouver un ensemble d'arêtes (et donc de diamants) indépendants.\\
+5- Par conséquent, trouver une solution à notre problème signifierait trouver une solution au MIS\\
+Nous avons donc réduit notre problème au MIS. Notre problème est donc NP-Dur.

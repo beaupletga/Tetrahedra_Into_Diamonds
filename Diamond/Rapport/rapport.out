@@ -3,48 +3,49 @@
 \BOOKMARK [2][-]{subsection.1.2}{Combinatoire}{section.1}% 3
 \BOOKMARK [3][-]{subsubsection.1.2.1}{Cas surfacique}{subsection.1.2}% 4
 \BOOKMARK [3][-]{subsubsection.1.2.2}{Cas volumique}{subsection.1.2}% 5
-\BOOKMARK [1][-]{section.2}{Etat de l'art}{}% 6
-\BOOKMARK [2][-]{subsection.2.1}{Maillages 2D}{section.2}% 7
-\BOOKMARK [3][-]{subsubsection.2.1.1}{Compression}{subsection.2.1}% 8
-\BOOKMARK [3][-]{subsubsection.2.1.2}{Structure de donn\351es compacte}{subsection.2.1}% 9
-\BOOKMARK [2][-]{subsection.2.2}{Maillages 3D}{section.2}% 10
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Compression}{subsection.2.2}% 11
-\BOOKMARK [3][-]{subsubsection.2.2.2}{Structure de donn\351es compacte}{subsection.2.2}% 12
-\BOOKMARK [1][-]{section.3}{Notre Contribution : T\351tra\350dres en Diamants}{}% 13
-\BOOKMARK [2][-]{subsection.3.1}{Principe g\351n\351ral}{section.3}% 14
-\BOOKMARK [2][-]{subsection.3.2}{Appariement des t\351tra\350dres en diamants}{section.3}% 15
-\BOOKMARK [3][-]{subsubsection.3.2.1}{Choisir une direction pour chaque sommet}{subsection.3.2}% 16
-\BOOKMARK [3][-]{subsubsection.3.2.2}{Optimisation al\351atoire}{subsection.3.2}% 17
-\BOOKMARK [3][-]{subsubsection.3.2.3}{Choisir l'ar\352te de degr\351 maximum}{subsection.3.2}% 18
-\BOOKMARK [3][-]{subsubsection.3.2.4}{Parcours en largeur des t\351tra\350dres}{subsection.3.2}% 19
-\BOOKMARK [2][-]{subsection.3.3}{Choisir l'ancre}{section.3}% 20
-\BOOKMARK [2][-]{subsection.3.4}{La structure}{section.3}% 21
-\BOOKMARK [2][-]{subsection.3.5}{Calculer les permutations}{section.3}% 22
-\BOOKMARK [2][-]{subsection.3.6}{Les requ\352tes}{section.3}% 23
-\BOOKMARK [3][-]{subsubsection.3.6.1}{Acc\351der \340 la i\350me face}{subsection.3.6}% 24
-\BOOKMARK [3][-]{subsubsection.3.6.2}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{subsection.3.6}% 25
-\BOOKMARK [3][-]{subsubsection.3.6.3}{Parcourir les t\351tra\350dres d'un diamant}{subsection.3.6}% 26
-\BOOKMARK [3][-]{subsubsection.3.6.4}{Acc\351der au i\350me t\351tra\350dre}{subsection.3.6}% 27
-\BOOKMARK [3][-]{subsubsection.3.6.5}{Acc\351der au i\350me sommet}{subsection.3.6}% 28
-\BOOKMARK [3][-]{subsubsection.3.6.6}{Degr\351 et hypersph\350re d'un sommet}{subsection.3.6}% 29
-\BOOKMARK [3][-]{subsubsection.3.6.7}{Parcours en largeur du graphe}{subsection.3.6}% 30
-\BOOKMARK [3][-]{subsubsection.3.6.8}{Retrouver l'indice d'un sommet}{subsection.3.6}% 31
-\BOOKMARK [2][-]{subsection.3.7}{Un nouveau format de stockage}{section.3}% 32
-\BOOKMARK [2][-]{subsection.3.8}{Impl\351mentation}{section.3}% 33
-\BOOKMARK [1][-]{section.4}{R\351sultats}{}% 34
-\BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 35
-\BOOKMARK [2][-]{subsection.4.2}{Appareillage en diamants}{section.4}% 36
-\BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 37
-\BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 38
-\BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 39
-\BOOKMARK [1][-]{section.5}{Partie Th\351orique}{}% 40
-\BOOKMARK [2][-]{subsection.5.1}{Borne inf\351rieure th\351orique}{section.5}% 41
-\BOOKMARK [2][-]{subsection.5.2}{NP-Compl\351tude}{section.5}% 42
-\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 43
-\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 44
-\BOOKMARK [2][-]{subsection.6.2}{D\351faut}{section.6}% 45
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 46
-\BOOKMARK [1][-]{section*.43}{Appendices}{}% 47
-\BOOKMARK [1][-]{Annexe.1.A}{Impl\351mentation des requ\352tes}{}% 48
-\BOOKMARK [2][-]{subsection.1.A.1}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{Annexe.1.A}% 49
-\BOOKMARK [2][-]{subsection.1.A.2}{Parcours en profondeur du graphe}{Annexe.1.A}% 50
+\BOOKMARK [3][-]{subsubsection.1.2.3}{Repr\351sentation des maillages t\351tra\350driques}{subsection.1.2}% 6
+\BOOKMARK [1][-]{section.2}{Etat de l'art}{}% 7
+\BOOKMARK [2][-]{subsection.2.1}{Maillages 2D}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Compression}{subsection.2.1}% 9
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Structure de donn\351es compacte}{subsection.2.1}% 10
+\BOOKMARK [2][-]{subsection.2.2}{Maillages 3D}{section.2}% 11
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Compression}{subsection.2.2}% 12
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Structure de donn\351es compacte}{subsection.2.2}% 13
+\BOOKMARK [1][-]{section.3}{Notre Contribution : T\351tra\350dres en Diamants}{}% 14
+\BOOKMARK [2][-]{subsection.3.1}{Principe g\351n\351ral}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.2}{Appariement des t\351tra\350dres en diamants}{section.3}% 16
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Choisir une direction pour chaque sommet}{subsection.3.2}% 17
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Optimisation al\351atoire}{subsection.3.2}% 18
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Choisir l'ar\352te de degr\351 maximum}{subsection.3.2}% 19
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Parcours en largeur des t\351tra\350dres}{subsection.3.2}% 20
+\BOOKMARK [2][-]{subsection.3.3}{Choisir l'ancre}{section.3}% 21
+\BOOKMARK [2][-]{subsection.3.4}{La structure}{section.3}% 22
+\BOOKMARK [2][-]{subsection.3.5}{Calculer les permutations}{section.3}% 23
+\BOOKMARK [2][-]{subsection.3.6}{Les requ\352tes}{section.3}% 24
+\BOOKMARK [3][-]{subsubsection.3.6.1}{Acc\351der \340 la i\350me face}{subsection.3.6}% 25
+\BOOKMARK [3][-]{subsubsection.3.6.2}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{subsection.3.6}% 26
+\BOOKMARK [3][-]{subsubsection.3.6.3}{Parcourir les t\351tra\350dres d'un diamant}{subsection.3.6}% 27
+\BOOKMARK [3][-]{subsubsection.3.6.4}{Acc\351der au i\350me t\351tra\350dre}{subsection.3.6}% 28
+\BOOKMARK [3][-]{subsubsection.3.6.5}{Acc\351der au i\350me sommet}{subsection.3.6}% 29
+\BOOKMARK [3][-]{subsubsection.3.6.6}{Degr\351 et hypersph\350re d'un sommet}{subsection.3.6}% 30
+\BOOKMARK [3][-]{subsubsection.3.6.7}{Parcours en largeur du graphe}{subsection.3.6}% 31
+\BOOKMARK [3][-]{subsubsection.3.6.8}{Retrouver l'indice d'un sommet}{subsection.3.6}% 32
+\BOOKMARK [2][-]{subsection.3.7}{Un nouveau format de stockage}{section.3}% 33
+\BOOKMARK [2][-]{subsection.3.8}{Impl\351mentation}{section.3}% 34
+\BOOKMARK [1][-]{section.4}{R\351sultats}{}% 35
+\BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 36
+\BOOKMARK [2][-]{subsection.4.2}{Appareillage en diamants}{section.4}% 37
+\BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 38
+\BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 39
+\BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 40
+\BOOKMARK [1][-]{section.5}{Partie Th\351orique}{}% 41
+\BOOKMARK [2][-]{subsection.5.1}{Borne inf\351rieure th\351orique}{section.5}% 42
+\BOOKMARK [2][-]{subsection.5.2}{NP-Compl\351tude}{section.5}% 43
+\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 44
+\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 45
+\BOOKMARK [2][-]{subsection.6.2}{D\351faut}{section.6}% 46
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 47
+\BOOKMARK [1][-]{section*.43}{Appendices}{}% 48
+\BOOKMARK [1][-]{Annexe.1.A}{Impl\351mentation des requ\352tes}{}% 49
+\BOOKMARK [2][-]{subsection.1.A.1}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{Annexe.1.A}% 50
+\BOOKMARK [2][-]{subsection.1.A.2}{Parcours en profondeur du graphe}{Annexe.1.A}% 51

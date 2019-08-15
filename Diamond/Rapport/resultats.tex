@@ -91,6 +91,7 @@ C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 \end{center}
 \end{figure}
 \begin{figure}
+\centering
 \pgfplotsset{width=15cm,height=7cm}
 \begin{tikzpicture}
 \begin{axis}[
@@ -150,19 +151,19 @@ Pour évaluer le temps nécessaire pour répondre à une requête, nous évaluon
 \begin{table}[h]
 \footnotesize
 \centering
-\begin{tabular}{| c | c | c| c |c |}
+\begin{tabular}{| c | c | c| c |c |c|}
 \hline
-Nom de la & Accès au& Accès au & Degré d'un & Parcours en\\
-structure &ième tétraèdre (s)& ième diamant (s) &sommet (s)&prodondeur (s)\\
+Nom de la & Accès au& Accès au & Degré d'un & Parcours en & Parcours en\\
+structure &ième tétraèdre (s)& ième diamant (s) &sommet (s)&largeur (s) & largeur normalisé\footnote{Par rapport au nombre de tétraèdres} (s/tétraèdre)\\
 \hline
-B1  & 1e-5 & 5e-6 & 1.9e-5 & 6e-4\\
-B2  &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01\\
-B3 & 0.011 & 0.0042 & 0.002 & 0.8\\
-B4 & 0.01 & 0.01 & 0.01 & 4.6\\
-B5 & 0.04 & 0.01 & 0.01 & 4.46 \\
+B1  & 1e-5 & 5e-6 & 1.9e-5 & 6e-4& 1.67e-7 \\
+B2  &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01& 1.19e-7\\
+B3 & 0.011 & 0.0042 & 0.002 & 0.8&3.56e-7\\
+B4 & 0.01 & 0.01 & 0.01 & 4.6&5.6e-7\\
+B5 & 0.04 & 0.01 & 0.01 & 4.46& 4.3e-7 \\
 %V1 & & & & \\
-M1  & 6.4e-4 & 2.6e-4 & 2.2e-4 & 0.02\\
-C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
+M1  & 6.4e-4 & 2.6e-4 & 2.2e-4 & 0.02&1.59e-7\\
+C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02&1.28e-7\\
 \hline  
 \end{tabular}
 \label{table:results_time}
@@ -173,16 +174,17 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 %Temps moyen structure de données non compacte (4 references tétra)
 %1.8e-3 7.8e-4 1.9e-4 0.36
 %2.5e-3 9.9e-4 5.2e-4 0.17
-
+%
 \begin{figure}[H]
 \centering
-\pgfplotsset{width=14cm,height=7cm}
+\pgfplotsset{width=16cm,height=8cm}
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
-    enlargelimits=0.15,
-    legend style={at={(0.6,0.9)},
-      anchor=north,legend columns=-1,cells={align=left}},
+    enlargelimits=0.1,
+%    legend style={anchor=east},
+    legend style={at={(0.45,0.94)}},
+%    anchor=north,legend columns=-1,cells={align=left}},
     ylabel={Secondes (s)},
 %    xlabel={Nombre de tétraèdres par arête},
     symbolic x coords={Accès au ième tétraèdre,Degré d'un sommet,Parcours en Largeur},
@@ -190,17 +192,19 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(Accès au ième tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,0.17)};
-\addplot coordinates {(Accès au ième tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,0.36)};
+\addplot coordinates {(Accès au ième tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,1.85e-3)};
+\addplot coordinates {(Accès au ième tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,4.25e-3)};
+\addplot coordinates {(Degré d'un sommet,1e-3)(Parcours en Largeur,2.92e-3)};
 %\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,)(5.11,) };
-\legend{Structure Compacte,Structure non Compacte,Structure avec Pointeurs}
+\legend{Structure Compacte,Structure Compacte avec 4 rpt,Structure avec Pointeurs}
 \end{axis}
 \end{tikzpicture}
-\caption{Comparaison des temps moyens (s) requis pour répondre aux requêtes avec notre structure de données compacte, une structure de données compacte utilisant 4 rpt (i.e SOT) et une structure de données compacte utilisant les pointeurs}
+\caption{Comparaison des temps moyens (s) requis pour répondre aux requêtes avec notre structure de données compacte, une structure de données compacte utilisant 4 rpt (i.e SOT) et une structure de données compacte utilisant les pointeurs. Le temps pour le parcours en largeur est normalisé pour 100 000 tétraèdres.}
 \label{fig:temps_moyen}
 \end{figure}
 \noindent
-Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre structure de données compacte sont moins bons pour l'accès au ième tétraèdre et le calcul du degré d'un sommet\footnote{Nous n'affichons pas le temps d'accès au ième diamant car la structure de données compacte à 4 rpt ne réunis pas les tétraèdres en diamants}. Etant donné que dans notre structure de données, le ième tétraèdre est plus proche du début du tableau que dans la structure à 4 rpt, le résultat devrait être l'inverse. De la même manière, pour le calcul du degré d'un sommet, sachant que les tétraèdres sont regroupés en diamants dans notre structure, le degré devrait être plus rapidement calculé. Nous expliquons ces deux écarts par les comparaisons effectuées dans les requêtes. En effet, lorsque nous voulons calculer le degré d'un sommet, si le sommet est adjacent à un tétraèdre isolé, alors il suffit de localiser la face du tétraèdre isolé non adjacente au sommet puis de naviguer au sein des trois autres faces. En revanche, lorsque notre sommet est adjacent à un diamant, davantage de comparaisons sont nécessaires afin de connaître les faces adjacentes au sommet. Cette suposition est confirmée en analysant les temps requis pour le parcours en largeur du graphe. Lorsque nous effectuons un parcours en largeur du graphe, aucune comparaison (utilisant les permutations des sommets) n'est nécessaire, il suffit seulement d'accèder au diamant/tétraèdres adjacents. Sachant que les tétraèdres sont regroupés en diamants dans notre structure, en accèdant à un diamant $D_i$, on accède directement au $|D_i|$ tétraèdres le composant, gagant un temps non négligeable.
+Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre structure de données compacte sont moins bons pour l'accès au ième tétraèdre et le calcul du degré d'un sommet\footnote{Nous n'affichons pas le temps d'accès au ième diamant car la structure de données compacte à 4 rpt ne réunis pas les tétraèdres en diamants}. Etant donné que dans notre structure de données, le ième tétraèdre est plus proche du début du tableau que dans la structure à 4 rpt, le résultat devrait être l'inverse. De la même manière, pour le calcul du degré d'un sommet, sachant que les tétraèdres sont regroupés en diamants dans notre structure, le degré devrait être plus rapidement calculé. Nous expliquons ces deux écarts par les comparaisons effectuées dans les requêtes. En effet, lorsque nous voulons calculer le degré d'un sommet, si le sommet est adjacent à un tétraèdre isolé, alors il suffit de localiser la face du tétraèdre isolé non adjacente au sommet puis de naviguer au sein des trois autres faces. En revanche, lorsque notre sommet est adjacent à un diamant, davantage de comparaisons sont nécessaires afin de connaître les faces adjacentes au sommet. Cette suposition est confirmée en analysant les temps requis pour le parcours en largeur du graphe. Lorsque nous effectuons un parcours en largeur du graphe, aucune comparaison (utilisant les permutations des sommets) n'est nécessaire, il suffit seulement d'accèder au diamant/tétraèdres adjacents. Sachant que les tétraèdres sont regroupés en diamants dans notre structure, en accèdant à un diamant $D_i$, on accède directement au $|D_i|$ tétraèdres le composant, gagant un temps non négligeable. 
+%Par ailleurs, nous avons choisi de d'ajouter à la comparaison une structure compacte (avec un regroupement en diamants) utilisant les pointeurs (et non un tableau d'entiers). On s'aper\c oit
 \subsection{Taille mémoire}
 \begin{figure}[H]
 \centering
@@ -212,15 +216,17 @@ Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre str
     enlargelimits=0.15,
     legend style={at={(0.4,0.94)},
       anchor=north,legend columns=-1,font=\fontsize{9}{9}\selectfont},
-    ylabel={Bytes},
+    ylabel={Mega Bytes (MB)},
     xlabel={Nombre de tétraèdres},
-    symbolic x coords={3k,83k,125k,156k,2.2M,8.1M,10.3M},
+    symbolic x coords={2.2M,8.1M,10.3M},
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(3k,9234)(83k,199262)(125k,307500)(156k,384156)(2.2M,5291508)(8.1M,19212158)(10.3M,24407986)};
-\addplot coordinates {(3k,14332)(83k,333648)(125k,500508)(156k,624540)(2.2M,8.97e6)(8.1M,3.26e7)(10.3M,4.14e7)};
+%\addplot coordinates {(3k,9234)(83k,199262)(125k,307500)(156k,384156)(2.2M,5291508)(8.1M,19212158)(10.3M,24407986)};
+%\addplot coordinates {(3k,14332)(83k,333648)(125k,500508)(156k,624540)(2.2M,8.97e6)(8.1M,3.26e7)(10.3M,4.14e7)};
+\addplot coordinates {(2.2M,5.2)(8.1M,19.2)(10.3M,24.4)};
+\addplot coordinates {(2.2M,8.9)(8.1M,32.6)(10.3M,41.4)};
 \legend{Structure Compacte,Structure non Compacte (4 rpt)}
 \end{axis}
 \end{tikzpicture}

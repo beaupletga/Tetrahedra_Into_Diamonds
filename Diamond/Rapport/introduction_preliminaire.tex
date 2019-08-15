@@ -42,7 +42,7 @@ Dans ce rapport, nous présentons une structure de données compacte permettant 
 
 \subsection*{Les arguments en faveur de sa validité}
 \noindent
-Notre structure de données est en moyenne 40\% plus économique que la meilleure structure de données disponible actuellement pour les maillages tétraèdriques. Cette économie est purement empirique et nous n'apportons pas de garanties théoriques concernant la place mémoire occupée par notre structure. La validité de la solution que nous proposons est directement liée aux expériences menées. Par conséquent, afin que nos résultats soient  fidèles à la réalité, nous évaluons notre structure sur une dizaine de maillages aux propriétés différentes en prétant particulièrement attention au temps requis pour la construction, au temps nécessaire pour répondre à de simples requêtes et à la taille mémoire consommée.
+Notre structure de données est en moyenne 40\% plus économique que la meilleure structure de données disponible actuellement pour les maillages tétraèdriques. Cette économie est purement empirique et nous n'apportons pas de garanties théoriques concernant la place mémoire occupée par notre structure. La validité de la solution que nous proposons est directement liée aux expériences menées. Par conséquent, afin que nos résultats soient fidèles à la réalité, nous évaluons notre structure sur une dizaine de maillages aux propriétés différentes en prétant particulièrement attention au temps requis pour la construction, au temps nécessaire pour répondre à de simples requêtes et à la taille mémoire consommée.
 
 \subsection*{Le bilan et les perspectives}
 \noindent
@@ -57,7 +57,7 @@ Je tiens à remercier mon superviseur Luca Castelli Aleardi pour sa précieuse a
 \newpage
 \section{Préliminaires}
 \noindent
-Ce rapport fait appel à des notions de géométrie. Afin que tous les termes employés soient compris par le lecteur, nous allons définir des termes qui seront employés tout au long de ce rapport.
+Ce rapport fait appel à des notions de géométrie. Afin que tous les termes employés soient compris par le lecteur, nous allons en définir certains qui seront employés tout au long de ce rapport.
 \subsection{Définitions}
 \noindent
 \textbf{Simplexe}. Un simplex $\sigma^p$ de dimension $p$ est l'enveloppe convexe de $p+1$ points $\{v_0,v_1,...v_p\}$, où $v_i\, \in R^n$ et les vecteurs $v_1-v_0,v_2-v_0...$ sont linéairement indépendants. Les simplexes de dimensions 0, 1, 2 et 3 sont respectivement les sommets, arêtes, triangles et tétraèdres.\\\\
@@ -82,6 +82,7 @@ Ce rapport fait appel à des notions de géométrie. Afin que tous les termes em
 
 \subsection{Combinatoire}
 \noindent
+%Les maillages dont nous allons parler dans la suite de ce rapport sont avant tout des complexes simpliciaux dont la combinatoire des simplexes est étudiée depuis de nombreuses années. 
 En mathématique et en optimisation combinatoire, la caractéristique d'Euler $\chi$ est un invariant topologique décrivant la forme d'un objet géométrique. Par conséquent, la valeur de $\chi$ ne change pas après déformation continue de l'objet géométrique.
 \begin{equation}
 \chi = \sum_{i=0} (-1)^i \, |dim(H_i)| = 2-2g
@@ -143,3 +144,21 @@ Ainsi :
 \chi \simeq |V|-|E|+|T|
 \end{equation}
 Il y a donc autant d'arêtes que de polytopes de dimension 3 et sommets réunis (Tab. \ref{tab:caract_maillages}).
+
+\subsubsection{Représentation des maillages tétraèdriques}
+\noindent
+Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, elle doit permettre une certaine utilisation du maillage. Voici certaines des opérations qu'elle doit supporter :\\
+\textbf{ith\_face(i,t)} Cette fonction doit donc permettre l'accès à la ième face du tétraèdre t. \\
+\textbf{ith\_tetrahedron(i)} Cette fonction doit permettre l'accès au ième tétraèdre en temps constant.\\
+\textbf{ith\_vertex(i)} Cette fonction doit retourner un des tétraèdres adjacents au ième sommet.\\ 
+\textbf{degree(i)} Cette fonction doit permettre de calculer le degré d'un sommet\\
+\textbf{hypersphere(i)} Cette fonction doit retourner l'hypersphère ou l'étoile d'un sommet, c'est à dire l'ensemble des tétraèdres possédant le ième sommet.\\
+\textbf{breadth\_first\_search(t)} Cette fonction doit permettre de réaliser un parcours en largeur du maillage en commen\c cant par le tétraèdre t .\\
+\textbf{get\_neighbour(v,t)} Cette fonction doit permettre de connaître l'indice du sommet v dans le tétraèdre t.\\\\
+Une structure de données naïve pour représenter un maillage tétraèdrique consiste à utiliser pour chaque tétraèdre plusieurs références\footnote{Une référence est un pointeur, c'est à dire une redirection vers un autre élément} : 
+\begin{itemize}
+\item 4 références par tétraèdre pointant vers ses tétraèdres voisins
+\item 4 référence par tétraèdre pointant vers ses sommets
+\item 1 référence par sommet pointant vers un de ses tétraèdres adjacents
+\end{itemize}
+Au total cela fait donc 8 références par tétraèdre et 1 référence par sommet (8$|$T$|$+$|$V$|$). Avec ces références, on peut répondre à toutes les requêtes ci-dessus.
