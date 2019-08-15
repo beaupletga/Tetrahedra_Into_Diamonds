@@ -50,7 +50,7 @@ Le degré d'une arête est le nombre de tétraèdres possédant cette arête. Un
 \subsubsection{Parcours en largeur des tétraèdres}
 \label{parcours_largeur}
 \noindent
-La troisième approche consiste à parcourir le maillage en largeur. On choisit un tétraèdre au début de l'algorithme puis on regarde pour chacune de ses arêtes si les tétraèdres partageant cette arète forment un diamant et qu'aucun n'appartienne déja à un diamant. Si ces deux conditions sont remplies, on crée un nouveau diamant avec cette arête centrale. Puis on ajoute à la file les tétraèdres adjacents et non visités au tétraèdre choisi. On exécute ainsi cet algorithme tant que la file n'est pas vide.\\\\
+La troisième approche consiste à parcourir le maillage en largeur. On choisit un tétraèdre au début de l'algorithme puis on regarde pour chacune de ses arêtes si les tétraèdres partageant cette arète forment un diamant et qu'aucun n'appartienne déja à un diamant. Si ces deux conditions sont remplies, on crée un nouveau diamant avec cette arête centrale. Puis on ajoute à la file les tétraèdres adjacents et non visités au tétraèdre choisi. On exécute ainsi cet algorithme tant que la file n'est pas vide.\\
 \begin{algorithm}[th]
 \SetAlgoLined	
  Soit F une file;\\
@@ -195,26 +195,27 @@ L'ordre des faces dans un diamant respecte celui des tétraèdres. Pour le ième
 \paragraph{Ordre des faces dans un tétraèdre isolé}
 Les faces d'un tétraèdre isolé sont ordonnées de manière arbitraire. Seulement, si le tétraèdre isolé est ancré à un sommet, alors la première face doit être la face opposée à l'ancre.
 \paragraph{Ordre des sommets dans les diamants}
-\label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant $D_i$ possedant $|D_i|$ tétraèdres contient $|D_i|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.
-\begin{figure}[th]
-\begin{center}
-\includegraphics[scale=0.45]{Images/tetra_ordonnee}
-\caption{Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. L'ordre des sommets est : C,D,E,G,F,A,B.}
-\label{fig:tetra_ordonnee}
-\end{center}
-\end{figure}
-
-\subsection{Calculer les permutations}
-\begin{figure}[th]
-\begin{center}
-\includegraphics[scale=0.45]{Images/permutation_tetra_diamant}
-\caption{Un diamant partage une face avec un tétraèdre isolé. En vert est l'ordre des face du tétraèdre. L'ordre des sommets du tétraèdre est A,D,C,H et celui du diamant est C,D,E,G,F,A,B.}
-\label{fig:permutation_tetra_diamant}
-\end{center}
+\label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant $D_i$ possedant $|D_i|$ tétraèdres contient $|D_i|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.\\
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.38]{Images/tetra_ordonnee}
+  \caption{}
+  \label{fig:tetra_ordonnee}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.4]{Images/permutation_tetra_diamant}
+  \caption{}
+  
+  \label{fig:permutation_tetra_diamant}
+\end{subfigure}
+\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. L'ordre des sommets est : C,D,E,G,F,A,B. \textbf{Droite} : Un diamant partage une face avec un tétraèdre isolé. En vert est l'ordre des face du tétraèdre. L'ordre des sommets du tétraèdre est A,D,C,H et celui du diamant est C,D,E,G,F,A,B.}
 \end{figure}
 \noindent
 %Calculer les permutations des sommets entre deux faces est primordial car cela permet de connaître la position d'un sommet dans la face opposée.\\
-Avec la structure naïve décrite dans la partie \ref{representation_maillages_tetra}, chaque tétraèdre possède entre autre 4 références vers ses 4 sommets. Ainsi, pour deux tétraèdres adjacents, il suffit de comparer les références de leurs sommets respectifs pour identifier les sommets communs.\\
+Avec la structure naïve décrite dans la partie \ref{representation_maillages_tetra}, chaque tétraèdre possède 4 références vers ses 4 sommets. Ainsi, pour deux tétraèdres adjacents, il suffit de comparer les références de leurs sommets respectifs pour identifier les sommets communs.\\
 Ici, par soucis d'économie, nous ne souhaitons pas stocker de références des tétraèdres vers leurs sommets. Nous utilisons juste l'ordre des diamants et des tétraèdres isolés afin d'identifier la position d'un sommet (partie \ref{ancrage}).\\
 Néanmoins, lorsque nous passons d'une face à l'autre, nous ne savons plus associer les sommets deux à deux. Dans la Fig. \ref{fig:permutation_tetra_diamant}, cela reviendrait à ne pas savoir lors du passage du tétraèdre isolé au diamant via la face ACD où se situe le sommet A (resp. C,D). Or, deux des opérations nécessaires à notre structure de donnée sont \textbf{degree(v)} et \textbf{hypersphere(v)} qui nécessitent toutes les deux d'identifier un sommet afin de parcourir les faces adjacentes à ce sommet. Par conséquent, pour connaître l'emplacement d'un sommet dans une face opposée, nous calculons des permutations.
 Dans la Fig. \ref{fig:permutation_tetra_diamant}, pour calculer la permutation vue du tétraèdre isolé de la face CAD, il suffit de comparer l'ordre des sommets du tétraèdre isolé et du diamant. Si l'on garde seulement les 3 sommets qui nous intéressent dans les deux classements, on a : A,D,C et C,D,A. La permutation est donc (2,1,0). Bien entendu, la permutation pour la même face du point de vue du diamant est la même. Il y a 3!=6 permutations possibles et donc 3 bits par face sont nécessaires pour représenter ces permutations.

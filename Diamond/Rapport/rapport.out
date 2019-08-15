@@ -20,29 +20,28 @@
 \BOOKMARK [3][-]{subsubsection.3.2.4}{Parcours en largeur des t\351tra\350dres}{subsection.3.2}% 20
 \BOOKMARK [2][-]{subsection.3.3}{Choisir l'ancre}{section.3}% 21
 \BOOKMARK [2][-]{subsection.3.4}{Organisation des diamant, t\351tra\350dres et sommets}{section.3}% 22
-\BOOKMARK [2][-]{subsection.3.5}{Calculer les permutations}{section.3}% 23
-\BOOKMARK [2][-]{subsection.3.6}{La structure}{section.3}% 24
-\BOOKMARK [2][-]{subsection.3.7}{Les requ\352tes}{section.3}% 25
-\BOOKMARK [3][-]{subsubsection.3.7.1}{Acc\351der \340 la i\350me face}{subsection.3.7}% 26
-\BOOKMARK [3][-]{subsubsection.3.7.2}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{subsection.3.7}% 27
-\BOOKMARK [3][-]{subsubsection.3.7.3}{Parcourir les t\351tra\350dres d'un diamant}{subsection.3.7}% 28
-\BOOKMARK [3][-]{subsubsection.3.7.4}{Acc\351der au i\350me t\351tra\350dre}{subsection.3.7}% 29
-\BOOKMARK [3][-]{subsubsection.3.7.5}{Acc\351der au i\350me sommet}{subsection.3.7}% 30
-\BOOKMARK [3][-]{subsubsection.3.7.6}{Degr\351 et hypersph\350re d'un sommet}{subsection.3.7}% 31
-\BOOKMARK [3][-]{subsubsection.3.7.7}{Parcours en largeur du graphe}{subsection.3.7}% 32
-\BOOKMARK [3][-]{subsubsection.3.7.8}{Retrouver l'indice d'un sommet}{subsection.3.7}% 33
-\BOOKMARK [2][-]{subsection.3.8}{Un nouveau format de stockage}{section.3}% 34
-\BOOKMARK [2][-]{subsection.3.9}{Impl\351mentation}{section.3}% 35
-\BOOKMARK [1][-]{section.4}{R\351sultats}{}% 36
-\BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 37
-\BOOKMARK [2][-]{subsection.4.2}{Appareillage en diamants}{section.4}% 38
-\BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 39
-\BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 40
-\BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 41
-\BOOKMARK [1][-]{section.5}{Partie Th\351orique}{}% 42
-\BOOKMARK [2][-]{subsection.5.1}{Borne inf\351rieure th\351orique}{section.5}% 43
-\BOOKMARK [2][-]{subsection.5.2}{NP-Compl\351tude}{section.5}% 44
-\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 45
-\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 46
-\BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 47
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 48
+\BOOKMARK [2][-]{subsection.3.5}{La structure}{section.3}% 23
+\BOOKMARK [2][-]{subsection.3.6}{Les requ\352tes}{section.3}% 24
+\BOOKMARK [3][-]{subsubsection.3.6.1}{Acc\351der \340 la i\350me face}{subsection.3.6}% 25
+\BOOKMARK [3][-]{subsubsection.3.6.2}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{subsection.3.6}% 26
+\BOOKMARK [3][-]{subsubsection.3.6.3}{Parcourir les t\351tra\350dres d'un diamant}{subsection.3.6}% 27
+\BOOKMARK [3][-]{subsubsection.3.6.4}{Acc\351der au i\350me t\351tra\350dre}{subsection.3.6}% 28
+\BOOKMARK [3][-]{subsubsection.3.6.5}{Acc\351der au i\350me sommet}{subsection.3.6}% 29
+\BOOKMARK [3][-]{subsubsection.3.6.6}{Degr\351 et hypersph\350re d'un sommet}{subsection.3.6}% 30
+\BOOKMARK [3][-]{subsubsection.3.6.7}{Parcours en largeur du graphe}{subsection.3.6}% 31
+\BOOKMARK [3][-]{subsubsection.3.6.8}{Retrouver l'indice d'un sommet}{subsection.3.6}% 32
+\BOOKMARK [2][-]{subsection.3.7}{Un nouveau format de stockage}{section.3}% 33
+\BOOKMARK [2][-]{subsection.3.8}{Impl\351mentation}{section.3}% 34
+\BOOKMARK [1][-]{section.4}{R\351sultats}{}% 35
+\BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 36
+\BOOKMARK [2][-]{subsection.4.2}{Appareillage en diamants}{section.4}% 37
+\BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 38
+\BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 39
+\BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 40
+\BOOKMARK [1][-]{section.5}{Partie Th\351orique}{}% 41
+\BOOKMARK [2][-]{subsection.5.1}{Borne inf\351rieure th\351orique}{section.5}% 42
+\BOOKMARK [2][-]{subsection.5.2}{NP-Compl\351tude}{section.5}% 43
+\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 44
+\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 45
+\BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 46
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 47

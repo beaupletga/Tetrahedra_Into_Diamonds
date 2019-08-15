@@ -218,15 +218,15 @@ Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre str
       anchor=north,legend columns=-1,font=\fontsize{9}{9}\selectfont},
     ylabel={Mega Bytes (MB)},
     xlabel={Nombre de tétraèdres},
-    symbolic x coords={2.2M,8.1M,10.3M},
+    symbolic x coords={2.2M,5.3M,8.1M,10.3M},
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
     ]
 %\addplot coordinates {(3k,9234)(83k,199262)(125k,307500)(156k,384156)(2.2M,5291508)(8.1M,19212158)(10.3M,24407986)};
 %\addplot coordinates {(3k,14332)(83k,333648)(125k,500508)(156k,624540)(2.2M,8.97e6)(8.1M,3.26e7)(10.3M,4.14e7)};
-\addplot coordinates {(2.2M,5.2)(8.1M,19.2)(10.3M,24.4)};
-\addplot coordinates {(2.2M,8.9)(8.1M,32.6)(10.3M,41.4)};
+\addplot coordinates {(2.2M,20.8)(5.3M,50.4)(8.1M,76.8)(10.3M,97.6)};
+\addplot coordinates {(2.2M,35.6)(5.3M,85.6)(8.1M,130.4)(10.3M,165.6)};
 \legend{Structure Compacte,Structure non Compacte (4 rpt)}
 \end{axis}
 \end{tikzpicture}
@@ -234,7 +234,7 @@ Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre str
 \label{fig:taille_memoire}
 \end{figure}
 \noindent
-La Fig. \ref{fig:taille_memoire} compare l'évolution de la place mémoire en fonction du nombre de tétraèdres par maillages pour notre structure de données et une structure de données utilisant 4 références par tétraèdres. Cette dernière structure de données est équivalente à SOT, seulement elle utilise les faces plutôt que les coins pour naviguer dans le maillage. Sur le plus gros maillage, notre structure de données permet d'économiser 17MB de place mémoire.
+La Fig. \ref{fig:taille_memoire} compare l'évolution de la place mémoire en fonction du nombre de tétraèdres par maillages pour notre structure de données et une structure de données utilisant 4 références par tétraèdres. Cette dernière structure de données est équivalente à SOT, seulement elle utilise les faces plutôt que les coins pour naviguer dans le maillage. Sur le plus gros maillage, notre structure de données permet d'économiser 68MB de place mémoire.
 
 %
 %temps pour la structure non compacte
