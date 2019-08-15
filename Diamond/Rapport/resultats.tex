@@ -79,7 +79,7 @@ M1 & 77& 2.44 & 1.26 & 83 & 2.34 & 794\\
 C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 \hline  
 \end{tabular}
-\caption{Résultats des algorithmes d'appareillage des tétraèdres en diamants}
+\caption{Résultats des algorithmes d'appareillage des tétraèdres en diamants. Le deuxième algorithme ayant des temps de calculs assez importants, certains maillages n'ont pas pu être considérés.}
 \label{tab:results_performances}
 \end{table}
 
@@ -142,7 +142,7 @@ C1 & 0.8 & 77 & 76 \\
 \label{tab:results_ancres}
 \end{table}
 \noindent
-On remarque sur le Tab. \ref{tab:results_ancres} qu'en appliquant l'algorithme glouton afin d'appareiller sommet et diamant/tétraèdre isolé, une part minime des sommets demeure non ancrés (1ère colonne). Par ailleurs, on note que la destruction de certains diamants pour associer des sommets à des tétraèdres n'a que peu d'incidence sur les performances tant que le nombre de sommets est important (2ème et 3ème colonnes).
+On remarque sur le Tab. \ref{tab:results_ancres} qu'en appliquant l'algorithme glouton afin d'appareiller sommet et diamant/tétraèdre isolé, une part minime des sommets demeure non ancrée (1ère colonne). Par ailleurs, on note que la destruction de certains diamants pour associer des sommets à des tétraèdres n'a que peu d'incidence sur la part de sommets ancrés tant que le nombre de sommets est important (2ème et 3ème colonnes).
 
 \subsection{Les requêtes}
 \noindent
@@ -160,7 +160,7 @@ B2  &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01\\
 B3 & 0.011 & 0.0042 & 0.002 & 0.8\\
 B4 & 0.01 & 0.01 & 0.01 & 4.6\\
 B5 & 0.04 & 0.01 & 0.01 & 4.46 \\
-V1 & & & & \\
+%V1 & & & & \\
 M1  & 6.4e-4 & 2.6e-4 & 2.2e-4 & 0.02\\
 C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 \hline  
@@ -197,7 +197,7 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 %\label{fig:graphique}
 %\end{figure}
 
-
+\subsection{Taille mémoire}
 \begin{figure}
 \pgfplotsset{width=15cm,height=7cm}
 \begin{tikzpicture}
@@ -206,7 +206,7 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 %    ymode = log,
     enlargelimits=0.15,
     legend style={at={(0.4,0.94)},
-      anchor=north,legend columns=-1,font=\fontsize{8}{8}\selectfont},
+      anchor=north,legend columns=-1,font=\fontsize{9}{9}\selectfont},
     ylabel={Bytes},
     xlabel={Nombre de tétraèdres},
     symbolic x coords={3k,83k,125k,156k,2.2M,8.1M,10.3M},
@@ -216,47 +216,26 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
     ]
 \addplot coordinates {(3k,9234)(83k,199262)(125k,307500)(156k,384156)(2.2M,5291508)(8.1M,19212158)(10.3M,24407986)};
 \addplot coordinates {(3k,14332)(83k,333648)(125k,500508)(156k,624540)(2.2M,8.97e6)(8.1M,3.26e7)(10.3M,4.14e7)};
-%\addplot coordinates {(3k,)(83k)(125k)(156k)(2.2M)(8.1M)(10.3M)};
-\legend{Structure Compacte,Structure de données non Compacte (4 rpt)}
+\legend{Structure Compacte,Structure non Compacte (4 rpt)}
 \end{axis}
 \end{tikzpicture}
 \caption{Comparaison de la taille mémoire (en bytes) de notre structure de données compacte et de la même structure de données sans regroupement des tétraèdres en diamants}
-\label{fig:graphique}
+\label{fig:taille_memoire}
 \end{figure}
-
+\noindent
+La Fig. \ref{fig:taille_memoire} compare l'évolution de la place mémoire en fonction du nombre de tétraèdres par maillages pour notre structure de données et une structure de données utilisant 4 références par tétraèdres. Cette dernière structure de données est équivalente à SOT, seulement elle utilise les faces plutôt que les coins pour naviguer dans le maillage. Sur le plus gros maillage, notre structure de données permet d'économiser 17MB de place mémoire.
 
 
 %Temps moyen structure de données non compacte (4 references tétra)
 %1.8e-3 7.8e-4 1.9e-4 0.36
+%2.5e-3 9.9e-4 5.2e-4 0.17
+
 %
 %temps pour la structure non compacte
 %B1 1.31e-5 5.3e-6 2.7e-5 9.1e-4
 %B2 2e-4 & 1e-4 7.1e-5 0.03
 %B3 8.1e-3 3e-3 7e-4 1.8
+%B4 
 %M1 4.9e-4 1.9e-4 8.6e-5 0.04
 %C1 6.4e-4 2.7e-4 1.1e-4 0.06
-%
-%
-%taille du tableau de la structure compacte
-%B1 9234  14332
-%B2 199262 333648
-%B3 5291508 8.97e6
-%B4 19212158 3.26e7
-%B5 24407986 4.14e7
-%V1
-%M1 307500 500508
-%C1 384156 624540
-%
-%
-%
-%
-%
-%
-%%B1  & 
-%%B2 & 1.4e-4 & 0.032
-%%B3 & 
-%%%Vache &  
-%%M1  & 3e-4 &  0.49
-%%C1  &
-%
-%METTRE GRAPHE EN COMPARANT STRUCTURE COMPLETE ET STRUCTURE COMPACTE
+
