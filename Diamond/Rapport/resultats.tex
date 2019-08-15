@@ -166,39 +166,44 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 \hline  
 \end{tabular}
 \label{table:results_time}
-\caption{Temps requis pour répondre aux requêtes sur plusieurs maillages}
+\caption{Temps requis (s) pour répondre aux requêtes sur plusieurs maillages}
 \end{table}
 \noindent
 
+%Temps moyen structure de données non compacte (4 references tétra)
+%1.8e-3 7.8e-4 1.9e-4 0.36
+%2.5e-3 9.9e-4 5.2e-4 0.17
 
-
-%\begin{figure}
-%\pgfplotsset{width=15cm,height=7cm}
-%\begin{tikzpicture}
-%\begin{axis}[
-%    ybar,
-%    enlargelimits=0.15,
-%    legend style={at={(0.6,0.9)},
-%      anchor=north,legend columns=-1},
-%    ylabel={RPT},
+\begin{figure}[H]
+\centering
+\pgfplotsset{width=14cm,height=7cm}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    enlargelimits=0.15,
+    legend style={at={(0.6,0.9)},
+      anchor=north,legend columns=-1,cells={align=left}},
+    ylabel={Secondes (s)},
 %    xlabel={Nombre de tétraèdres par arête},
-%    symbolic x coords={3.9,4.29,4.43,4.93,5.08,5.10,5.11},
-%    xtick=data,
-%    nodes near coords,
-%    nodes near coords align={vertical},
-%    ]
-%\addplot coordinates {(3.9,1.31e-5)(4.29,2.44)(4.43,2.44)(4.93,2.39)(5.08,2.37)(5.10,2.35)(5.11,2.35) };
+    symbolic x coords={Accès au ième tétraèdre,Degré d'un sommet,Parcours en Largeur},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    ]
+\addplot coordinates {(Accès au ième tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,0.17)};
+\addplot coordinates {(Accès au ième tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,0.36)};
 %\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,)(5.11,) };
-%%\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,)(5.11,) };
-%\legend{Structure Compacte,Structure non Compacte,Structure avec Pointeurs}
-%\end{axis}
-%\end{tikzpicture}
-%\caption{Nombre de références par tétraèdre (rpt) en fonction du nombre de tétraèdres par arête}
-%\label{fig:graphique}
-%\end{figure}
-
+\legend{Structure Compacte,Structure non Compacte,Structure avec Pointeurs}
+\end{axis}
+\end{tikzpicture}
+\caption{Comparaison des temps moyens (s) requis pour répondre aux requêtes avec notre structure de données compacte, une structure de données compacte utilisant 4 rpt (i.e SOT) et une structure de données compacte utilisant les pointeurs}
+\label{fig:temps_moyen}
+\end{figure}
+\noindent
+Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre structure de données compacte sont moins bons pour l'accès au ième tétraèdre et le calcul du degré d'un sommet\footnote{Nous n'affichons pas le temps d'accès au ième diamant car la structure de données compacte à 4 rpt ne réunis pas les tétraèdres en diamants}. Etant donné que dans notre structure de données, le ième tétraèdre est plus proche du début du tableau que dans la structure à 4 rpt, le résultat devrait être l'inverse. De la même manière, pour le calcul du degré d'un sommet, sachant que les tétraèdres sont regroupés en diamants dans notre structure, le degré devrait être plus rapidement calculé. Nous expliquons ces deux écarts par les comparaisons effectuées dans les requêtes. En effet, lorsque nous voulons calculer le degré d'un sommet, si le sommet est adjacent à un tétraèdre isolé, alors il suffit de localiser la face du tétraèdre isolé non adjacente au sommet puis de naviguer au sein des trois autres faces. En revanche, lorsque notre sommet est adjacent à un diamant, davantage de comparaisons sont nécessaires afin de connaître les faces adjacentes au sommet. Cette suposition est confirmée en analysant les temps requis pour le parcours en largeur du graphe. Lorsque nous effectuons un parcours en largeur du graphe, aucune comparaison (utilisant les permutations des sommets) n'est nécessaire, il suffit seulement d'accèder au diamant/tétraèdres adjacents. Sachant que les tétraèdres sont regroupés en diamants dans notre structure, en accèdant à un diamant $D_i$, on accède directement au $|D_i|$ tétraèdres le composant, gagant un temps non négligeable.
 \subsection{Taille mémoire}
-\begin{figure}
+\begin{figure}[H]
+\centering
 \pgfplotsset{width=15cm,height=7cm}
 \begin{tikzpicture}
 \begin{axis}[
@@ -224,11 +229,6 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02\\
 \end{figure}
 \noindent
 La Fig. \ref{fig:taille_memoire} compare l'évolution de la place mémoire en fonction du nombre de tétraèdres par maillages pour notre structure de données et une structure de données utilisant 4 références par tétraèdres. Cette dernière structure de données est équivalente à SOT, seulement elle utilise les faces plutôt que les coins pour naviguer dans le maillage. Sur le plus gros maillage, notre structure de données permet d'économiser 17MB de place mémoire.
-
-
-%Temps moyen structure de données non compacte (4 references tétra)
-%1.8e-3 7.8e-4 1.9e-4 0.36
-%2.5e-3 9.9e-4 5.2e-4 0.17
 
 %
 %temps pour la structure non compacte
