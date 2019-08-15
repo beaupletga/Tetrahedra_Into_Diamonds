@@ -79,72 +79,72 @@
 \end{thebibliography}
 
 
-\newpage
-\begin{appendices}
-\section{Implémentation des requêtes}
-\subsection{Accéder au ième diamant ou tétraèdre isolé}
-\begin{lstlisting}
-int ith_tetra_diamond(bool service_bit_array[],int array_size,int i)
-{
-    int count=0;
-    int j=0;
-    while(count<i)
-    {
-    	if (service_bit_array[j]==1)
-    	{
-    		count++;
-    	}
-    }
-    return j;
-}
-\end{lstlisting}
-\subsection{Parcours en profondeur du graphe}
-\begin{lstlisting}
-void BFS(int diamond_array[],bool service_bit_array[],int array_size,
-int starting_index)
-{
-    queue<int> wait_list;
-    unordered_set<int> visited_polygons; 
-    int index = ith_diamond(service_bit_array,array_size,starting_index);    
-    wait_list.push(get_starting_index(service_bit_array,index)); 
-    while(!wait_list.empty())
-    {
-        index = wait_list.front();
-        wait_list.pop();
-        int i=index+1;
-        int diamond_id = get_starting_index(service_bit_array,index);
-        if(visited_polygons.count(diamond_id)==0)
-        {
-            visited_polygons.insert(diamond_id);
-            path.push_back(diamond_id);
-            //we iterate over the following faces in the diamond or isolated tetra
-            while(service_bit_array[i]!=1 && i<array_size)
-            {
-                if (diamond_array[i]!=-1)
-                {
-                    wait_list.push(diamond_array[i]);
-                }
-                i++;               
-            }
-            //we iterate over the previous faces in the diamond or isolated tetra
-            i=index;
-            while(service_bit_array[i]!=1 && i<array_size)
-            {
-                if (diamond_array[i]!=-1)
-                {
-                    wait_list.push(diamond_array[i]);
-                }
-                i--;
-            }
-            if (diamond_array[i]!=-1)
-            {
-                wait_list.push(diamond_array[i]);
-            }
-        }
-    }
-}
-\end{lstlisting}
-\end{appendices}
+%\newpage
+%\begin{appendices}
+%\section{Implémentation des requêtes}
+%\subsection{Accéder au ième diamant ou tétraèdre isolé}
+%\begin{lstlisting}
+%int ith_tetra_diamond(bool service_bit_array[],int array_size,int i)
+%{
+%    int count=0;
+%    int j=0;
+%    while(count<i)
+%    {
+%    	if (service_bit_array[j]==1)
+%    	{
+%    		count++;
+%    	}
+%    }
+%    return j;
+%}
+%\end{lstlisting}
+%\subsection{Parcours en profondeur du graphe}
+%\begin{lstlisting}
+%void BFS(int diamond_array[],bool service_bit_array[],int array_size,
+%int starting_index)
+%{
+%    queue<int> wait_list;
+%    unordered_set<int> visited_polygons; 
+%    int index = ith_diamond(service_bit_array,array_size,starting_index);    
+%    wait_list.push(get_starting_index(service_bit_array,index)); 
+%    while(!wait_list.empty())
+%    {
+%        index = wait_list.front();
+%        wait_list.pop();
+%        int i=index+1;
+%        int diamond_id = get_starting_index(service_bit_array,index);
+%        if(visited_polygons.count(diamond_id)==0)
+%        {
+%            visited_polygons.insert(diamond_id);
+%            path.push_back(diamond_id);
+%            //we iterate over the following faces in the diamond or isolated tetra
+%            while(service_bit_array[i]!=1 && i<array_size)
+%            {
+%                if (diamond_array[i]!=-1)
+%                {
+%                    wait_list.push(diamond_array[i]);
+%                }
+%                i++;               
+%            }
+%            //we iterate over the previous faces in the diamond or isolated tetra
+%            i=index;
+%            while(service_bit_array[i]!=1 && i<array_size)
+%            {
+%                if (diamond_array[i]!=-1)
+%                {
+%                    wait_list.push(diamond_array[i]);
+%                }
+%                i--;
+%            }
+%            if (diamond_array[i]!=-1)
+%            {
+%                wait_list.push(diamond_array[i]);
+%            }
+%        }
+%    }
+%}
+%\end{lstlisting}
+%\end{appendices}%
 
 
 \end{document}

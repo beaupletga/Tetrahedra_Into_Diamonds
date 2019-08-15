@@ -1,7 +1,7 @@
 \section{Résultats}
 \subsection{Procédure d'évaluation}
 \noindent
-Nous devons évaluer notre structure afin de comparer ses performances aux résultats pré-existants. Pour cela, nous avons choisi une dizaine de maillages avec des formes, des tailles, et des tétraèdrisations différentes (Fig. \ref{fig:exemples_maillages}). Les boules ont été générées avec CGAL \cite{CGAL} en utilisant le module de génération de sphères implicites. Les autres tétraèdrisations ont été pris le site "". Nous ne présentons les résultats de nos algorithmes que sur 8 de ces maillages.
+Nous devons évaluer notre structure afin de comparer ses performances aux résultats pré-existants. Pour cela, nous avons choisi une dizaine de maillages avec des formes, des tailles, et des tétraèdrisations différentes (Fig. \ref{fig:exemples_maillages}). Les boules ont été générées avec CGAL \cite{CGAL} en utilisant le module de génération de sphères implicites. Les autres tétraèdrisations ont été pris le site "Aim@Shape". Nous ne présentons les résultats de nos algorithmes que sur 8 de ces maillages.
 \begin{figure}[th]
 \centering
 \begin{subfigure}{.24\textwidth}
@@ -90,9 +90,9 @@ C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 \label{fig:histogramme}
 \end{center}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
 \centering
-\pgfplotsset{width=15cm,height=7cm}
+\pgfplotsset{width=15cm,height=5.5cm}
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
@@ -177,13 +177,13 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02&1.28e-7\\
 %
 \begin{figure}[H]
 \centering
-\pgfplotsset{width=16cm,height=8cm}
+\pgfplotsset{width=12cm,height=7cm}
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
     enlargelimits=0.1,
 %    legend style={anchor=east},
-    legend style={at={(0.45,0.94)}},
+    legend style={at={(0.62,0.94)}},
 %    anchor=north,legend columns=-1,cells={align=left}},
     ylabel={Secondes (s)},
 %    xlabel={Nombre de tétraèdres par arête},
@@ -194,12 +194,12 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02&1.28e-7\\
     ]
 \addplot coordinates {(Accès au ième tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,1.85e-3)};
 \addplot coordinates {(Accès au ième tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,4.25e-3)};
-\addplot coordinates {(Degré d'un sommet,1e-3)(Parcours en Largeur,2.92e-3)};
+%\addplot coordinates {(Degré d'un sommet,1e-3)(Parcours en Largeur,2.92e-3)};
 %\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,)(5.11,) };
 \legend{Structure Compacte,Structure Compacte avec 4 rpt,Structure avec Pointeurs}
 \end{axis}
 \end{tikzpicture}
-\caption{Comparaison des temps moyens (s) requis pour répondre aux requêtes avec notre structure de données compacte, une structure de données compacte utilisant 4 rpt (i.e SOT) et une structure de données compacte utilisant les pointeurs. Le temps pour le parcours en largeur est normalisé pour 100 000 tétraèdres.}
+\caption{Comparaison des temps moyens (s) requis pour répondre aux requêtes avec notre structure de données compacte et une structure de données compacte utilisant 4 rpt (i.e SOT). Le temps pour le parcours en largeur est normalisé pour 100 000 tétraèdres.}
 \label{fig:temps_moyen}
 \end{figure}
 \noindent
@@ -208,7 +208,7 @@ Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre str
 \subsection{Taille mémoire}
 \begin{figure}[H]
 \centering
-\pgfplotsset{width=15cm,height=7cm}
+\pgfplotsset{width=13cm,height=7cm}
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
