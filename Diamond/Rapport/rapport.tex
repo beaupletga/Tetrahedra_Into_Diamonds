@@ -1,7 +1,7 @@
 \documentclass[a4paper,11pt,openany]{article}
 \usepackage[noconfigs,french]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
+\usepackage[left=1.3cm,right=1.3cm,top=1.4cm,bottom=1.4cm]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{float}
@@ -14,13 +14,25 @@
 \usepackage{subcaption}
 \usepackage[noabbrev]{cleveref}
 %\usepackage{algorithm}
-%\usepackage{algorithmic}
+\usepackage{algorithmic}
 \usepackage[]{algorithm2e}
 \usepackage{listings}
 \usepackage{pgfplots}
 \usepackage{xcolor}
 \usepackage{titling}
 \usepackage[toc,page]{appendix}
+\SetAlFnt{\footnotesize}
+
+
+\definecolor{OliveGreen}{rgb}{0.2,0.5,0.2}
+\definecolor{Orange}{rgb}{1,0.5,0.3}
+\definecolor{Purple}{rgb}{0.75,0.2,0.75}
+\definecolor{Grey}{rgb}{0.5,0.5,0.5}
+\definecolor{BlueMarine}{rgb}{0,0.6,0.6}
+\newcommand{\gb}[1]{{\color{OliveGreen}  #1}}
+\newcommand{\lc}[1]{{\color{BlueMarine}  #1}}
+\newcommand{\gabriel}[1]{\marginpar{\tiny\od{#1}}}
+\newcommand{\luca}[1]{\marginpar{\tiny\lc{#1}}}
 \newcommand{\subtitle}[1]{%
   \posttitle{%
     \par\end{center}
@@ -78,73 +90,108 @@
 \bibitem{rank_and_select}Gonzalo Navarro,Eliana Providel,\emph{Fast, Small, Simple Rank/Select on Bitmaps}, 2012
 \end{thebibliography}
 
-
-%\newpage
-%\begin{appendices}
-%\section{Implémentation des requêtes}
-%\subsection{Accéder au ième diamant ou tétraèdre isolé}
-%\begin{lstlisting}
-%int ith_tetra_diamond(bool service_bit_array[],int array_size,int i)
-%{
-%    int count=0;
-%    int j=0;
-%    while(count<i)
-%    {
-%    	if (service_bit_array[j]==1)
-%    	{
-%    		count++;
-%    	}
-%    }
-%    return j;
-%}
-%\end{lstlisting}
-%\subsection{Parcours en profondeur du graphe}
-%\begin{lstlisting}
-%void BFS(int diamond_array[],bool service_bit_array[],int array_size,
-%int starting_index)
-%{
-%    queue<int> wait_list;
-%    unordered_set<int> visited_polygons; 
-%    int index = ith_diamond(service_bit_array,array_size,starting_index);    
-%    wait_list.push(get_starting_index(service_bit_array,index)); 
-%    while(!wait_list.empty())
-%    {
-%        index = wait_list.front();
-%        wait_list.pop();
-%        int i=index+1;
-%        int diamond_id = get_starting_index(service_bit_array,index);
-%        if(visited_polygons.count(diamond_id)==0)
-%        {
-%            visited_polygons.insert(diamond_id);
-%            path.push_back(diamond_id);
-%            //we iterate over the following faces in the diamond or isolated tetra
-%            while(service_bit_array[i]!=1 && i<array_size)
-%            {
-%                if (diamond_array[i]!=-1)
-%                {
-%                    wait_list.push(diamond_array[i]);
-%                }
-%                i++;               
-%            }
-%            //we iterate over the previous faces in the diamond or isolated tetra
-%            i=index;
-%            while(service_bit_array[i]!=1 && i<array_size)
-%            {
-%                if (diamond_array[i]!=-1)
-%                {
-%                    wait_list.push(diamond_array[i]);
-%                }
-%                i--;
-%            }
-%            if (diamond_array[i]!=-1)
-%            {
-%                wait_list.push(diamond_array[i]);
-%            }
-%        }
-%    }
-%}
-%\end{lstlisting}
-%\end{appendices}%
-
+\begin{appendices}
+%appendix
+\begin{algorithm}[th]
+\SetAlgoLined	
+\SetKwFunction{FMain}{degré$\_$sommet}
+\SetKwProg{Fn}{Function}{:}{}
+\Fn{\FMain{A[],bit$\_$service[],permutation[], int i}}{ 
+    degré=0;\\
+    file Q de faces;\\
+    index$\_$face = index$\_$du$\_$sommet$\_$i$\_$dans$\_$tableau(i,bit$\_$service);\\
+    \eIf{taille$\_$conteneur(index,bit$\_$service)=4}
+    {
+        ajouter à Q les faces [index$\_$face+1,pos$\_$ancre=0],[index$\_$face+2,pos$\_$ancre=0],[index$\_$face+3,pos$\_$ancre=0];
+    }
+    {   ajouter à Q les faces [index$\_$face+i,pos$\_$ancre=2] pour i=$\{$0,2,4..taille$\_$conteneur(index$\_$face,bit$\_$service)$\}$;
+   	}
+   	\While{Q non vide}
+   	{
+   		face = Q.defiler();\\
+   		index$\_$face=face.index;\\
+   		index$\_$face$\_$op=A[index$\_$face];\\
+        pos$\_$ancre=face.pos$\_$ancre;\\
+        taille$\_$conteneur = taille$\_$conteneur(index$\_$face$\_$op,service$\_$bit);\\
+        \If{index$\_$face$\_$op non visité}
+        {
+        	\eIf{taille$\_$conteneur$>$4}
+        	{
+        		\If{permutation[index$\_$face][0]==pos$\_$ancre}
+        		{
+        			\eIf{index$\_$face$\_$op\%2==0}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op+1,pos$\_$ancre=0],[index$\_$face$\_$op-1,pos$\_$ancre=1],[index$\_$face$\_$op-2,pos$\_$ancre=2];\\
+        			}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op-1,pos$\_$ancre=0],[index$\_$face$\_$op-2,pos$\_$ancre=1],[index$\_$face$\_$op-3,pos$\_$ancre=2];\\
+        			}
+        			degré+=2;\\
+        		}
+        		\If{permutation[index$\_$face][1]==pos$\_$ancre}
+        		{
+        			\eIf{index$\_$face$\_$op\%2==0}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op+1,pos$\_$ancre=1],[index$\_$face$\_$op+2,pos$\_$ancre=0],[index$\_$face$\_$op+3,pos$\_$ancre=0];\\
+        			}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op-1,pos$\_$ancre=1],[index$\_$face$\_$op+1,pos$\_$ancre=0],[index$\_$face$\_$op+2,pos$\_$ancre=0];\\
+        			}
+        			degré+=2;\\
+        		}
+        		\If{permutation[index$\_$face][2]==pos$\_$ancre}
+        		{
+        			\leIf{index$\_$face$\_$op\%2=0}
+        			{
+        				debut=0
+        			}
+        			{
+        				debut=1
+        			}
+        			\For{(i=debut,i$<$taille$\_$conteneur(index$\_$face$\_$ops,service$\_$bit),i+=2)}
+        			{
+        				ajouter à Q la face [index$\_$face$\_$op+i,pos$\_$ancre=2];\\
+        				degré++;
+        			}
+        		}
+        	}
+        	{
+        		\lIf{indice$\_$face==0}
+        		{
+        			indexes={1,2,3}
+        		}
+        		\lIf{indice$\_$face==1}
+        		{
+        			indexes={0,2,3}
+        		}
+        		\lIf{indice$\_$face==2}
+        		{
+        			indexes={0,1,3}
+        		}
+        		\lIf{indice$\_$face==3}
+        		{
+        			indexes={0,1,2}
+        		}
+        		\If{permutation[index$\_$face][0]==pos$\_$ancre}
+        		{
+        			ajouter à Q les faces [index$\_$face$\_$op+indexes[1],pos$\_$ancre=0],[index$\_$face$\_$op+indexes[2],pos$\_$ancre=0];\\
+        		}
+        		\If{permutation[index$\_$face][1]==pos$\_$ancre}
+        		{
+        			ajouter à Q les faces [index$\_$face$\_$op+indexes[0],pos$\_$ancre=1],[index$\_$face$\_$op+indexes[2],pos$\_$ancre=0] ;\\
+        		}
+        		\If{permutation[index$\_$face][2]==pos$\_$ancre}
+        		{
+        		ajouter à Q les faces [index$\_$face$\_$op+indexes[1],pos$\_$ancre=2],[index$\_$face$\_$op+indexes[2],pos$\_$ancre=2];\\
+        		}
+        		degré++;
+        	}
+        }
+   	}
+	\textbf{Retourner} degré;\\
+ }
+\caption{Pseudo code permettant de calculer le degré d'un sommet}
+\end{algorithm}
+\end{appendices}
 
 \end{document}

@@ -3,7 +3,7 @@
 \BOOKMARK [2][-]{subsection.1.2}{Combinatoire}{section.1}% 3
 \BOOKMARK [3][-]{subsubsection.1.2.1}{Cas surfacique}{subsection.1.2}% 4
 \BOOKMARK [3][-]{subsubsection.1.2.2}{Cas volumique}{subsection.1.2}% 5
-\BOOKMARK [3][-]{subsubsection.1.2.3}{Repr\351sentation des maillages t\351tra\350driques}{subsection.1.2}% 6
+\BOOKMARK [2][-]{subsection.1.3}{Repr\351sentation des maillages t\351tra\350driques}{section.1}% 6
 \BOOKMARK [1][-]{section.2}{Etat de l'art}{}% 7
 \BOOKMARK [2][-]{subsection.2.1}{Maillages 2D}{section.2}% 8
 \BOOKMARK [3][-]{subsubsection.2.1.1}{Compression}{subsection.2.1}% 9
@@ -39,9 +39,9 @@
 \BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 39
 \BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 40
 \BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 41
-\BOOKMARK [1][-]{section.5}{Partie Th\351orique}{}% 42
-\BOOKMARK [2][-]{subsection.5.1}{Borne inf\351rieure th\351orique}{section.5}% 43
-\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 44
-\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 45
-\BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 46
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 47
+\BOOKMARK [1][-]{section.5}{Borne inf\351rieure th\351orique}{}% 42
+\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 43
+\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 44
+\BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 45
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 46
+\BOOKMARK [1][-]{section*.45}{Appendices}{}% 47

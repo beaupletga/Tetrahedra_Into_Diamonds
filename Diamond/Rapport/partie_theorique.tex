@@ -1,8 +1,6 @@
-\section{Partie Théorique}
-\subsection{Borne inférieure théorique}
+\section{Borne inférieure théorique}
 \noindent
-Les performances du parcours en largeur pour appareiller les tétraèdres en diamants nous semblent raisonnables. Cependant, il serait bien de pouvoir assurer une borne minimum théorique pour l'appareillage. A priori, aucune borne minimale intéressante ne peut être apportée. En effet, certains maillages comme des chaines de tétraèdres où les tétraèdres sont juste reliés deux à deux n'autorisent pas le regroupement en diamant.\\
-Néanmoins, nous allons dans cette partie essayer de dégager une borne inférieure sous certaines assomptions. Nous allons d'abord transformer notre maillage M en graphe annexe $G'(V',E')$. Dans ce graphe annexe, chaque point est une arête centrale potentielle du maillage M et deux points sont connectés si leurs arêtes correspondantes dans M appartiennent au même tétraèdre.\\
+Les performances du parcours en largeur pour appareiller les tétraèdres en diamants nous semblent raisonnables. Cependant, il serait bien de pouvoir assurer une borne minimum théorique sur le nombre de diamants possibles. A priori, aucune borne minimale intéressante ne peut être apportée. En effet, certains maillages comme des chaines de tétraèdres où les tétraèdres sont juste reliés deux à deux n'autorisent pas le regroupement en diamant. Néanmoins, nous allons dans cette partie essayer de dégager une borne inférieure sous certaines assomptions. Nous allons d'abord transformer notre maillage M en graphe annexe $G'(V',E')$. Dans ce graphe annexe, chaque point est une arête centrale potentielle du maillage M et deux points sont connectés si leurs arêtes correspondantes dans M appartiennent au même tétraèdre.\\
 $V' = \{e\in E : e\notin B\}$ et $E'=\{(e,e'), e,e'\in E : e,e' \in T_i, \,  i\in \{0,|T|-1\}\}$.
 \begin{itemize}
 \item $V$ est l'ensemble des sommets de notre maillage M
@@ -22,34 +20,35 @@ $V' = \{e\in E : e\notin B\}$ et $E'=\{(e,e'), e,e'\in E : e,e' \in T_i, \,  i\i
 \label{eq:d}
 |d'|= 27
 \end{equation}
-L'équation Eq. \ref{eq:V} vient du fait que seules les arêtes n'étant pas sur les bords du maillages peuvent être utlisées comme arête centrale et donc devenir des sommets dans notre graphe annexe $G'$.\\
-L'équation Eq. \ref{eq:d} est la conséquence de notre choix d'appariement des tétraèdres en diamants contenant au maximum 9 tétraèdres. Un diamant contenant 9 tétraèdres contient 27 arêtes. Par conséquent (dans le pire des cas) chaque arête n'étant pas sur les bords du maillage M peut être adjacente à 9 tétraèdres. Le sommet correspondant dans notre graphe annexe sera alors adjacent à 27 autres sommets.\\
-Calculer un Stable Maximum $\alpha(G')$ (Maximum Independant Set en anglais) dans ce graphe annexe $G'$ revient ainsi à choisir un ensemble d'arêtes maximal tel-que deux arêtes n'appartiennent pas au même tétraèdre. C'est donc une autre formulation de notre problème d'appariement des tétraèdres en diamants. Si on applique un algorithme glouton choisissant à chaque itération le sommet de maximum degré alors :
+L'équation Eq. \ref{eq:V} vient du fait que seules les arêtes n'étant pas sur les bords du maillages peuvent être utlisées comme arêtes centrales et donc devenir des sommets dans notre graphe annexe $G'$.\\
+L'équation Eq. \ref{eq:d} est la conséquence de notre choix d'appariement des tétraèdres en diamants contenant au maximum 9 tétraèdres\footnote{Nous avons choisi de limiter le nombre de tétraèdres arbitrairement}. Un diamant contenant 9 tétraèdres contient 27 arêtes. Par conséquent (dans le pire des cas) chaque arête n'étant pas sur les bords du maillage M peut être adjacente à 9 tétraèdres. Le sommet correspondant dans notre graphe annexe sera alors adjacent à 27 autres sommets.\\
+Calculer un Stable Maximum $\alpha(G')$ (Maximum Independant Set en anglais) dans ce graphe annexe $G'$ revient ainsi à choisir un ensemble d'arêtes de M maximal tel-que deux arêtes n'appartiennent pas au même tétraèdre. C'est donc une autre formulation de notre problème d'appariement des tétraèdres en diamants. Si on applique un algorithme glouton choisissant à chaque itération le sommet de maximum degré alors :
 \begin{equation}
 \alpha(G')\geqslant \frac{|V'|}{d+1} = \frac{(1-b)\cdot |E|}{28}
 \end{equation}
-On peut comparer cette borne inférieure aux résultats trouvés par notre parcours en largeur (Tab. \ref{tab:borne_inf_theorique}). On note que la borne inférieure est en moyenne 4 fois plus faible que le résultat trouvé par le parcours en largeur.
-\begin{table}[h]
-\footnotesize
-\centering
-\begin{tabular}{| c | c | c | c | c|}
-\hline
-Nom de la & Part d'arêtes & Nombre d'arêtes& Nombre d'arêtes centrales & Nombre d'arêtes centrales\\
-structure & sur les bords du maillage & &choisies par le & minimum théorique\\
-& & & parcours en largeur & \\
-\hline
-B1 & 0.44 & 5452 & 504 & 109 \\
-B2 & 0.08 & 101343 & 12866 & 3329\\
-B3 & 0.02 & 2647808 & 351997 & 92673 \\
-B4 & 0.01 & 9575510 & 1281894 & 338563  \\
-V1 & 0.27 & 182170 & 19942 & 4749 \\
-M1 & 0.26 & 169115 & 18215 & 4469 \\
-C1 & 0.33 & 217974 & 22919 & 5215\\
-\hline  
-\end{tabular}
-\caption{Comparaison du nombre d'arêtes centrales choisies par le parcours en largeur et de la borne inférieure théorique}
-\label{tab:borne_inf_theorique}
-\end{table}
+En pratique, l'algorithme de parcours en largeur permet de trouver 4 fois plus de diamants que cette borne inférieure. Bien entendu, l'écart entre l'algorithme de parcours en largeur et la borne théorique s'amenuise à mesure qu'on limite le nombre de tétraèdres maximum dans des diamants. 
+%On peut comparer cette borne inférieure aux résultats trouvés par notre parcours en largeur (Tab. \ref{tab:borne_inf_theorique}). On note que la borne inférieure est en moyenne 4 fois plus faible que le résultat trouvé par le parcours en largeur.
+%\begin{table}[h]
+%\footnotesize
+%\centering
+%\begin{tabular}{| c | c | c | c | c|}
+%\hline
+%Nom de la & Part d'arêtes & Nombre d'arêtes& Nombre d'arêtes centrales & Nombre d'arêtes centrales\\
+%structure & sur les bords du maillage & &choisies par le & minimum théorique\\
+%& & & parcours en largeur & \\
+%\hline
+%B1 & 0.44 & 5452 & 504 & 109 \\
+%B2 & 0.08 & 101343 & 12866 & 3329\\
+%B3 & 0.02 & 2647808 & 351997 & 92673 \\
+%B4 & 0.01 & 9575510 & 1281894 & 338563  \\
+%V1 & 0.27 & 182170 & 19942 & 4749 \\
+%M1 & 0.26 & 169115 & 18215 & 4469 \\
+%C1 & 0.33 & 217974 & 22919 & 5215\\
+%\hline  
+%\end{tabular}
+%\caption{Comparaison du nombre d'arêtes centrales choisies par le parcours en largeur et de la borne inférieure théorique}
+%\label{tab:borne_inf_theorique}
+%\end{table}
 
 
 %\subsection{NP-Complétude}

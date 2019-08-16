@@ -145,21 +145,48 @@ Ainsi :
 \end{equation}
 Il y a donc autant d'arêtes que de polytopes de dimension 3 et sommets réunis (Tab. \ref{tab:caract_maillages}).
 
-\subsubsection{Représentation des maillages tétraèdriques}
+\subsection{Représentation des maillages tétraèdriques}
 \label{representation_maillages_tetra}
 \noindent
-Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, une structure de données doit permettre une certaine utilisation du maillage. Voici certaines des opérations qu'elle doit supporter :\\
-\textbf{ith\_face(i,t)} Cette fonction doit donc permettre l'accès à la ième face du tétraèdre t. \\
-\textbf{ith\_tetrahedron(i)} Cette fonction doit permettre l'accès au ième tétraèdre en temps constant.\\
-\textbf{ith\_vertex(i)} Cette fonction doit retourner un des tétraèdres adjacents au ième sommet.\\ 
-\textbf{degree(i)} Cette fonction doit permettre de calculer le degré d'un sommet\\
-\textbf{hypersphere(i)} Cette fonction doit retourner l'hypersphère ou l'étoile d'un sommet, c'est à dire l'ensemble des tétraèdres possédant le ième sommet.\\
-\textbf{breadth\_first\_search(t)} Cette fonction doit permettre de réaliser un parcours en largeur du maillage en commen\c cant par le tétraèdre t .\\
-\textbf{get\_neighbour(v,t)} Cette fonction doit permettre de connaître l'indice du sommet v dans le tétraèdre t.\\\\
-Une structure de données naïve pour représenter un maillage tétraèdrique consiste à utiliser pour chaque tétraèdre plusieurs références\footnote{Une référence est un pointeur, c'est à dire une redirection vers un autre élément} : 
+Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, une structure de données \lc{doit fournir une implémentation des opérateurs permettant la navigation et l'accès à la combinatoire du maillage, décrite par les relations d'incidence entre ses éléments. Dans le cas de maillages tétraèdriques, il est usuel de disposer des opérations suivantes:}
+
 \begin{itemize}
-\item 4 références par tétraèdre pointant vers ses tétraèdres voisins
-\item 4 référence par tétraèdre pointant vers ses sommets
-\item 1 référence par sommet pointant vers un de ses tétraèdres adjacents
+\item \texttt{incident\_face($i,t$)}: renvoie la $i$-ème face du tétraèdre $t$ (pour $i=0..3$).
+\item \texttt{incident\_vertex($v$)}: renvoie un des tétraèdres \lc{incidents} au sommet $v$.
+\item \texttt{neighbour($i, t$)}: renvoie le tétraèdre qui est le $i$-ème voisin \lc{adjacent} au tétraèdre $t$. 
+\item \texttt{get\_vertex\_index($v,t$)}: renvoie un entier $i\in\{0 \ldots 3 \}$, l'indice du sommet $v$ dans le tétraèdre $t$.
+%\indent \texttt{degree(i)} Cette fonction doit permettre de calculer le degré d'un sommet\\
+%\indent \texttt{hypersphere(i)} Cette fonction doit retourner l'hypersphère ou l'étoile d'un sommet, c'est à dire l'ensemble des tétraèdres possédant le ième sommet.\\
+%\indent \texttt{breadth\_first\_search(t)} Cette fonction doit permettre de réaliser un parcours en largeur du maillage en commen\c cant par le tétraèdre t .\\
 \end{itemize}
-Au total cela fait donc 8 références par tétraèdre et 1 référence par sommet (8$|$T$|$+$|$V$|$). Avec ces références, on peut mettre au point des algorithmes pour répondre à toutes les requêtes ci-dessus.
+\noindent
+\lc{La combinaison de ces fonctions permet de réaliser la quasi-totalité des opérations de navigation locale qui sont effectuées habituellement
+dans le cadre des procédures de modélisation géométrique et géométrie algorithmique. A titre d'exemple, on peut implémenter de manière efficace les fonctions suivantes:}
+\begin{itemize}
+\item \texttt{degree($v$)}: renvoie le degré d'un sommet $v$
+\item \texttt{hypersphere($v$)}: renvoie l'hypersphère ou l'étoile d'un sommet $v$, c'est à dire l'ensemble des tétraèdres incidents à $v$.
+\item \texttt{BFS($t$)}: réalise un parcours en largeur du maillage en commen\c cant par le tétraèdre $t$.
+\end{itemize}
+\lc{On dit que la structure de données est \emph{indexable} si, de plus, elle permet l'accès en temps constant aux éléments du maillage (ses faces, sommets, ...), par le biais des opérations suivantes:}
+\begin{itemize}
+\item \texttt{tetrahedron($i$)}: donne accès au $i$-ème tétraèdre,
+\item \texttt{vertex($i$)}: donne accès au $i$-ème sommet.
+\end{itemize}
+
+\lc{Ces deux opérations sont parfois importantes dans plusieurs applications: elles permettent, par exemple, d'itérer sur tous les sommets ou tétraèdres,
+ainsi que de récupérer les attributs qui y sont associés (couleurs, normales, coordonnées, ...).}
+
+\paragraph{Implantation naïve}
+\lc{Une solution simple à implémenter (utilisée, entre autres, par la librarie \texttt{CGAL}~\cite{CGAL}) permettant de représenter un maillage tétraèdrique consiste à stoquer explicitement les relations d'adjacences
+entre tétraèdres voisins et les relations d'incidence tétraèdre/sommet. Plus précisément,  on stoque:}
+pour chaque tétraèdre plusieurs références : 
+\begin{itemize}
+\item $4$ références par tétraèdre \lc{donnant l'accès aux} tétraèdres voisins
+\item $4$ références par tétraèdre donnant l'accès aux sommets incidents
+\item $1$ référence par sommet donnant l'accès à l'un de ses tétraèdres \lc{incidents}
+\end{itemize}
+Au total, on comptabilise donc $8$ références par tétraèdre et $1$ référence par sommet ($8|T|+|V|$)~\footnote{
+\lc{Lorsqu'on parle de références il peut s'agir, selon le langage de programmation et environnement de travail choisis, de pointeurs (comme en \texttt{C/C++}), 
+de références (comme en \texttt{Java}), ou d'indices si l'implantation mise en place fait appel à des tableaux d'entiers (dans ce cas une référence vers un tétraèdre co\^utera
+$\lceil\log_2 |T|\rceil$ bits).}
+}.

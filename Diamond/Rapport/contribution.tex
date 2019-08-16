@@ -70,7 +70,7 @@ La troisième approche consiste à parcourir le maillage en largeur. On choisit 
  \caption{Parcours en largeur du maillage avec un tétraèdre de départ t}
 \end{algorithm}
 
-\begin{figure}[th]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -88,7 +88,7 @@ La troisième approche consiste à parcourir le maillage en largeur. On choisit 
 \end{figure}
 \noindent
 Sur Fig. \ref{fig:isolated_tetra}, on note une certaine homogénéité des tétraèdres isolés. En analysant plus spécifiquement la concentration des tétraèdres isolés, on remarque sur la Fig. \ref{fig:density_cow_hand} qu'ils sont particulièrement situé sur les bords et dans des régions à courbures \footnote{Afin que la densité ne soit pas biaisée, nous avons soustrait la densité originale du maillage. Le fait qu'une région soit plus densément peuplée en tétraèdres n'influence donc pas le résultat.}.
-\begin{figure}[th]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -104,9 +104,9 @@ Sur Fig. \ref{fig:isolated_tetra}, on note une certaine homogénéité des tétr
 
 \paragraph{Choix du tétraèdre de départ}
 Suivant le premier tétraèdre choisi pour lancer l'algorithme de parcours en largeur (Fig. \ref{fig:bfs_starting}), le taux de tétraèdres appareillés dans des diamants varie peu (1\% d'écart). Il semble néanmoins plus intéressant de commencer par les régions étroites.
-\begin{figure}[th]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.3]{Images/bfs_starting}
+\includegraphics[scale=0.22]{Images/bfs_starting}
 \caption{Performance de l'algorithme de parcours en largeur en fonction du tétraèdre de départ.}
 \label{fig:bfs_starting}
 \end{center}
@@ -145,13 +145,7 @@ Suivant le premier tétraèdre choisi pour lancer l'algorithme de parcours en la
 \subsection{Choisir l'ancre}
 \label{ancrage}
 \noindent
-Le but de cette section est d'associer chaque sommet à un diamant ou un tétraèdre isolé. Voici les règles pour l'association.\\
-\begin{itemize}
-\item Un diamant ne peut être associé qu'à un sommet de son arête centrale
-\item Un tétraèdre isolé peut être associé à n'importe lequel de ses quatres sommets
-\item On associe en priorité les sommets à des diamants afin de calculer plus rapidement le degré du sommet\\
-\end{itemize}
-\begin{figure}[th]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.2]{Images/central_edges}
 \caption{Vue de coupe d'une tétraèdrisation d'une boule avec affichage des arêtes centrales de tous les diamants}
@@ -159,6 +153,12 @@ Le but de cette section est d'associer chaque sommet à un diamant ou un tétra�
 \end{center}
 \end{figure}
 \noindent
+Le but de cette section est d'associer chaque sommet à un diamant ou un tétraèdre isolé. Voici les règles pour l'association.\\
+\begin{itemize}
+\item Un diamant ne peut être associé qu'à un sommet de son arête centrale
+\item Un tétraèdre isolé peut être associé à n'importe lequel de ses quatres sommets
+\item On associe en priorité les sommets à des diamants afin de calculer plus rapidement le degré du sommet\\
+\end{itemize}
 Les différents cas possibles pour l'association des sommets sont les suivants :\\
 \begin{itemize}
 \item Le sommet est adjacent à une arête centrale disponible. On associe le sommet à cette arête.
@@ -166,7 +166,7 @@ Les différents cas possibles pour l'association des sommets sont les suivants :
 \item Le sommet n'est adjacent à aucune arête centrale, n'est pas adjacent à un tétraèdre isolé libre mais est adjacent à un diamant. On 'explose' alors le diamant, c'est à dire qu'on fait comme s'il était constitué que de tétraèdres isolés. Sur la Fig. \ref{fig:central_edge_AB}, le sommet F n'est pas sur une arête centrale. Si le diamant est déjà associé au sommet A (resp. B) alors on explose le diamant. On peut alors associer le sommet F (Fig. \ref{fig:explosion_diamond}) aux tétraèdres ABFG ou ABFC et le sommet A (resp. B) aux tétraèdres ACDB ou ADEB ou ABEG.\\
 \end{itemize}
 
-\begin{figure}[th]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -241,7 +241,7 @@ Pour résumer, voici notre structure de données :
 \item Un bit de service par face afin de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé
 \item 3 bits de service par face afin de représenter la permutation des sommets entre deux faces
 \end{itemize}
-\begin{figure}[th]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.35]{Images/structure}
 \caption{Notre structure est constituée d'un tableau A contenant les indices des faces adjacentes, d'un bit de service permettant de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé, et de trois autres bits de service afin de connaître la permutation des sommets entre deux faces. Dans cet exemple, la face 0 est sur le bord et la face 1 est adjacente à la face 281. La permutation de la face 1 du premier diamant (1,0,2) indique que le premier et second sommets de cette face sont inversés dans la face opposée.}
