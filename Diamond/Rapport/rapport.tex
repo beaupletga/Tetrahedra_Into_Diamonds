@@ -15,16 +15,20 @@
 \usepackage[noabbrev]{cleveref}
 %\usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage[]{algorithm2e}
+\usepackage[noend]{algorithm2e}
 \usepackage{listings}
 \usepackage{pgfplots}
 \usepackage{xcolor}
 \usepackage{titling}
 \usepackage[toc,page]{appendix}
-\SetAlFnt{\footnotesize}
+\SetAlFnt{\small}
 \usepackage{footnote}
 \makesavenoteenv{tabular}
 %\makesavenoteenv{table}
+\SetKwRepeat{Struct}{struct \{}{\}}%
+\usepackage{xcolor}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
 
 \definecolor{OliveGreen}{rgb}{0.2,0.5,0.2}
 \definecolor{Orange}{rgb}{1,0.5,0.3}
@@ -99,16 +103,21 @@
 %appendix
 \begin{algorithm}[th]
 \SetAlgoLined	
+\Struct{Face}{
+    Entier index$\_$face \tcp*{Indice de la face}
+    Entier pos$\_$ancre \tcp*{Position du sommet ciblé dans la face}
+}
 \SetKwFunction{FMain}{degré$\_$sommet}
 \SetKwProg{Fn}{Function}{:}{}
-\Fn{\FMain{A[],bit$\_$service[],permutation[], int i}}{ 
+\Fn{\FMain{A[],bit$\_$service[],permutation[], indice$\_$sommet}}{ 
     degré=0;\\
     file Q de faces;\\
-    index$\_$face = index$\_$du$\_$sommet$\_$i$\_$dans$\_$tableau(i,bit$\_$service);\\
-    \eIf{taille$\_$conteneur(index,bit$\_$service)=4}
+    index$\_$face = index$\_$du$\_$sommet$\_$i$\_$dans$\_$tableau(indice$\_$sommet,bit$\_$service);\\
+    \tcp*[h]{taille$\_$conteneur renvoie le nombre de face du diamant/tetra à l'index i}\\
+    \eIf(\tcp*[h]{si le sommet est ancré à un tétra isolé}){taille$\_$conteneur(index,bit$\_$service)=4 }
     {
         ajouter à Q les faces [index$\_$face+1,pos$\_$ancre=0],[index$\_$face+2,pos$\_$ancre=0],[index$\_$face+3,pos$\_$ancre=0];
-    }
+    }(\tcp*[h]{si le sommet est ancré à un diamant})
     {   ajouter à Q les faces [index$\_$face+i,pos$\_$ancre=2] pour i=$\{$0,2,4..taille$\_$conteneur(index$\_$face,bit$\_$service)$\}$;
    	}
    	\While{Q non vide}
@@ -120,7 +129,7 @@
         taille$\_$conteneur = taille$\_$conteneur(index$\_$face$\_$op,service$\_$bit);\\
         \If{index$\_$face$\_$op non visité}
         {
-        	\eIf{taille$\_$conteneur$>$4}
+        	\eIf(\tcp*[h]{si on entre dans un diamant}){taille$\_$conteneur$>$4}
         	{
         		\If{permutation[index$\_$face][0]==pos$\_$ancre}
         		{
@@ -160,6 +169,7 @@
         			}
         		}
         	}
+        	(\tcp*[h]{si on entre dans un tétra isolé})
         	{
         		\lIf{indice$\_$face==0}
         		{
