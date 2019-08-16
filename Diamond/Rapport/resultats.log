@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  15 AUG 2019 22:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  16 AUG 2019 18:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -5037,13 +5037,26 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no C in font nullfont!
 Missing character: There is no . in font nullfont!
 
+! LaTeX Error: Environment savenotes undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.151 \begin{savenotes}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
 ! LaTeX Error: Environment table undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.151 \begin{table}
+l.152 \begin{table}
                    [h]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -5053,7 +5066,7 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.152 \footnotesize
+l.153 \footnotesize
                    
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5196,7 +5209,7 @@ Missing character: There is no � in font nullfont!
 ! Undefined control sequence.
 \@footnotetext ...tins {\reset@font \footnotesize 
                                                   \interlinepenalty \interfo...
-l.157 ...te{Par rapport au nombre de tétraèdres}
+l.158 ...te{Par rapport au nombre de tétraèdres}
                                                    (s/tétraèdre)\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5207,7 +5220,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \@footnotetext ...}\color@begingroup \@makefntext 
                                                   {\rule \z@ \footnotesep \i...
-l.157 ...te{Par rapport au nombre de tétraèdres}
+l.158 ...te{Par rapport au nombre de tétraèdres}
                                                    (s/tétraèdre)\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5220,42 +5233,42 @@ Missing character: There is no � in font cmr10!
 Missing character: There is no � in font cmr10!
 Missing character: There is no � in font cmr10!
 
-Overfull \hbox (15.44447pt too wide) in paragraph at lines 157--157
+Overfull \hbox (15.44447pt too wide) in paragraph at lines 158--158
 [][]\OT1/cmr/m/n/10 Par
  []
 
 
-Overfull \hbox (17.80559pt too wide) in paragraph at lines 157--157
+Overfull \hbox (17.80559pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 rap-
  []
 
 
-Overfull \hbox (18.63895pt too wide) in paragraph at lines 157--157
+Overfull \hbox (18.63895pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 port
  []
 
 
-Overfull \hbox (10.55559pt too wide) in paragraph at lines 157--157
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 au
  []
 
 
-Overfull \hbox (22.22227pt too wide) in paragraph at lines 157--157
+Overfull \hbox (22.22227pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 nom-
  []
 
 
-Overfull \hbox (13.91669pt too wide) in paragraph at lines 157--157
+Overfull \hbox (13.91669pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 bre
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 157--157
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 de
  []
 
 
-Overfull \hbox (34.55562pt too wide) in paragraph at lines 157--157
+Overfull \hbox (34.55562pt too wide) in paragraph at lines 158--158
 \OT1/cmr/m/n/10 ttradres| 
  []
 
@@ -5476,7 +5489,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.170 \caption
+l.171 \caption
               {Temps requis (s) pour répondre aux requêtes sur plusieurs m...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -5549,24 +5562,37 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.171 \end{table}
+l.172 \end{table}
                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 148--173
+! LaTeX Error: \begin{document} ended by \end{savenotes}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.173 \end{savenotes}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 148--175
 []
  []
 
 
-Overfull \hbox (10.49991pt too wide) in paragraph at lines 148--173
+Overfull \hbox (10.49991pt too wide) in paragraph at lines 148--175
 \OT1/cmtt/m/n/10 ++
  []
 
 
-Overfull \hbox (4.48613pt too wide) in paragraph at lines 148--173
+Overfull \hbox (4.48613pt too wide) in paragraph at lines 148--175
 []
  []
 
@@ -5577,7 +5603,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.178 \begin{figure}
+l.180 \begin{figure}
                     [H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -5587,7 +5613,7 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.180 \pgfplotsset
+l.182 \pgfplotsset
                   {width=12cm,height=7cm}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5623,7 +5649,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.181 \begin{tikzpicture}
+l.183 \begin{tikzpicture}
                          
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -5636,7 +5662,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.182 \begin{axis}
+l.184 \begin{axis}
                   [
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -5847,7 +5873,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.195 \addplot
+l.197 \addplot
                coordinates {(Accès au ième tétraèdre,2.5e-3)(Degré d'un...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5953,7 +5979,7 @@ Missing character: There is no 3 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ; in font nullfont!
 ! Undefined control sequence.
-l.196 \addplot
+l.198 \addplot
                coordinates {(Accès au ième tétraèdre,1.8e-3)(Degré d'un...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6059,7 +6085,7 @@ Missing character: There is no 3 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ; in font nullfont!
 ! Undefined control sequence.
-l.199 \legend
+l.201 \legend
              {Structure Compacte,Structure Compacte avec 4 rpt,Structure ave...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6140,7 +6166,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.200 \end{axis}
+l.202 \end{axis}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -6153,7 +6179,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.201 \end{tikzpicture}
+l.203 \end{tikzpicture}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -6166,7 +6192,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.202 \caption
+l.204 \caption
               {Comparaison des temps moyens (s) requis pour répondre aux re...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -6394,7 +6420,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.204 \end{figure}
+l.206 \end{figure}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -6410,7 +6436,7 @@ Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
 <write> ...nce `fig:temps_moyen' on page \thepage 
                                                   \space undefined\on@line .
-l.206 Sur Fig. \ref{fig:temps_moyen}
+l.208 Sur Fig. \ref{fig:temps_moyen}
                                     , on constate que les temps de calcul de...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6419,7 +6445,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `fig:temps_moyen' on page  undefined on input line 206
+LaTeX Warning: Reference `fig:temps_moyen' on page  undefined on input line 208
 .
 
 Missing character: There is no , in font nullfont!
@@ -6560,7 +6586,7 @@ Missing character: There is no t in font nullfont!
 ! Undefined control sequence.
 \@footnotetext ...tins {\reset@font \footnotesize 
                                                   \interlinepenalty \interfo...
-l.206 ...réunis pas les tétraèdres en diamants}
+l.208 ...réunis pas les tétraèdres en diamants}
                                                   . Etant donné que dans no...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6571,7 +6597,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \@footnotetext ...}\color@begingroup \@makefntext 
                                                   {\rule \z@ \footnotesep \i...
-l.206 ...réunis pas les tétraèdres en diamants}
+l.208 ...réunis pas les tétraèdres en diamants}
                                                   . Etant donné que dans no...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6594,147 +6620,147 @@ Missing character: There is no � in font cmr10!
 Missing character: There is no � in font cmr10!
 Missing character: There is no � in font cmr10!
 
-Overfull \hbox (22.00005pt too wide) in paragraph at lines 206--206
+Overfull \hbox (22.00005pt too wide) in paragraph at lines 208--208
 [][]\OT1/cmr/m/n/10 Nous
  []
 
 
-Overfull \hbox (45.88899pt too wide) in paragraph at lines 206--206
+Overfull \hbox (45.88899pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 n'affichons
  []
 
 
-Overfull \hbox (14.50003pt too wide) in paragraph at lines 206--206
+Overfull \hbox (14.50003pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 pas
  []
 
 
-Overfull \hbox (7.22223pt too wide) in paragraph at lines 206--206
+Overfull \hbox (7.22223pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 le
  []
 
 
-Overfull \hbox (26.16672pt too wide) in paragraph at lines 206--206
+Overfull \hbox (26.16672pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 temps
  []
 
 
-Overfull \hbox (26.1667pt too wide) in paragraph at lines 206--206
+Overfull \hbox (26.1667pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 d'accs
  []
 
 
-Overfull \hbox (10.55559pt too wide) in paragraph at lines 206--206
+Overfull \hbox (10.55559pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 au
  []
 
 
-Overfull \hbox (15.55559pt too wide) in paragraph at lines 206--206
+Overfull \hbox (15.55559pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 ime
  []
 
 
-Overfull \hbox (16.6667pt too wide) in paragraph at lines 206--206
+Overfull \hbox (16.6667pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 dia-
  []
 
 
-Overfull \hbox (22.50006pt too wide) in paragraph at lines 206--206
+Overfull \hbox (22.50006pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 mant
  []
 
 
-Overfull \hbox (13.36113pt too wide) in paragraph at lines 206--206
+Overfull \hbox (13.36113pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 car
  []
 
 
-Overfull \hbox (7.7778pt too wide) in paragraph at lines 206--206
+Overfull \hbox (7.7778pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 la
  []
 
 
-Overfull \hbox (25.08336pt too wide) in paragraph at lines 206--206
+Overfull \hbox (25.08336pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 struc-
  []
 
 
-Overfull \hbox (17.80559pt too wide) in paragraph at lines 206--206
+Overfull \hbox (17.80559pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 ture
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 206--206
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 de
  []
 
 
-Overfull \hbox (30.05562pt too wide) in paragraph at lines 206--206
+Overfull \hbox (30.05562pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 donnes
  []
 
 
-Overfull \hbox (21.11115pt too wide) in paragraph at lines 206--206
+Overfull \hbox (21.11115pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 com-
  []
 
 
-Overfull \hbox (23.33337pt too wide) in paragraph at lines 206--206
+Overfull \hbox (23.33337pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 pacte
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 206--206
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 4
  []
 
 
-Overfull \hbox (13.36115pt too wide) in paragraph at lines 206--206
+Overfull \hbox (13.36115pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 rpt
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 206--206
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 ne
  []
 
 
-Overfull \hbox (12.80557pt too wide) in paragraph at lines 206--206
+Overfull \hbox (12.80557pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 ru-
  []
 
 
-Overfull \hbox (12.2778pt too wide) in paragraph at lines 206--206
+Overfull \hbox (12.2778pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 nis
  []
 
 
-Overfull \hbox (14.50003pt too wide) in paragraph at lines 206--206
+Overfull \hbox (14.50003pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 pas
  []
 
 
-Overfull \hbox (11.16667pt too wide) in paragraph at lines 206--206
+Overfull \hbox (11.16667pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 les
  []
 
 
-Overfull \hbox (34.55562pt too wide) in paragraph at lines 206--206
+Overfull \hbox (34.55562pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 ttradres
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 206--206
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 en
  []
 
 
-Overfull \hbox (16.6667pt too wide) in paragraph at lines 206--206
+Overfull \hbox (16.6667pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 dia-
  []
 
 
-Overfull \hbox (26.4445pt too wide) in paragraph at lines 206--206
+Overfull \hbox (26.4445pt too wide) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 mants| 
  []
 
@@ -7891,7 +7917,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-l.208 \subsection
+l.210 \subsection
                  {Taille mémoire}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -7920,7 +7946,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.209 \begin{figure}
+l.211 \begin{figure}
                     [H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -7930,7 +7956,7 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.211 \pgfplotsset
+l.213 \pgfplotsset
                   {width=13cm,height=7cm}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -7966,7 +7992,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.212 \begin{tikzpicture}
+l.214 \begin{tikzpicture}
                          
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -7979,7 +8005,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.213 \begin{axis}
+l.215 \begin{axis}
                   [
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -8142,6 +8168,11 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 2 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no M in font nullfont!
+Missing character: There is no , in font nullfont!
 Missing character: There is no 8 in font nullfont!
 Missing character: There is no . in font nullfont!
 Missing character: There is no 1 in font nullfont!
@@ -8212,8 +8243,8 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.228 \addplot
-               coordinates {(2.2M,5.2)(5.3M,12.6)(8.1M,19.2)(10.3M,24.4)};
+l.230 \addplot
+               coordinates {(2.2M,20.8)(5.3M,50.4)(8.1M,76.8)(10.3M,97.6)};
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8237,9 +8268,10 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 2 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 5 in font nullfont!
-Missing character: There is no . in font nullfont!
 Missing character: There is no 2 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 8 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ( in font nullfont!
 Missing character: There is no 5 in font nullfont!
@@ -8247,10 +8279,10 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 3 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no 2 in font nullfont!
+Missing character: There is no 5 in font nullfont!
+Missing character: There is no 0 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 6 in font nullfont!
+Missing character: There is no 4 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ( in font nullfont!
 Missing character: There is no 8 in font nullfont!
@@ -8258,10 +8290,10 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 1 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no 9 in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no 6 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 2 in font nullfont!
+Missing character: There is no 8 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ( in font nullfont!
 Missing character: There is no 1 in font nullfont!
@@ -8270,15 +8302,15 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 3 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 2 in font nullfont!
-Missing character: There is no 4 in font nullfont!
+Missing character: There is no 9 in font nullfont!
+Missing character: There is no 7 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 4 in font nullfont!
+Missing character: There is no 6 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ; in font nullfont!
 ! Undefined control sequence.
-l.229 \addplot
-               coordinates {(2.2M,8.9)(5.3M,21.4)(8.1M,32.6)(10.3M,41.4)};
+l.231 \addplot
+               coordinates {(2.2M,35.6)(5.3M,85.6)(8.1M,130.4)(10.3M,165.6)};
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8302,9 +8334,10 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 2 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 8 in font nullfont!
+Missing character: There is no 3 in font nullfont!
+Missing character: There is no 5 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 9 in font nullfont!
+Missing character: There is no 6 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ( in font nullfont!
 Missing character: There is no 5 in font nullfont!
@@ -8312,10 +8345,10 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 3 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 2 in font nullfont!
-Missing character: There is no 1 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no 5 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 4 in font nullfont!
+Missing character: There is no 6 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ( in font nullfont!
 Missing character: There is no 8 in font nullfont!
@@ -8323,10 +8356,11 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 1 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
+Missing character: There is no 1 in font nullfont!
 Missing character: There is no 3 in font nullfont!
-Missing character: There is no 2 in font nullfont!
+Missing character: There is no 0 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 6 in font nullfont!
+Missing character: There is no 4 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ( in font nullfont!
 Missing character: There is no 1 in font nullfont!
@@ -8335,14 +8369,15 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no 3 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no , in font nullfont!
-Missing character: There is no 4 in font nullfont!
 Missing character: There is no 1 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 5 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 4 in font nullfont!
+Missing character: There is no 6 in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ; in font nullfont!
 ! Undefined control sequence.
-l.230 \legend
+l.232 \legend
              {Structure Compacte,Structure non Compacte (4 rpt)}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -8401,7 +8436,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.231 \end{axis}
+l.233 \end{axis}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -8414,7 +8449,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.232 \end{tikzpicture}
+l.234 \end{tikzpicture}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -8427,7 +8462,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.233 \caption
+l.235 \caption
               {Comparaison de la taille mémoire (en bytes) de notre structu...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -8583,7 +8618,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.235 \end{figure}
+l.237 \end{figure}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -8598,7 +8633,7 @@ Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
 <write> ... `fig:taille_memoire' on page \thepage 
                                                   \space undefined\on@line .
-l.237 La Fig. \ref{fig:taille_memoire}
+l.239 La Fig. \ref{fig:taille_memoire}
                                        compare l'évolution de la place mém...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -8608,7 +8643,7 @@ and I'll forget about whatever was undefined.
 
 
 LaTeX Warning: Reference `fig:taille_memoire' on page  undefined on input line 
-237.
+239.
 
 Missing character: There is no c in font nullfont!
 Missing character: There is no o in font nullfont!
@@ -8972,8 +9007,8 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no r in font nullfont!
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no 7 in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no 8 in font nullfont!
 Missing character: There is no M in font nullfont!
 Missing character: There is no B in font nullfont!
 Missing character: There is no d in font nullfont!
@@ -8993,32 +9028,32 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 178--238
+Overfull \hbox (20.0pt too wide) in paragraph at lines 180--240
 []
  []
 
 
-Overfull \hbox (10.86105pt too wide) in paragraph at lines 178--238
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 180--240
 []
  []
 
 
-Overfull \hbox (4.48613pt too wide) in paragraph at lines 178--238
+Overfull \hbox (4.48613pt too wide) in paragraph at lines 180--240
 []
  []
 
 
-Overfull \hbox (11.60844pt too wide) in paragraph at lines 178--238
+Overfull \hbox (11.60844pt too wide) in paragraph at lines 180--240
 \OML/cmm/m/it/10 D[]$
  []
 
 
-Overfull \hbox (17.16402pt too wide) in paragraph at lines 178--238
+Overfull \hbox (17.16402pt too wide) in paragraph at lines 180--240
 \OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 D[]\OMS/cmsy/m/n/10 j$
  []
 
 
-Overfull \hbox (10.86105pt too wide) in paragraph at lines 178--238
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 180--240
 []
  []
 
@@ -9030,11 +9065,11 @@ Overfull \hbox (10.86105pt too wide) in paragraph at lines 178--238
 
  
 Here is how much of TeX's memory you used:
- 33 strings out of 494883
- 481 string characters out of 6178692
+ 35 strings out of 494883
+ 502 string characters out of 6178692
  66869 words of memory out of 5000000
- 3431 multiletter control sequences out of 15000+600000
+ 3433 multiletter control sequences out of 15000+600000
  4415 words of font info for 17 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 19i,11n,21p,1755b,205s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 19i,11n,21p,1755b,209s stack positions out of 5000i,500n,10000p,200000b,80000s
 !  ==> Fatal error occurred, no output PDF file produced!
