@@ -200,31 +200,31 @@ L'ordre des faces dans un diamant respecte celui des tétraèdres. Pour le ième
 \paragraph{Ordre des faces dans un tétraèdre isolé}
 Les faces d'un tétraèdre isolé sont ordonnées de manière arbitraire. Seulement, si le tétraèdre isolé est ancré à un sommet, alors la première face doit être la face opposée à l'ancre.
 \paragraph{Ordre des sommets dans les diamants}
-\label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant $D_i$ possedant $|D_i|$ tétraèdres contient $|D_i|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.\\
+\label{Ordre des sommets dans les diamants}Tout comme les tétraèdres, les sommets peuvent être ordonnés au sein d'un diamant. Un diamant $D_i$ possedant $|D_i|$ tétraèdres contient $|D_i|+2$ sommets. On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig. \ref{fig:tetra_ordonnee}), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig. \ref{fig:tetra_ordonnee}). Le classement entre ces deux-derniers n'est pas important car on ne compare jamais l'ordre de ces deux sommets.
 \paragraph{Ordre des sommets dans les tétraèdres}
 Au sein d'un tétraèdre, les sommets sont ordonnés tel-que le ième sommet est opposé à la ième face. Si un sommet est associé au tétraèdre alors ce sommet est opposé à la première face.
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.38]{Images/tetra_ordonnee}
+  \includegraphics[scale=0.34]{Images/tetra_ordonnee}
   \caption{}
   \label{fig:tetra_ordonnee}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.4]{Images/permutation_tetra_diamant}
+  \includegraphics[scale=0.36]{Images/permutation_tetra_diamant}
   \caption{}
   \label{fig:permutation_tetra_diamant}
 \end{subfigure}
-\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. L'ordre des sommets est : C,D,E,G,F,A,B. \textbf{Droite} : Un diamant partage une face avec un tétraèdre isolé. En vert est l'ordre des face du tétraèdre. L'ordre des sommets du tétraèdre est A,D,C,H et celui du diamant est C,D,E,G,F,A,B.}
+\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. L'ordre des sommets est : C,D,E,G,F,A,B. \textbf{Droite} : Un diamant partage une face avec un tétraèdre isolé. En vert est l'ordre des faces du tétraèdre. L'ordre des sommets du tétraèdre est A,D,C,H et celui du diamant est C,D,E,G,F,A,B.}
 \end{figure}
 \subsection{Calcul des permutations}
 \noindent
 %Calculer les permutations des sommets entre deux faces est primordial car cela permet de connaître la position d'un sommet dans la face opposée.\\
 Avec la structure naïve décrite dans la partie \ref{representation_maillages_tetra}, chaque tétraèdre possède 4 références vers ses 4 sommets. Ainsi, pour deux tétraèdres adjacents, il suffit de comparer les références de leurs sommets respectifs pour identifier les sommets communs.\\
 Ici, par soucis d'économie, nous ne souhaitons pas stocker de références des tétraèdres vers leurs sommets. Nous utilisons juste l'ordre des diamants et des tétraèdres isolés afin d'identifier la position d'un sommet (partie \ref{ancrage}).\\
-Néanmoins, lorsque nous passons d'une face à l'autre, nous ne savons plus associer les sommets deux à deux. Dans la Fig. \ref{fig:permutation_tetra_diamant}, cela reviendrait à ne pas savoir lors du passage du tétraèdre isolé au diamant via la face ACD où se situe le sommet A (resp. C,D). Or, deux des opérations nécessaires à notre structure de donnée sont \textbf{degree(v)} et \textbf{hypersphere(v)} qui nécessitent toutes les deux d'identifier un sommet afin de parcourir les faces adjacentes à ce sommet. Par conséquent, pour connaître l'emplacement d'un sommet dans une face opposée, nous calculons des permutations.
+Néanmoins, lorsque nous passons d'une face à l'autre, nous ne savons plus associer les sommets deux à deux. Dans la Fig. \ref{fig:permutation_tetra_diamant}, cela reviendrait à ne pas savoir lors du passage du tétraèdre isolé au diamant via la face ACD où se situe le sommet A (resp. C,D). Or, deux des opérations nécessaires à notre structure de données sont \texttt{degree(v)} et \texttt{hypersphere(v)} qui nécessitent toutes les deux d'identifier un sommet afin de parcourir les faces adjacentes à ce sommet. Par conséquent, pour connaître l'emplacement d'un sommet dans une face opposée, nous calculons des permutations.
 Dans la Fig. \ref{fig:permutation_tetra_diamant}, pour calculer la permutation vue du tétraèdre isolé de la face CAD, il suffit de comparer l'ordre des sommets du tétraèdre isolé et du diamant. Si l'on garde seulement les 3 sommets qui nous intéressent dans les deux classements, on a : A,D,C et C,D,A. La permutation est donc (2,1,0). Bien entendu, la permutation pour la même face du point de vue du diamant est la même. Il y a 3!=6 permutations possibles et donc 3 bits par face sont nécessaires pour représenter ces permutations.
 
 \subsection{La structure}
@@ -237,7 +237,7 @@ Désormais, nos diamants sont formés, les sommets sont associés à des diamant
 \item $F_e$ l'ensemble des faces des tétraèdres isolés et des faces extérieures des diamants où $|F_e|=2\cdot |T_D|+4\cdot |T_i|$\\
 \end{itemize}
 \noindent
-La structure que nous proposons est un tableau A de taille $|F_e|$. Le tableau contient des entiers représentant les indices des faces. Ainsi A[i] indique l'indice dans le tableau de la face adjacente à la ième face. Si la ième face est sur le bord du volume alors A[i]=-1.\\ 
+La structure que nous proposons est un tableau A de taille $|F_e|$. Le tableau contient des entiers représentant les indices des faces. Ainsi A[i] indique l'indice dans le tableau de la face opposée\footnote{Deux faces sont opposées si elles partagent les 3 mêmes sommets} à la ième face. Si la ième face est sur le bord du volume alors A[i]=-1.\\ 
 Un diamant contenant 4 tétraèdres occupera 8 cellules dans le tableau (car il a 8 faces extérieures) et un tétraèdre isolé en occupera 4. Les diamants et tétraèdres isolés sont ré-ordonnés de tel manière que le ième sommet soit ancré au ième diamant/tétraèdre isolé. Etant donné qu'il y a beaucoup plus de diamants que de sommets, seuls, les $|V|$ premiers diamants/tétraèdres isolés sont ré-ordonnés.\\
 Par ailleurs, pour savoir quand on passe d'un diamant à un autre, nous utilisons des bits de service\footnote{Un bit de service est un bit permettant de faciliter une opération. Il prend si peu de place qu'on ne le considère par comme une référence (qui est souvent codée sur 32 bits)} (1 ou 0) pour chaque face. Une face contient un 1 si c'est la première face d'un diamant/tétraèdre isolé, 0 sinon. Finalement, afin de pouvoir tourner facilement autour d'un sommet, nous utilisons 3 bits de service par face pour représenter la permutation des sommets entre ces deux faces.\\
 Pour résumer, voici notre structure de données :
@@ -249,7 +249,7 @@ Pour résumer, voici notre structure de données :
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.35]{Images/structure}
-\caption{Notre structure est constituée d'un tableau A contenant les indices des faces adjacentes, d'un bit de service permettant de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé, et de trois autres bits de service afin de connaître la permutation des sommets entre deux faces. Dans cet exemple, la face 0 est sur le bord et la face 1 est adjacente à la face 281. La permutation de la face 1 du premier diamant (1,0,2) indique que le premier et second sommets de cette face sont inversés dans la face opposée.}
+\caption{Notre structure est constituée d'un tableau A contenant les indices des faces opposées, d'un bit de service permettant de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé, et de trois autres bits de service afin de connaître la permutation des sommets entre deux faces. Dans cet exemple, la face 0 est sur le bord et la face 1 est opposée à la face 281. La permutation de la face 1 du premier diamant (1,0,2) indique que le premier et second sommet de cette face sont inversés dans la face opposée.}
 \label{fig:structure}
 \end{center}
 \end{figure}
@@ -258,7 +258,7 @@ Pour résumer, voici notre structure de données :
 Notre structure de données permet de réaliser des requêtes simples et courantes sur le maillage. Nous détaillons dans cette partie comment ces requêtes ont été implémentées et la complexité pour chacune d'elle.
 \subsubsection{Accéder à la ième face}
 \noindent
-Pour accéder à la ième face, il suffit d'accéder à la cellule A[i] dans laquelle se trouve la face opposée à la ième face. L'accès est donc en temps O(1).
+Pour accéder à la ième face, il suffit d'accéder à la cellule A[i] dans laquelle se trouve l'indice de la face opposée à la ième face. L'accès est donc en temps O(1).
 \subsubsection{Accéder au ième diamant ou tétraèdre isolé}
 \noindent
 Il suffit de parcourir le tableau A et de regarder pour chaque face si le premier bit de service vaut 1. On s'arrête alors dès que l'on a parcouru i faces dont la valeur du premier bit de service est 1. En utilisant une structure adaptée au 'Rank and Select' \footnote{Dans un tableau de bits $B[0..n-1]$, $rank(x) = |\{k\in [0..x] : B[k]=1\}|$ et $select(x)=min\{k\in [0..n-1) : rank(k)=x\}$}, la compléxité est O(1) \cite{rank_and_select}.
@@ -271,17 +271,17 @@ Lors du regroupement des tétraèdres en diamants, l'ordre des diamants n'est pl
 \subsubsection{Accéder au ième sommet}
 \noindent
 Bien que nous ne stockions pas les sommets de manière explicite (nous ne stockons que les faces). Nous sommes en mesures de localiser le ième sommet car il est adjacent au ième diamant/tétraèdre isolé.
-Il suffit donc d'accéder au ième diamant/tétraèdre isolé. Si c'est un diamant, alors le sommet est adjacent à toutes les faces paires du diamant. Si c'est un tétraèdre isolé, alors le sommet est opposé à la première face et est donc adjacent au trois autres faces. La complexité est la même que pour accéder au ième diamant/tétraèdre isolé, O(1).
+Il suffit donc d'accéder au ième diamant/tétraèdre isolé. Si c'est un diamant, alors le sommet est adjacent à toutes les faces paires du diamant. Si c'est un tétraèdre isolé, alors le sommet est opposé\footnote{Dans un tétraèdre, un sommet est opposé à une face s'il ne fait pas partie de celle-ci) une face quand il} à la première face et est donc adjacent au trois autres faces. La complexité est la même que pour accéder au ième diamant/tétraèdre isolé, O(1).
 \subsubsection{Degré et hypersphère d'un sommet}
 \noindent
-Calculer le degré d'un sommet est plus compliqué\footnote{Le pseudo code est en appendices}. On sait que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet cible est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau A. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
+Calculer le degré d'un sommet est plus compliqué\footnote{Le pseudo code est en appendices}. On sait que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet ciblé est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau A. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
 \subsubsection{Parcours en largeur du graphe}
 \noindent
 Parcourir en largeur le graphe est plus facile que de calculer le degré d'un sommet. Il suffit d'utiliser une file et un bit de service pour chaque tétraèdre afin de savoir si celui-ci a été visité. Le passage d'un tétraèdre à l'autre est rendu très facile grace à notre tableau représentant les faces adjacentes. La complexité est donc la même que dans le maillage original : O($|$T$|$).
 \subsubsection{Retrouver l'indice d'un sommet}
 \label{Retrouver l'indice d'un sommet}
 \noindent
-Retrouver l'indice d'un sommet est une procédure courante. En effet lorsque on est sur une face, on peut vouloir connaître les indices des trois sommets qui la compose. Pour connaître l'indice d'un sommet, on calcule son hypersphère. Puis pour chaque diamant ou tétraèdre isolé dans l'hypersphère dont l'indice de la première face est inférieur à la limite\footnote{La limite est l'index à partir duquel les diamant et tétraèdres isolés ne sont plus associés à des sommets}, on calcule alors l'hypersphère du sommet ancré. Il suffit de comparer l'hypersphère de notre sommet cible avec les hypersphère des sommets ancrés et de renvoyer l'indice du sommet ayant la même hypersphère. Cette opération peut s'avérer néanmoins très couteuse. La compléxité pour calculer l'hypersphère d'un sommet est O(d). En utilisant notre algorithme pour appareiller les tétraèdres en diamants, les sommets sont en moyennes adjacents à 8 diamants/tétraèdres isolés. Seulement parmi ces 8 diamants/tétraèdres isolés, en moyenne 65\% \footnote{$\frac{|Diamants|+|T\acute{e}tra\grave{e}dres\; isol\acute{e}s|}{|V|}$} auront un indice inférieur à la limite. Par conséquent, retrouver l'indice d'un sommet nécessite de calculer en moyenne 6 (0.65*8+1) hypersphères.
+Retrouver l'indice d'un sommet est une procédure courante. En effet lorsque on est sur une face, on peut vouloir connaître les indices des trois sommets qui la compose. Pour connaître l'indice d'un sommet, on calcule son hypersphère. Puis pour chaque diamant ou tétraèdre isolé dans l'hypersphère dont l'indice de la première face est inférieur à la limite\footnote{La limite est l'index à partir duquel les diamant et tétraèdres isolés ne sont plus associés à des sommets}, on calcule alors l'hypersphère du sommet ancré. Il suffit de comparer l'hypersphère de notre sommet cible avec les hypersphère des sommets ancrés et de renvoyer l'indice du sommet ayant la même hypersphère. Cette opération peut s'avérer néanmoins très couteuse. La compléxité pour calculer l'hypersphère d'un sommet est O(d). En utilisant notre algorithme pour appareiller les tétraèdres en diamants, les sommets sont en moyenne adjacents à 8 diamants/tétraèdres isolés. Seulement parmi ces 8 diamants/tétraèdres isolés, en moyenne 65\% \footnote{$\frac{|Diamants|+|T\acute{e}tra\grave{e}dres\; isol\acute{e}s|}{|V|}$} auront un indice inférieur à la limite. Par conséquent, retrouver l'indice d'un sommet nécessite de calculer en moyenne 6 (0.65*8+1) hypersphères.
 
 %\begin{tikzpicture}
 %\begin{axis}[
@@ -332,7 +332,7 @@ Retrouver l'indice d'un sommet est une procédure courante. En effet lorsque on 
 
 \subsection{Un nouveau format de stockage}
 \noindent
-Les fichiers OFF encodent d'abord les coordonnées géométriques de chaque sommet puis les indices des 4 sommets de chaque tétraèdre. Ils sont ainsi très faciles à manipuler mais ne sont pas concis (un sommet apparaît en moyenne 22 fois dans une tétraèdrisation). L'idée de cette section est de tirer avantage de notre appariement des tétraèdres en diamants afin de sauvegarder les maillages dans un format plus succint.
+Les fichiers OFF encodent d'abord les coordonnées géométriques de chaque sommet puis les indices des 4 sommets de chaque tétraèdre. Ils sont ainsi très faciles à manipuler mais ne sont pas concis (un sommet apparaît en moyenne 22 fois dans une tétraèdrisation). L'idée de cette section est de tirer avantage de notre appariement des tétraèdres en diamants afin de sauvegarder les maillages dans un format plus succinct.
 \paragraph{Encodage de la structure}
 Comme exprimé dans la partie \ref{Retrouver l'indice d'un sommet}, un sommet dans notre structure est adjacent en moyenne à 8 diamants/tétraèdres isolés. Par conséquent, plutôt que de décrire pour chaque tétraèdre les 4 indices des 4 sommets, nous pouvons encoder les indices des sommets composant un diamant. Les sommets sont ordonnés dans un diamant (\ref{Ordre des sommets dans les diamants}). Ainsi, en ayant juste l'ordre des sommets, nous sommes en mesure de retrouver les faces (la première face est bordée par le premier, le deuxième et l'avant dernier sommet).\\
 Cependant, notre structure ne stocke pas implicitement les sommets. Nous savons seulement que le ième sommet est adjacent au ième diamant/tétraèdre isolé. Néanmoins, en calculant l'hypersphère d'un sommet, nous informons les faces adjacentes qu'elles possèdent ce sommet. En faisant ainsi pour tous les sommets du maillage, nous associons alors à chaque face ses 3 sommets bordants.\\
@@ -356,8 +356,6 @@ L'ouverture est similaire à l'encodage du maillage. Pour chaque diamant, l'ordr
 \paragraph{Résultats}
 En théorie comme en pratique, notre structure nous permet de reduire en moyenne la taille du fichier OFF de 44\% ($\frac{8}{18}$).
 
-\subsection{Implémentation}
+\subsection{Encodage des références}
 \noindent
-Tout le code est implémenté en C\texttt{++} natif, sans l'aide d'aucune bibliothèque extérieure. Le code source est compilé avec g\texttt{++} sous Elementary OS. Tous les algorithmes ont été exécutés sur une machine avec un processeur i5-5300U et 16Go de RAM. L'ensemble du code est open-source et disponible sur github : \url{https://github.com/beaupletga/3D-Mesh-Compression}.\\
-Des classes représentent chaque forme géométrique (sommet, tétraèdre, diamant) permettant un code modulable et facilement exploitable. Nous utilisons cette représentation sous forme de classe pour la construction de notre structure mais elle est tout à fait absente dans son utilisation. \\
-En ce qui concerne cette dernière, le tableau A est un tableau d'entiers codés sur 32 bits. Bien que nous aurions pu inclure les 4 bits de services dans les 32 bits de chaque entier, nous avons préféré utiliser deux tableaux annexes pour représenter ces bits de service. Le premier bit de service est stocké dans un tableau de booléens et les 3 autres bits de service sont stockés dans un tableau d'entiers. En codant les indices dans le tableau $F$ sur 28 bits et en utilisant les 4 derniers bits comme bits de service, nous pouvons encoder des maillages ayant jusqu'à $2^{28}=268$ millions de faces.
+En ce qui concerne le choix d'implémentation des références, nous avons utilisé un tableau A stockant des entiers sur 32 bits. Bien que nous aurions pu inclure les 4 bits de services dans les 32 bits de chaque entier, nous avons préféré utiliser deux tableaux annexes pour représenter ces bits de service. Le premier bit de service est stocké dans un tableau de booléens et les 3 autres bits de service sont stockés dans un tableau d'entiers. En codant les indices dans le tableau A sur 28 bits et en utilisant les 4 derniers bits comme bits de service, nous pouvons encoder des maillages ayant jusqu'à $2^{28}=268$ millions de faces.

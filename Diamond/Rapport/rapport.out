@@ -32,16 +32,16 @@
 \BOOKMARK [3][-]{subsubsection.3.7.7}{Parcours en largeur du graphe}{subsection.3.7}% 32
 \BOOKMARK [3][-]{subsubsection.3.7.8}{Retrouver l'indice d'un sommet}{subsection.3.7}% 33
 \BOOKMARK [2][-]{subsection.3.8}{Un nouveau format de stockage}{section.3}% 34
-\BOOKMARK [2][-]{subsection.3.9}{Impl\351mentation}{section.3}% 35
+\BOOKMARK [2][-]{subsection.3.9}{Encodage des r\351f\351rences}{section.3}% 35
 \BOOKMARK [1][-]{section.4}{R\351sultats}{}% 36
 \BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 37
 \BOOKMARK [2][-]{subsection.4.2}{Appareillage en diamants}{section.4}% 38
 \BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 39
 \BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 40
 \BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 41
-\BOOKMARK [1][-]{section.5}{Borne inf\351rieure th\351orique}{}% 42
+\BOOKMARK [1][-]{section.5}{Taille m\351moire de notre structure : garanties th\351oriques}{}% 42
 \BOOKMARK [1][-]{section.6}{Travail Futur}{}% 43
-\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations}{section.6}% 44
+\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations et extensions possibles}{section.6}% 44
 \BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 45
 \BOOKMARK [1][-]{section.7}{Conclusion}{}% 46
 \BOOKMARK [1][-]{section*.45}{Appendices}{}% 47

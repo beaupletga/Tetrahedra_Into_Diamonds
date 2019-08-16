@@ -16,13 +16,14 @@ Un maillage représente un domaine géometrique en le discretisant en formes sim
 %Si non, pourquoi pensiez-vous pouvoir apporter une contribution originale ?
 La compression de données est omniprésente en informatique, avec des formats compressés génériques comme \textit{gzip} mais aussi dédiés comme \textit{mp3} pour les fichiers audios. Ce besoin de compresser les données est grandissant car de plus en plus de fichiers sont stockés à distance sur des serveurs et la moindre économie de stockage a d'importantes répercussions. Néanmoins, sous certains formats compressés, les données originales deviennent inutilisables (ex : \textit{rar}). Cela pose problème quand l'on souhaite accéder aux données  sans passer par l'étape de décompression.\\
 Une structure de données est une manière d'organiser les données pour faciliter leur traitement. Les listes, arbres et graphes sont des exemples de structures de données. Leur but n'est pas de limiter l'usage mémoire mais seulement de faciliter l'utilisation des données. Ainsi, pour certains formats volumineux, des structures de données compactes ont été inventées. Ce sont des structures de données compressées, c'est à dire des structures de données dont l'utilisation de la mémoire est limitée.\\
-Si l'on revient aux maillages, les algorithmes de compression limitent au maximum l'usage mémoire du maillage et il devient alors inutilisable sous forme compressé tandis que la structure de données pré-traite le maillage en réduisant l'usage mémoire mais celui-ci reste utilisable. Les maillages surfaciques sont majoritairement utilisés car ils sont plus léger, et permettent de représenter implicitement des volumes (la frontière). Par conséquent, de nombreuses structures de données compactes ont été créees afin de faciliter leur utilisation. Les maillages volumiques étant beaucoup moins utilisés pour l'instant, peu de structure de données compactes leur sont dévolues. Néanmoins, leur utilisation croissante incite à procéder de même. La suite de ce rapport sera principalement consacrée aux structures de données compactes pour maillages volumiques tétraèdriques.
+Si l'on revient aux maillages, les algorithmes de compression limitent au maximum l'usage mémoire du maillage et il devient alors inutilisable sous forme compressé tandis que la structure de données pré-traite le maillage en réduisant l'usage mémoire mais celui-ci reste utilisable.\\ 
+Les maillages surfaciques sont majoritairement utilisés car ils sont plus léger, et permettent de représenter implicitement des volumes (la frontière). Par conséquent, de nombreuses structures de données compactes ont été créees afin de faciliter leur utilisation. Les maillages volumiques étant beaucoup moins utilisés pour l'instant, peu de structure de données compactes leur sont dévolues. Néanmoins, leur utilisation croissante incite à procéder de même. La suite de ce rapport sera principalement consacrée aux structures de données compactes pour maillages volumiques tétraèdriques.
 
 \subsection*{La contribution proposée}
 \noindent
 De manière générale, un structure de données pour maillage stocke trois types d'informations :
 \begin{itemize}
-\item La géometrie, c'est à dire les positions des sommets
+\item La géométrie, c'est à dire les positions des sommets
 \item La connectivité, les relations d'adjacence entre les tétraèdres
 \item Des attributs (par sommet, par arête, par face, par tétraèdre)\\
 \end{itemize}
@@ -42,7 +43,7 @@ Dans ce rapport, nous présentons une structure de données compacte permettant 
 
 \subsection*{Les arguments en faveur de sa validité}
 \noindent
-Notre structure de données est en moyenne 40\% plus économique que la meilleure structure de données disponible actuellement pour les maillages tétraèdriques. Cette économie est purement empirique et nous n'apportons pas de garanties théoriques concernant la place mémoire occupée par notre structure. La validité de la solution que nous proposons est directement liée aux expériences menées. Par conséquent, afin que nos résultats soient fidèles à la réalité, nous évaluons notre structure sur une dizaine de maillages aux propriétés différentes en prétant particulièrement attention au temps requis pour la construction, au temps nécessaire pour répondre à de simples requêtes et à la taille mémoire consommée.
+Notre structure de données est en moyenne 40\% plus économique que la meilleure structure de données disponible actuellement pour les maillages tétraèdriques. Cette économie est purement empirique et nous n'apportons que peu de garanties théoriques concernant la place mémoire occupée par notre structure. La validité de la solution que nous proposons est directement liée aux expériences menées. Par conséquent, afin que nos résultats soient fidèles à la réalité, nous évaluons notre structure sur une dizaine de maillages aux propriétés différentes en prétant particulièrement attention au temps requis pour la construction, au temps nécessaire pour répondre à de simples requêtes et à la taille mémoire consommée.
 
 \subsection*{Le bilan et les perspectives}
 \noindent
@@ -133,9 +134,9 @@ Pour un maillage volumique, la formule d'Euler contient un terme de plus :\\
 \chi = |V|-|E|+|F|-|T|
 \end{equation}
 \begin{itemize}
-\item $T$ est l'ensemble des polytopes de dimensions 3 (tétraèdres, hexaèdres...)\\
+\item $T$ est l'ensemble des polyèdres (tétraèdres, hexaèdres...)\\
 \end{itemize}
-Si l'objet considéré est une variété alors chaque facette qui n'est pas sur les bords du volume est partagée par deux polytopes de dimensions 3, alors :\\
+Si l'objet considéré est une variété alors chaque facette qui n'est pas sur les bords du volume est partagée par deux polyèdres, alors :\\
 \begin{equation}
 |F|\simeq 2|T|
 \end{equation}
@@ -143,50 +144,44 @@ Ainsi :
 \begin{equation}
 \chi \simeq |V|-|E|+|T|
 \end{equation}
-Il y a donc autant d'arêtes que de polytopes de dimension 3 et sommets réunis (Tab. \ref{tab:caract_maillages}).
+Il y a donc autant d'arêtes que de polyèdres et sommets réunis (Tab. \ref{tab:caract_maillages}).
 
 \subsection{Représentation des maillages tétraèdriques}
 \label{representation_maillages_tetra}
 \noindent
-Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, une structure de données \lc{doit fournir une implémentation des opérateurs permettant la navigation et l'accès à la combinatoire du maillage, décrite par les relations d'incidence entre ses éléments. Dans le cas de maillages tétraèdriques, il est usuel de disposer des opérations suivantes:}
-
+Ce rapport se concentre sur les structures de données pour maillages tétraèdriques. Comme rappelé dans l'introduction, une structure de données doit fournir une implémentation des opérateurs permettant la navigation et l'accès à la combinatoire du maillage (décrite par les relations d'incidence entre ses éléments). Dans le cas de maillages tétraèdriques, il est usuel de disposer des opérations suivantes:
 \begin{itemize}
 \item \texttt{incident\_face($i,t$)}: renvoie la $i$-ème face du tétraèdre $t$ (pour $i=0..3$).
-\item \texttt{incident\_vertex($v$)}: renvoie un des tétraèdres \lc{incidents} au sommet $v$.
-\item \texttt{neighbour($i, t$)}: renvoie le tétraèdre qui est le $i$-ème voisin \lc{adjacent} au tétraèdre $t$. 
+\item \texttt{incident\_vertex($v$)}: renvoie un des tétraèdres incidents au sommet $v$.
+\item \texttt{neighbour($i, t$)}: renvoie le tétraèdre qui est le $i$-ème voisin adjacent au tétraèdre $t$. 
 \item \texttt{get\_vertex\_index($v,t$)}: renvoie un entier $i\in\{0 \ldots 3 \}$, l'indice du sommet $v$ dans le tétraèdre $t$.
 %\indent \texttt{degree(i)} Cette fonction doit permettre de calculer le degré d'un sommet\\
 %\indent \texttt{hypersphere(i)} Cette fonction doit retourner l'hypersphère ou l'étoile d'un sommet, c'est à dire l'ensemble des tétraèdres possédant le ième sommet.\\
 %\indent \texttt{breadth\_first\_search(t)} Cette fonction doit permettre de réaliser un parcours en largeur du maillage en commen\c cant par le tétraèdre t .\\
 \end{itemize}
 \noindent
-\lc{La combinaison de ces fonctions permet de réaliser la quasi-totalité des opérations de navigation locale qui sont effectuées habituellement
-dans le cadre des procédures de modélisation géométrique et géométrie algorithmique. A titre d'exemple, on peut implémenter de manière efficace les fonctions suivantes:}
+La combinaison de ces fonctions permet de réaliser la quasi-totalité des opérations de navigation locale qui sont effectuées habituellement
+dans le cadre des procédures de modélisation géométrique et géométrie algorithmique. A titre d'exemple, on peut implémenter de manière efficace les fonctions suivantes:
 \begin{itemize}
 \item \texttt{degree($v$)}: renvoie le degré d'un sommet $v$
 \item \texttt{hypersphere($v$)}: renvoie l'hypersphère ou l'étoile d'un sommet $v$, c'est à dire l'ensemble des tétraèdres incidents à $v$.
 \item \texttt{BFS($t$)}: réalise un parcours en largeur du maillage en commen\c cant par le tétraèdre $t$.
 \end{itemize}
-\lc{On dit que la structure de données est \emph{indexable} si, de plus, elle permet l'accès en temps constant aux éléments du maillage (ses faces, sommets, ...), par le biais des opérations suivantes:}
+On dit que la structure de données est \emph{indexable} si, de plus, elle permet l'accès en temps constant aux éléments du maillage (ses faces, sommets, ...), par le biais des opérations suivantes:
 \begin{itemize}
 \item \texttt{tetrahedron($i$)}: donne accès au $i$-ème tétraèdre,
 \item \texttt{vertex($i$)}: donne accès au $i$-ème sommet.
 \end{itemize}
-
-\lc{Ces deux opérations sont parfois importantes dans plusieurs applications: elles permettent, par exemple, d'itérer sur tous les sommets ou tétraèdres,
-ainsi que de récupérer les attributs qui y sont associés (couleurs, normales, coordonnées, ...).}
+Ces deux opérations sont parfois importantes dans plusieurs applications: elles permettent, par exemple, d'itérer sur tous les sommets ou tétraèdres,
+ainsi que de récupérer les attributs qui y sont associés (couleurs, normales, coordonnées, ...).
 
 \paragraph{Implantation naïve}
-\lc{Une solution simple à implémenter (utilisée, entre autres, par la librarie \texttt{CGAL}~\cite{CGAL}) permettant de représenter un maillage tétraèdrique consiste à stoquer explicitement les relations d'adjacences
-entre tétraèdres voisins et les relations d'incidence tétraèdre/sommet. Plus précisément,  on stoque:}
-pour chaque tétraèdre plusieurs références : 
+Une solution simple à implémenter (utilisée, entre autres, par la librarie \texttt{CGAL}~\cite{CGAL}) permettant de représenter un maillage tétraèdrique consiste à stocker explicitement les relations d'adjacence entre tétraèdres voisins et les relations d'incidence tétraèdre/sommet. Plus précisément,  on stocke pour chaque tétraèdre plusieurs références : 
 \begin{itemize}
-\item $4$ références par tétraèdre \lc{donnant l'accès aux} tétraèdres voisins
+\item $4$ références par tétraèdre donnant l'accès aux tétraèdres voisins
 \item $4$ références par tétraèdre donnant l'accès aux sommets incidents
-\item $1$ référence par sommet donnant l'accès à l'un de ses tétraèdres \lc{incidents}
+\item $1$ référence par sommet donnant l'accès à l'un de ses tétraèdres incidents
 \end{itemize}
-Au total, on comptabilise donc $8$ références par tétraèdre et $1$ référence par sommet ($8|T|+|V|$)~\footnote{
-\lc{Lorsqu'on parle de références il peut s'agir, selon le langage de programmation et environnement de travail choisi, de pointeurs (comme en \texttt{C/C++}), 
+Au total, on comptabilise donc $8$ références par tétraèdre et $1$ référence par sommet ($8|T|+|V|$)~\footnote{Lorsqu'on parle de références il peut s'agir, selon le langage de programmation et environnement de travail choisi, de pointeurs (comme en \texttt{C/C++}), 
 de références (comme en \texttt{Java}), ou d'indices si l'implémentation mise en place fait appel à des tableaux d'entiers (dans ce cas une référence vers un tétraèdre co\^utera
-$\lceil\log_2 |T|\rceil$ bits).}
-}.
+$\lceil\log_2 |T|\rceil$ bits).}.

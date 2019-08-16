@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  16 AUG 2019 22:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  17 AUG 2019 00:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1334,49 +1334,49 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 66.
 
 (./introduction_preliminaire.tex
-Underfull \hbox (badness 10000) in paragraph at lines 27--28
+Underfull \hbox (badness 10000) in paragraph at lines 28--29
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--76
+Underfull \hbox (badness 10000) in paragraph at lines 63--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
@@ -1384,36 +1384,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 92--93
 File: Images/planar_graph.png Graphic file (type png)
 
 <use Images/planar_graph.png>
-Package pdftex.def Info: Images/planar_graph.png used on input line 99.
+Package pdftex.def Info: Images/planar_graph.png used on input line 100.
 (pdftex.def)             Requested size: 159.59747pt x 103.88892pt.
 
 <Images/4cubes.png, id=224, 943.525pt x 603.25375pt>
 File: Images/4cubes.png Graphic file (type png)
  <use Images/4cubes.png>
-Package pdftex.def Info: Images/4cubes.png used on input line 103.
+Package pdftex.def Info: Images/4cubes.png used on input line 104.
 (pdftex.def)             Requested size: 169.82716pt x 108.58098pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 130--132
+Underfull \hbox (badness 10000) in paragraph at lines 131--133
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
+Underfull \hbox (badness 10000) in paragraph at lines 137--138
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 138--139
+Underfull \hbox (badness 10000) in paragraph at lines 139--140
 
  []
 
@@ -1423,31 +1423,31 @@ File: Images/corner_table.png Graphic file (type png)
 
 <use Images/corner_table.png>
 Package pdftex.def Info: Images/corner_table.png used on input line 27.
-(pdftex.def)             Requested size: 154.37401pt x 135.10236pt.
+(pdftex.def)             Requested size: 100.3484pt x 87.82117pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 22--31
 
  []
 
-[6 <./Images/corner_table.png>]) (./contribution.tex [7]
+[6 <./Images/corner_table.png>]) (./contribution.tex
 Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
  []
 
-<Images/full_diamond.png, id=317, 369.38pt x 354.32375pt>
+<Images/full_diamond.png, id=305, 369.38pt x 354.32375pt>
 File: Images/full_diamond.png Graphic file (type png)
 
 <use Images/full_diamond.png>
 Package pdftex.def Info: Images/full_diamond.png used on input line 17.
 (pdftex.def)             Requested size: 110.81485pt x 106.29794pt.
 
-<Images/not_full_diamond.png, id=318, 407.5225pt x 395.4775pt>
+<Images/not_full_diamond.png, id=306, 407.5225pt x 395.4775pt>
 File: Images/not_full_diamond.png Graphic file (type png)
 
 <use Images/not_full_diamond.png>
 Package pdftex.def Info: Images/not_full_diamond.png used on input line 23.
 (pdftex.def)             Requested size: 105.95334pt x 102.82172pt.
- [8 <./Images/full_diamond.png> <./Images/not_full_diamond.png>]
+ [7] [8 <./Images/full_diamond.png> <./Images/not_full_diamond.png>]
 <Images/isolated_tetra.png, id=326, 597.23125pt x 588.1975pt>
 File: Images/isolated_tetra.png Graphic file (type png)
 
@@ -1498,13 +1498,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 165--166
 
  []
 
-[10 <./Images/density_cow.png> <./Images/hand_density.png> <./Images/bfs_starti
-ng.png> <./Images/central_edges.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 167--168
 
  []
 
-
+[10 <./Images/density_cow.png> <./Images/hand_density.png> <./Images/bfs_starti
+ng.png> <./Images/central_edges.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 171--172
 
  []
@@ -1523,32 +1523,27 @@ File: Images/explosion_diamond.png Graphic file (type png)
 Package pdftex.def Info: Images/explosion_diamond.png used on input line 184.
 (pdftex.def)             Requested size: 132.3371pt x 152.89432pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 203--204
-
- []
-
-[11 <./Images/central_edge_AB.png> <./Images/explosion_diamond.png>]
-<Images/tetra_ordonnee.png, id=372, 336.25626pt x 352.31625pt>
+<Images/tetra_ordonnee.png, id=362, 336.25626pt x 352.31625pt>
 File: Images/tetra_ordonnee.png Graphic file (type png)
 
 <use Images/tetra_ordonnee.png>
 Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 210.
-(pdftex.def)             Requested size: 127.7787pt x 133.88156pt.
+(pdftex.def)             Requested size: 114.3256pt x 119.78593pt.
 
-<Images/permutation_tetra_diamant.png, id=373, 336.25626pt x 347.2975pt>
+<Images/permutation_tetra_diamant.png, id=363, 336.25626pt x 347.2975pt>
 File: Images/permutation_tetra_diamant.png Graphic file (type png)
 
 <use Images/permutation_tetra_diamant.png>
 Package pdftex.def Info: Images/permutation_tetra_diamant.png used on input lin
 e 216.
-(pdftex.def)             Requested size: 134.5001pt x 138.91653pt.
-
+(pdftex.def)             Requested size: 121.05215pt x 125.027pt.
+ [11 <./Images/central_edge_AB.png> <./Images/explosion_diamond.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 237--238
 
  []
 
 [12 <./Images/tetra_ordonnee.png> <./Images/permutation_tetra_diamant.png>]
-<Images/structure.png, id=384, 1222.5675pt x 300.12125pt>
+<Images/structure.png, id=386, 1222.5675pt x 300.12125pt>
 File: Images/structure.png Graphic file (type png)
 
 <use Images/structure.png>
@@ -1559,40 +1554,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 346--347
 
  []
 
-) (./resultats.tex <Images/ball.png, id=416, 579.16376pt x 573.14125pt>
+) (./resultats.tex <Images/ball.png, id=420, 579.16376pt x 573.14125pt>
 File: Images/ball.png Graphic file (type png)
 
 <use Images/ball.png>
-Package pdftex.def Info: Images/ball.png used on input line 9.
+Package pdftex.def Info: Images/ball.png used on input line 11.
 (pdftex.def)             Requested size: 69.49664pt x 68.77397pt.
- <Images/cow.png, id=417, 695.59875pt x 423.5825pt>
+ <Images/cow.png, id=421, 695.59875pt x 423.5825pt>
 File: Images/cow.png Graphic file (type png)
 
 <use Images/cow.png>
-Package pdftex.def Info: Images/cow.png used on input line 15.
+Package pdftex.def Info: Images/cow.png used on input line 17.
 (pdftex.def)             Requested size: 83.46825pt x 50.8277pt.
- <Images/hand.png, id=418, 711.65875pt x 484.81125pt>
+ <Images/hand.png, id=422, 711.65875pt x 484.81125pt>
 File: Images/hand.png Graphic file (type png)
 
 <use Images/hand.png>
-Package pdftex.def Info: Images/hand.png used on input line 21.
+Package pdftex.def Info: Images/hand.png used on input line 23.
 (pdftex.def)             Requested size: 85.39536pt x 58.17484pt.
- <Images/skull.png, id=419, 435.6275pt x 446.66875pt>
+ <Images/skull.png, id=423, 435.6275pt x 446.66875pt>
 File: Images/skull.png Graphic file (type png)
 
 <use Images/skull.png>
-Package pdftex.def Info: Images/skull.png used on input line 27.
+Package pdftex.def Info: Images/skull.png used on input line 29.
 (pdftex.def)             Requested size: 60.98743pt x 62.53319pt.
  [15]
-Underfull \hbox (badness 10000) in paragraph at lines 57--59
+Underfull \hbox (badness 10000) in paragraph at lines 60--62
 
  []
 
-<Images/histograme.png, id=428, 795.97375pt x 360.34625pt>
+<Images/histograme.png, id=432, 795.97375pt x 360.34625pt>
 File: Images/histograme.png Graphic file (type png)
 
 <use Images/histograme.png>
-Package pdftex.def Info: Images/histograme.png used on input line 88.
+Package pdftex.def Info: Images/histograme.png used on input line 91.
 (pdftex.def)             Requested size: 278.59499pt x 126.12308pt.
 
 NOTE: coordinate (5.08,) has been dropped because of a coordinate filter. (see 
@@ -1603,9 +1598,9 @@ NOTE: coordinate (5.11,) has been dropped because of a coordinate filter. (see
 also unbounded coords=jump). 
 [16 <./Images/ball.png> <./Images/cow.png> <./Images/hand.png> <./Images/skull.
 png> <./Images/histograme.png>]
-Overfull \hbox (1.2257pt too wide) in paragraph at lines 145--147
+Overfull \hbox (14.1832pt too wide) in paragraph at lines 148--150
 \OT1/cmr/m/n/10.95 On re-marque sur le Tab. []5[] qu'en ap-pli-quant l'al-go-ri
-thme glou-ton afin d'ap-pa-reiller som-met et dia-mant/t^^Setra^^Redre
+thme glou-ton afin d'ap-pa-reiller som-mets et dia-mants/t^^Setra^^Redres
  []
 
 
@@ -1629,17 +1624,17 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 212.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 212.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 212.
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 291BA22D51D9AB4A059D8E3D386954D5;3575.
+(rerunfilecheck)             Checksum: C8BCD3F7BB366784FEFD55231789D682;3641.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 212.
  ) 
 Here is how much of TeX's memory you used:
- 33680 strings out of 494883
- 759075 string characters out of 6178692
- 975401 words of memory out of 5000000
+ 33682 strings out of 494883
+ 759099 string characters out of 6178692
+ 975399 words of memory out of 5000000
  36250 multiletter control sequences out of 15000+600000
  18771 words of font info for 73 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 62i,29n,100p,1772b,2330s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,29n,100p,1773b,2330s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1670,10 +1665,10 @@ nts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
 fb>
-Output written on rapport.pdf (22 pages, 1328270 bytes).
+Output written on rapport.pdf (22 pages, 1328251 bytes).
 PDF statistics:
- 609 PDF objects out of 1000 (max. 8388607)
- 533 compressed objects within 6 object streams
- 157 named destinations out of 1000 (max. 500000)
+ 613 PDF objects out of 1000 (max. 8388607)
+ 537 compressed objects within 6 object streams
+ 159 named destinations out of 1000 (max. 500000)
  494 words of extra memory for PDF output out of 10000 (max. 10000000)
 
