@@ -1,0 +1,79 @@
+\begin{thebibliography}{10}
+
+\bibitem{CGAL}
+{The CGAL Project}, {\em {CGAL} User and Reference Manual}.
+\newblock {CGAL Editorial Board}, {4.14}~ed., 2019.
+
+\bibitem{triangle_strips}
+M.~Deering, ``Geometry compression,'' in {\em Proceedings of the 22nd annual
+  conference on Computer graphics and interactive techniques}, pp.~13--20,
+  Citeseer, 1995.
+
+\bibitem{cut_border_machine_2d}
+S.~Gumhold, ``Improved cut-border machine for triangle mesh compression,'' in
+  {\em Erlangen Workshop}, vol.~99, pp.~261--268, 1999.
+
+\bibitem{edgebreaker}
+J.~Rossignac, ``Edgebreaker: Connectivity compression for triangle meshes,''
+  {\em IEEE transactions on visualization and computer graphics}, vol.~5,
+  no.~1, pp.~47--61, 1999.
+
+\bibitem{valence_encoding}
+C.~Touma, ``Triangle mesh compression,'' in {\em Graphics Interface 98}, 1998.
+
+\bibitem{winged_edge}
+B.~G. Baumgart, ``Winged edge polyhedron representation,'' tech. rep., STANFORD
+  UNIV CA DEPT OF COMPUTER SCIENCE, 1972.
+
+\bibitem{SOT}
+T.~Gurung and J.~Rossignac, ``Sot: compact representation for tetrahedral
+  meshes,'' in {\em 2009 SIAM/ACM Joint Conference on Geometric and Physical
+  Modeling}, pp.~79--88, ACM, 2009.
+
+\bibitem{squad}
+T.~Gurung, D.~Laney, P.~Lindstrom, and J.~Rossignac, ``Squad: Compact
+  representation for triangle meshes,'' in {\em Computer Graphics Forum},
+  vol.~30, pp.~355--364, Wiley Online Library, 2011.
+
+\bibitem{2d_catalog}
+L.~C. Aleardi, O.~Devillers, and A.~Mebarki, ``Catalog-based representation of
+  2d triangulations,'' {\em International Journal of Computational Geometry \&
+  Applications}, vol.~21, no.~04, pp.~393--402, 2011.
+
+\bibitem{star_vertices}
+M.~Kallmann and D.~Thalmann, ``Star-vertices: a compact representation for
+  planar meshes with adjacency information,'' {\em Journal of Graphics Tools},
+  vol.~6, no.~1, pp.~7--18, 2001.
+
+\bibitem{grow_and_fold}
+A.~Szymczak and J.~R. Rossignac, ``Grow \& fold: Compression of tetrahedral
+  meshes,'' tech. rep., Georgia Institute of Technology, 1999.
+
+\bibitem{topological_surgery}
+G.~Taubin and J.~Rossignac, ``Geometric compression through topological
+  surgery,'' {\em ACM Transactions on Graphics (TOG)}, vol.~17, no.~2,
+  pp.~84--115, 1998.
+
+\bibitem{cut_border_machine_3d}
+S.~Gumhold, S.~Guthe, and W.~Stra{\ss}er, ``Tetrahedral mesh compression with
+  the cut-border machine,'' in {\em Proceedings of the conference on
+  Visualization'99: celebrating ten years}, pp.~51--58, IEEE Computer Society
+  Press, 1999.
+
+\bibitem{triangle_strips_weiler}
+M.~Weiler, P.~N. Mall{\'o}n, M.~Kraus, and T.~Ertl, ``Texture-encoded
+  tetrahedral strips,'' in {\em 2004 IEEE Symposium on Volume Visualization and
+  Graphics}, pp.~71--78, IEEE, 2004.
+
+\bibitem{CHF}
+M.~Lage, T.~Lewiner, H.~Lopes, and L.~Velho, ``Chf: a scalable topological data
+  structure for tetrahedral meshes,'' in {\em XVIII Brazilian Symposium on
+  Computer Graphics and Image Processing (SIBGRAPI'05)}, pp.~349--356, IEEE,
+  2005.
+
+\bibitem{rank_and_select}
+G.~Navarro and E.~Providel, ``Fast, small, simple rank/select on bitmaps,'' in
+  {\em International Symposium on Experimental Algorithms}, pp.~295--306,
+  Springer, 2012.
+
+\end{thebibliography}
