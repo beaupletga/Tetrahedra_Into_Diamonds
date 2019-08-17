@@ -8,7 +8,7 @@ Une structure de données compacte est dîtes \textit{dynamique} lorsqu'on peut 
 \subsection{Défauts}
 \label{defauts}
 \noindent
-\paragraph{Lecture du maillage}Afin d'appareiller les tétraèdres en diamants, nous réalisons un parcours en largeur de notre maillage. Seulement, pour parcourir le maillage, nous lisons entièrement le fichier original car nous n'avons aucune garantie géométrique sur la manière dont sont énumérés les tétraèdres. Si les tétraèdres sont énumérés dans le fichier original par proximité alors nous pouvons maintenir un cache de tétraèdres puis les associer en diamants au moment voulu. Sans-cela, nous devons lire le fichier entièrement et cela représente un vrai goulot d'étranglement.
+\paragraph{Lecture du maillage}Afin d'appareiller les tétraèdres en diamants, nous réalisons un parcours en largeur de notre maillage. Seulement, pour parcourir le maillage, nous lisons entièrement le fichier original car nous n'avons aucune garantie géométrique sur la manière dont sont énumérés les tétraèdres. Si les tétraèdres sont énumérés dans le fichier original par proximité alors nous pouvons maintenir un cache de tétraèdres puis les associer en diamants au moment voulu. Sans cela, nous devons lire le fichier entièrement et cela représente un vrai goulot d'étranglement.
 \paragraph{Maillages problématiques}Le second défaut est inhérent à notre structure de données car celle-ci apparie les tétraèdres en diamants. Cependant, certains maillages pathologiques (en forme de serpentins par exemple) peuvent ne pas autoriser la formation de diamants. Notre structure de données utilisera alors 4 rpt.
 
 \section{Conclusion}
