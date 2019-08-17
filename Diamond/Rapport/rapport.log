@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  17 AUG 2019 00:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  17 AUG 2019 10:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1434,55 +1434,55 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
  []
 
-<Images/full_diamond.png, id=305, 369.38pt x 354.32375pt>
+<Images/full_diamond.png, id=307, 369.38pt x 354.32375pt>
 File: Images/full_diamond.png Graphic file (type png)
 
 <use Images/full_diamond.png>
 Package pdftex.def Info: Images/full_diamond.png used on input line 17.
 (pdftex.def)             Requested size: 110.81485pt x 106.29794pt.
 
-<Images/not_full_diamond.png, id=306, 407.5225pt x 395.4775pt>
+<Images/not_full_diamond.png, id=308, 407.5225pt x 395.4775pt>
 File: Images/not_full_diamond.png Graphic file (type png)
 
 <use Images/not_full_diamond.png>
 Package pdftex.def Info: Images/not_full_diamond.png used on input line 23.
 (pdftex.def)             Requested size: 105.95334pt x 102.82172pt.
  [7] [8 <./Images/full_diamond.png> <./Images/not_full_diamond.png>]
-<Images/isolated_tetra.png, id=326, 597.23125pt x 588.1975pt>
+<Images/isolated_tetra.png, id=328, 597.23125pt x 588.1975pt>
 File: Images/isolated_tetra.png Graphic file (type png)
 
 <use Images/isolated_tetra.png>
 Package pdftex.def Info: Images/isolated_tetra.png used on input line 82.
 (pdftex.def)             Requested size: 119.44412pt x 117.6374pt.
 
-<Images/diamond.png, id=327, 742.775pt x 740.7675pt>
+<Images/diamond.png, id=329, 742.775pt x 740.7675pt>
 File: Images/diamond.png Graphic file (type png)
  <use Images/diamond.png>
 Package pdftex.def Info: Images/diamond.png used on input line 88.
 (pdftex.def)             Requested size: 118.84642pt x 118.5252pt.
 
-<Images/density_cow.png, id=331, 796.9775pt x 550.055pt>
+<Images/density_cow.png, id=333, 796.9775pt x 550.055pt>
 File: Images/density_cow.png Graphic file (type png)
 
 <use Images/density_cow.png>
 Package pdftex.def Info: Images/density_cow.png used on input line 100.
 (pdftex.def)             Requested size: 199.24388pt x 137.51341pt.
 
-<Images/hand_density.png, id=332, 848.16875pt x 753.81625pt>
+<Images/hand_density.png, id=334, 848.16875pt x 753.81625pt>
 File: Images/hand_density.png Graphic file (type png)
 
 <use Images/hand_density.png>
 Package pdftex.def Info: Images/hand_density.png used on input line 104.
 (pdftex.def)             Requested size: 186.5977pt x 165.84009pt.
  [9 <./Images/isolated_tetra.png> <./Images/diamond.png>] <Images/bfs_starting.
-png, id=345, 801.99625pt x 621.32124pt>
+png, id=347, 801.99625pt x 621.32124pt>
 File: Images/bfs_starting.png Graphic file (type png)
 
 <use Images/bfs_starting.png>
 Package pdftex.def Info: Images/bfs_starting.png used on input line 114.
 (pdftex.def)             Requested size: 176.43971pt x 136.69109pt.
 
-<Images/central_edges.png, id=346, 591.20876pt x 561.09625pt>
+<Images/central_edges.png, id=348, 591.20876pt x 561.09625pt>
 File: Images/central_edges.png Graphic file (type png)
 
 <use Images/central_edges.png>
@@ -1509,70 +1509,70 @@ Underfull \hbox (badness 10000) in paragraph at lines 171--172
 
  []
 
-<Images/central_edge_AB.png, id=356, 529.98pt x 554.07pt>
+<Images/central_edge_AB.png, id=358, 529.98pt x 554.07pt>
 File: Images/central_edge_AB.png Graphic file (type png)
 
 <use Images/central_edge_AB.png>
 Package pdftex.def Info: Images/central_edge_AB.png used on input line 178.
 (pdftex.def)             Requested size: 132.49466pt x 138.51715pt.
 
-<Images/explosion_diamond.png, id=357, 413.545pt x 477.785pt>
+<Images/explosion_diamond.png, id=359, 413.545pt x 477.785pt>
 File: Images/explosion_diamond.png Graphic file (type png)
 
 <use Images/explosion_diamond.png>
 Package pdftex.def Info: Images/explosion_diamond.png used on input line 184.
 (pdftex.def)             Requested size: 132.3371pt x 152.89432pt.
-
-<Images/tetra_ordonnee.png, id=362, 336.25626pt x 352.31625pt>
+ [11 <./Images/central_edge_AB.png> <./Images/explosion_diamond.png>]
+<Images/tetra_ordonnee.png, id=374, 336.25626pt x 352.31625pt>
 File: Images/tetra_ordonnee.png Graphic file (type png)
 
 <use Images/tetra_ordonnee.png>
 Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 210.
 (pdftex.def)             Requested size: 114.3256pt x 119.78593pt.
 
-<Images/permutation_tetra_diamant.png, id=363, 336.25626pt x 347.2975pt>
+<Images/permutation_tetra_diamant.png, id=375, 336.25626pt x 347.2975pt>
 File: Images/permutation_tetra_diamant.png Graphic file (type png)
 
 <use Images/permutation_tetra_diamant.png>
 Package pdftex.def Info: Images/permutation_tetra_diamant.png used on input lin
 e 216.
 (pdftex.def)             Requested size: 121.05215pt x 125.027pt.
- [11 <./Images/central_edge_AB.png> <./Images/explosion_diamond.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 237--238
 
  []
 
 [12 <./Images/tetra_ordonnee.png> <./Images/permutation_tetra_diamant.png>]
-<Images/structure.png, id=386, 1222.5675pt x 300.12125pt>
+<Images/structure.png, id=388, 1222.5675pt x 300.12125pt>
 File: Images/structure.png Graphic file (type png)
 
 <use Images/structure.png>
 Package pdftex.def Info: Images/structure.png used on input line 251.
-(pdftex.def)             Requested size: 427.90503pt x 105.044pt.
+(pdftex.def)             Requested size: 513.47485pt x 126.05006pt.
  [13 <./Images/structure.png>] [14]
 Underfull \hbox (badness 10000) in paragraph at lines 346--347
 
  []
 
-) (./resultats.tex <Images/ball.png, id=420, 579.16376pt x 573.14125pt>
+) (./resultats.tex <Images/ball.png, id=421, 579.16376pt x 573.14125pt>
 File: Images/ball.png Graphic file (type png)
 
 <use Images/ball.png>
 Package pdftex.def Info: Images/ball.png used on input line 11.
 (pdftex.def)             Requested size: 69.49664pt x 68.77397pt.
- <Images/cow.png, id=421, 695.59875pt x 423.5825pt>
+ <Images/cow.png, id=422, 695.59875pt x 423.5825pt>
 File: Images/cow.png Graphic file (type png)
 
 <use Images/cow.png>
 Package pdftex.def Info: Images/cow.png used on input line 17.
 (pdftex.def)             Requested size: 83.46825pt x 50.8277pt.
- <Images/hand.png, id=422, 711.65875pt x 484.81125pt>
+ <Images/hand.png, id=423, 711.65875pt x 484.81125pt>
 File: Images/hand.png Graphic file (type png)
 
 <use Images/hand.png>
 Package pdftex.def Info: Images/hand.png used on input line 23.
 (pdftex.def)             Requested size: 85.39536pt x 58.17484pt.
- <Images/skull.png, id=423, 435.6275pt x 446.66875pt>
+ <Images/skull.png, id=424, 435.6275pt x 446.66875pt>
 File: Images/skull.png Graphic file (type png)
 
 <use Images/skull.png>
@@ -1583,12 +1583,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--62
 
  []
 
-<Images/histograme.png, id=432, 795.97375pt x 360.34625pt>
+<Images/histograme.png, id=434, 795.97375pt x 360.34625pt>
 File: Images/histograme.png Graphic file (type png)
 
 <use Images/histograme.png>
 Package pdftex.def Info: Images/histograme.png used on input line 91.
-(pdftex.def)             Requested size: 278.59499pt x 126.12308pt.
+(pdftex.def)             Requested size: 286.55034pt x 129.72455pt.
 
 NOTE: coordinate (5.08,) has been dropped because of a coordinate filter. (see 
 also unbounded coords=jump). 
@@ -1628,9 +1628,9 @@ Package rerunfilecheck Info: File `rapport.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 212.
  ) 
 Here is how much of TeX's memory you used:
- 33682 strings out of 494883
- 759099 string characters out of 6178692
- 975399 words of memory out of 5000000
+ 33683 strings out of 494883
+ 759111 string characters out of 6178692
+ 975401 words of memory out of 5000000
  36250 multiletter control sequences out of 15000+600000
  18771 words of font info for 73 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
@@ -1665,10 +1665,10 @@ nts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
 fb>
-Output written on rapport.pdf (22 pages, 1328251 bytes).
+Output written on rapport.pdf (22 pages, 1328730 bytes).
 PDF statistics:
- 613 PDF objects out of 1000 (max. 8388607)
- 537 compressed objects within 6 object streams
- 159 named destinations out of 1000 (max. 500000)
+ 615 PDF objects out of 1000 (max. 8388607)
+ 539 compressed objects within 6 object streams
+ 160 named destinations out of 1000 (max. 500000)
  494 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -88,7 +88,7 @@ C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.35]{Images/histograme}
+\includegraphics[scale=0.36]{Images/histograme}
 \caption{Histogramme de la part de tétraèdres parmi les tétraèdres isolés et diamants en utilisant le parcours en largeur}
 \label{fig:histogramme}
 \end{center}
@@ -120,7 +120,7 @@ C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 
 \vspace{0.1cm}
 \noindent
-On note sur la Fig. \ref{fig:graphique} qu'il semble avoir un lien entre le nombre de tétraèdres par arête et les performances de nos algorithmes de création de diamants. Ce comportement ne semble pas étonnant étant donné que plus le nombre de tétraèdres par arête est important, plus les diamants peuvent contenir un nombre important de tétraèdres. Compte tenu des résultats de Tab. \ref{tab:results_performances}, nous avons choisi d'utiliser le parcours en largeur pour appareiller les tétraèdres en diamants. Le parcours en largeur est rapide et permet d'associer en moyenne 76\% des tétraèdres en diamants. Néanmoins, notre algorithme pourrait probablement être améliorés en étant exécutés en parallèle ou en choisissant plus spécifiquement un tétraèdre de départ (Fig. \ref{fig:bfs_starting}). On remarque que 50\% des tétraèdres sont dans des diamants possédant 5 ou 6 tétraèdres (Fig. \ref{fig:histogramme}).
+On note sur la Fig. \ref{fig:graphique} qu'il semble avoir un lien entre le nombre de tétraèdres par arête et les performances de nos algorithmes de création de diamants. Ce comportement ne semble pas étonnant étant donné que plus le nombre de tétraèdres par arête est important, plus les diamants peuvent contenir un nombre important de tétraèdres. Compte tenu des résultats de Tab. \ref{tab:results_performances}, nous avons choisi d'utiliser le parcours en largeur pour appareiller les tétraèdres en diamants. Le parcours en largeur est rapide et permet d'associer en moyenne 76\% des tétraèdres en diamants. Néanmoins, notre algorithme pourrait probablement être amélioré en étant exécuté en parallèle ou en choisissant plus spécifiquement un tétraèdre de départ (Fig. \ref{fig:bfs_starting}). On remarque que 50\% des tétraèdres sont dans des diamants possédant 5 ou 6 tétraèdres (Fig. \ref{fig:histogramme}).
 
 \subsection{Ancrage des sommets}
 \begin{table}[H]

@@ -176,7 +176,7 @@ Ces deux opérations sont parfois importantes dans plusieurs applications: elles
 ainsi que de récupérer les attributs qui y sont associés (couleurs, normales, coordonnées, ...).
 
 \paragraph{Implantation naïve}
-Une solution simple à implémenter (utilisée, entre autres, par la librarie \texttt{CGAL}~\cite{CGAL}) permettant de représenter un maillage tétraèdrique consiste à stocker explicitement les relations d'adjacence entre tétraèdres voisins et les relations d'incidence tétraèdre/sommet. Plus précisément,  on stocke pour chaque tétraèdre plusieurs références : 
+Une solution simple à implémenter (utilisée, entre autres, par la librarie \texttt{CGAL}~\cite{CGAL}) permettant de représenter un maillage tétraèdrique consiste à stocker explicitement les relations d'adjacence entre tétraèdres voisins et les relations d'incidence tétraèdre/sommet. Plus précisément, on stocke pour chaque tétraèdre plusieurs références : 
 \begin{itemize}
 \item $4$ références par tétraèdre donnant l'accès aux tétraèdres voisins
 \item $4$ références par tétraèdre donnant l'accès aux sommets incidents
