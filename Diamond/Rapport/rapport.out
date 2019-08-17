@@ -19,29 +19,23 @@
 \BOOKMARK [3][-]{subsubsection.3.2.3}{Choisir l'ar\352te de degr\351 maximum}{subsection.3.2}% 19
 \BOOKMARK [3][-]{subsubsection.3.2.4}{Parcours en largeur des t\351tra\350dres}{subsection.3.2}% 20
 \BOOKMARK [2][-]{subsection.3.3}{Choisir l'ancre}{section.3}% 21
-\BOOKMARK [2][-]{subsection.3.4}{Organisation des diamant, t\351tra\350dres et sommets}{section.3}% 22
-\BOOKMARK [2][-]{subsection.3.5}{Calcul des permutations}{section.3}% 23
-\BOOKMARK [2][-]{subsection.3.6}{La structure}{section.3}% 24
-\BOOKMARK [2][-]{subsection.3.7}{Les requ\352tes}{section.3}% 25
-\BOOKMARK [3][-]{subsubsection.3.7.1}{Acc\351der \340 la i\350me face}{subsection.3.7}% 26
-\BOOKMARK [3][-]{subsubsection.3.7.2}{Acc\351der au i\350me diamant ou t\351tra\350dre isol\351}{subsection.3.7}% 27
-\BOOKMARK [3][-]{subsubsection.3.7.3}{Parcourir les t\351tra\350dres d'un diamant}{subsection.3.7}% 28
-\BOOKMARK [3][-]{subsubsection.3.7.4}{Acc\351der au i\350me t\351tra\350dre}{subsection.3.7}% 29
-\BOOKMARK [3][-]{subsubsection.3.7.5}{Acc\351der au i\350me sommet}{subsection.3.7}% 30
-\BOOKMARK [3][-]{subsubsection.3.7.6}{Degr\351 et hypersph\350re d'un sommet}{subsection.3.7}% 31
-\BOOKMARK [3][-]{subsubsection.3.7.7}{Parcours en largeur du graphe}{subsection.3.7}% 32
-\BOOKMARK [3][-]{subsubsection.3.7.8}{Retrouver l'indice d'un sommet}{subsection.3.7}% 33
-\BOOKMARK [2][-]{subsection.3.8}{Un nouveau format de stockage}{section.3}% 34
-\BOOKMARK [2][-]{subsection.3.9}{Encodage des r\351f\351rences}{section.3}% 35
-\BOOKMARK [1][-]{section.4}{R\351sultats}{}% 36
-\BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 37
-\BOOKMARK [2][-]{subsection.4.2}{Appareillage en diamants}{section.4}% 38
-\BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 39
-\BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 40
-\BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 41
-\BOOKMARK [1][-]{section.5}{Taille m\351moire de notre structure : garanties th\351oriques}{}% 42
-\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 43
-\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations et extensions possibles}{section.6}% 44
-\BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 45
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 46
-\BOOKMARK [1][-]{section*.45}{Appendices}{}% 47
+\BOOKMARK [2][-]{subsection.3.4}{Organisation des diamants, t\351tra\350dres et sommets}{section.3}% 22
+\BOOKMARK [2][-]{subsection.3.5}{Identification des sommets partag\351s par des t\351tra\350dres adjacents}{section.3}% 23
+\BOOKMARK [2][-]{subsection.3.6}{Description de la structure}{section.3}% 24
+\BOOKMARK [2][-]{subsection.3.7}{Impl\351mentation des requ\352tes et des op\351rations de navigation}{section.3}% 25
+\BOOKMARK [3][-]{subsubsection.3.7.1}{Incidences et indexabilit\351}{subsection.3.7}% 26
+\BOOKMARK [3][-]{subsubsection.3.7.2}{Navigation entre faces et autour des sommets}{subsection.3.7}% 27
+\BOOKMARK [2][-]{subsection.3.8}{Un nouveau format de stockage}{section.3}% 28
+\BOOKMARK [2][-]{subsection.3.9}{Encodage des r\351f\351rences}{section.3}% 29
+\BOOKMARK [1][-]{section.4}{R\351sultats}{}% 30
+\BOOKMARK [2][-]{subsection.4.1}{Proc\351dure d'\351valuation}{section.4}% 31
+\BOOKMARK [2][-]{subsection.4.2}{Appariement des t\351tra\350dres en diamants}{section.4}% 32
+\BOOKMARK [2][-]{subsection.4.3}{Ancrage des sommets}{section.4}% 33
+\BOOKMARK [2][-]{subsection.4.4}{Les requ\352tes}{section.4}% 34
+\BOOKMARK [2][-]{subsection.4.5}{Taille m\351moire}{section.4}% 35
+\BOOKMARK [1][-]{section.5}{Taille m\351moire de notre structure : garanties th\351oriques}{}% 36
+\BOOKMARK [1][-]{section.6}{Travail Futur}{}% 37
+\BOOKMARK [2][-]{subsection.6.1}{Am\351liorations et extensions possibles}{section.6}% 38
+\BOOKMARK [2][-]{subsection.6.2}{D\351fauts}{section.6}% 39
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 40
+\BOOKMARK [1][-]{section*.52}{Appendices}{}% 41

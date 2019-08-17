@@ -56,7 +56,7 @@ Crane (C1)& 37k & 217k & 156k & 0.30 & 16.51 & 11.52 \\
 \label{tab:caract_maillages}
 \end{table}
 
-\subsection{Appareillage en diamants}
+\subsection{Appariement des tétraèdres en diamants}
 \noindent
 On peut évaluer l'appareillage des tétraèdres en diamants en regardant la part des tétraèdres dans des diamants ou en calculant le nombre de références par tétraèdre (rpt). On calcule ce dernier de cette manière :\\
 \begin{equation}
@@ -148,6 +148,7 @@ C1 & 0.8 & 77 & 76 \\
 \noindent
 On remarque sur le Tab. \ref{tab:results_ancres} qu'en appliquant l'algorithme glouton afin d'appareiller sommets et diamants/tétraèdres isolés, une part minime des sommets demeure non ancrée (1ère colonne). Par ailleurs, on note que la destruction de certains diamants pour associer des sommets à des tétraèdres n'a que peu d'incidence sur la part de sommets ancrés tant que le nombre de sommets est important (2ème et 3ème colonnes).
 
+\newpage
 \subsection{Les requêtes}
 \noindent
 Pour évaluer le temps nécessaire pour répondre à une requête, nous évaluons celle-ci après 10 000 essais aléatoires. Les temps sont obtenus en utilisant l'optimisation '-O3' de C\texttt{++}.
@@ -158,7 +159,7 @@ Pour évaluer le temps nécessaire pour répondre à une requête, nous évaluon
 \begin{tabular}{| c | c | c| c |c |c|}
 \hline
 Nom de la & Accès au& Accès au & Degré d'un & Parcours en & Parcours en\\
-structure &ième tétraèdre (s)& ième diamant (s) &sommet (s)&largeur (s) & largeur normalisé\footnote{Par rapport au nombre de tétraèdres} (s/tétraèdre)\\
+structure &$i$-ème tétraèdre (s)& $i$-ème diamant (s) &sommet (s)&largeur (s) & largeur normalisé\footnote{Par rapport au nombre de tétraèdres} (s/tétraèdre)\\
 \hline
 B1  & 1e-5 & 5e-6 & 1.9e-5 & 6e-4& 1.67e-7 \\
 B2  &  4.1e-4 & 1.6e-4 & 1.2e-4 & 0.01& 1.19e-7\\
@@ -192,13 +193,13 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02&1.28e-7\\
 %    anchor=north,legend columns=-1,cells={align=left}},
     ylabel={Secondes (s)},
 %    xlabel={Nombre de tétraèdres par arête},
-    symbolic x coords={Accès au ième tétraèdre,Degré d'un sommet,Parcours en Largeur},
+    symbolic x coords={Accès au $i$-ème tétraèdre,Degré d'un sommet,Parcours en Largeur},
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(Accès au ième tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,1.85e-3)};
-\addplot coordinates {(Accès au ième tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,4.25e-3)};
+\addplot coordinates {(Accès au $i$-ème tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,1.85e-3)};
+\addplot coordinates {(Accès au $i$-ème tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,4.25e-3)};
 %\addplot coordinates {(Degré d'un sommet,1e-3)(Parcours en Largeur,2.92e-3)};
 %\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,)(5.11,) };
 \legend{Notre Structure Compacte,Structure Compacte avec 4 rpt,Structure avec Pointeurs}
@@ -208,11 +209,12 @@ C1  & 8.1e-4 & 3.4e-4 & 2.8e-4 & 0.02&1.28e-7\\
 \label{fig:temps_moyen}
 \end{figure}
 \noindent
-Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre structure de données compacte sont moins bons pour l'accès au ième tétraèdre et le calcul du degré d'un sommet\footnote{Nous n'affichons pas le temps d'accès au ième diamant car la structure de données compacte à 4 rpt ne réunit pas les tétraèdres en diamants}. Etant donné que dans notre structure de données, le ième tétraèdre est plus proche du début du tableau que dans la structure à 4 rpt, le résultat devrait être l'inverse. De la même manière, pour le calcul du degré d'un sommet, sachant que les tétraèdres sont regroupés en diamants dans notre structure, le degré devrait être plus rapidement calculé. Nous expliquons ces deux écarts par les comparaisons effectuées dans les requêtes. En effet, lorsque nous voulons calculer le degré d'un sommet, si le sommet est adjacent à un tétraèdre isolé, alors il suffit de localiser la face du tétraèdre isolé non adjacente au sommet puis de naviguer au sein des trois autres faces. En revanche, lorsque notre sommet est adjacent à un diamant, davantage de comparaisons sont nécessaires afin de connaître les faces adjacentes au sommet. Cette supposition est confirmée en analysant les temps requis pour le parcours en largeur du graphe. Lorsque nous effectuons un parcours en largeur du graphe, aucune comparaison (utilisant les permutations des sommets) n'est nécessaire, il suffit seulement d'accéder au diamant/tétraèdres adjacents. Sachant que les tétraèdres sont regroupés en diamants dans notre structure, en accédant à un diamant $D_i$, on accède directement au $|D_i|$ tétraèdres le composant, gagnant un temps non négligeable. 
+Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre structure de données compacte sont moins bons pour l'accès au $i$-ème tétraèdre et le calcul du degré d'un sommet\footnote{Nous n'affichons pas le temps d'accès au $i$-ème diamant car la structure de données compacte à 4 rpt ne réunit pas les tétraèdres en diamants}. Etant donné que dans notre structure de données, le $i$-ème tétraèdre est plus proche du début du tableau que dans la structure à 4 rpt, le résultat devrait être l'inverse. De la même manière, pour le calcul du degré d'un sommet, sachant que les tétraèdres sont regroupés en diamants dans notre structure, le degré devrait être plus rapidement calculé. Nous expliquons ces deux écarts par les comparaisons effectuées dans les requêtes. En effet, lorsque nous voulons calculer le degré d'un sommet, si le sommet est adjacent à un tétraèdre isolé, alors il suffit de localiser la face du tétraèdre isolé non adjacente au sommet puis de naviguer au sein des trois autres faces. En revanche, lorsque notre sommet est adjacent à un diamant, davantage de comparaisons sont nécessaires afin de connaître les faces adjacentes au sommet. Cette supposition est confirmée en analysant les temps requis pour le parcours en largeur du graphe. Lorsque nous effectuons un parcours en largeur du graphe, aucune comparaison (utilisant les permutations des sommets) n'est nécessaire, il suffit seulement d'accéder au diamant/tétraèdres adjacents. Sachant que les tétraèdres sont regroupés en diamants dans notre structure, en accédant à un diamant $D_i$, on accède directement au $|D_i|$ tétraèdres le composant, gagnant un temps non négligeable. 
 %Par ailleurs, nous avons choisi de d'ajouter à la comparaison une structure compacte (avec un regroupement en diamants) utilisant les pointeurs (et non un tableau d'entiers). On s'aper\c oit
 \subsection{Taille mémoire}
 \begin{figure}[H]
 \centering
+\resizebox{0.65\textwidth} {!}{
 \pgfplotsset{width=13cm,height=7cm}
 \begin{tikzpicture}
 \begin{axis}[
@@ -235,6 +237,7 @@ Sur Fig. \ref{fig:temps_moyen}, on constate que les temps de calcul de notre str
 \legend{Notre Structure Compacte,Structure Compacte (4 rpt)}
 \end{axis}
 \end{tikzpicture}
+}
 \caption{Comparaison de la taille mémoire (en Mega Bytes) de notre structure de données compacte (en bleue) et de la même structure de données sans regroupement des tétraèdres en diamants (i.e SOT)}
 \label{fig:taille_memoire}
 \end{figure}

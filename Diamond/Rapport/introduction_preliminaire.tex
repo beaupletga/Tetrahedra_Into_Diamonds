@@ -18,7 +18,7 @@ La compression de données est omniprésente en informatique, avec des formats c
 Une structure de données est une manière d'organiser les données pour faciliter leur traitement. Les listes, arbres et graphes sont des exemples de structures de données. Leur but n'est pas de limiter l'usage mémoire mais seulement de faciliter l'utilisation des données. Ainsi, pour certains formats volumineux, des structures de données compactes ont été inventées. Ce sont des structures de données compressées, c'est-à-dire des structures de données dont l'utilisation de la mémoire est limitée.\\
 Si l'on revient aux maillages, les algorithmes de compression limitent au maximum l'usage mémoire du maillage et il devient alors inutilisable sous forme compressée tandis que la structure de données prétraite le maillage en réduisant l'usage mémoire mais celui-ci reste utilisable.\\ 
 Les maillages surfaciques sont majoritairement utilisés car ils sont plus légers, et permettent de représenter implicitement des volumes (la frontière). Par conséquent, de nombreuses structures de données compactes ont été créees afin de faciliter leur utilisation. Les maillages volumiques étant beaucoup moins utilisés pour l'instant, peu de structures de données compactes leur sont dévolues. Néanmoins, leur utilisation croissante incite à procéder de même. La suite de ce rapport sera principalement consacrée aux structures de données compactes pour maillages volumiques tétraèdriques.
-
+\newpage
 \subsection*{La contribution proposée}
 \noindent
 De manière générale, un structure de données pour maillage stocke trois types d'informations :
@@ -29,9 +29,9 @@ De manière générale, un structure de données pour maillage stocke trois type
 \end{itemize}
 Elle doit par ailleurs supporter des requêtes simples :
 \begin{itemize}
-\item Quels sont les sommets de la ième face ?
-\item Quel est le degré du ième sommet ?
-\item Quelles sont les tétraèdres adjacents au ième tétraèdre ?
+\item Quels sont les sommets de la $i$-ème face ?
+\item Quel est le degré du $i$-ème sommet ?
+\item Quels sont les tétraèdres adjacents au $i$-ème tétraèdre ?
 \item ...
 \end{itemize}
 %Par ailleurs, suivant l'utilisation ciblée, la structure de données devra être en mesure de satisfaire des opérations de modification :
@@ -39,7 +39,7 @@ Elle doit par ailleurs supporter des requêtes simples :
 %\item Ajouter/Enlever un sommet
 %\item Ajouter/Enlever/Séparer un tetra\\
 %\end{itemize}
-Dans ce rapport, nous présentons une structure de données compacte permettant de représenter la connectivité d'un maillage tétraèdrique en utilisant en moyenne 2.4 références par tétraèdre. Le principe de notre structure consiste à regrouper les tétraèdres en diamants. Nous exploitons le fait que les tétraèdres puissent être ordonnés autour d'une arête. Cet ordre permet d'omettre des informations de connectivité. Notre structure de données permet l'accès au ième sommet, au ième tétraèdre en temps constant et à l'hypersphère d'un sommet en temps proportionnel au degré du sommet. Son implémentation est simple et l'utilisation d'un tableau d'entiers afin de représenter les références permet une interopérabilité entre les languages de programmation.
+Dans ce rapport, nous présentons une structure de données compacte permettant de représenter la connectivité d'un maillage tétraèdrique en utilisant en moyenne 2.4 références par tétraèdre. Le principe de notre structure consiste à regrouper les tétraèdres en diamants. Nous exploitons le fait que les tétraèdres puissent être ordonnés autour d'une arête. Cet ordre permet d'omettre des informations de connectivité. Notre structure de données permet l'accès au $i$-ème sommet, au $i$-ème tétraèdre en temps constant et à l'hypersphère d'un sommet en temps proportionnel au degré du sommet. Son implémentation est simple et l'utilisation d'un tableau d'entiers afin de représenter les références permet une interopérabilité entre les languages de programmation.
 
 \subsection*{Les arguments en faveur de sa validité}
 \noindent
@@ -47,7 +47,7 @@ Notre structure de données est en moyenne 40\% plus économique que la meilleur
 
 \subsection*{Le bilan et les perspectives}
 \noindent
-Notre structure permet d'encoder de réduire la taille mémoire de la connectivivé du maillage sans utiliser sa géométrie. Par conséquent, cela rend notre approche très générale.\\
+Notre structure permet de réduire la taille mémoire de la connectivivé du maillage sans utiliser sa géométrie. Par conséquent, cela rend notre approche très générale.\\
 Néanmoins, notre structure de données est statique. Elle ne permet pas de modifier le maillage localement. Rendre notre structure dynamique en permettant l'ajout de sommets ou l'ajout de tétraèdres permettrait une utilisation encore plus étendue.\\
 Par ailleurs, notre structure est destinée aux maillages tétraèdriques et plus particulièrement aux variétés tétraèdriques. Cependant, les maillages hexaèdriques sont souvent préférés aux maillages tétraèdriques car ils offrent un meilleur ratio entre précision et temps de calcul. Une autre piste de recherche intéressante serait donc l'extension de notre structure aux maillages hexaèdriques.
 
@@ -95,15 +95,23 @@ En mathématiques et en optimisation combinatoire, la caractéristique d'Euler $
 
 \begin{figure}[th]
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[scale=0.3]{Images/planar_graph}
+  \caption{}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[scale=0.18]{Images/4cubes}
+  \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Graphe planaire ($|V|=8$,$|E|=15$,$|F|=9$). \textbf{Droite} : Polyèdre ($|V|=18$,$|E|=33$,$|F|=20$,$|T|=4$)}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.2]{Images/naive}
+  \caption{}
+  \label{fig:naive}
+\end{subfigure}
+\caption{\textbf{Gauche} : Graphe planaire ($|V|=8$,$|E|=15$,$|F|=9$). \textbf{Milieu} : Polyèdre ($|V|=18$,$|E|=33$,$|F|=20$,$|T|=4$). \textbf{Droite} : Deux tétraèdres partageant une face. Un espace a été ajouté entre les deux tétraèdres pour plus de clarté. Une structure de données naïve pour représenter le maillage stockerait pour chacun des deux tétraèdres leurs quatre voisins, leurs quatre sommets puis pour chacun des sommets l'un des tétraèdres adjacents.}
 \label{fig:planar_graph_4cubes}
 \end{figure}
 \noindent
@@ -156,14 +164,14 @@ Ce rapport se concentre sur les structures de données pour maillages tétraèdr
 \item \texttt{neighbour($i, t$)}: renvoie le tétraèdre qui est le $i$-ème voisin adjacent au tétraèdre $t$. 
 \item \texttt{get\_vertex\_index($v,t$)}: renvoie un entier $i\in\{0 \ldots 3 \}$, l'indice du sommet $v$ dans le tétraèdre $t$.
 %\indent \texttt{degree(i)} Cette fonction doit permettre de calculer le degré d'un sommet\\
-%\indent \texttt{hypersphere(i)} Cette fonction doit retourner l'hypersphère ou l'étoile d'un sommet, c'est à dire l'ensemble des tétraèdres possédant le ième sommet.\\
+%\indent \texttt{hypersphere(i)} Cette fonction doit retourner l'hypersphère ou l'étoile d'un sommet, c'est à dire l'ensemble des tétraèdres possédant le $i$-ème sommet.\\
 %\indent \texttt{breadth\_first\_search(t)} Cette fonction doit permettre de réaliser un parcours en largeur du maillage en commen\c cant par le tétraèdre t .\\
 \end{itemize}
 \noindent
 La combinaison de ces fonctions permet de réaliser la quasi-totalité des opérations de navigation locale qui sont effectuées habituellement
 dans le cadre des procédures de modélisation géométrique et géométrie algorithmique. A titre d'exemple, on peut implémenter de manière efficace les fonctions suivantes:
 \begin{itemize}
-\item \texttt{degree($v$)}: renvoie le degré d'un sommet $v$
+\item \texttt{degree($v$)}: renvoie le degré d'un sommet $v$.
 \item \texttt{hypersphere($v$)}: renvoie l'hypersphère ou l'étoile d'un sommet $v$, c'est-à-dire l'ensemble des tétraèdres incidents à $v$.
 \item \texttt{BFS($t$)}: réalise un parcours en largeur du maillage en commen\c cant par le tétraèdre $t$.
 \end{itemize}
@@ -175,7 +183,7 @@ On dit que la structure de données est \emph{indexable} si, de plus, elle perme
 Ces deux opérations sont parfois importantes dans plusieurs applications: elles permettent, par exemple, d'itérer sur tous les sommets ou tétraèdres,
 ainsi que de récupérer les attributs qui y sont associés (couleurs, normales, coordonnées, ...).
 
-\paragraph{Implantation naïve}
+\paragraph{Implémentation naïve}
 Une solution simple à implémenter (utilisée, entre autres, par la librairie \texttt{CGAL}~\cite{CGAL}) permettant de représenter un maillage tétraèdrique consiste à stocker explicitement les relations d'adjacence entre tétraèdres voisins et les relations d'incidence tétraèdre/sommet. Plus précisément, on stocke pour chaque tétraèdre plusieurs références : 
 \begin{itemize}
 \item $4$ références par tétraèdre donnant l'accès aux tétraèdres voisins
