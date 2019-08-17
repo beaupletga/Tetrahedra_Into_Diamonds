@@ -32,7 +32,7 @@ Au sein d'un diamant, les tétraèdres sont ordonnés. Ainsi, on peut oublier le
 
 \subsection{Appariement des tétraèdres en diamants}
 \noindent
-La première étape consiste à regrouper les tétraèdres en diamants. Un tétraèdre ne peut appartenir qu'à un seul diamant au maximum. On peut ramener ce problème à un problème d'optimisation dans les graphes. En considérant notre maillage tétraèdrique comme un graphe (i.e en ne conservant que les arêtes et les sommets), il s'agit de choisir un ensemble $E'$ d'arêtes telles-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. Les arêtes candidates pour appartenir à $E'$ sont toutes les arêtes qui ne sont pas situées sur les bords du maillage. Par exemple, sur Fig. \ref{fig:not_full_diamond}, l'arête AB est située sur le bord du maillage et n'est donc pas candidate pour appartenir à $E'$. Pour chaque arête sélectionnée, le diamant est constitué de tous les tétraèdres possédant cette arête. Tous les tétraèdres n'ayant pas d'arêtes dans $E'$ sont appelés les tétraèdres isolés.\\
+La première étape consiste à regrouper les tétraèdres en diamants. Un tétraèdre ne peut appartenir qu'à un seul diamant au maximum. On peut ramener ce problème à un problème d'optimisation dans les graphes. En considérant notre maillage tétraédrique comme un graphe (i.e en ne conservant que les arêtes et les sommets), il s'agit de choisir un ensemble $E'$ d'arêtes telles-que deux arêtes de $E'$ n'appartiennent pas au même tétraèdre. Les arêtes candidates pour appartenir à $E'$ sont toutes les arêtes qui ne sont pas situées sur les bords du maillage. Par exemple, sur Fig. \ref{fig:not_full_diamond}, l'arête AB est située sur le bord du maillage et n'est donc pas candidate pour appartenir à $E'$. Pour chaque arête sélectionnée, le diamant est constitué de tous les tétraèdres possédant cette arête. Tous les tétraèdres n'ayant pas d'arêtes dans $E'$ sont appelés les tétraèdres isolés.\\
 Pour trouver cet ensemble d'arêtes, nous avons essayé plusieurs algorithmes.
 \subsubsection{Choisir une direction pour chaque sommet}
 \noindent
@@ -153,7 +153,7 @@ Suivant le premier tétraèdre choisi pour lancer l'algorithme de parcours en la
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.2]{Images/central_edges}
-\caption{Vue de coupe d'une tétraèdrisation d'une boule avec affichage des arêtes centrales de tous les diamants}
+\caption{Vue de coupe d'une tétraédrisation d'une boule avec affichage des arêtes centrales de tous les diamants}
 \label{fig:central_edges}
 \end{center}
 \end{figure}
@@ -223,9 +223,9 @@ Au sein d'un tétraèdre isolé, les sommets sont ordonnés tel que le $i$-ème 
 \noindent
 Avec la structure naïve décrite dans la partie \ref{representation_maillages_tetra}, chaque tétraèdre possède 4 références vers ses 4 sommets incidents. Ainsi, étant donné un tétraèdre $t$, l'implémentation de la fonction \texttt{get\_vertex\_index($v,t$)} nécessite juste la comparaison de $v$ avec $4$ indices (ou références).  Cela permet, entre autres, de retrouver en temps constant les sommets communs à deux tétraèdres adjacents.\\
 Ici, par souci d'économie, nous ne souhaitons pas stocker de références des tétraèdres vers leurs sommets : nous utilisons juste l'ordre des diamants et des tétraèdres isolés afin de représenter la relation d'incidence sommet/tétraèdre (comme décrit dans~\ref{ancrage}).
-Or, ce type d'information est crucial lors de la navigation entre tétraèdres adjacents : l'implémentation d'opérations telles que \texttt{degree(v)} et \texttt{hypersphere(v)} necéssitent l'identification d'un sommet afin de parcourir les faces opposées deux à deux aux tétraèdres incidents à ce sommet. 
+Or, ce type d'information est crucial lors de la navigation entre tétraèdres adjacents : l'implémentation d'opérations telles que \texttt{degree(v)} et \texttt{hypersphere(v)} nécessitent l'identification d'un sommet afin de parcourir les faces opposées deux à deux aux tétraèdres incidents à ce sommet. 
 %
-Cette limitation est illustrée par la Fig.~\ref{fig:permutation_tetra_diamant}: lors du passage du tétraèdre isolé ACDH au diamant adjacent (ancré en AB) via la face ACD, on perd l'indentification des sommets A, C, D.
+Cette limitation est illustrée par la Fig.~\ref{fig:permutation_tetra_diamant}: lors du passage du tétraèdre isolé ACDH au diamant adjacent (ancré en AB) via la face ACD, on perd l'identification des sommets A, C, D.
 Ce problème, commun aussi à la structure de données SOT~\cite{SOT}, peut \^etre resolu à l'aide de permutations : pour chaque face (appartenant à un diamant ou à un tétraèdre isolé), on stocke un triplet de permutations (stocké sur 3 bits) permettant de retrouver l'indice des sommets partagés par les deux entités opposées.
 %\luca{Important: enrichir la fig. 9b avec un exemple de calcul de permutations}
 Comme illustré par la Fig. \ref{fig:permutation_tetra_diamant}, pour calculer la permutation vue du tétraèdre isolé de la face CAD, il suffit de comparer l'ordre des sommets du tétraèdre isolé et du diamant. Si l'on garde seulement les 3 sommets qui de cette face dans les deux classements des sommets, on a : A,D,C et C,D,A. La permutation est donc (2,1,0). Bien entendu, 
@@ -288,17 +288,17 @@ Bien que nous ne stockions pas les sommets de manière explicite (nous ne stocko
 La complexité est la même que pour accéder au $i$-ème diamant/tétraèdre isolé, $O(1)$.
 
 \subsubsection{Navigation entre faces et autour des sommets}
+\paragraph{Degré et hypersphère d'un sommet.}
+\noindent
+Calculer le degré d'un sommet est compliqué\footnote{Le pseudo code est en appendices}. On sait que le $i$-ème sommet est adjacent au $i$-ème diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet ciblé est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau A. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
 
 \paragraph{Retrouver l'indice d'un sommet}\label{Retrouver l'indice d'un sommet}
 \noindent
 Retrouver l'indice d'un sommet est une procédure courante. En effet lorsqu'on est sur une face, on peut vouloir connaître les indices des trois sommets qui la composent. Pour connaître l'indice d'un sommet, on calcule son hypersphère. Puis pour chaque diamant ou tétraèdre isolé dans l'hypersphère dont l'indice de la première face est inférieur à la limite\footnote{La limite est l'index à partir duquel les diamants et tétraèdres isolés ne sont plus associés à des sommets}, on calcule alors l'hypersphère du sommet ancré. Il suffit de comparer l'hypersphère de notre sommet cible avec les hypersphères des sommets ancrés et de renvoyer l'indice du sommet ayant la même hypersphère. Cette opération peut s'avérer néanmoins très couteuse. La complexité pour calculer l'hypersphère d'un sommet est O(d). En utilisant notre algorithme pour appareiller les tétraèdres en diamants, les sommets sont en moyenne adjacents à 8 diamants/tétraèdres isolés. Seulement parmi ces 8 diamants/tétraèdres isolés, en moyenne 65\% \footnote{$\frac{|Diamants|+|T\acute{e}tra\grave{e}dres\; isol\acute{e}s|}{|V|}$} auront un indice inférieur à la limite. Par conséquent, retrouver l'indice d'un sommet nécessite de calculer en moyenne 6 (0.65*8+1) hypersphères.
 
-\paragraph{Degré et hypersphère d'un sommet.}
-\noindent
-Calculer le degré d'un sommet est plus compliqué\footnote{Le pseudo code est en appendices}. On sait que le $i$-ème sommet est adjacent au $i$-ème diamant/tétraèdre isolé. Si celui-ci est un diamant alors toutes les faces paires de celui-ci sont adjacentes au sommet ciblé. Si c'est un tétraèdre isolé, alors le sommet ciblé est opposé à la première face et est donc adjacent aux trois autres faces. Pour chaque face adjacente au sommet on accède à la face opposée en utilisant notre tableau A. En utilisant les permutations entre deux faces, nous sommes en mesure de savoir où se situe notre sommet dans la face opposée. Ainsi, nous pouvons accéder aux faces adjacentes au sommet dans ce nouveau diamant/tétraèdre isolé. Pour chaque diamant/tétraèdre isolé, on utilise un bit de service afin de savoir si celui-ci a déjà été visité \footnote{Nous omettons ce bit de service car il y en a en moyenne $\frac{|Diamants| + |T\acute{e}tra\grave{a}dres \; isol\acute{e}s|}{|T\acute{e}tra\grave{a}dres|}\simeq 0.5$ par tétraèdre}. On arrête de parcourir les faces quand tous les diamants et tétraèdres isolés adjacents au sommet ont été visités. La complexité est donc O(d).
 \paragraph{Parcours en largeur du graphe.}
 \noindent
-Parcourir en largeur le graphe est plus facile que de calculer le degré d'un sommet. Il suffit d'utiliser une file et un bit de service pour chaque tétraèdre afin de savoir si celui-ci a été visité. Le passage d'un tétraèdre à l'autre est rendu très facile grace à notre tableau représentant les faces adjacentes. La complexité est donc la même que dans le maillage original : O($|$T$|$).
+Parcourir en largeur le graphe est plus facile. Il suffit d'utiliser une file et un bit de service pour chaque tétraèdre afin de savoir si celui-ci a été visité. Le passage d'un tétraèdre à l'autre est rendu très facile grace à notre tableau représentant les faces adjacentes. La complexité est donc la même que dans le maillage original : O($|$T$|$).
 
 %\begin{tikzpicture}
 %\begin{axis}[
@@ -349,7 +349,7 @@ Parcourir en largeur le graphe est plus facile que de calculer le degré d'un so
 
 \subsection{Un nouveau format de stockage}
 \noindent
-Les fichiers OFF encodent d'abord les coordonnées géométriques de chaque sommet puis les indices des 4 sommets de chaque tétraèdre. Ils sont ainsi très faciles à manipuler mais ne sont pas concis (un sommet apparaît en moyenne 22 fois dans une tétraèdrisation). L'idée de cette section est de tirer avantage de notre appariement des tétraèdres en diamants afin de sauvegarder les maillages dans un format plus succinct.
+Les fichiers OFF encodent d'abord les coordonnées géométriques de chaque sommet puis les indices des 4 sommets de chaque tétraèdre. Ils sont ainsi très faciles à manipuler mais ne sont pas concis (un sommet apparaît en moyenne 22 fois dans une tétraédrisation). L'idée de cette section est de tirer avantage de notre appariement des tétraèdres en diamants afin de sauvegarder les maillages dans un format plus succinct.
 \paragraph{Encodage de la structure}
 Comme exprimé dans la partie \ref{Retrouver l'indice d'un sommet}, un sommet dans notre structure est adjacent en moyenne à 8 diamants/tétraèdres isolés. Par conséquent, plutôt que de décrire pour chaque tétraèdre les 4 indices des 4 sommets, nous pouvons encoder les indices des sommets composant un diamant. Les sommets sont ordonnés dans un diamant (\ref{Ordre des sommets dans les diamants}). Ainsi, en ayant juste l'ordre des sommets, nous sommes en mesure de retrouver les faces (la première face est bordée par le premier, le deuxième et l'avant-dernier sommet).\\
 Cependant, notre structure ne stocke pas implicitement les sommets. Nous savons seulement que le $i$-ème sommet est adjacent au $i$-ème diamant/tétraèdre isolé. Néanmoins, en calculant l'hypersphère d'un sommet, nous informons les faces adjacentes qu'elles possèdent ce sommet. En faisant ainsi pour tous les sommets du maillage, nous associons alors à chaque face ses 3 sommets bordants.\\

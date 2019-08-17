@@ -3,7 +3,7 @@
 \noindent
 Afin d'évaluer les performances de notre structure de données en matière de ressources mémoires ainsi qu'en vitesse de navigation, nous avons implémenté la totalité des procédures décrites dans ce rapport et effectué une comparaison avec d'autres structures de données existantes.\\
 Tout le code est implémenté en C\texttt{++} natif, sans l'aide d'aucune bibliothèque extérieure. Le code source est compilé avec g\texttt{++} sous Elementary OS. Tous les algorithmes ont été exécutés sur une machine avec un processeur i5-5300U et 16Go de RAM. L'ensemble du code est open-source et disponible sur github : \url{https://github.com/beaupletga/3D-Mesh-Compression}.\\
-Pour effectuer nos tests, nous avons choisi une dizaine de maillages avec des formes, des tailles, et des tétraèdrisations différentes (Fig. \ref{fig:exemples_maillages}). Les boules ont été générées avec CGAL \cite{CGAL} en utilisant le module de génération de sphères implicites. Les autres tétraèdrisations ont été pris le site \textit{Aim@Shape}. Nous ne présentons les résultats de nos algorithmes que sur 8 de ces maillages.
+Pour effectuer nos tests, nous avons choisi une dizaine de maillages avec des formes, des tailles, et des tétraédrisations différentes (Fig. \ref{fig:exemples_maillages}). Les boules ont été générées avec CGAL \cite{CGAL} en utilisant le module de génération de sphères implicites. Les autres tétraédrisations ont été pris le site \textit{Aim@Shape}. Nous ne présentons les résultats de nos algorithmes que sur 8 de ces maillages.
 \begin{figure}[th]
 \centering
 \begin{subfigure}{.24\textwidth}
@@ -30,7 +30,7 @@ Pour effectuer nos tests, nous avons choisi une dizaine de maillages avec des fo
 %  \caption{figure}{Tétraèdrisation d'un crane}
 %  \label{fig:skull}
 \end{subfigure}
-\caption{Exemples de maillages tétraèdriques utilisés pour évaluer notre structure de données.}
+\caption{Exemples de maillages tétraédriques utilisés pour évaluer notre structure de données.}
 \label{fig:exemples_maillages}
 \end{figure}
 
@@ -52,7 +52,7 @@ Main (M1)& 28k & 169k & 125k & 0.24 & 17.38 & 11.74\\
 Crane (C1)& 37k & 217k & 156k & 0.30 & 16.51 & 11.52 \\ 
 \hline  
 \end{tabular}
-\caption{Caractéristiques des maillages tétraèdriques utilisés pour évaluer notre structure}
+\caption{Caractéristiques des maillages tétraédriques utilisés pour évaluer notre structure}
 \label{tab:caract_maillages}
 \end{table}
 
@@ -82,7 +82,7 @@ M1 & 77& 2.44 & 1.26 & 83 & 2.34 & 794\\
 C1 & 77& 2.44 & 1.48 & 80 & 2.38 & 1262\\
 \hline  
 \end{tabular}
-\caption{Résultats des algorithmes d'appareillage des tétraèdres en diamants. Le deuxième algorithme ayant des temps de calculs assez importants, certains maillages n'ont pas pu être considérés.}
+\caption{Résultats des algorithmes d'appareillage des tétraèdres en diamants. Le deuxième algorithme ayant des temps de calcul assez importants, certains maillages n'ont pas pu être considérés.}
 \label{tab:results_performances}
 \end{table}
 
