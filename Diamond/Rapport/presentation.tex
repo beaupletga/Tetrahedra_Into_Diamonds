@@ -46,50 +46,156 @@
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Préliminaires}
-\framesubtitle{Maillages surfaciques et volumiques}
+%\framesubtitle{Maillages surfaciques et volumiques}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.17]{Images/bunny}
-  \caption{Maillage surfacique contenant 14k sommets, 42k arêtes et 28k faces.}
+  \includegraphics[scale=0.13]{Images/bunny}
+  \caption{}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.14]{Images/cow_cut}
-  \caption{Vue de coupe d'une tétraédrisation (maillage volumique) d'une vache avec 30k sommets, 182k arêtes, 143k faces et 134k tétraèdres.}
+  \includegraphics[scale=0.09]{Images/cow_cut}
+  \caption{}
 \end{subfigure}
+\caption{\textbf{Gauche} : Maillage triangulaire (surfacique) contenant 14k sommets, 42k arêtes et 28k faces. \textbf{Droite} : Vue de coupe d'une tétraédrisation (maillage volumique) contenant 30k sommets, 182k arêtes, 143k faces et 134k tétraèdres.}
 \end{figure}
-\begin{block}{Définitions}
+\small
+\begin{block}{Les maillages}
 \begin{itemize}
 \item Les maillages 2D (surfaciques) sont constitués de polygones
 \item Les maillages 3D (volumiques) sont constitués de polyèdres
 \end{itemize}
 \end{block}
-\small
-\textbf{Nous nous intéressons dans la suite de ce rapport aux maillages volumiques tétraédriques
-}
-\end{frame}
-
-\begin{frame}
-\frametitle{Préliminaires}
-\framesubtitle{Géométrie et connectivité}
 \begin{block}{Composantes d'un maillage}
 \begin{itemize}
 \item Géométrie : positions des sommets
-\item Connectivité : relations d’adjacence entre les tétraèdres
+\item Connectivité : relations d’adjacence entre les polygones/polyèdres
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
+\footnotesize
 \frametitle{Préliminaires}
-\framesubtitle{Une structure de données naïve}
+%\framesubtitle{Maillages surfaciques et volumiques}
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=0.19]{Images/planar_graph}
+%\caption{Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$)}
+%\end{figure}
+
+  \begin{columns}[c]
+    \begin{column}[c]{.48\textwidth}
+ 		\begin{block}{Notations}
+\begin{itemize}
+\item $V$ est l'ensemble des sommets du maillage
+\item $E$ est l'ensemble des arêtes du maillage
+\item $F$ est l'ensemble des triangles (faces) du maillage
+\item $T$ est l'ensemble des tétraèdres du maillage
+\end{itemize}
+\end{block}
+    \end{column}%
+    \hfill%
+    \begin{column}[c]{.48\textwidth}
+    \begin{figure}
+    \includegraphics[scale=0.19]{Images/planar_graph}
+\caption{Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$)}
+    \end{figure}
+    \end{column}%
+  \end{columns}
+
+
+\begin{block}{Définitions}
+\begin{itemize}
+\item Simplexe : Un simplexe $\sigma^p$ de dimension $p$ est l'enveloppe convexe de $p+1$ points $\{v_0,v_1,...v_p\}$, où $v_i\, \in R^n$ et les vecteurs $v_1-v_0,v_2-v_0...$ sont linéairement indépendants. 
+\item Variété  : Espace topologique M connexe séparé localement homéomorphe à un ouvert de $\mathbb{R}^n$. Chaque point de M admet un voisinage homéomorphe à un ouvert de $\mathbb{R}^n$.
+\item Complexe Simplicial : Ensemble K de simplexes d'un espace affine tel que toutes les faces de chaque simplexe de K appartiennent aussi à K et si deux simplexes $\sigma$ et $\tau$ de K sont adjacents alors $\sigma \cap \tau \neq \emptyset$
+\item Maillage : Complexe simplicial représentant un objet géométrique. Il a la même dimension que l'objet qu'il représente
+\item Etoile : Ensemble des k-simplexes adjacents à un sommet
+\end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
+\footnotesize
+\frametitle{Préliminaires}
+%\framesubtitle{Attentes de la structure de données}
+\begin{figure}
+\includegraphics[scale=0.12]{Images/naive}
+\caption{Deux tétraèdres partageant une face. Un espace a été ajouté entre les deux tétraèdres pour plus de clarté.}
+\end{figure}
+\begin{block}{Opérations courantes}
+\begin{itemize}
+\item \texttt{incident\_face($i,t$)}: renvoie la $i$-ème face du tétraèdre $t$ (pour $i=0..3$)
+\item \texttt{incident\_vertex($v$)}: renvoie un des tétraèdres incidents au sommet $v$
+\item \texttt{neighbour($i, t$)}: renvoie le tétraèdre qui est le $i$-ème voisin adjacent au tétraèdre $t$
+\item \texttt{get\_vertex\_index($v,t$)}: renvoie un entier $i\in\{0 \ldots 3 \}$, l'indice du sommet $v$ dans le tétraèdre $t$
+\end{itemize}
+\end{block}
+
+\begin{block}{Une implémentation naïve}
+\begin{itemize}
+\item $4$ références par tétraèdre donnant l'accès aux tétraèdres voisins
+\item $4$ références par tétraèdre donnant l'accès aux sommets incidents
+\item $1$ référence par sommet donnant l'accès à l'un de ses tétraèdres incidents
+\end{itemize}
+\end{block}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Préliminaires}
+%\framesubtitle{Géométrie et connectivité}
+%%  \begin{columns}[c]
+%%    \begin{column}[c]{.48\textwidth}
+%% 		\begin{block}{\rlap{Portrait of Simonetta Vespucci}}
+%% 		\end{block}
+%%    \end{column}%
+%%    \hfill%
+%%    \begin{column}[c]{.48\textwidth}
+%%  	\includegraphics[scale=0.14]{Images/cow_cut}
+%%    \end{column}%
+%%  \end{columns}
+%\small
+
+
+%\begin{block}{Cas surfacique (triangulaire)}
+%\begin{itemize}
+%\item Géométrie : 1 référence par sommet
+%\item Connectivité :
+%\begin{itemize}
+%\item 1 référence par sommet vers un triangle adjacent
+%\item 3 références par triangle vers ses sommets
+%\item 3 références par triangle vers ses triangles voisins
+%\end{itemize}
+%\end{itemize}
+%\end{block}
+%
+%\begin{block}{Cas volumique (tétraédrique)} 
+%\begin{itemize}
+%\item Géométrie : 1 référence par sommet
+%\item Connectivité :
+%\begin{itemize}
+%\item 1 référence par sommet vers un tétraèdre adjacent
+%\item 4 références par tétraèdre vers ses sommets
+%\item 4 références par tétraèdre vers ses tétraèdres voisins
+%\end{itemize}
+%\end{itemize}
+%\end{block}
+%\small
+%\textbf{Nous nous intéressons dans la suite de ce rapport aux maillages volumiques tétraédriques
+%}
+%\end{frame}
+
+
+
+\begin{frame}
+\small
 \frametitle{Etat de l'Art}
+\framesubtitle{Structures de données surfaciques et volumiques}
 \begin{table}[H]
 \centering
 \footnotesize
@@ -118,7 +224,7 @@ SQUAD (Gurung, Laney, Lindstrom, Rossignac)& $(4+\epsilon)$n & O(1) & O(d) & non
 \begin{table}[th]
 \centering
 \footnotesize
-\scalebox{0.7}{
+\scalebox{0.75}{
 \begin{tabular}{|c | c | c | c | c|}
 \hline
 Structure de données & Taille mémoire moyenne & Temps de navigation & Accès au sommet & Dynamique\\
@@ -131,18 +237,28 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \hline  
 \end{tabular}
 }
-\caption{Taille mémoire et performances des structures de données pour maillages volumiques. t représente le nombre de tétraèdres et n le nombre de sommets}
+\caption{Taille mémoire et performances des structures de données pour maillages volumiques. t représente le nombre de tétraèdres et n le nombre de sommets.}
 \end{table}
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Principe général}
+\small
+\begin{block}{Notre but}
+\begin{itemize}
+\item Construire une structure de données compacte pour les maillages tétraédriques
+\item Construction rapide de la structure
+\item Navigation en temps constant
+\item Calcul de l'hypersphère d'un sommet
+\end{itemize}
+\end{block}
 \begin{block}{Inspirations}
 \begin{itemize}
 \item Regroupement des tétraèdres comme SQUAD
 \item Ancrer un sommet avec un diamant comme SOT
-\item Ordonner les diamants tel-que le $i$-ème sommet soit au sein du $i$-ème diamant comme SOT
+\item Ordonner les diamants tel que le $i$-ème sommet soit ancré au $i$-ème diamant comme SOT
 \item Passage d'un tétraèdre à l'autre en utilisant les faces (et non les coins) comme Half-Face\\
 \end{itemize}
 \end{block}
@@ -155,100 +271,110 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Etape 1 : Appariement des tétraèdres en diamants}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.24\textwidth}
   \centering
-  \includegraphics[scale=0.25]{Images/full_diamond}
+  \includegraphics[scale=0.21]{Images/full_diamond}
   \caption{}
 \end{subfigure}%
 \begin{subfigure}{.24\textwidth}
   \centering
-  \includegraphics[scale=0.21]{Images/not_full_diamond}
+  \includegraphics[scale=0.17]{Images/not_full_diamond}
   \caption{}
 \end{subfigure}
 \begin{subfigure}{.24\textwidth}
   \centering
-  \includegraphics[scale=0.13]{Images/isolated_tetra}
+  \includegraphics[scale=0.12]{Images/isolated_tetra}
   \caption{}
 \end{subfigure}
 \begin{subfigure}{.24\textwidth}
   \centering
-  \includegraphics[scale=0.10]{Images/diamond}
+  \includegraphics[scale=0.095]{Images/diamond}
   \caption{}
 \end{subfigure}
 \caption{\textbf{(a)} : Diamant contenant 5 tétraèdres et dont l'arête centrale commune est AB. \textbf{(b)} : Exemple n'étant pas un diamant car les tétraèdres ne sont pas cycliques. \textbf{(c)} : Vue de coupe des tétraèdres isolés après exécution du parcours en largeur pour créer les diamants. Chaque couleur représente un tétraèdre isolé. \textbf{(d)} : Vue de coupe des diamants après exécution du parcours en largeur pour créer les diamants. Chaque couleur représente un diamant.}
 \end{figure}
-\begin{block}{}
+\begin{block}{Etape 1}
 \begin{itemize}
 \item Problème : Grouper les tétraèdres en diamants
 \item Motif : Omission des références entre les tétraèdres du même diamant
-\item Solution : Parcours en profondeur du graphe
-\item Complexité : O(T)
+\begin{itemize}
+\item Deux voisins dans un diamant ne se référenceront pas mutuellement. Chaque tétraèdre dans le diamant n'aura donc que deux références vers ses voisins extérieurs au diamant
+\end{itemize}
+\item Solution : Parcours en profondeur du maillage
 \item Résultat : Une partie des tétraèdres est groupé en diamants. Les autres tétraèdres sont dits isolés
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Etape 2 : Ancrage des sommets}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.32\textwidth}
   \centering
-  \includegraphics[scale=0.16]{Images/central_edge_AB}
+  \includegraphics[scale=0.12]{Images/central_edge_AB}
   \caption{}
   \label{fig:central_edge_AB}
 \end{subfigure}%
 \begin{subfigure}{.32\textwidth}
   \centering
-  \includegraphics[scale=0.20]{Images/explosion_diamond}
+  \includegraphics[scale=0.16]{Images/explosion_diamond}
   \caption{}
   \label{fig:explosion_diamond}
 \end{subfigure}
 \begin{subfigure}{.32\textwidth}
   \centering
-  \includegraphics[scale=0.16]{Images/central_edges}
+  \includegraphics[scale=0.12]{Images/central_edges}
   \caption{}
 \end{subfigure}
 \caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres dont l'arête centrale est le segment AB et ancré au sommet A. \textbf{Milieu} : 5 tétraèdres isolés (chaque couleur est un tétraèdre différent). \textbf{Droite} : Vue de coupe d'une tétraédrisation d'une boule avec affichage des arêtes centrales de tous les diamants}
 \end{figure}
 
-\begin{block}{}
+\begin{block}{Etape 2}
 \begin{itemize}
 \item Problème : Ancrer chaque sommet à un tétraèdre/diamant
-\item Motif : Omission des références des sommets vers leurs tétraèdres adjacents
+\item Motif : Omission des références des sommets vers l'un de leurs tétraèdres incidents
 \item Solution : Algorithme glouton privilégiant les sommets de faible degré
-\item Complexité :  O(nlog(n))
-\item Résultat : Chaque sommet est ancré à un diamant/tétraèdre isolé. Le $i$-ème sommet est ancré avec le $i$-ème diamant/tétraèdre isolé
+\item Résultat : Chaque sommet est ancré à un diamant/tétraèdre isolé. On réordonne les diamants/tétraèdres isolés tel que le $i$-ème sommet soit ancré au $i$-ème diamant/tétraèdre isolé
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Organisation générale}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.26]{Images/tetra_ordonnee}
+\includegraphics[scale=0.22]{Images/tetra_ordonnee}
 \caption{Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir.}
 \end{figure}
-\footnotesize
-\begin{block}{Ordres}
+\begin{block}{Règles pour l'ordonnancement}
 \begin{itemize}
-\item Deux tétraèdres partageant une face doivent être consécutif dans le classement modulo la taille du diamant
-\item Les faces extérieures du $i$-ème tétraèdre d'un diamant seront les faces $2i$ et $2i+1$
-\item Si un tétraèdre isolé est ancré à un sommet, alors la première face doit être la face opposée à l'ancre
+\item Diamant
+\begin{itemize}
+\item L'ordre de deux tétraèdres partageant une face doit être consécutif modulo la taille du diamant
+\item Les faces extérieures du $i$-ème tétraèdre seront les faces $2i$ et $2i+1$
 \item On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig.), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig.)
-\item Au sein d'un tétraèdre isolé, les sommets sont ordonnés tel que le $i$-ème sommet est opposé à la $i$-ème face
+\end{itemize}
+\item Tétraèdre isolé
+\begin{itemize}
+\item S'il est ancré à un sommet, alors la première face doit être la face opposée à l'ancre
+\item Les sommets sont ordonnés tel que le $i$-ème sommet est opposé à la $i$-ème face
+\end{itemize}
 \end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Identification des sommets dans des tétraèdres/diamants opposés}
 \begin{figure}[H]
@@ -256,11 +382,11 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \includegraphics[scale=0.21]{Images/permut1}
 \caption{Tétraèdre isolé \textcolor{blue}{\textbf{T1}} partageant la face ACD avec un diamant \textcolor{brown}{\textbf{D1}} ancré au sommet \textcolor{red}{\textbf{A}}.}
 \end{figure}
-\begin{block}{}
+\begin{block}{Notre situation}
 \begin{itemize}
 \item Le sommet \textcolor{red}{\textbf{A}} est ancré au tétraèdre \textcolor{brown}{\textbf{D1}}
 \item Nous sommes sur la face ACD de \textcolor{brown}{\textbf{D1}}
-\item\textbf{Comment savoir ou se trouve le sommet \textcolor{red}{\textbf{A}} dans \textcolor{blue}{\textbf{T1}} ?}
+\item\textbf{Comment savoir où se trouve le sommet \textcolor{red}{\textbf{A}} dans \textcolor{blue}{\textbf{T1}} ?}
 \end{itemize}
 \end{block}
 \end{frame}
@@ -276,8 +402,8 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \scriptsize
 \begin{block}{Organisation des sommets et des faces}
 \begin{itemize}
-\item L'ordre des sommets de \textcolor{blue}{\textbf{T1}} est : A,D,C,H \textbf{$\Rightarrow$} l'ordre des faces de \textcolor{blue}{\textbf{T1}} est CDH,ACH,ADH,ADC
-\item L'ordre des faces de \textcolor{brown}{\textbf{D1}} est : ACD,BCD,ADE,BDE,AEG,BEG,EFG,BFG,ACF,BCF \textbf{$\Rightarrow$} l'ordre des sommets de \textcolor{brown}{\textbf{D1}} est C,D,E,G,F,A,B
+\item L'ordre des sommets de \textcolor{blue}{\textbf{T1}} est : A,D,C,H \textbf{$\Rightarrow$} l'ordre des faces de \textcolor{blue}{\textbf{T1}} est DCH,ACH,ADH,ADC
+\item L'ordre des faces de \textcolor{brown}{\textbf{D1}} est : ACD,BCD,ADE,BDE,AEG,BEG,EFG,BFG,AFC,BFC \textbf{$\Rightarrow$} l'ordre des sommets de \textcolor{brown}{\textbf{D1}} est C,D,E,G,F,A,B
 \end{itemize}
 \end{block}
 \begin{block}{Calculer la permutation}
@@ -299,8 +425,19 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Description}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.275]{Images/structure}
+\caption{Dans cet exemple, la face 0 est sur le bord et la face 1 est opposée à la face 281. La permutation de la face 1 du premier diamant (1,0,2) indique que le premier et second sommet de cette face sont inversés dans la face opposée.}
+\label{fig:structure}
+\end{center}
+\end{figure}
+
+
 \begin{block}{Notations}
 \begin{itemize}
 \item $D$ l'ensemble des diamants
@@ -310,32 +447,39 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{itemize}
 \end{block}
 
-\begin{block}{Contenu}
-\begin{itemize}
-\item Un tableau A de taille $|F_e|$
-\item Un bit de service par face afin de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé
-\item 3 bits de service par face afin de représenter la permutation des sommets entre deux faces
-\end{itemize}
-\end{block}
+%\begin{block}{Contenu}
+%\small
+%\begin{itemize}
+%\item Un tableau A de taille $|F_e|$
+%\item Un bit de service par face afin de savoir si une face est la première d'un diamant ou d'un tétraèdre isolé
+%\item 3 bits de service par face afin de représenter la permutation des sommets entre deux faces
+%\end{itemize}
+%\end{block}
+
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Notre Structure : Tétraèdres en Diamants}
-\framesubtitle{Exemple}
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.27]{Images/structure}
-\caption{Dans cet exemple, la face 0 est sur le bord et la face 1 est opposée à la face 281. La permutation de la face 1 du premier diamant (1,0,2) indique que le premier et second sommet de cette face sont inversés dans la face opposée.}
-\label{fig:structure}
-\end{center}
-\end{figure}
-\end{frame}
+%
+%\begin{frame}
+%\frametitle{Notre Structure : Tétraèdres en Diamants}
+%\framesubtitle{Exemple}
+%\begin{figure}[H]
+%\begin{center}
+%\includegraphics[scale=0.27]{Images/structure}
+%\caption{Dans cet exemple, la face 0 est sur le bord et la face 1 est opposée à la face 281. La permutation de la face 1 du premier diamant (1,0,2) indique que le premier et second sommet de cette face sont inversés dans la face opposée.}
+%\label{fig:structure}
+%\end{center}
+%\end{figure}
+%\end{frame}
 
 
 \begin{frame}
 \frametitle{Résultats}
 \framesubtitle{Appariement des diamants et ancrage des sommets}
+\begin{block}{Compter le nombre de références par tétraèdre (rpt)}
+\begin{equation}
+\text{RPT} = \frac{2\cdot T_D+4\cdot T_i}{|T|}
+\end{equation}
+\end{block}
 \end{frame}
 
 \begin{frame}
@@ -407,7 +551,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
-\frametitle{Coclusion}
+\frametitle{Conclusion}
 \begin{block}{Avantages et inconvénients}
 \begin{itemize}
 \color{blue}

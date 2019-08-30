@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  30 AUG 2019 18:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.11)  30 AUG 2019 20:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1656,14 +1656,14 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 File: Images/bunny.png Graphic file (type png)
 
 <use Images/bunny.png>
-Package pdftex.def Info: Images/bunny.png used on input line 73.
-(pdftex.def)             Requested size: 81.56363pt x 86.6827pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 73.
+Package pdftex.def Info: Images/bunny.png used on input line 79.
+(pdftex.def)             Requested size: 62.3752pt x 66.28996pt.
+LaTeX Font Info:    Try loading font information for U+msa on input line 79.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 73.
+LaTeX Font Info:    Try loading font information for U+msb on input line 79.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1671,139 +1671,143 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <Images/cow_cut.png, id=49, 1077.02374pt x 630.355pt>
 File: Images/cow_cut.png Graphic file (type png)
  <use Images/cow_cut.png>
-Package pdftex.def Info: Images/cow_cut.png used on input line 73.
-(pdftex.def)             Requested size: 150.78229pt x 88.24908pt.
+Package pdftex.def Info: Images/cow_cut.png used on input line 79.
+(pdftex.def)             Requested size: 96.92795pt x 56.72949pt.
 
 [2
 
- <./Images/bunny.png> <./Images/cow_cut.png>] [3
+ <./Images/bunny.png> <./Images/cow_cut.png>]
+<Images/planar_graph.png, id=87, 531.9875pt x 346.29375pt>
+File: Images/planar_graph.png Graphic file (type png)
 
-] [4
+<use Images/planar_graph.png>
+Package pdftex.def Info: Images/planar_graph.png used on input line 121.
+(pdftex.def)             Requested size: 101.07867pt x 65.7965pt.
+ [3
 
-] [5
+ <./Images/planar_graph.png>]
+<Images/naive.png, id=119, 890.32625pt x 611.28375pt>
+File: Images/naive.png Graphic file (type png)
+ <use Images/naive.png>
+Package pdftex.def Info: Images/naive.png used on input line 147.
+(pdftex.def)             Requested size: 106.83453pt x 73.35088pt.
+
+[4
+
+ <./Images/naive.png>] [5
 
 ] [6
 
 ]
-<Images/full_diamond.png, id=194, 369.38pt x 354.32375pt>
+<Images/full_diamond.png, id=200, 369.38pt x 354.32375pt>
 File: Images/full_diamond.png Graphic file (type png)
 
 <use Images/full_diamond.png>
-Package pdftex.def Info: Images/full_diamond.png used on input line 193.
-(pdftex.def)             Requested size: 92.34477pt x 88.58072pt.
+Package pdftex.def Info: Images/full_diamond.png used on input line 312.
+(pdftex.def)             Requested size: 77.57208pt x 74.41017pt.
 
-Overfull \hbox (9.37596pt too wide) in paragraph at lines 193--193
- [][] 
- []
-
-<Images/not_full_diamond.png, id=195, 407.5225pt x 395.4775pt>
+<Images/not_full_diamond.png, id=201, 407.5225pt x 395.4775pt>
 File: Images/not_full_diamond.png Graphic file (type png)
 
 <use Images/not_full_diamond.png>
-Package pdftex.def Info: Images/not_full_diamond.png used on input line 193.
-(pdftex.def)             Requested size: 85.58224pt x 83.05272pt.
+Package pdftex.def Info: Images/not_full_diamond.png used on input line 312.
+(pdftex.def)             Requested size: 69.27791pt x 67.23029pt.
 
-Overfull \hbox (2.61343pt too wide) in paragraph at lines 193--193
- [][] 
- []
-
-<Images/isolated_tetra.png, id=196, 597.23125pt x 588.1975pt>
+<Images/isolated_tetra.png, id=202, 597.23125pt x 588.1975pt>
 File: Images/isolated_tetra.png Graphic file (type png)
 
 <use Images/isolated_tetra.png>
-Package pdftex.def Info: Images/isolated_tetra.png used on input line 193.
-(pdftex.def)             Requested size: 77.64278pt x 76.46835pt.
+Package pdftex.def Info: Images/isolated_tetra.png used on input line 312.
+(pdftex.def)             Requested size: 71.66466pt x 70.58064pt.
 
-<Images/diamond.png, id=197, 742.775pt x 740.7675pt>
+<Images/diamond.png, id=203, 742.775pt x 740.7675pt>
 File: Images/diamond.png Graphic file (type png)
  <use Images/diamond.png>
-Package pdftex.def Info: Images/diamond.png used on input line 193.
-(pdftex.def)             Requested size: 74.28185pt x 74.08109pt.
+Package pdftex.def Info: Images/diamond.png used on input line 312.
+(pdftex.def)             Requested size: 70.56435pt x 70.37364pt.
 
-Overfull \vbox (1.35696pt too high) detected at line 193
+Overfull \vbox (4.63087pt too high) detected at line 312
  []
 
 [7
 
  <./Images/full_diamond.png> <./Images/not_full_diamond.png> <./Images/isolated
 _tetra.png> <./Images/diamond.png>]
-<Images/central_edge_AB.png, id=225, 529.98pt x 554.07pt>
+<Images/central_edge_AB.png, id=232, 529.98pt x 554.07pt>
 File: Images/central_edge_AB.png Graphic file (type png)
 
 <use Images/central_edge_AB.png>
-Package pdftex.def Info: Images/central_edge_AB.png used on input line 229.
-(pdftex.def)             Requested size: 84.79852pt x 88.653pt.
+Package pdftex.def Info: Images/central_edge_AB.png used on input line 348.
+(pdftex.def)             Requested size: 63.59485pt x 66.48552pt.
 
-<Images/explosion_diamond.png, id=226, 413.545pt x 477.785pt>
+<Images/explosion_diamond.png, id=233, 413.545pt x 477.785pt>
 File: Images/explosion_diamond.png Graphic file (type png)
 
 <use Images/explosion_diamond.png>
-Package pdftex.def Info: Images/explosion_diamond.png used on input line 229.
-(pdftex.def)             Requested size: 82.70752pt x 95.5553pt.
+Package pdftex.def Info: Images/explosion_diamond.png used on input line 348.
+(pdftex.def)             Requested size: 66.16855pt x 76.44716pt.
 
-<Images/central_edges.png, id=227, 591.20876pt x 561.09625pt>
+<Images/central_edges.png, id=234, 591.20876pt x 561.09625pt>
 File: Images/central_edges.png Graphic file (type png)
 
 <use Images/central_edges.png>
-Package pdftex.def Info: Images/central_edges.png used on input line 229.
-(pdftex.def)             Requested size: 94.59532pt x 89.77722pt.
-
-Overfull \vbox (5.08154pt too high) detected at line 229
- []
-
-[8
+Package pdftex.def Info: Images/central_edges.png used on input line 348.
+(pdftex.def)             Requested size: 70.94199pt x 67.32864pt.
+ [8
 
  <./Images/central_edge_AB.png> <./Images/explosion_diamond.png> <./Images/cent
 ral_edges.png>]
-<Images/tetra_ordonnee.png, id=259, 336.25626pt x 352.31625pt>
+<Images/tetra_ordonnee.png, id=266, 336.25626pt x 352.31625pt>
 File: Images/tetra_ordonnee.png Graphic file (type png)
 
 <use Images/tetra_ordonnee.png>
-Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 249.
-(pdftex.def)             Requested size: 87.42456pt x 91.60005pt.
- [9
+Package pdftex.def Info: Images/tetra_ordonnee.png used on input line 374.
+(pdftex.def)             Requested size: 73.9766pt x 77.50981pt.
+
+Overfull \vbox (3.28607pt too high) detected at line 374
+ []
+
+[9
 
  <./Images/tetra_ordonnee.png>]
-<Images/permut1.png, id=287, 553.06625pt x 614.295pt>
+<Images/permut1.png, id=293, 553.06625pt x 614.295pt>
 File: Images/permut1.png Graphic file (type png)
  <use Images/permut1.png>
-Package pdftex.def Info: Images/permut1.png used on input line 266.
+Package pdftex.def Info: Images/permut1.png used on input line 392.
 (pdftex.def)             Requested size: 116.14734pt x 129.00575pt.
 
 [10
 
  <./Images/permut1.png>]
-<Images/permut2.png, id=314, 523.9575pt x 597.23125pt>
+<Images/permut2.png, id=320, 523.9575pt x 597.23125pt>
 File: Images/permut2.png Graphic file (type png)
 
 <use Images/permut2.png>
-Package pdftex.def Info: Images/permut2.png used on input line 298.
+Package pdftex.def Info: Images/permut2.png used on input line 424.
 (pdftex.def)             Requested size: 73.35355pt x 83.6118pt.
 
-Overfull \vbox (1.40665pt too high) detected at line 298
+Overfull \vbox (1.40665pt too high) detected at line 424
  []
 
 [11
 
- <./Images/permut2.png>] [12
-
-]
-<Images/structure.png, id=372, 1222.5675pt x 300.12125pt>
+ <./Images/permut2.png>]
+<Images/structure.png, id=348, 1222.5675pt x 300.12125pt>
 File: Images/structure.png Graphic file (type png)
 
 <use Images/structure.png>
-Package pdftex.def Info: Images/structure.png used on input line 333.
-(pdftex.def)             Requested size: 330.09764pt x 81.03381pt.
- [13
+Package pdftex.def Info: Images/structure.png used on input line 459.
+(pdftex.def)             Requested size: 336.19777pt x 82.5313pt.
+ [12
 
- <./Images/structure.png>] [14
+ <./Images/structure.png>] [13
+
+] [14
 
 ] [15
 
-] [16
-
 ]
-[17
+[16
 
 ]
 \tf@nav=\write6
@@ -1815,11 +1819,11 @@ Package pdftex.def Info: Images/structure.png used on input line 333.
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 435.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 435.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 579.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 579.
  (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 435.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 435.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 579.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 579.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1827,14 +1831,14 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 435.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 579.
  ) 
 Here is how much of TeX's memory you used:
- 36420 strings out of 494883
- 836374 string characters out of 6178692
- 1047793 words of memory out of 5000000
- 38963 multiletter control sequences out of 15000+600000
- 12434 words of font info for 46 fonts, out of 8000000 for 9000
+ 36446 strings out of 494883
+ 836984 string characters out of 6178692
+ 1051793 words of memory out of 5000000
+ 38985 multiletter control sequences out of 15000+600000
+ 13903 words of font info for 52 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  60i,20n,107p,727b,2324s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
@@ -1847,12 +1851,15 @@ pe1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmssi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-am5.pfb>
-Output written on presentation.pdf (17 pages, 578135 bytes).
+cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam5.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on presentation.pdf (16 pages, 658653 bytes).
 PDF statistics:
- 557 PDF objects out of 1000 (max. 8388607)
- 494 compressed objects within 5 object streams
- 42 named destinations out of 1000 (max. 500000)
- 147 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 549 PDF objects out of 1000 (max. 8388607)
+ 481 compressed objects within 5 object streams
+ 40 named destinations out of 1000 (max. 500000)
+ 157 words of extra memory for PDF output out of 10000 (max. 10000000)
 
