@@ -37,7 +37,7 @@
 \DeclarePairedDelimiter\bra{\langle}{\rvert}
 \DeclarePairedDelimiter\ket{\lvert}{\rangle}
 \setlength{\abovecaptionskip}{6pt plus 3pt minus 2pt} % Chosen fairly arbitrarily
-\setlength{\belowcaptionskip}{1pt plus 3pt minus 2pt}
+\setlength{\belowcaptionskip}{0pt plus 3pt minus 2pt}
 \begin{frame}
 \titlepage
 \begin{figure}
@@ -85,29 +85,21 @@
 \end{block}
 \end{frame}
 
+
 \begin{frame}
 \small
 \frametitle{Préliminaires}
-%\framesubtitle{L'importance de la mémoire}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.32\textwidth}
-  \centering
-  \includegraphics[scale=0.16]{Images/michelangelo}
-  \caption{}
-\end{subfigure}%
-\begin{subfigure}{.32\textwidth}
-  \centering
-  \includegraphics[scale=0.12]{Images/ball}
-  \caption{}
-\end{subfigure}
-\begin{subfigure}{.32\textwidth}
-  \centering
-  \includegraphics[scale=0.18]{Images/T_V_3D}
-  \caption{}
-\end{subfigure}
-\caption{\textbf{Gauche} : Maillage surfacique contenant 1Md de sommets, 3Md d'arêtes et 2Md de triangles. 32GB sont nécessaires pour stocker le maillage. \textbf{Milieu} : Maillage tétraédrique d'une boule contenant 3M sommets, 21M arêtes et 17M tétraèdres. Le fichier OFF associé occupe une place de 780 MB. \textbf{Droite} : Evolution du nombre de tétraèdres en fonction du nombre de sommets.}
-\end{figure}
+
+\begin{columns}[c]
+    \begin{column}[c]{.6\textwidth}
+ 		\begin{block}{Notations}
+\begin{itemize}
+\item $V$ est l'ensemble des sommets du maillage
+\item $E$ est l'ensemble des arêtes du maillage
+\item $F$ est l'ensemble des triangles (faces) du maillage
+\item $T$ est l'ensemble des tétraèdres du maillage
+\end{itemize}
+\end{block}
 \begin{block}{Combinatoire}
 \begin{itemize}
 \item Maillage triangulaire : environ 2 fois plus de triangles que de sommets
@@ -118,37 +110,122 @@
 \item Maillage tétraédriques : environ 4.5 fois plus de tétraèdres que de sommets
 \end{itemize}
 \end{block}
+    \end{column}%
+%    \hfill%
+    \begin{column}[c]{.37\textwidth}
+    \begin{figure}
+    \includegraphics[scale=0.10]{Images/michelangelo}
+\caption{Maillage surfacique contenant 1Md de sommets, 3Md d'arêtes et 2Md de triangles. 32GB sont nécessaires pour stocker le maillage}
+\vspace{-1em}
+    \end{figure}
+     \begin{figure}
+    \includegraphics[scale=0.08]{Images/ball}
+\caption{Maillage tétraédrique d'une boule contenant 3M sommets, 21M arêtes et 17M tétraèdres. Le fichier OFF associé occupe une place de 780 MB}
+\vspace{-1em}
+    \end{figure}
+     \begin{figure}
+    \includegraphics[scale=0.11]{Images/T_V_3D}
+\caption{ Evolution du nombre de tétraèdres en fonction du nombre de sommets.}
+    \end{figure}
+    \end{column}%
+  \end{columns}
+
+%\framesubtitle{L'importance de la mémoire}
+%\begin{figure}[H]
+%\centering
+%\begin{subfigure}{.32\textwidth}
+%  \centering
+%  \includegraphics[scale=0.16]{Images/michelangelo}
+%  \caption{}
+%\end{subfigure}%
+%\begin{subfigure}{.32\textwidth}
+%  \centering
+%  \includegraphics[scale=0.12]{Images/ball}
+%  \caption{}
+%\end{subfigure}
+%\begin{subfigure}{.32\textwidth}
+%  \centering
+%  \includegraphics[scale=0.18]{Images/T_V_3D}
+%  \caption{}
+%\end{subfigure}
+%\caption{\textbf{Gauche} : Maillage surfacique contenant 1Md de sommets, 3Md d'arêtes et 2Md de triangles. 32GB sont nécessaires pour stocker le maillage. \textbf{Milieu} : Maillage tétraédrique d'une boule contenant 3M sommets, 21M arêtes et 17M tétraèdres. Le fichier OFF associé occupe une place de 780 MB. \textbf{Droite} : Evolution du nombre de tétraèdres en fonction du nombre de sommets.}
+%\end{figure}
+
 \end{frame}
+
+%\begin{frame}
+%\small
+%\frametitle{Préliminaires}
+%%\framesubtitle{L'importance de la mémoire}
+%\begin{figure}[H]
+%\centering
+%\begin{subfigure}{.32\textwidth}
+%  \centering
+%  \includegraphics[scale=0.16]{Images/michelangelo}
+%  \caption{}
+%\end{subfigure}%
+%\begin{subfigure}{.32\textwidth}
+%  \centering
+%  \includegraphics[scale=0.12]{Images/ball}
+%  \caption{}
+%\end{subfigure}
+%\begin{subfigure}{.32\textwidth}
+%  \centering
+%  \includegraphics[scale=0.18]{Images/T_V_3D}
+%  \caption{}
+%\end{subfigure}
+%\caption{\textbf{Gauche} : Maillage surfacique contenant 1Md de sommets, 3Md d'arêtes et 2Md de triangles. 32GB sont nécessaires pour stocker le maillage. \textbf{Milieu} : Maillage tétraédrique d'une boule contenant 3M sommets, 21M arêtes et 17M tétraèdres. Le fichier OFF associé occupe une place de 780 MB. \textbf{Droite} : Evolution du nombre de tétraèdres en fonction du nombre de sommets.}
+%\end{figure}
+%\begin{block}{Combinatoire}
+%\begin{itemize}
+%\item Maillage triangulaire : environ 2 fois plus de triangles que de sommets
+%\begin{itemize}
+%\item $V-E+F\simeq 0$
+%\item $2E=3F$ $\Rightarrow$ $V-\frac{3}{2}F+F\simeq 0$ $\Rightarrow$ $F\simeq 2V$
+%\end{itemize}
+%\item Maillage tétraédriques : environ 4.5 fois plus de tétraèdres que de sommets
+%\end{itemize}
+%\end{block}
+%\end{frame}
 
 \begin{frame}
 \footnotesize
 \frametitle{Préliminaires}
 %\framesubtitle{Maillages surfaciques et volumiques}
-%\begin{figure}[H]
-%\centering
-%\includegraphics[scale=0.19]{Images/planar_graph}
-%\caption{Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$)}
-%\end{figure}
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.21]{Images/planar_graph}
+  \caption{}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.17]{Images/non_manifold}
+  \caption{}
+\end{subfigure}
+\caption{\textbf{Gauche} : Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$). \textbf{Droite} : Volume n'étant pas une variété. Les deux cubes sont connectés par une arête de taille infiniment fine.}
+\end{figure}
 
-  \begin{columns}[c]
-    \begin{column}[c]{.48\textwidth}
- 		\begin{block}{Notations}
-\begin{itemize}
-\item $V$ est l'ensemble des sommets du maillage
-\item $E$ est l'ensemble des arêtes du maillage
-\item $F$ est l'ensemble des triangles (faces) du maillage
-\item $T$ est l'ensemble des tétraèdres du maillage
-\end{itemize}
-\end{block}
-    \end{column}%
-    \hfill%
-    \begin{column}[c]{.48\textwidth}
-    \begin{figure}
-    \includegraphics[scale=0.19]{Images/planar_graph}
-\caption{Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$)}
-    \end{figure}
-    \end{column}%
-  \end{columns}
+%  \begin{columns}[c]
+%    \begin{column}[c]{.48\textwidth}
+% 		\begin{block}{Notations}
+%\begin{itemize}
+%\item $V$ est l'ensemble des sommets du maillage
+%\item $E$ est l'ensemble des arêtes du maillage
+%\item $F$ est l'ensemble des triangles (faces) du maillage
+%\item $T$ est l'ensemble des tétraèdres du maillage
+%\end{itemize}
+%\end{block}
+%    \end{column}%
+%    \hfill%
+%    \begin{column}[c]{.48\textwidth}
+%    \begin{figure}
+%    \includegraphics[scale=0.19]{Images/planar_graph}
+%\caption{Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$)}
+%    \end{figure}
+%    \end{column}%
+%  \end{columns}
 
 
 \begin{block}{Définitions}
@@ -543,7 +620,22 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{frame}
 \frametitle{Résultats}
 \framesubtitle{Appariement des diamants et ancrage des sommets}
-\begin{block}{Compter le nombre de références par tétraèdre (rpt)}
+\small
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.26]{Images/boundary_RPT}
+  \caption{}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.36]{Images/T_time}
+  \caption{}
+\end{subfigure}
+\caption{\textbf{Gauche} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{Droite} : Temps en secondes (s) du parcous en largeur en fonction du nombre de tétraèdres.}
+\end{figure}
+\begin{block}{Compter le nombre de références par tétraèdre (RPT)}
 \begin{equation}
 \text{RPT} = \frac{2\cdot T_D+4\cdot T_i}{|T|}
 \end{equation}
