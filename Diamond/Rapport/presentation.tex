@@ -374,6 +374,36 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\frametitle{Notre Structure : Tétraèdres en Diamants}
+\framesubtitle{Encodage des références}
+\small
+\begin{block}{La situation}
+\begin{itemize}
+\item Les tétraèdres sont regroupés en diamants ou isolés
+\item Chaque sommet est associé avec un diamant ou un tétraèdre isolé
+\end{itemize}
+\end{block}
+
+\begin{block}{Notations}
+\begin{itemize}
+\item $D$ l'ensemble des diamants
+\item $T_D$ l'ensemble des tétraèdres appartenant à des diamants
+\item $T_i$ l'ensemble des tétraèdres isolés
+\item $F_e$ l'ensemble des faces des tétraèdres isolés et des faces extérieures des diamants où $|F_e|=2\cdot |T_D|+4\cdot |T_i|$\\
+\end{itemize}
+\end{block}
+
+\begin{block}{Comment définir les références ?}
+\begin{itemize}
+\item On numérote toutes les faces extérieures $f \in F_e$ de notre maillage
+\item Une référence est juste un numéro de face
+\item Chaque $f \in F_e$ possède une référence vers une autre face
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
 \small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Identification des sommets dans des tétraèdres/diamants opposés}
@@ -438,14 +468,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{figure}
 
 
-\begin{block}{Notations}
-\begin{itemize}
-\item $D$ l'ensemble des diamants
-\item $T_D$ l'ensemble des tétraèdres appartenant à des diamants
-\item $T_i$ l'ensemble des tétraèdres isolés
-\item $F_e$ l'ensemble des faces des tétraèdres isolés et des faces extérieures des diamants où $|F_e|=2\cdot |T_D|+4\cdot |T_i|$\\
-\end{itemize}
-\end{block}
+
 
 %\begin{block}{Contenu}
 %\small
@@ -552,6 +575,11 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 
 \begin{frame}
 \frametitle{Conclusion}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.1]{Images/serpentin}
+\caption{Serpentin de tétraèdres. Aucun diamant n'est réalisable}
+\end{figure}
 \begin{block}{Avantages et inconvénients}
 \begin{itemize}
 \color{blue}
