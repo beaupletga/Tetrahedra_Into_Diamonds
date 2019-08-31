@@ -53,12 +53,12 @@
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.13]{Images/bunny}
+  \includegraphics[scale=0.10]{Images/bunny}
   \caption{}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.09]{Images/cow_cut}
+  \includegraphics[scale=0.07]{Images/cow_cut}
   \caption{}
 \end{subfigure}
 \caption{\textbf{Gauche} : Maillage triangulaire (surfacique) contenant 14k sommets, 42k arêtes et 28k faces. \textbf{Droite} : Vue de coupe d'une tétraédrisation (maillage volumique) contenant 30k sommets, 182k arêtes, 143k faces et 134k tétraèdres.}
@@ -66,14 +66,21 @@
 \small
 \begin{block}{Les maillages}
 \begin{itemize}
+\item La dimension
+\begin{itemize}
 \item Les maillages 2D (surfaciques) sont constitués de polygones
 \item Les maillages 3D (volumiques) sont constitués de polyèdres
 \end{itemize}
-\end{block}
-\begin{block}{Composantes d'un maillage}
+\item Ses composantes
 \begin{itemize}
 \item Géométrie : positions des sommets
 \item Connectivité : relations d’adjacence entre les polygones/polyèdres
+\end{itemize}
+\item Compression et structure de données compacte
+\begin{itemize}
+\item Compression : réduire la place mémoire du maillage
+\item Structure de données compacte : réduire la place mémoire du maillage tout en permettant une utilisation
+\end{itemize}
 \end{itemize}
 \end{block}
 \end{frame}
@@ -351,10 +358,20 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Organisation générale}
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.22]{Images/tetra_ordonnee}
-\caption{Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir.}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.19]{Images/tetra_ordonnee}
+  \caption{}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.16]{Images/tetra_number_face}
+  \caption{}
+\end{subfigure}
+\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. \textbf{Droite} : Tétraèdre isolé ancré au sommet A.}
 \end{figure}
 \begin{block}{Règles pour l'ordonnancement}
 \begin{itemize}
@@ -362,7 +379,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{itemize}
 \item L'ordre de deux tétraèdres partageant une face doit être consécutif modulo la taille du diamant
 \item Les faces extérieures du $i$-ème tétraèdre seront les faces $2i$ et $2i+1$
-\item On ordonne d'abord les sommets situés entre deux faces (les sommets D,E,G,F,C sur la Fig.), puis les deux sommets communs à toutes les faces (les sommets A et B sur la Fig.)
+\item On ordonne d'abord les sommets situés entre deux faces, puis les deux sommets communs à toutes les faces
 \end{itemize}
 \item Tétraèdre isolé
 \begin{itemize}
