@@ -132,7 +132,7 @@
 \frametitle{Préliminaires}
 %\framesubtitle{Attentes de la structure de données}
 \begin{figure}
-\includegraphics[scale=0.12]{Images/naive}
+\includegraphics[scale=0.11]{Images/naive}
 \caption{Deux tétraèdres partageant une face. Un espace a été ajouté entre les deux tétraèdres pour plus de clarté.}
 \end{figure}
 \begin{block}{Opérations courantes}
@@ -150,6 +150,7 @@
 \item $4$ références par tétraèdre donnant l'accès aux sommets incidents
 \item $1$ référence par sommet donnant l'accès à l'un de ses tétraèdres incidents
 \end{itemize}
+$\Rightarrow$ \textbf{8 références par tétraèdre (rpt) et 1 référence par sommet}
 \end{block}
 \end{frame}
 
@@ -255,24 +256,17 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \small
 \begin{block}{Notre but}
 \begin{itemize}
-\item Construire une structure de données compacte pour les maillages tétraédriques
+\item Construire une structure de données compacte pour maillages tétraédriques
 \item Construction rapide de la structure
 \item Navigation en temps constant
 \item Calcul de l'hypersphère d'un sommet
 \end{itemize}
 \end{block}
-\begin{block}{Inspirations}
+\begin{block}{Procédure}
 \begin{itemize}
-\item Regroupement des tétraèdres comme SQUAD
-\item Ancrer un sommet avec un diamant comme SOT
-\item Ordonner les diamants tel que le $i$-ème sommet soit ancré au $i$-ème diamant comme SOT
-\item Passage d'un tétraèdre à l'autre en utilisant les faces (et non les coins) comme Half-Face\\
-\end{itemize}
-\end{block}
-\begin{block}{Construction}
-\begin{itemize}
-\item Etape 1 : Appareiller les tétraèdres en diamants
-\item Etape 2 : Ancrer les sommets
+\item Etape 1 : Groupement des tétraèdres en diamants (\textit{SQUAD})
+\item Etape 2 : Ancrage des sommets avec des diamants/tétraèdres isolés. Le $i$-ème sommet est ancré au $i$-ème diamant/tétraèdre isolé (\textit{SOT})
+\item Etape 3 : Encodage des références. Passage d'un tétraèdre à l'autre en utilisant les faces (\textit{Half-Face})
 \end{itemize}
 \end{block}
 \end{frame}
@@ -280,7 +274,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{frame}
 \small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
-\framesubtitle{Etape 1 : Appariement des tétraèdres en diamants}
+\framesubtitle{Etape 1 : Groupement des tétraèdres en diamants}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.24\textwidth}
@@ -392,7 +386,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 
 \begin{frame}
 \frametitle{Notre Structure : Tétraèdres en Diamants}
-\framesubtitle{Encodage des références}
+\framesubtitle{Etape 3 : Encodage des références}
 \small
 \begin{block}{La situation}
 \begin{itemize}
