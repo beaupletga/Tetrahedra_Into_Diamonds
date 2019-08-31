@@ -190,24 +190,24 @@
 %\end{block}
 %\end{frame}
 
-\begin{frame}
-\footnotesize
-\frametitle{Préliminaires}
-%\framesubtitle{Maillages surfaciques et volumiques}
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[scale=0.21]{Images/planar_graph}
-  \caption{}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[scale=0.17]{Images/non_manifold}
-  \caption{}
-\end{subfigure}
-\caption{\textbf{Gauche} : Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$). \textbf{Droite} : Volume n'étant pas une variété. Les deux cubes sont connectés par une arête de taille infiniment fine.}
-\end{figure}
+%\begin{frame}
+%\footnotesize
+%\frametitle{Préliminaires}
+%%\framesubtitle{Maillages surfaciques et volumiques}
+%\begin{figure}[H]
+%\centering
+%\begin{subfigure}{.5\textwidth}
+%  \centering
+%  \includegraphics[scale=0.21]{Images/planar_graph}
+%  \caption{}
+%\end{subfigure}%
+%\begin{subfigure}{.5\textwidth}
+%  \centering
+%  \includegraphics[scale=0.17]{Images/non_manifold}
+%  \caption{}
+%\end{subfigure}
+%\caption{\textbf{Gauche} : Maillage triangulaire avec bords ($|V|=8$,$|E|=15$,$|F|=9$). \textbf{Droite} : Volume n'étant pas une variété. Les deux cubes sont connectés par une arête de taille infiniment fine.}
+%\end{figure}
 
 %  \begin{columns}[c]
 %    \begin{column}[c]{.48\textwidth}
@@ -230,16 +230,16 @@
 %  \end{columns}
 
 
-\begin{block}{Définitions}
-\begin{itemize}
-\item Simplexe : Un simplexe $\sigma^p$ de dimension $p$ est l'enveloppe convexe de $p+1$ points $\{v_0,v_1,...v_p\}$, où $v_i\, \in R^n$ et les vecteurs $v_1-v_0,v_2-v_0...$ sont linéairement indépendants. 
-\item Variété  : Espace topologique M connexe séparé localement homéomorphe à un ouvert de $\mathbb{R}^n$. Chaque point de M admet un voisinage homéomorphe à un ouvert de $\mathbb{R}^n$.
-\item Complexe Simplicial : Ensemble K de simplexes d'un espace affine tel que toutes les faces de chaque simplexe de K appartiennent aussi à K et si deux simplexes $\sigma$ et $\tau$ de K sont adjacents alors $\sigma \cap \tau \neq \emptyset$
-\item Maillage : Complexe simplicial représentant un objet géométrique. Il a la même dimension que l'objet qu'il représente
-\item Etoile : Ensemble des k-simplexes adjacents à un sommet
-\end{itemize}
-\end{block}
-\end{frame}
+%\begin{block}{Définitions}
+%\begin{itemize}
+%\item Simplexe : Un simplexe $\sigma^p$ de dimension $p$ est l'enveloppe convexe de $p+1$ points $\{v_0,v_1,...v_p\}$, où $v_i\, \in R^n$ et les vecteurs $v_1-v_0,v_2-v_0...$ sont linéairement indépendants. 
+%\item Variété  : Espace topologique M connexe séparé localement homéomorphe à un ouvert de $\mathbb{R}^n$. Chaque point de M admet un voisinage homéomorphe à un ouvert de $\mathbb{R}^n$.
+%\item Complexe Simplicial : Ensemble K de simplexes d'un espace affine tel que toutes les faces de chaque simplexe de K appartiennent aussi à K et si deux simplexes $\sigma$ et $\tau$ de K sont adjacents alors $\sigma \cap \tau \neq \emptyset$
+%\item Maillage : Complexe simplicial représentant un objet géométrique. Il a la même dimension que l'objet qu'il représente
+%\item Etoile : Ensemble des k-simplexes adjacents à un sommet
+%\end{itemize}
+%\end{block}
+%\end{frame}
 
 \begin{frame}
 \footnotesize
@@ -633,7 +633,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.28]{Images/T_time}
+  \includegraphics[scale=0.36]{Images/T_time}
   \caption{}
 \end{subfigure}
 \caption{\textbf{Gauche} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{Droite} : Temps en secondes (s) du parcours en largeur en fonction du nombre de tétraèdres.}
