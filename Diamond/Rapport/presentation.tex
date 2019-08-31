@@ -86,6 +86,41 @@
 \end{frame}
 
 \begin{frame}
+\small
+\frametitle{Préliminaires}
+%\framesubtitle{L'importance de la mémoire}
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.32\textwidth}
+  \centering
+  \includegraphics[scale=0.16]{Images/michelangelo}
+  \caption{}
+\end{subfigure}%
+\begin{subfigure}{.32\textwidth}
+  \centering
+  \includegraphics[scale=0.12]{Images/ball}
+  \caption{}
+\end{subfigure}
+\begin{subfigure}{.32\textwidth}
+  \centering
+  \includegraphics[scale=0.18]{Images/T_V_3D}
+  \caption{}
+\end{subfigure}
+\caption{\textbf{Gauche} : Maillage surfacique contenant 1Md de sommets, 3Md d'arêtes et 2Md de triangles. 32GB sont nécessaires pour stocker le maillage. \textbf{Milieu} : Maillage tétraédrique d'une boule contenant 3M sommets, 21M arêtes et 17M tétraèdres. Le fichier OFF associé occupe une place de 780 MB. \textbf{Droite} : Evolution du nombre de tétraèdres en fonction du nombre de sommets.}
+\end{figure}
+\begin{block}{Combinatoire}
+\begin{itemize}
+\item Maillage triangulaire : environ 2 fois plus de triangles que de sommets
+\begin{itemize}
+\item $V-E+F\simeq 0$
+\item $2E=3F$ $\Rightarrow$ $V-\frac{3}{2}F+F\simeq 0$ $\Rightarrow$ $F\simeq 2V$
+\end{itemize}
+\item Maillage tétraédriques : environ 4.5 fois plus de tétraèdres que de sommets
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
 \footnotesize
 \frametitle{Préliminaires}
 %\framesubtitle{Maillages surfaciques et volumiques}
@@ -468,8 +503,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{frame}
 \small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
-\framesubtitle{Description}
-
+\framesubtitle{Exemple}
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.275]{Images/structure}
