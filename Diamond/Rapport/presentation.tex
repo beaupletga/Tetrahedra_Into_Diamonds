@@ -38,6 +38,7 @@
 \DeclarePairedDelimiter\ket{\lvert}{\rangle}
 \setlength{\abovecaptionskip}{6pt plus 3pt minus 2pt} % Chosen fairly arbitrarily
 \setlength{\belowcaptionskip}{0pt plus 3pt minus 2pt}
+\beamertemplatenavigationsymbolsempty
 \begin{frame}
 \titlepage
 \begin{figure}
@@ -113,18 +114,19 @@
     \end{column}%
 %    \hfill%
     \begin{column}[c]{.37\textwidth}
+    \vspace{-15.5pt}
     \begin{figure}
-    \includegraphics[scale=0.10]{Images/michelangelo}
+    \includegraphics[scale=0.09]{Images/michelangelo}
 \caption{Maillage surfacique contenant 1Md de sommets, 3Md d'arêtes et 2Md de triangles. 32GB sont nécessaires pour stocker le maillage}
 \vspace{-1em}
     \end{figure}
      \begin{figure}
-    \includegraphics[scale=0.08]{Images/ball}
+    \includegraphics[scale=0.07]{Images/ball}
 \caption{Maillage tétraédrique d'une boule contenant 3M sommets, 21M arêtes et 17M tétraèdres. Le fichier OFF associé occupe une place de 780 MB}
 \vspace{-1em}
     \end{figure}
      \begin{figure}
-    \includegraphics[scale=0.11]{Images/T_V_3D}
+    \includegraphics[scale=0.19]{Images/T_V_3D}
 \caption{ Evolution du nombre de tétraèdres en fonction du nombre de sommets.}
     \end{figure}
     \end{column}%
@@ -477,7 +479,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
   \includegraphics[scale=0.16]{Images/tetra_number_face}
   \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. \textbf{Droite} : Tétraèdre isolé ancré au sommet A.}
+\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. \textbf{Droite} : Tétraèdre isolé ancré au sommet A. L'ordre des faces est indiqué en noir.}
 \end{figure}
 \begin{block}{Règles pour l'ordonnancement}
 \begin{itemize}
@@ -497,6 +499,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Etape 3 : Encodage des références}
 \small
@@ -619,7 +622,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 
 \begin{frame}
 \frametitle{Résultats}
-\framesubtitle{Appariement des diamants et ancrage des sommets}
+\framesubtitle{Appariement des diamants}
 \small
 \begin{figure}[H]
 \centering
@@ -630,10 +633,10 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.36]{Images/T_time}
+  \includegraphics[scale=0.28]{Images/T_time}
   \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{Droite} : Temps en secondes (s) du parcous en largeur en fonction du nombre de tétraèdres.}
+\caption{\textbf{Gauche} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{Droite} : Temps en secondes (s) du parcours en largeur en fonction du nombre de tétraèdres.}
 \end{figure}
 \begin{block}{Compter le nombre de références par tétraèdre (RPT)}
 \begin{equation}
