@@ -743,11 +743,23 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{frame}
 \small
 \frametitle{Conclusion}
+\vspace{-6.5pt}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.1]{Images/serpentin}
-\caption{Serpentin de tétraèdres. Aucun diamant n'est réalisable}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.12]{Images/serpentin}
+  \caption{}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.11]{Images/bfs_starting}
+  \caption{}
+\end{subfigure}
+\vspace{-5.5pt}
+\caption{\textbf{(a)} : Serpentin de tétraèdres. Aucun diamant n'est réalisable. \textbf{(b)} : Performance de l’algorithme de parcours en largeur en fonction du tétraèdre de départ.}
 \end{figure}
+\vspace{-6.5pt}
 \begin{block}{Avantages et inconvénients}
 \begin{itemize}
 \color{blue}
@@ -761,6 +773,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{itemize}
 \color{blue}
 \end{block}
+\vspace{-4.5pt}
 \begin{block}{Travail futur}
 \begin{itemize}
 \item Rendre la structure dynamique
