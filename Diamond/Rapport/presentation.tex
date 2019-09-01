@@ -109,6 +109,9 @@
 \item $2E=3F$ $\Rightarrow$ $V-\frac{3}{2}F+F\simeq 0$ $\Rightarrow$ $F\simeq 2V$
 \end{itemize}
 \item Maillage tétraédriques : environ 4.5 fois plus de tétraèdres que de sommets
+\begin{itemize}
+\item $V-E+F-T\simeq 0$
+\end{itemize}
 \end{itemize}
 \end{block}
     \end{column}%
@@ -535,7 +538,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \framesubtitle{Identification des sommets dans des tétraèdres/diamants opposés}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.21]{Images/permut1}
+\includegraphics[scale=0.2]{Images/permut1}
 \caption{Tétraèdre isolé \textcolor{blue}{\textbf{T1}} partageant la face ACD avec un diamant \textcolor{brown}{\textbf{D1}} ancré au sommet \textcolor{red}{\textbf{A}}.}
 \end{figure}
 \begin{block}{Notre situation}
@@ -548,11 +551,12 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Notre Structure : Tétraèdres en Diamants}
 \framesubtitle{Identification des sommets dans des tétraèdres/diamants opposés}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.14]{Images/permut2}
+\includegraphics[scale=0.13]{Images/permut2}
 \caption{Un diamant partage la face ACD avec un tétraèdre isolé. }
 \end{figure}
 \scriptsize
@@ -621,6 +625,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 
 
 \begin{frame}
+\small
 \frametitle{Résultats}
 \framesubtitle{Appariement des diamants}
 \small
@@ -628,12 +633,12 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.26]{Images/boundary_RPT}
+  \includegraphics[scale=0.18]{Images/boundary_RPT}
   \caption{}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.36]{Images/T_time}
+  \includegraphics[scale=0.18]{Images/T_time}
   \caption{}
 \end{subfigure}
 \caption{\textbf{Gauche} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{Droite} : Temps en secondes (s) du parcours en largeur en fonction du nombre de tétraèdres.}
@@ -646,6 +651,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Résultats}
 \framesubtitle{Les requêtes}
 \begin{figure}[H]
@@ -680,6 +686,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Résultats}
 \framesubtitle{Taille mémoire}
 \begin{figure}[H]
@@ -714,6 +721,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{frame}
 
 \begin{frame}
+\small
 \frametitle{Conclusion}
 \begin{figure}[H]
 \centering
