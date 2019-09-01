@@ -59,10 +59,10 @@
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.07]{Images/cow_cut}
+  \includegraphics[scale=0.10]{Images/cerveau}
   \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Maillage triangulaire (surfacique) contenant 14k sommets, 42k arêtes et 28k faces. \textbf{Droite} : Vue de coupe d'une tétraédrisation (maillage volumique) contenant 30k sommets, 182k arêtes, 143k faces et 134k tétraèdres.}
+\caption{\textbf{(a)} : Maillage triangulaire (surfacique) contenant 14k sommets, 42k arêtes et 28k faces. \textbf{(b)} : Vue de coupe d'une tétraédrisation (maillage volumique) d'un cerveau.}
 \end{figure}
 \small
 \begin{block}{Les maillages}
@@ -74,7 +74,7 @@
 \end{itemize}
 \item Ses composantes
 \begin{itemize}
-\item Géométrie : positions des sommets
+\item Géométrie : positions des sommets (moins de 20\% de la place mémoire)
 \item Connectivité : relations d’adjacence entre les polygones/polyèdres
 \end{itemize}
 \item Compression et structure de données compacte
@@ -108,7 +108,7 @@
 \item $V-E+F\simeq 0$
 \item $2E=3F$ $\Rightarrow$ $V-\frac{3}{2}F+F\simeq 0$ $\Rightarrow$ $F\simeq 2V$
 \end{itemize}
-\item Maillage tétraédriques : environ 4.5 fois plus de tétraèdres que de sommets
+\item Maillage tétraédriques : environ 4.1 fois plus de tétraèdres que de sommets
 \begin{itemize}
 \item $V-E+F-T\simeq 0$
 \end{itemize}
@@ -261,13 +261,13 @@
 \end{itemize}
 \end{block}
 
-\begin{block}{Une implémentation naïve}
+\begin{block}{Implémentation CGAL}
 \begin{itemize}
 \item $4$ références par tétraèdre donnant l'accès aux tétraèdres voisins
 \item $4$ références par tétraèdre donnant l'accès aux sommets incidents
 \item $1$ référence par sommet donnant l'accès à l'un de ses tétraèdres incidents
 \end{itemize}
-$\Rightarrow$ \textbf{8 références par tétraèdre (rpt) et 1 référence par sommet}
+$\Rightarrow$ \textbf{8 références par tétraèdre (RPT) et 1 référence par sommet}
 \end{block}
 \end{frame}
 
@@ -358,7 +358,9 @@ VOT & 8t+n & O(1) & O(1) & oui \\
 Compact Half Face (Lage, Lewiner, Lopes, Velho) & 8t+n & O(1) & O(1) & oui\\
 Bande de triangles (Weiler, Mallón, Kraus, Ertl) & 5.1t & O(1) & O(1) & non \\
 SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
-\textbf{Tétraèdres en diamants} & \textbf{ 2.4t } & \textbf{O(1)} & \textbf{O(d)} & \textbf{non} \\
+\small
+\color{red} \textbf{Tétraèdres en diamants (Notre Contribution)} & \small\color{red}
+\textbf{ 2.4t } & \small\color{red}\textbf{O(1)} & \small\color{red}\textbf{O(d)} &\normalsize \color{red}\textbf{non} \\
 \hline  
 \end{tabular}
 }
@@ -379,7 +381,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \item Calcul de l'hypersphère d'un sommet
 \end{itemize}
 \end{block}
-\begin{block}{Procédure}
+\begin{block}{Aper\c cu de la solution}
 \begin{itemize}
 \item Etape 1 : Groupement des tétraèdres en diamants (\textit{SQUAD})
 \item Etape 2 : Ancrage des sommets avec des diamants/tétraèdres isolés. Le $i$-ème sommet est ancré au $i$-ème diamant/tétraèdre isolé (\textit{SOT})
@@ -423,7 +425,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{itemize}
 \item Deux voisins dans un diamant ne se référenceront pas mutuellement. Chaque tétraèdre dans le diamant n'aura donc que deux références vers ses voisins extérieurs au diamant
 \end{itemize}
-\item Solution : Parcours en profondeur du maillage
+\item Solution retenue : Parcours en profondeur du maillage
 \item Résultat : Une partie des tétraèdres est groupé en diamants. Les autres tétraèdres sont dits isolés
 \end{itemize}
 \end{block}
@@ -452,14 +454,14 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
   \includegraphics[scale=0.12]{Images/central_edges}
   \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres dont l'arête centrale est le segment AB et ancré au sommet A. \textbf{Milieu} : 5 tétraèdres isolés (chaque couleur est un tétraèdre différent). \textbf{Droite} : Vue de coupe d'une tétraédrisation d'une boule avec affichage des arêtes centrales de tous les diamants}
+\caption{\textbf{(a)} : Diamant contenant 5 tétraèdres dont l'arête centrale est le segment AB et ancré au sommet A. \textbf{(b)} : 5 tétraèdres isolés (chaque couleur est un tétraèdre différent). \textbf{(c)} : Vue de coupe d'une tétraédrisation d'une boule avec affichage des arêtes centrales de tous les diamants}
 \end{figure}
 
 \begin{block}{Etape 2}
 \begin{itemize}
 \item Problème : Ancrer chaque sommet à un tétraèdre/diamant
 \item Motif : Omission des références des sommets vers l'un de leurs tétraèdres incidents
-\item Solution : Algorithme glouton privilégiant les sommets de faible degré
+\item Solution retenue : Algorithme glouton privilégiant les sommets de faible degré
 \item Résultat : Chaque sommet est ancré à un diamant/tétraèdre isolé. On réordonne les diamants/tétraèdres isolés tel que le $i$-ème sommet soit ancré au $i$-ème diamant/tétraèdre isolé
 \end{itemize}
 \end{block}
@@ -482,7 +484,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
   \includegraphics[scale=0.16]{Images/tetra_number_face}
   \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. \textbf{Droite} : Tétraèdre isolé ancré au sommet A. L'ordre des faces est indiqué en noir.}
+\caption{\textbf{(a)} : Diamant contenant 5 tétraèdres ordonnés, dont l'arête centrale est AB et ancré au sommet A. L'ordre des tétraèdres est indiqué en noir. \textbf{(b)} : Tétraèdre isolé ancré au sommet A. L'ordre des faces est indiqué en noir.}
 \end{figure}
 \begin{block}{Règles pour l'ordonnancement}
 \begin{itemize}
@@ -596,6 +598,14 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{center}
 \end{figure}
 
+\begin{block}{Contenu de la structure}
+\begin{itemize}
+\item Un tableau A d'entiers de taille $|F_E|$
+\item Un bit de service pour indiquer la première face d'un diamant/tétraèdre isolé
+\item Trois bits de service pour la permutation des sommets
+\end{itemize}
+\end{block}
+
 
 
 
@@ -641,7 +651,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
   \includegraphics[scale=0.18]{Images/T_time}
   \caption{}
 \end{subfigure}
-\caption{\textbf{Gauche} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{Droite} : Temps en secondes (s) du parcours en largeur en fonction du nombre de tétraèdres.}
+\caption{\textbf{(a)} : Evolution du nombre de références par tétraèdre (RPT) en fonction de la part de tétraèdres sur les bords du maillage. \textbf{(b)} : Temps en secondes (s) du parcours en largeur en fonction du nombre de tétraèdres.}
 \end{figure}
 \begin{block}{Compter le nombre de références par tétraèdre (RPT)}
 \begin{equation}
@@ -653,7 +663,7 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \begin{frame}
 \small
 \frametitle{Résultats}
-\framesubtitle{Les requêtes}
+\framesubtitle{Temps de calcul}
 \begin{figure}[H]
 \centering
 \resizebox{0.8\textwidth} {!}{
@@ -667,13 +677,13 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 %    anchor=north,legend columns=-1,cells={align=left}},
     ylabel={Secondes (s)},
 %    xlabel={Nombre de tétraèdres par arête},
-    symbolic x coords={Accès au $i$-ème tétraèdre,Degré d'un sommet,Parcours en Largeur},
+    symbolic x coords={Accès au $i$-ème tétraèdre,Degré d'un sommet,Parcours en largeur},
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(Accès au $i$-ème tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en Largeur,1.85e-3)};
-\addplot coordinates {(Accès au $i$-ème tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en Largeur,4.25e-3)};
+\addplot coordinates {(Accès au $i$-ème tétraèdre,2.5e-3)(Degré d'un sommet,5.2e-4)(Parcours en largeur,1.85e-3)};
+\addplot coordinates {(Accès au $i$-ème tétraèdre,1.8e-3)(Degré d'un sommet,1.9e-4)(Parcours en largeur,4.25e-3)};
 %\addplot coordinates {(Degré d'un sommet,1e-3)(Parcours en Largeur,2.92e-3)};
 %\addplot coordinates {(3.9,2.36)(4.29,2.38)(4.43,2.34)(4.93,2.29)(5.08,)(5.10,)(5.11,) };
 \legend{Notre Structure Compacte,Structure Compacte avec 4 rpt,Structure avec Pointeurs}
@@ -749,7 +759,37 @@ SOT (Gurung, Rossignac) & 4t & O(1) & O(d)  & non\\
 \end{block}
 \end{frame}
 
+\begin{frame}[noframenumbering]
+\small
+\frametitle{Garanties Théoriques}
+\begin{block}{Création d'un graphe annexe}
+\begin{itemize}
+\item $V' = \{e\in E : e\notin B\}$
+\item $E'=\{(e,e'), e,e'\in E : e,e' \in T_i, \,  i\in \{0,|T|-1\}\}$ 
+\end{itemize}
+\end{block}
+\begin{block}{Notations}
+\begin{itemize}
+\item $B$ est le bord du maillage M
+\item $b$ est la part d'arêtes situées sur les bords dans le maillage M
+\item $V'$ est l'ensemble des sommets de notre graphe $G'$
+\item $E'$ est l'ensemble des arêtes de notre graphe $G'$
+\item $d'$ est le degré maximum d'un sommet dans notre graphe $G'$
+\end{itemize}
+\end{block}
 
-
+\begin{block}{Stable Maximum $\alpha(G')$}
+\begin{equation}
+|V'|=(1-b)\cdot |E|
+\end{equation}
+\begin{equation}
+|d'|= 27
+\end{equation}
+\begin{equation}
+\alpha(G')\geqslant \frac{|V'|}{d+1} = \frac{(1-b)\cdot |E|}{28}
+\end{equation}
+\end{block}
+\textbf{En pratique, l'algorithme de parcours en largeur permet de trouver 4 fois plus de diamants que cette borne inférieure}
+\end{frame}
 
 \end{document}
