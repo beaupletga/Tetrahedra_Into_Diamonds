@@ -1,0 +1,213 @@
+\documentclass[a4paper,11pt,openany]{article}
+\usepackage[noconfigs,french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.3cm,right=1.3cm,top=1.3cm,bottom=1.3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+%\usepackage{appendix} 
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}  
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage[noabbrev]{cleveref}
+%\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[noend]{algorithm2e}
+\usepackage{listings}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage{titling}
+\usepackage[toc,page]{appendix}
+\SetAlFnt{\small}
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+%\makesavenoteenv{table}
+\SetKwRepeat{Struct}{struct \{}{\}}%
+\usepackage{xcolor}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
+\definecolor{OliveGreen}{rgb}{0.2,0.5,0.2}
+\definecolor{Orange}{rgb}{1,0.5,0.3}
+\definecolor{Purple}{rgb}{0.75,0.2,0.75}
+\definecolor{Grey}{rgb}{0.5,0.5,0.5}
+\definecolor{BlueMarine}{rgb}{0,0.6,0.6}
+\newcommand{\gb}[1]{{\color{OliveGreen}  #1}}
+\newcommand{\lc}[1]{{\color{BlueMarine}  #1}}
+\newcommand{\gabriel}[1]{\marginpar{\tiny\od{#1}}}
+\newcommand{\luca}[1]{\marginpar{\tiny\lc{#1}}}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+\title{Tétraèdres en Diamants : Structure de Données Compacte pour Maillages Tétraédriques}
+\author{
+   Gabriel Beauplet\thanks{LIX, Ecole Polytechnique, Palaiseau, France} supervisé par Luca Castelli Aleardi\thanks{LIX, Ecole Polytechnique, Palaiseau, France}
+%   \and
+%   Olivier Devillers\thanks{INRIA, CNRS, Loria, Université de Lorraine, France}
+}
+\subtitle{Stage de M2 MPRI (Master Parisien de Recherche en Informatique)}
+\vspace{1cm}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%\section{Résumé}
+%\noindent
+%De nombreuses structures de données compactes ont été développées pour les triangulations 2D mais très peu pour les tétraèdrisations 3D. Nous introduisons dans ce rapport, une nouvelle structure de donneés compacte pour les tétraèdrisations. Nous nous concentrons seulement sur les informations de connectivité plutôt que sur les informations géométriques (les coordonnées des sommets). L'idée principale est de regrouper les tétraèdres en diamants de telle manière à économiser les références d'adjacence entre deux tétraèdres du même diamant. Nous définissons un diamant comme un ensemble de tétraèdres formant un cycle autour d'une arête. Notre structure de données permet de représenter la connectivité d'un maillage en utilisant en moyenne 2.4 références par tétraèdre tout en permettant l'exécution de requêtes simples. Nous présentons des résultats pratiques de notre structure de donneés ainsi que des résultats plus théoriques.
+
+\input{introduction_preliminaire}
+\input{etat_de_l_art}
+\input{contribution}
+\input{resultats}
+\input{partie_theorique}
+\input{travail_futur_conclusion}
+
+
+%\begin{thebibliography}{999}
+%\bibitem{triangle_strips}Deering,\emph{Geometry Compression}. 
+%\bibitem{cut_border_machine_2d}Stefan Gumhold,\emph{Improved Cut-Border Machine for Triangle Mesh Compression}. 
+%\bibitem{cut_border_machine_3d}Stefan Gumhold, Stefan Guthe, Wolfgang Straßer,\emph{Tetrahedral Mesh Compression with the Cut-Border Machine}. 
+%\bibitem{edgebreaker}Jarek Rossignac,\emph{Edgebreaker: Connectivity compression for triangle meshes}. 
+%\bibitem{topological_surgery}Gabriel Taubin, Jarek Rossignac,\emph{Geometric Compression Through Topological Surgery}. 
+%\bibitem{valence_encoding}Costa Touma and Craig Gotsman,\emph{Triangle Mesh Compression}. 
+%\bibitem{grow_and_fold}Andrzej Szymczak, Jarek Rossignac,\emph{Grow\&fold: compression of tetrahedral meshes}. 
+%\bibitem{triangle_strips_weiler}Manfred Weiler, Paula N. Mallon, Martin Kraus, Thomas Ertl,\emph{Texture-Encoded Tetrahedral Strips}. 
+%\bibitem{CHF}Marcos Lage, Thomas Lewiner, Helio Lopes, Luiz Velho,\emph{CHF: A scalable topological data structure for tetrahedral meshes}, 2005
+%\bibitem{SOT}Topraj Gurung, Jarek Rossignac,\emph{SOT: Compact representation for tetrahedral meshes}. 
+%\bibitem{CGAL},\emph{The CGAL Project. CGAL User and Reference Manual. CGAL Editorial Board, 4.14 edition, 2019}
+%\bibitem{winged_edge}Bruce G. Baumgart,\emph{Winged Edge Polyhedron Representation}
+%\bibitem{star_vertices}Marcelo Kallmann and Daniel Thalmann,\emph{Star-vertices: a compact representation for planar meshes with adjacency information}
+%\bibitem{2d_catalog}Catalog based representation of 2d triangulations,\emph{Luca Castelli Aleardi, Olivier Devillers, and Abdelkrim Mebarki}
+%\bibitem{squad}Topraj Gurung, Daniel Laney, Peter Lindstrom, and Jarek Rossignac,\emph{SQuad: Compact representation for triangle meshes}
+%\bibitem{rank_and_select}Gonzalo Navarro,Eliana Providel,\emph{Fast, Small, Simple Rank/Select on Bitmaps}, 2012
+%\end{thebibliography}
+
+\newpage
+\bibliography{biblio} 
+\bibliographystyle{ieeetr}
+
+\begin{appendices}
+%appendix
+\begin{algorithm}[th]
+\SetAlgoLined	
+\Struct{Face}{
+    Entier index$\_$face \tcp*{Indice de la face}
+    Entier pos$\_$ancre \tcp*{Position du sommet ciblé dans la face}
+}
+\SetKwFunction{FMain}{degré$\_$sommet}
+\SetKwProg{Fn}{Function}{:}{}
+\Fn{\FMain{A[],bit$\_$service[],permutation[], indice$\_$sommet}}{ 
+    degré=0;\\
+    file Q de faces;\\
+    index$\_$face = index$\_$du$\_$sommet$\_$i$\_$dans$\_$tableau(indice$\_$sommet,bit$\_$service);\\
+    \tcp*[h]{taille$\_$conteneur renvoie le nombre de face du diamant/tetra à l'index i}\\
+    \eIf(\tcp*[h]{si le sommet est ancré à un tétra isolé}){taille$\_$conteneur(index,bit$\_$service)=4 }
+    {
+        ajouter à Q les faces [index$\_$face+1,pos$\_$ancre=0],[index$\_$face+2,pos$\_$ancre=0],[index$\_$face+3,pos$\_$ancre=0];
+    }(\tcp*[h]{si le sommet est ancré à un diamant})
+    {   ajouter à Q les faces [index$\_$face+i,pos$\_$ancre=2] pour i=$\{$0,2,4..taille$\_$conteneur(index$\_$face,bit$\_$service)$\}$;
+   	}
+   	\While{Q non vide}
+   	{
+   		face = Q.defiler();\\
+   		index$\_$face=face.index;\\
+   		index$\_$face$\_$op=A[index$\_$face];\\
+        pos$\_$ancre=face.pos$\_$ancre;\\
+        taille$\_$conteneur = taille$\_$conteneur(index$\_$face$\_$op,service$\_$bit);\\
+        \If{index$\_$face$\_$op non visité}
+        {
+        	\eIf(\tcp*[h]{si on entre dans un diamant}){taille$\_$conteneur$>$4}
+        	{
+        		\If{permutation[index$\_$face][0]==pos$\_$ancre}
+        		{
+        			\eIf{index$\_$face$\_$op\%2==0}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op+1,pos$\_$ancre=0],[index$\_$face$\_$op-1,pos$\_$ancre=1],[index$\_$face$\_$op-2,pos$\_$ancre=2];\\
+        			}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op-1,pos$\_$ancre=0],[index$\_$face$\_$op-2,pos$\_$ancre=1],[index$\_$face$\_$op-3,pos$\_$ancre=2];\\
+        			}
+        			degré+=2;\\
+        		}
+        		\If{permutation[index$\_$face][1]==pos$\_$ancre}
+        		{
+        			\eIf{index$\_$face$\_$op\%2==0}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op+1,pos$\_$ancre=1],[index$\_$face$\_$op+2,pos$\_$ancre=0],[index$\_$face$\_$op+3,pos$\_$ancre=0];\\
+        			}
+        			{
+        				ajouter à Q les faces [index$\_$face$\_$op-1,pos$\_$ancre=1],[index$\_$face$\_$op+1,pos$\_$ancre=0],[index$\_$face$\_$op+2,pos$\_$ancre=0];\\
+        			}
+        			degré+=2;\\
+        		}
+        		\If{permutation[index$\_$face][2]==pos$\_$ancre}
+        		{
+        			\leIf{index$\_$face$\_$op\%2=0}
+        			{
+        				debut=0
+        			}
+        			{
+        				debut=1
+        			}
+        			\For{(i=debut,i$<$taille$\_$conteneur(index$\_$face$\_$ops,service$\_$bit),i+=2)}
+        			{
+        				ajouter à Q la face [index$\_$face$\_$op+i,pos$\_$ancre=2];\\
+        				degré++;
+        			}
+        		}
+        	}
+        	(\tcp*[h]{si on entre dans un tétra isolé})
+        	{
+        		\lIf{indice$\_$face==0}
+        		{
+        			indexes={1,2,3}
+        		}
+        		\lIf{indice$\_$face==1}
+        		{
+        			indexes={0,2,3}
+        		}
+        		\lIf{indice$\_$face==2}
+        		{
+        			indexes={0,1,3}
+        		}
+        		\lIf{indice$\_$face==3}
+        		{
+        			indexes={0,1,2}
+        		}
+        		\If{permutation[index$\_$face][0]==pos$\_$ancre}
+        		{
+        			ajouter à Q les faces [index$\_$face$\_$op+indexes[1],pos$\_$ancre=0],[index$\_$face$\_$op+indexes[2],pos$\_$ancre=0];\\
+        		}
+        		\If{permutation[index$\_$face][1]==pos$\_$ancre}
+        		{
+        			ajouter à Q les faces [index$\_$face$\_$op+indexes[0],pos$\_$ancre=1],[index$\_$face$\_$op+indexes[2],pos$\_$ancre=0] ;\\
+        		}
+        		\If{permutation[index$\_$face][2]==pos$\_$ancre}
+        		{
+        		ajouter à Q les faces [index$\_$face$\_$op+indexes[1],pos$\_$ancre=2],[index$\_$face$\_$op+indexes[2],pos$\_$ancre=2];\\
+        		}
+        		degré++;
+        	}
+        }
+   	}
+	\textbf{Retourner} degré;\\
+ }
+\caption{Pseudo code permettant de calculer le degré d'un sommet}
+\end{algorithm}
+\end{appendices}
+
+\end{document}
