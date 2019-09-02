@@ -10,8 +10,11 @@ We also re-order the diamond and the isolated tetrahedra such that the ith verte
 Finally, instead of using OFF file to describe a mesh, we have created a new format for exporting our data structure. This new format is 40% lighter than the original OFF file.
 
 <img src="/Tetraedres_en_diamants/Rapport_et_Presentation/Images/full_diamond.png" width="250" height="250" alt="dominating_sets_example2">*Figure showing 5 tetrahedra forming a diamond*
+<br/>
 <img src="/Tetraedres_en_diamants/Rapport_et_Presentation/Images/diamond.png" width="250" height="250">*Figure showing diamonds*
+<br/>
 <img src="/Tetraedres_en_diamants/Rapport_et_Presentation/Images/isolated_tetra.png" width="250" height="250">*Figure showing isolated tetrahedra*
+<br/>
 
 All the code in this repo is native C++ code. No external library is used. Our data structure is essentially an array of integer. This way, our data structure can be transcripted easily in any other language.
 
@@ -29,4 +32,5 @@ Here are the steps for constructing our data structure :
 ### Results
 
 <img src="/Tetraedres_en_diamants/Rapport_et_Presentation/Images/boundary_RPT.png" width="250" height="250">*Evolution of the RPT according to the share of tetrahedra on the boundary of the mesh*
+<br/>
 
