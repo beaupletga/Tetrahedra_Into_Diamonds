@@ -12,6 +12,7 @@ Finally, instead of using OFF file to describe a mesh, we have created a new for
 <img src="/Tetraedres_en_diamants/Rapport_et_Presentation/Images/full_diamond.png" width="250" height="250" alt="dominating_sets_example2">
 *Figure showing 5 tetrahedra forming diamond a*
 </center>
+<br/>
 
 All the code in this repo is native C++ code. No external library is used. Our data structure is essentially an array of integer. This way, our data structure can be transcripted easily in any other language.
 
