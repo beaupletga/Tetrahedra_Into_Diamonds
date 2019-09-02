@@ -9,11 +9,11 @@ Our algorithm groups tetrahera sharing a same edge and forming a cycle. We call 
 We also re-order the diamond and the isolated tetrahedra such that the ith vertex is adjacent to the ith diamond/isolated tetra.<br/>
 Finally, instead of using OFF file to describe a mesh, we have created a new format for exporting our data structure. This new format is 40% lighter than the original OFF file.
 
-![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/full_diamond.png = 250x250)*Figure showing 5 tetrahedra forming a diamond*
+![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/full_diamond.png =250x250)*Figure showing 5 tetrahedra forming a diamond*
 
-![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/diamond.png = 250x250)*Figure showing diamonds*
+![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/diamond.png =250x250)*Figure showing diamonds*
 
-![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/isolated_tetra.png = 250x250)*Figure showing isolated tetrahedra*
+![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/isolated_tetra.png =250x250)*Figure showing isolated tetrahedra*
 
 
 All the code in this repo is native C++ code. No external library is used. Our data structure is essentially an array of integer. This way, our data structure can be transcripted easily in any other language.
@@ -31,5 +31,5 @@ Here are the steps for constructing our data structure :
 
 ### Results
 
-![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/boundary_RPT.png = 250x250)*Evolution of the RPT according to the share of tetrahedra on the boundary of the mesh*
+![alt text](/Tetraedres_en_diamants/Rapport_et_Presentation/Images/boundary_RPT.png =250x250)*Evolution of the RPT according to the share of tetrahedra on the boundary of the mesh*
 
