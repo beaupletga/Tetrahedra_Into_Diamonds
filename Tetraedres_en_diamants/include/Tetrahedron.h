@@ -40,7 +40,7 @@ class Tetrahedron
         void set_position_in_diamond(int); 
         tuple<int,int,int> get_opposite_face(Vertex*);
 
-        int count_matched;
+        // int count_matched;
 
     private:
         int id;
@@ -49,9 +49,8 @@ class Tetrahedron
         vector<tuple<int,int>> edges;
         bool in_diamond;
         bool is_on_boundary;
-
-        Diamond* diamond_ref;
-        int position_in_diamond;
+        Diamond* diamond_ref; // ref towards its diamond
+        int position_in_diamond; // its position number inside the diamond
 };
 
 

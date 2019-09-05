@@ -15,7 +15,6 @@
 #include <chrono> 
 
 #include "../include/Vertex.h"
-#include "../include/Triangle.h"
 #include "../include/Tetrahedron.h"
 #include "../include/Diamond.h"
 #include "../include/navigate.h"

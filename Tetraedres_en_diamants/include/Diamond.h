@@ -25,13 +25,14 @@ class Diamond
         void set_central_edge(pair<int,int>);
         void set_anchor_vertex(Vertex*);
         void display_vertices_id();
-        bool has_anchor;
         vector<int> get_vertex_order();
         vector<tuple<int,int,int>> neighbours_faces;
         void set_permutation(vector<int>&,int);
         vector<int> get_permutation(int);
         vector<int> vertex_order;
         unordered_set<int> get_vertices_id();
+        bool get_has_anchor();
+        void set_has_anchor(bool has_anchor);
 
 
     private:
@@ -41,6 +42,7 @@ class Diamond
         vector<Tetrahedron*> tetra_list;
         vector<Diamond*> neighbours;
         vector<vector<int>> permutation;
+        bool has_anchor;
 };
 
 

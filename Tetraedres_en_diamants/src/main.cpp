@@ -9,7 +9,6 @@
 
 #include "../include/read_file.h"
 #include "../include/Vertex.h"
-#include "../include/Triangle.h"
 #include "../include/Tetrahedron.h"
 #include "../include/preprocessing.h"
 #include "../include/visualization.h"
@@ -124,7 +123,7 @@ int main(int argc, char** argv)
 
     // edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
     auto start = chrono::high_resolution_clock::now(); 
-    // edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
+    edge_to_tetra=step_1_bfs(vertex_list,tetra_list,edge_dict);
     // edge_to_tetra=step_1_random(vertex_list,tetra_list,edge_dict,edge_to_tetra);
     // edge_to_tetra=step_1_edge_degree(vertex_list,tetra_list,edge_dict);
     // edge_to_vertex=step_1_vertex_choose_neighbour(vertex_list,tetra_list,edge_dict);

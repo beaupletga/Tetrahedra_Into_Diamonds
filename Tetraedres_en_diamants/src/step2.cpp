@@ -1,21 +1,8 @@
 #include "../include/step2.h"
 
-// This second step consist in linking diamond (and isolated tetra) for adjacency relations
-// We take a set of edges and their anchor, and return a vector of diamond
-
-// pour chaque diamond :
-//  - taille (nb de tetra)
-//  - contient les tetra
-//  -- reference vers tous voisins 
-
-// pour chaque tetra : 
-//  -- reference vers le Diamond (int)
-//  -- position dans le diamand (3 bits)
-
-// pour chaque vertex :
-//  -- reference vers un diamand ou un tetra isolé
-
-
+// This second step consists in linking diamond (and isolated tetra) for adjacency relations
+// We take a set of central edges (from step 1) and create diamonds for each central edge
+// if a tetra is not in a diamond, we also create a diamond (but of size 1)
 vector<Diamond> step_2(map<tuple<int,int>,vector<Tetrahedron*>>& edge_to_tetra,vector<Tetrahedron>& tetra_list,
 map<tuple<int,int>,vector<Tetrahedron*>>& edge_dict,map<tuple<int,int,int>,vector<Tetrahedron*>>& face_dict,
 vector<Vertex> &vertex_list)

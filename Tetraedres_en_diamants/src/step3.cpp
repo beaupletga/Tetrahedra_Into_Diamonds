@@ -1,6 +1,6 @@
 #include "../include/step3.h"
 
-
+// set central edge for diamond (containing more than 1 tetra)
 void step_3_0_set_central_edge(vector<Diamond> &diamond_list,map<tuple<int,int>,vector<Tetrahedron*>> &edge_dict,
 map<int,vector<Tetrahedron*>> &vertex_dict)
 {
@@ -32,102 +32,7 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
             vertex_taken[central_vertices[1]]++;
         }       
     }
-
-    // cout<<"vertex taken : "<<vertex_taken.size()<<endl;
-    // unordered_set<int> xx;
-    // int count_x=0;
-    // for(pair<int,vector<Tetrahedron*>> vertex : vertex_dict)
-    // {
-    //     int count_isolated=0;
-    //     if(vertex_taken.count(vertex.first)==0)
-    //     {
-    //         for(Tetrahedron* tetra : vertex.second)
-    //         {
-    //             if(tetra->get_diamond_ref()->get_tetra_list().size()==1)
-    //             {
-    //                 count_isolated++;
-    //             }
-    //         }
-    //         if (count_isolated==0)
-    //         {
-    //             count_x++;
-    //         }
-    //     }
-    // }
-    // cout<<"count x : "<<count_x<<endl;
-
-
-    // for(Diamond &diamond : diamond_list)
-    // {
-    //     if (diamond.get_tetra_list().size()==1)
-    //     {
-    //         int min_value=10000;
-    //         tuple<int,int> min_edge;
-    //         int min_size;
-    //         for(tuple<int,int> edge : diamond.get_tetra_list()[0]->enumerate_edges())
-    //         {
-    //             int d=vertex_taken[get<0>(edge)]+vertex_taken[get<1>(edge)];
-    //             if(d<min_value)
-    //             {
-    //                 min_edge=edge;
-    //                 min_value=d;
-    //                 min_size=count_if(vertex_dict[get<0>(edge)].begin(),vertex_dict[get<0>(edge)].end(),
-    //                 [](Tetrahedron* i){return i->get_diamond_ref()->get_tetra_list().size()>1;});
-    //                 min_size+=count_if(vertex_dict[get<1>(edge)].begin(),vertex_dict[get<1>(edge)].end(),
-    //                 [](Tetrahedron* i){return i->get_diamond_ref()->get_tetra_list().size()>1;});
-    //             }
-    //             else if(d==min_value)
-    //             {
-    //                 int c = count_if(vertex_dict[get<0>(edge)].begin(),vertex_dict[get<0>(edge)].end(),
-    //                     [](Tetrahedron* i){return i->get_diamond_ref()->get_tetra_list().size()>1;});
-    //                     min_size+=count_if(vertex_dict[get<1>(edge)].begin(),vertex_dict[get<1>(edge)].end(),
-    //                     [](Tetrahedron* i){return i->get_diamond_ref()->get_tetra_list().size()>1;});
-    //                 if(c<min_size)
-    //                 {
-    //                     min_edge=edge;
-    //                     min_size=c;
-    //                 }
-    //             }
-    //         }
-    //         diamond.set_central_edge(pair<int,int>{get<0>(min_edge),get<1>(min_edge)});
-    //     }           
-    // }
 }
-
-
-int minimum(map<int,vector<int>> &lala,vector<Diamond> &diamond_list)
-{
-    int min_value=1000;
-    int min_key;
-    for (pair<int,vector<int>> i : lala)
-    {
-        if (min_value>i.second.size())
-        {
-            min_key=i.first;
-            min_value=i.second.size();
-        }
-        else if (min_value==i.second.size())
-        {
-            int a=0;
-            int b=0;
-            for (int j : i.second)
-            {
-                a+=2*diamond_list[j].get_tetra_list().size();
-            }
-            for (int j : lala[min_key])
-            {
-                b+=2*diamond_list[j].get_tetra_list().size();
-            }
-            if (a<b)
-            {
-                min_key=i.first;
-                min_value=i.second.size();
-            }
-        }
-    }
-    return min_key;
-}
-
 
 int minimumm(vector<int> &vec,vector<Diamond> &diamond_list)
 {
@@ -150,14 +55,10 @@ int minimumm(vector<int> &vec,vector<Diamond> &diamond_list)
 void step_3_1_pair_vertices_as_anchor(vector<Diamond> &diamond_list,vector<Vertex> &vertex_list,
 map<int,vector<Tetrahedron*>> &vertex_dict,map<tuple<int,int>,vector<Tetrahedron*>> &edge_dict)
 {
-    // auto cmp = [](pair<int,vector<int>> a, pair<int,vector<int>> b) { return a.second.size()<b.second.size(); };
     map<int,vector<int>> remaining_vertices;
-    // set<pair<int,vector<int>>,decltype(cmp)> remaining_vertices(cmp);
+    vector<pair<int,vector<int>>> remaining_vertices_vector;
     map<int,vector<int>> inverse;
-    // vector<pair<int,vector<pair<int,int>>>> remaining_vertices;
-    // auto cmp = [](pair<int,vector<pair<int,int>>> left, pair<int,vector<pair<int,int>>> right)
-    //  { return left.second.size()<right.second.size();};
-    // priority_queue<pair<int,vector<pair<int,int>>>,vector<pair<int,vector<pair<int,int>>>>,decltype(cmp)> queue(cmp);
+    vector<pair<int,int>> app;
 
     for (int i=0;i<diamond_list.size();i++)
     {
@@ -178,185 +79,39 @@ map<int,vector<Tetrahedron*>> &vertex_dict,map<tuple<int,int>,vector<Tetrahedron
         }
     }
 
-    // for (pair<int,vector<int>> i : remaining_vertices2)
-    // {
-    //     remaining_vertices.insert(pair<int,vector<int>>{i.first,i.second});
-    // }
-
-    vector<pair<int,int>> app;
-
-    // while there is a vertex not associated to an central edge and which is adjacent to a non paired central edge
-    // cout<<"lets go"<<endl;
-
-    vector<pair<int,vector<int>>> lala;
-
-    for (pair<int,vector<int>> x : remaining_vertices)
+    for (pair<int,vector<int>> i : remaining_vertices)
     {
-        lala.push_back({x.first,x.second});
+        remaining_vertices_vector.push_back(i);
     }
 
-    std::sort(lala.begin(), lala.end(),[]( pair<int,vector<int>>& l, pair<int,vector<int>>& r) 
+    std::sort(remaining_vertices_vector.begin(), remaining_vertices_vector.end(),[]( pair<int,vector<int>>& l, pair<int,vector<int>>& r) 
     {return l.second.size()<r.second.size();});
     
-    // while(remaining_vertices.size()>0)  
-    set<int> diamond_taken;  
-    for (pair<int,vector<int>> w : lala)
+    set<int> diamond_taken; // to check if a diamond has already an anchor
+    for (pair<int,vector<int>> v_vector : remaining_vertices_vector)
     {
-        // cout<<1<<endl;
-        // auto it = min_element(remaining_vertices.begin(),remaining_vertices.end(),
-        // [](pair<int,vector<int>> const i,pair<int,vector<int>> const j){return i.second.size()<j.second.size();});
-        // cout<<2<<endl;
-        // int v = minimum(remaining_vertices,diamond_list);
-        int v = w.first;
-
-        // int max_key;
-        // int max_value =1000;
-        // for (int i : remaining_vertices[v])
-        // {
-        //     if (diamond_list[i].get_tetra_list().size()>max_value)
-        //     {
-        //         max_value=diamond_list[i].get_tetra_list().size();
-        //         max_key=i;
-        //     }
-        // }
-        // int d =max_key;
-        int d=-1;
         vector<int> tmp;
-        for (int i: w.second)
+        for (int i: v_vector.second)
         {
             if (diamond_taken.count(i)==0)
             {
                 tmp.push_back(i);
-                // d = i;
-                // diamond_taken.insert(d);
-                
-                // break;
             }
         }
+        // if at least one of the adjacents diamonds of this vertex has no anchor
         if (tmp.size()>0)
         {
-            d= minimumm(tmp,diamond_list);
+            int d = minimumm(tmp,diamond_list);
             diamond_taken.insert(d);
-            app.push_back({v,d});
-        }
-        // continue;
-
-        // int v= it->first;
-
-        // int d= it->second[0];
-        // app.push_back(pair<int,int>{v,d});
-        // // cout<<3<<endl;
-        // vector<int> x;
-        // for (int vertex : inverse[d])
-        // {
-        //     auto it = remaining_vertices.find({vertex,x});
-
-        //     if (it!=remaining_vertices.end())
-        //     {
-        //         // remaining_vertices[vertex].erase(std::remove(remaining_vertices[vertex].begin(),
-        //         // remaining_vertices[vertex].end(), d), remaining_vertices[vertex].end());
-        //         // if (remaining_vertices[vertex].size()==0)
-        //         // {
-        //         //     remaining_vertices.erase(vertex);
-        //         // }
-        //         cout<<"ca va"<<endl;
-        //     }
-            
-
-            
-        // } 
-        // remaining_vertices.erase({v,x});
-        if (remaining_vertices.size()%1000==0)
-        {
-            cout<<remaining_vertices.size()/(double)vertex_list.size()<<endl;
+            app.push_back({v_vector.first,d});
         }
     }
-    // key : id of vertex and value is the vector with the ids of the diamonds containing it
-    // map<int,vector<int>> remaining_vertices;
-    // map<int,vector<int>> inverse;
-    // // vector<pair<int,vector<pair<int,int>>>> remaining_vertices;
-    // // auto cmp = [](pair<int,vector<pair<int,int>>> left, pair<int,vector<pair<int,int>>> right)
-    // //  { return left.second.size()<right.second.size();};
-    // // priority_queue<pair<int,vector<pair<int,int>>>,vector<pair<int,vector<pair<int,int>>>>,decltype(cmp)> queue(cmp);
-
-    // for (int i=0;i<diamond_list.size();i++)
-    // {
-    //     if (diamond_list[i].get_tetra_list().size()>1)
-    //     {
-    //         remaining_vertices[diamond_list[i].get_central_edge().first].push_back(i);
-    //         remaining_vertices[diamond_list[i].get_central_edge().second].push_back(i);
-    //         inverse[i].push_back(diamond_list[i].get_central_edge().first);
-    //         inverse[i].push_back(diamond_list[i].get_central_edge().second);
-    //     }
-    //     else
-    //     {
-    //         for (Vertex* vertex : diamond_list[i].get_tetra_list()[0]->get_vertices())
-    //         {
-    //             remaining_vertices[vertex->get_id()].push_back(i);
-    //             inverse[i].push_back(vertex->get_id());
-    //         }
-    //     }
-    // }
-    // vector<pair<int,int>> app;
-
-    // while there is a vertex not associated to an central edge and which is adjacent to a non paired central edge
-    // cout<<"lets go"<<endl;
-
-    // while(remaining_vertices.size()>0)
-    // {
-    //     // cout<<1<<endl;
-    //     // auto it = min_element(remaining_vertices.begin(),remaining_vertices.end(),
-    //     // [](pair<int,vector<int>> const i,pair<int,vector<int>> const j){return i.second.size()<j.second.size();});
-    //     // cout<<2<<endl;
-    //     int v = minimum(remaining_vertices,diamond_list);
-
-    //     // int max_key;
-    //     // int max_value =1000;
-    //     // for (int i : remaining_vertices[v])
-    //     // {
-    //     //     if (diamond_list[i].get_tetra_list().size()>max_value)
-    //     //     {
-    //     //         max_value=diamond_list[i].get_tetra_list().size();
-    //     //         max_key=i;
-    //     //     }
-    //     // }
-    //     // int d =max_key;
-    //     int d =remaining_vertices[v][0];
-    //     // int v= it->first;
-
-    //     // int d= it->second[0];
-    //     app.push_back(pair<int,int>{v,d});
-    //     // cout<<3<<endl;
-    //     for (int vertex : inverse[d])
-    //     {
-    //         remaining_vertices[vertex].erase(std::remove(remaining_vertices[vertex].begin(),
-    //         remaining_vertices[vertex].end(), d), remaining_vertices[vertex].end());
-
-    //         if (remaining_vertices[vertex].size()==0)
-    //         {
-    //             remaining_vertices.erase(vertex);
-    //         }
-    //     }
-    //     remaining_vertices.erase(v);
-    //     if (remaining_vertices.size()%1000==0)
-    //     {
-    //         cout<<remaining_vertices.size()/(double)vertex_list.size()<<endl;
-    //     }
-    // }
-
-    set<int> a;
-    set<int> b;
 
     for (pair<int,int> i : app)
     {
-        a.insert(i.first);
-        b.insert(i.second);
         diamond_list[i.second].set_anchor_vertex(&vertex_list[i.first]);
-        diamond_list[i.second].has_anchor=true;
+        diamond_list[i.second].set_has_anchor(true);
     }
-    cout<<(double)a.size()/vertex_list.size()<<endl;
-    cout<<(double)b.size()/vertex_list.size()<<endl;
-    // assert(true==false);
 }
 
 // this function aims at associating all unassociated vertices of step_3 (around 0.1% of vertices)
@@ -374,15 +129,12 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
     }
     for(Diamond &diamond : diamond_list)
     {
-        if (diamond.has_anchor)
+        if (diamond.get_has_anchor())
         {
             unpaired_vertices.erase(diamond.get_anchor_vertex()->get_id());
         }
     }
-    // for (int i : unpaired_vertices)
-    // {
-    //     cout<<"unpaired id "<<i<<endl;
-    // }
+
     cout<<"Share of vertices not associated to diamond or isolated tetra : "<<(double)unpaired_vertices.size()/vertex_list.size()<<endl;
     for(int vertex_id : unpaired_vertices)
     {
@@ -462,9 +214,9 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
                         {
                             if (&diamond_list[i]==tetra->get_diamond_ref())
                             {
-                                if (!diamond_list[i].has_anchor)
+                                if (!diamond_list[i].get_has_anchor())
                                 {
-                                    diamond2.has_anchor=false;
+                                    diamond2.set_has_anchor(false);
                                 }
                                 c.push_back(diamond2);
                                 diamond_list[i]=diamond1;
@@ -487,10 +239,10 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
             cout<<"unpaired :"<<vertex_id<<endl;
             for (Tetrahedron* tetra : vertex_dict[vertex_id])
             {
-                if (!tetra->get_diamond_ref()->has_anchor)
+                if (!tetra->get_diamond_ref()->get_has_anchor())
                 {
                     tetra->get_diamond_ref()->set_anchor_vertex(&vertex_list[vertex_id]);
-                    tetra->get_diamond_ref()->has_anchor=true;
+                    tetra->get_diamond_ref()->set_has_anchor(true);
                     paired=true;
                     cout<<"paired"<<endl;
                 }
@@ -500,44 +252,11 @@ map<int,vector<Tetrahedron*>> &vertex_dict)
         {
             w++;
         }
-        // if (!paired)
-        // {
-        //     vector<Tetrahedron*> a;
-        //     vector<Vertex*> b;
-
-        //     for (Tetrahedron* tetra : vertex_dict[b.end()->get_id()])
-        //     {
-        //         if (tetra->get_diamond_ref()->get_tetra_list().size()==1)
-        //         {
-        //             a.push_back(tetra);
-        //         }
-        //     }
-
-
-        //     for (Tetrahedron* tetra : vertex_dict[vertex_id])
-        //     {
-        //         if (tetra->get_diamond_ref()->get_tetra_list().size()==1 & tetra->get_diamond_ref()->has_anchor)
-        //         {
-        //             for (Tetrahedron* tetra2 : vertex_dict[tetra->get_diamond_ref()->get_anchor_vertex()->get_id()])
-        //             {
-        //                 if (tetra->get_diamond_ref()->get_tetra_list().size()==1 & !tetra->get_diamond_ref()->has_anchor)
-        //                 {
-        //                     tetra->get_diamond_ref()->set_anchor_vertex(&vertex_list[vertex_id]);
-        //                     tetra2->get_diamond_ref()->set_anchor_vertex(tetra->get_diamond_ref()->get_anchor_vertex());
-        //                     tetra2->get_diamond_ref()->has_anchor=true;
-        //                     cout<<"Finally paired"<<endl;
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
     }
     cout<<"Nombre de conflits : "<<w<<endl;
 }
 
-
-
+// we link diamonds between each other
 void step_3_3_connectivity(vector<Diamond> &diamond_list)
 {
     map<tuple<int,int,int>,vector<Diamond*>> external_faces_dict;
@@ -566,7 +285,6 @@ void step_3_3_connectivity(vector<Diamond> &diamond_list)
     }
 }
 
-
 map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &diamond_list)
 {
     map<int,Diamond*> anchor_dict;
@@ -574,7 +292,7 @@ map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &diamond_list)
     for (Diamond &diamond : diamond_list)
     {
         // cout<<2<<endl;
-        if (diamond.has_anchor)
+        if (diamond.get_has_anchor())
         {
             // // cout<<s2<<endl;
             anchor_dict[diamond.get_anchor_vertex()->get_id()]=&diamond;
@@ -587,6 +305,8 @@ map<int,Diamond*> step_3_4_anchor_dict(vector<Diamond> &diamond_list)
 
 // at the ith face, if i%2=0 => there are the vertices i/2 et i/2 +1
 // at the ith face, if i%2=1 => there are the vertices i-1/2 et i-1/2 +1
+// take 2 diamonds and the index of the face of the first diamond connecting both
+// return the permutation between both entity
 vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
 {
     vector<int> focus_order = focus.get_vertex_order();
@@ -595,7 +315,6 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
     vector<int> vertices;
     vector<int> permutation;
 
-    int fais_chier=-1;
     // because the last tetra has the vertice 0
     int size=focus.get_tetra_list().size();
 
@@ -625,12 +344,10 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
         {
             if (index!=0 && (index/2+1)%size==0)
             {
-                fais_chier=0;
                 vertices={(index/2),0,size};
             }
             else
             {
-                fais_chier=1;
                 vertices={(index/2)%size,(index/2+1)%size,size};
             }
         }
@@ -638,12 +355,10 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
         {
             if (index-1!=0 && ((index-1)/2+1)%size==0)
             {
-                fais_chier=2;
                 vertices={((index-1)/2)%size,0,size+1};
             }
             else
             {
-                fais_chier=3;
                 vertices={((index-1)/2)%size,((index-1)/2+1)%size,size+1};
             }
         }
@@ -659,25 +374,6 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
             }
         }
     }
-
-    // if (focus.get_id()==6369 && neighbour->get_id()==476)
-    // {
-    //     for (int i : focus_order)
-    //     {
-    //         cout<<i<<" ";
-    //     }
-    //     cout<<endl;
-    //     for (int i : neighbour_order)
-    //     {
-    //         cout<<i<<" ";
-    //     }
-    //     cout<<endl;
-    //     cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<" "<<neighbour_order.size()<<endl;
-    //     cout<<vertices[0]<<" "<<vertices[1]<<" "<<vertices[2]<<endl;
-    //     cout<<"fais_chier "<<fais_chier<<endl;
-    //     cout<<"index "<<index<<endl;
-    // }
-
 
     if (permutation.size()!=3)
     {
@@ -773,13 +469,12 @@ vector<int> get_permutation(Diamond focus, Diamond* neighbour,int index)
         }
     }
     
-
-
     cout<<permutation[0]<<" "<<permutation[1]<<" "<<permutation[2]<<" "<<neighbour_order.size()<<endl;
-    cout<<"fuck"<<endl;
+    cout<<"error permutation"<<endl;
     assert(true==false);   
 }
 
+// set permutation between all the elements of the mesh
 void step_3_5_set_neighbour_permutation(vector<Diamond> &diamond_list)
 {
     for(Diamond &diamond : diamond_list)

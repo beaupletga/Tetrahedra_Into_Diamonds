@@ -16,6 +16,8 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
     bool already_in=false;
     this->tetra_list.push_back(elements[0]);
     this->anchor_vertex=anchor_vertex;
+
+    // we are in an isolated tetra
     if (elements.size()==1)
     {
         this->neighbours={NULL,NULL,NULL,NULL};
@@ -23,10 +25,13 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
         this->permutation = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
         if (this->has_anchor)
         {
+            // the first face must be the one opposite to the anchor
             tuple<int,int,int> opposite_anchor_face=elements[0]->get_opposite_face(anchor_vertex);
             this->neighbours_faces[0]=opposite_anchor_face;
             this->vertex_order.push_back(anchor_vertex->get_id());
             int x=1;
+
+            // we add the other face arbitrarily
             for(int i=0;i<4;i++)
             {
                 if (elements[0]->get_vertices()[i]->get_id()!=anchor_vertex->get_id())
@@ -37,6 +42,7 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
                 }
             }
         }
+        // if the isolated tetra is not anchored, then we add the faces arbitrarily
         else
         {
             for (int i=0;i<4;i++)
@@ -92,17 +98,13 @@ Diamond::Diamond(int id,vector<Tetrahedron*>& elements,Vertex* anchor_vertex,boo
 unordered_set<int> Diamond::get_vertices_id()
 {
     unordered_set<int> ids;
-    cout<<"a"<<endl;
     for (Tetrahedron* tetra : this->tetra_list)
     {
-        cout<<"b"<<endl;
         for (Vertex* vertex : tetra->get_vertices())
         {
             ids.insert(vertex->get_id());
         }
-        cout<<"c"<<endl;
     }
-    cout<<"d"<<endl;
     return ids;
 }
 
@@ -146,8 +148,16 @@ vector<int> Diamond::get_permutation(int i)
     }
     return this->permutation[i];
 }
+bool Diamond::get_has_anchor()
+{
+    return this->has_anchor;
+}
+void Diamond::set_has_anchor(bool has_anchor)
+{
+    this->has_anchor=has_anchor;
+}
 
-
+// return the external faces of a diamond (there is 2*number_of_tetra_in_diamond)
 vector<tuple<int,int,int>> Diamond::get_external_faces()
 {
     map<tuple<int,int,int>,int> faces;
@@ -172,16 +182,9 @@ vector<tuple<int,int,int>> Diamond::get_external_faces()
     return external_faces;
 }
 
-
+// take a face of the diamond and a reference toward another diamond and add this neighbour to the diamond
 void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
 {
-    // cout<<this->tetra_list.size()<<endl;
-    // if the diamond has n tetra => 2*n external faces
-    // if (face==tuple<int,int,int>{0,0,1})
-    // {
-    //     cout<<"problem "<<this->get_id()<<endl;
-    //     assert(true==false);
-    // }
     if (this->tetra_list.size()>1)
     {
         // we want to know which tetra has this face
@@ -228,7 +231,7 @@ void Diamond::add_neighbour(tuple<int,int,int> &face,Diamond* neighbour)
     }
 }
 
-
+// take the reference of a diamond and return its position among the neighbours
 int Diamond::get_neighbour_index(Diamond* neighbour)
 {
     for(int i=0;i<this->neighbours.size();i++)

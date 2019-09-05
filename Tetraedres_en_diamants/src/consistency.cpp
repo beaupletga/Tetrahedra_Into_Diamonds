@@ -14,6 +14,7 @@ void check_1(vector<Diamond> &diamond_list)
     cout<<"Check 1 done"<<endl;
 }
 
+// check that 2 faces are well linked (face1 -> face2 and face2 -> face1)
 void check_2(int (diamond_array)[],int diamond_array_size)
 {
     for (int i=0;i<diamond_array_size;i++)
@@ -60,6 +61,7 @@ void check_3(vector<Diamond> &diamond_list)
     cout<<"Check 3 done"<<endl;
 }
 
+// check that permutations are well computed when a diamond has a neighbour
 void check_4(vector<Diamond> &diamond_list)
 {
     int error1=0;
@@ -90,6 +92,7 @@ void check_4(vector<Diamond> &diamond_list)
 }
 
 
+// check the validity of the permutation
 void check_5(vector<Diamond> &diamond_list)
 {
     int error1=0;
@@ -221,30 +224,6 @@ void check_5(vector<Diamond> &diamond_list)
                 }
             }
         }
-    }
-}
-
-void check_6(bool diamond_extra_bytes_array[],int array_size,int tetra_list_size)
-{
-    int x=0;
-    int i=0;
-    while(i<array_size)
-    {   
-        int tmp = diamond_size(diamond_extra_bytes_array,array_size,i);
-        if (tmp==4)
-        {
-            x++;
-        }
-        else
-        {
-            x+=tmp/2;
-        }
-        i+=tmp;
-    }
-    if (x!=tetra_list_size)
-    {
-        cout<<"Wrong number of tetrahedron"<<endl;
-        assert(true==false);
     }
 }
 

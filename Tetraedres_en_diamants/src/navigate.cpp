@@ -293,7 +293,7 @@ unordered_set<int> vertex_degree_full_structure(vector<Diamond> &diamond_list,in
     int total_degree=0;
     for (int i=0;i<diamond_list.size();i++)
     {
-        if (diamond_list[i].has_anchor && diamond_list[i].get_anchor_vertex()->get_id()==id)// && diamond_list[i].get_tetra_list().size()>1)
+        if (diamond_list[i].get_has_anchor() && diamond_list[i].get_anchor_vertex()->get_id()==id)// && diamond_list[i].get_tetra_list().size()>1)
         {
             Next first;
             first.from=&diamond_list[i];

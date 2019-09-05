@@ -3,7 +3,6 @@
 Tetrahedron::Tetrahedron(int id,vector<Vertex*> vertex_list)
 {
     this->id=id;
-    this->count_matched=0;
     this->in_diamond=false;
     this->is_on_boundary=false;
     for(int i=0;i<vertex_list.size();i++)
@@ -89,6 +88,8 @@ vector<tuple<int,int,int>> Tetrahedron::enumerate_faces()
     return faces;
 }
 
+// 2 tetra are adjacents if they share 3 vertices
+// check if 2 tetra are adjacents
 bool Tetrahedron::is_adjacent(Tetrahedron* tetra)
 {
     int count=0;

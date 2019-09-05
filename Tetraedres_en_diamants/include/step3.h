@@ -14,7 +14,6 @@
 #include <set>
 
 #include "Vertex.h"
-#include "Triangle.h"
 #include "Tetrahedron.h"
 #include "Diamond.h"
 

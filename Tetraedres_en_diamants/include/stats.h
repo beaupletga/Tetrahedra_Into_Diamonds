@@ -9,7 +9,6 @@
 #include <map>
 
 #include "../include/Vertex.h"
-#include "../include/Triangle.h"
 #include "../include/Tetrahedron.h"
 #include "../include/Diamond.h"
 

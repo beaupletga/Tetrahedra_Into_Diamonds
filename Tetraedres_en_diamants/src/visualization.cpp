@@ -14,6 +14,7 @@ int id_to_index2(vector<Diamond> &diamond_list,int id)
     return -1;
 }
 
+// write in a csv the position of the tetrahedra
 void visualize(vector<Tetrahedron> &tetra_list)
 {
     ofstream output;
@@ -26,6 +27,8 @@ void visualize(vector<Tetrahedron> &tetra_list)
     output.close();
 }
 
+// take a vector of tetrahedron id as input
+// write in an off file the face of the tetrahedra to visualize
 void visualize_subset_tetra(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list,vector<int> &tetras_id)
 {
     ofstream output;
@@ -43,18 +46,16 @@ void visualize_subset_tetra(vector<Vertex> &vertex_list,vector<Tetrahedron> &tet
         double B = rand()%255;
         Tetrahedron tetra = tetra_list[id];
         vector<Vertex*> ids=tetra.get_vertices();
-        // output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
-        // output<<"3 "<<ids[0]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
-        // output<<"3 "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
-        // output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
-        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<"\n";
-        output<<"3 "<<ids[0]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<"\n";
-        output<<"3 "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<"\n";
-        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[3]->get_id()<<"\n";
+        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<"3 "<<ids[0]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<"3 "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
+        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[3]->get_id()<<" "<<R<<" "<<G<<" "<<B<<"\n";
     }
     output.close();
 }
 
+// take a vector of diamond id
+// write in an off file the faces of diamonds to visualize
 void visualize_subset_diamond(vector<Vertex> &vertex_list,vector<Diamond> &diamond_list,vector<int> &diamonds_id)
 {
     ofstream output;
@@ -88,26 +89,7 @@ void visualize_subset_diamond(vector<Vertex> &vertex_list,vector<Diamond> &diamo
     }
 }
 
-void visualize_subset_tetra(vector<Vertex> &vertex_list,vector<Tetrahedron> &tetra_list)
-{
-    ofstream output;
-    output.open("../data/visualize_all.off");
-    output<<"OFF\n";
-    output<<vertex_list.size()<<" "<<tetra_list.size()*4<<" "<<0<<"\n";
-    for (Vertex vertex : vertex_list)
-    {
-        output<<vertex.get_coords()[0]<<" "<<vertex.get_coords()[1]<<" "<<vertex.get_coords()[2]<<"\n";
-    }
-    for (Tetrahedron tetra : tetra_list)
-    {
-        vector<Vertex*> ids=tetra.get_vertices();
-        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<"\n";
-        output<<"3 "<<ids[0]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<"\n";
-        output<<"3 "<<ids[1]->get_id()<<" "<<ids[2]->get_id()<<" "<<ids[3]->get_id()<<"\n";
-        output<<"3 "<<ids[0]->get_id()<<" "<<ids[1]->get_id()<<" "<<ids[3]->get_id()<<"\n";
-    }
-}
-
+// write into an off file the central edges of diamonds 
 void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamond_list)
 {
     ofstream output;
@@ -157,7 +139,8 @@ void visualize_central_edges(vector<Vertex> &vertex_list,vector<Diamond> &diamon
     output.close();
 }
 
-
+// take a vector of double as input
+// write them into a csv file
 void write_in_csv(vector<double> &list,string name)
 {
     ofstream output;

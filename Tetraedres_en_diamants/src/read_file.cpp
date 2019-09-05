@@ -1,5 +1,9 @@
 #include "../include/read_file.h"
 
+
+// take a string as input
+// split the string (i.e separate the string into chunks delimited by ' ')
+// return the chunks between start_index and end_index
 vector<double> split(string line,int start_index,int end_index)
 {
     vector<double> list;
@@ -27,6 +31,7 @@ vector<double> split(string line,int start_index,int end_index)
     return newVec;
 }
 
+// function to read .tet file
 tuple<vector<vector<double>>,vector<vector<double>>> read_tet_file(string filename)
 {
     string line;
@@ -68,10 +73,11 @@ tuple<vector<vector<double>>,vector<vector<double>>> read_tet_file(string filena
     first = whole_list.begin()+ n_v;
     last = whole_list.end();
     vector<vector<double>>conectivity_list(first, last);
-    tuple<vector<vector<double>>,vector<vector<double>>> lala = make_tuple(geometry_list,conectivity_list); 
-    return lala;
+    tuple<vector<vector<double>>,vector<vector<double>>> tuple = make_tuple(geometry_list,conectivity_list); 
+    return tuple;
 }
 
+// read .mesh file
 tuple<vector<vector<double>>,vector<vector<double>>> read_mesh_file(string filename)
 {
     string line;
@@ -137,22 +143,6 @@ tuple<vector<vector<double>>,vector<vector<double>>> read_mesh_file(string filen
             j--;
         }
     }
-    tuple<vector<vector<double>>,vector<vector<double>>> lala = make_tuple(geometry_list,conectivity_list); 
-    return lala;
+    tuple<vector<vector<double>>,vector<vector<double>>> tuple = make_tuple(geometry_list,conectivity_list); 
+    return tuple;
 }
-
-
-
-
-// int main()
-// {
-//     tuple<vector<vector<double>>,vector<vector<double>>> result;
-//     result=read_mesh_file("ball.mesh");
-//     // result=read_file("cow.tet");
-//     // for (vector<double> i : get<1>(result))
-//     // {
-//     //     cout<<i[0]<<" "<<i[1]<<" "<<i[2]<<" "<<i[3]<<" "<<endl;
-//     // }
-//     return 0;
-// }
-
